@@ -1,0 +1,194 @@
+.single-qa_updates h1 {
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.single-qa_updates p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.supervisor_cont{
+    width: 90%;
+    margin: 0 5% 30px;
+}
+
+
+.supervisor-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.supervisor-search {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.supervisor-search-bar {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.supervisor-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.updates-box {
+    flex: 1;
+    margin-left: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.updates-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #d3d3d3;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.updates-list {
+    margin-bottom: 15px;
+}
+
+.update-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.update-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.update-title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.update-title a:hover {
+    text-decoration: underline;
+}
+
+.update-date {
+    font-size: 14px;
+    color: green;
+}
+
+.more-updates-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0073aa;
+}
+
+.more-updates-link:hover {
+    text-decoration: underline;
+}
+
+.vertical-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vertical-button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #d3d3d3;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.vertical-button:hover {
+    background-color: #ccc;
+}
+.taxonomy-box{
+    margin-left: 10px;
+    padding: 2px 5px;
+    color:white;
+    font-size:12px;
+}
+
+.archive-qa-updates{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-column-gap: 15px;
+}
+
+.qa-update-title {
+    display: flex;
+    justify-content: space-between; /* Space between title and button */
+    align-items: center; /* Align items vertically */
+}
+
+.qa-update-title h3 {
+    margin: 0; /* Ensure no extra margin for the title */
+    flex-grow: 1; /* Allow the title to take up remaining space */
+}
+
+.supervisor_logo_cont{
+    text-align: center;
+    width: 300px;
+    margin: 0px auto;
+}
+
+
+
+.accordion-toggle:focus {
+    outline: none; /* Optional: Remove focus outline for cleaner look */
+}
+
+.box-color-4555{ /* רווחה  */
+    background-color: #04A9AD;
+}
+.box-color-4561{ /* מסטיק  */
+    background-color: #006EA0;
+}
+.box-color-4559{ /* מתוק  */
+    background-color: #91C83E;
+}
+
+.qa-update-item{
+    margin-bottom: 20px;
+}
+
+.accordion-toggle {
+    margin-left: auto; /* Push the button to the left */
+    padding: 5px 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.accordion-toggle[data-state="expanded"]::after {
+    content: "↑"; /* Up caret when expanded */
+}
+
+.accordion-toggle[data-state="collapsed"]::after {
+    content: "↓"; /* Down caret when collapsed */
+}

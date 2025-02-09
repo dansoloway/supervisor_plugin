@@ -1,4 +1,6 @@
 <?php
 define("SUPERVISOR_HOME", '27886');
+define("SUPERVISOR_INTRO_TEXT", '27901');
+define("SUPERVISOR_BIB_CATS", '27899');
 
 ?>

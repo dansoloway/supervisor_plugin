@@ -1,15 +1,6 @@
 <?php
 /* Template Name: Supervisor Home */
 get_header('supervisor');
-
-
-// // Enqueue the plugin CSS
-// wp_enqueue_style(
-//     'supervisor-styles',
-//     plugins_url('assets/css/supervisor-styles.css', dirname(__FILE__)),
-//     [],
-//     '1.0'
-// );
 ?>
 
 <div class="supervisor-home">
@@ -60,9 +51,9 @@ get_header('supervisor');
 
         <!-- Vertical Buttons -->
         <div class="vertical-buttons">
-            <button class="vertical-button" id="button-1">לחצן 1</button>
-            <button class="vertical-button" id="button-2">לחצן 2</button>
-            <button class="vertical-button" id="button-3">לחצן 3</button>
+            <a class="vertical-button" href="<?php echo get_the_permalink(SUPERVISOR_INTRO_TEXT) ?>">פיקוח על שירותים חברתיים</a>
+            <a class="vertical-button" href="">ארגוני פיקוח מן העולם</a>
+            <a class="vertical-button" href="<?php echo get_the_permalink(SUPERVISOR_BIB_CATS) ?>">רשימה ביבליוגרפית נבחרת</a>
         </div>
 
     </div>

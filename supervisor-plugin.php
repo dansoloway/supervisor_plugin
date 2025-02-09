@@ -7,6 +7,7 @@
  */
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
+require_once plugin_dir_path(__FILE__) . 'config.php';
 
 // 1. Register Custom Post Types
 function register_qa_cpts() {
@@ -51,24 +52,25 @@ function register_qa_cpts() {
     ]);
 
     // CPT: ביבליוגרפיה
-    register_post_type('qa_bibs', [
+    register_post_type('qa_bib_items', [
         'labels' => [
-            'name' => __('ביבליוגרפיה', 'text-domain'),
+            'name' => __('פריטים ביבליוגרפיים', 'text-domain'),
             'singular_name' => __('פריט ביבליוגרפי', 'text-domain'),
             'add_new' => __('הוסף חדש', 'text-domain'),
             'add_new_item' => __('הוסף פריט ביבליוגרפי חדש', 'text-domain'),
             'edit_item' => __('ערוך פריט ביבליוגרפי', 'text-domain'),
             'new_item' => __('פריט ביבליוגרפי חדש', 'text-domain'),
             'view_item' => __('הצג פריט ביבליוגרפי', 'text-domain'),
-            'search_items' => __('חפש ביבליוגרפיה', 'text-domain'),
+            'search_items' => __('חפש פריטים ביבליוגרפיים', 'text-domain'),
             'not_found' => __('לא נמצאו פריטים ביבליוגרפיים', 'text-domain'),
             'not_found_in_trash' => __('לא נמצאו פריטים ביבליוגרפיים באשפה', 'text-domain'),
         ],
         'public' => true,
         'has_archive' => false,
-        'rewrite' => ['slug' => 'qa-bibs'],
+        'rewrite' => ['slug' => 'qa-bib-items'],
         'supports' => ['title', 'editor', 'thumbnail'],
     ]);
+
 }
 add_action('init', 'register_qa_cpts');
 
@@ -96,6 +98,8 @@ function supervisor_load_templates($template) {
         return plugin_dir_path(__FILE__) . 'templates/single-qa_bibs.php';
     }
 
+ 
+
     return $template;
 }
 add_filter('template_include', 'supervisor_load_templates');
@@ -116,17 +120,17 @@ function register_additional_taxonomies() {
         'menu_name' => __('נושאים', 'text-domain'),
     ];
 
-    register_taxonomy('qa_themes', ['qa_orgs', 'qa_updates', 'qa_bibs'], [
+    register_taxonomy('qa_themes', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
         'labels' => $themes_labels,
-        'hierarchical' => true, // Enables dropdown behavior
-        'public' => false, // Hides the taxonomy UI for creating terms
-        'show_ui' => true, // Show taxonomy in the admin post edit screen
-        'show_in_nav_menus' => false,
-        'show_in_rest' => true, // Enable for Gutenberg and API
-        'rewrite' => ['slug' => 'qa-themes'],
+        'hierarchical' => true, // Enables hierarchical structure (like categories)
+        'public' => true, // Allows taxonomy to be publicly queryable
+        'show_ui' => true, // Shows taxonomy UI in the admin
+        'show_in_nav_menus' => false, // Disable in navigation menus
+        'show_in_rest' => true, // Enable for block editor and REST API
+        'rewrite' => ['slug' => 'qa-themes'], // Rewrite slug
     ]);
 
-    // Register "qa_tags" (no changes needed)
+    // Register "qa_tags"
     $tags_labels = [
         'name' => __('טגים', 'text-domain'),
         'singular_name' => __('טג', 'text-domain'),
@@ -139,16 +143,39 @@ function register_additional_taxonomies() {
         'menu_name' => __('טגים', 'text-domain'),
     ];
 
-    register_taxonomy('qa_tags', ['qa_orgs', 'qa_updates', 'qa_bibs'], [
+    register_taxonomy('qa_tags', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
         'labels' => $tags_labels,
-        'hierarchical' => false,
-        'public' => true,
-        'show_ui' => true,
-        'show_in_rest' => true,
-        'rewrite' => ['slug' => 'qa-tags'],
+        'hierarchical' => false, // Non-hierarchical (like tags)
+        'public' => true, // Allows taxonomy to be publicly queryable
+        'show_ui' => true, // Shows taxonomy UI in the admin
+        'show_in_rest' => true, // Enable for block editor and REST API
+        'rewrite' => ['slug' => 'qa-tags'], // Rewrite slug
     ]);
 }
 add_action('init', 'register_additional_taxonomies');
+
+function register_qa_bib_cats_taxonomy() {
+    register_taxonomy('qa_bib_cats', 'qa_bib_items', [
+        'labels' => [
+            'name' => __('קטגוריות ביבליוגרפיה', 'text-domain'),
+            'singular_name' => __('קטגוריה ביבליוגרפיה', 'text-domain'),
+            'search_items' => __('חפש קטגוריות ביבליוגרפיה', 'text-domain'),
+            'all_items' => __('כל הקטגוריות', 'text-domain'),
+            'parent_item' => __('קטגוריית אב', 'text-domain'),
+            'parent_item_colon' => __('קטגוריית אב:', 'text-domain'),
+            'edit_item' => __('ערוך קטגוריה', 'text-domain'),
+            'update_item' => __('עדכן קטגוריה', 'text-domain'),
+            'add_new_item' => __('הוסף קטגוריה חדשה', 'text-domain'),
+            'new_item_name' => __('שם קטגוריה חדשה', 'text-domain'),
+            'menu_name' => __('קטגוריות ביבליוגרפיה', 'text-domain'),
+        ],
+        'hierarchical' => false, // Allows parent-child structure
+        'show_admin_column' => true, // Displays the taxonomy in the post list view
+        'rewrite' => ['slug' => 'qa-bib-cats'], // Friendly URL slug
+        'show_in_rest' => true, // Enables REST API and Gutenberg support
+    ]);
+}
+add_action('init', 'register_qa_bib_cats_taxonomy');
 
 function add_default_themes_terms() {
     $terms = ['חינוך', 'רווחה', 'בריאות']; // Replace with your terms
@@ -179,7 +206,7 @@ function display_taxonomies($post_id, $taxonomy_labels) {
 
 function enqueue_alternate_header_assets() {
     // Define templates and post type archives requiring alternate assets
-    $templates = ['supervisor-home.php'];
+    $templates = ['supervisor-home.php', 'supervisor-content.php', 'supervisor-bib_cats.php'];
     $singles = ['qa_bibs', 'qa_orgs', 'qa_updates']; // Post type slugs
     $post_type_archives = ['qa_updates'];
 
@@ -215,20 +242,30 @@ function enqueue_alternate_header_assets() {
             true // Load in the footer
         );  
     
-        // Pass the URL to the AJAX handler
-        wp_localize_script('ajax-search-script', 'ajaxSearchParams', [
-            'ajax_url' => plugins_url('ajax/search_handler.php', __FILE__), // Correct URL
-        ]);
+       
     }
 }
 add_action('wp_enqueue_scripts', 'enqueue_alternate_header_assets');
 
-// Add the custom Supervisor Home template
-function supervisor_add_template($templates) {
+// Register the custom page templates
+function supervisor_add_templates($templates) {
     $templates['supervisor-home.php'] = 'Supervisor Home';
+    $templates['supervisor-content.php'] = 'Supervisor Content';
     return $templates;
 }
-add_filter('theme_page_templates', 'supervisor_add_template');
+add_filter('theme_page_templates', 'supervisor_add_templates');
+
+// // Add the custom Supervisor Content
+// function supervisor_add_template($templates) {
+    
+//     return $templates;
+// }
+// add_filter('theme_page_templates', 'supervisor_add_template');
+
+   // intro text
+//    if (is_page(SUPERVISOR_INTRO_TEXT) && file_exists(plugin_dir_path(__FILE__) . 'templates/page-qa_content.php')) {
+//     return plugin_dir_path(__FILE__) . 'templates/page-qa_content.php';
+
 
 function supervisor_load_template($template) {
     // Check for Supervisor Home page template
@@ -278,3 +315,27 @@ function handle_custom_ajax_requests() {
     }
 }
 
+
+include_once plugin_dir_path(__FILE__) . 'inc/bib_admin_page.php';
+
+
+function qa_bib_custom_template($template) {
+    global $post;
+
+    // Define an array of custom templates mapped to page IDs
+    $custom_templates_by_id = [
+        SUPERVISOR_BIB_CATS => 'supervisor-bib_cats.php',  // Example: Page ID 101 loads page-bib_cats.php
+        SUPERVISOR_HOME => 'supervisor-home.php',
+        SUPERVISOR_INTRO_TEXT => 'supervisor-content.php' 
+    ];
+
+ 
+
+    // Check by Page ID
+    if (isset($custom_templates_by_id[$post->ID]) && file_exists(plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$post->ID])) {
+        return plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$post->ID];
+    }
+
+    return $template;
+}
+add_filter('template_include', 'qa_bib_custom_template');

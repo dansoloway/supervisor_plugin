@@ -1,0 +1,640 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+:root {
+    --hover_color: #CB8774; /* Define the hover color */
+    --main_color: #CB8774; 
+    --outline_color: #F1CCCF;
+}
+.single-qa_updates h1 {
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.single-qa_updates p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.supervisor-container{
+    width: 90%;
+    margin: 0 5% 30px;
+}
+
+.updates-list {
+    margin-bottom: 15px;
+}
+
+
+.update-title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.update-title a:hover {
+    text-decoration: underline;
+}
+
+.more-updates-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0073aa;
+}
+
+.more-updates-link:hover {
+    text-decoration: underline;
+}
+
+.vertical-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vertical-button {
+    margin: 0 10px 30px 10px;
+    padding: 16px 20px;
+    background-color: var(--main_color);
+    border: 2px solid var(--outline_color);
+    border-radius: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.vertical-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.taxonomy-box{
+    margin-left: 10px;
+    padding: 2px 5px;
+    color:white;
+    font-size:12px;
+}
+
+.archive-qa-updates{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-column-gap: 15px;
+}
+
+.qa-update-title {
+    display: flex;
+    justify-content: space-between; /* Space between title and button */
+    align-items: center; /* Align items vertically */
+}
+
+.qa-update-title h3 {
+    margin: 0; /* Ensure no extra margin for the title */
+    flex-grow: 1; /* Allow the title to take up remaining space */
+}
+
+.supervisor_logo_cont{
+    text-align: center;
+    width: 300px;
+    margin: 0px auto;
+    cursor: pointer;
+}
+
+
+
+.accordion-toggle:focus {
+    outline: none; /* Optional: Remove focus outline for cleaner look */
+}
+
+.box-color-4555{ /* רווחה  */
+    background-color: #04A9AD;
+}
+.box-color-4561{ /* מסטיק  */
+    background-color: #006EA0;
+}
+.box-color-4559{ /* מתוק  */
+    background-color: #91C83E;
+}
+
+.qa-update-item{
+    margin-bottom: 10px;
+}
+
+.accordion-toggle {
+    margin-left: auto; /* Push the button to the left */
+    padding: 5px 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.accordion-toggle[data-state="expanded"]::after {
+    content: "↑"; /* Up caret when expanded */
+}
+
+.accordion-toggle[data-state="collapsed"]::after {
+    content: "↓"; /* Down caret when collapsed */
+}
+
+
+
+
+
+.supervisor_button {
+    display: inline-block;
+    width: 280px;
+    padding: 10px 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #000;
+    border-radius: 50px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3sease-in-out;
+}
+
+.supervisor_button:hover {
+    background-color: var(--hover_color);
+    color: #fff;
+    border-color: var(--hover_color);
+}
+
+.supervisor_button.active {
+    background-color: #B1B4B6; /* Change background */
+}
+
+.amatic-sc-regular {
+    font-family: "Amatic SC", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .amatic-sc-bold {
+    font-family: "Amatic SC", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+.single-qa_updates h1 {
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.single-qa_updates p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.supervisor_cont{
+    width: 90%;
+    margin: 0 5% 30px;
+}
+
+
+.supervisor-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.supervisor-search {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.supervisor-search-bar {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.supervisor-content {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    width: 100%;
+    grid-gap: 20px;
+}
+
+.updates-box {
+    flex: 1;
+    margin: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    padding: 0;
+}
+
+.updates-title {
+    font-size: 20px;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+    background-color: var(--main_color);
+    padding: 10px;
+    color:white;
+}
+
+.updates-list {
+    margin-bottom: 15px;
+}
+
+.update-item {
+    margin-bottom: 5px;
+    padding: 5px 10px;
+}
+
+.update-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.update-title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.update-title a:hover {
+    text-decoration: underline;
+}
+
+.update-date {
+    font-size: 14px;
+    color: var(--main_color);
+    margin-bottom: 0px !important;
+
+}
+.more-updates-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0073aa;
+}
+
+.more-updates-link:hover {
+    text-decoration: underline;
+}
+
+.taxonomy-box{
+    margin-left: 10px;
+    padding: 2px 5px;
+    color:white;
+    font-size:12px;
+}
+
+.archive-qa-updates{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-column-gap: 15px;
+}
+
+.qa-update-title {
+    display: flex;
+    justify-content: space-between; /* Space between title and button */
+    align-items: center; /* Align items vertically */
+}
+
+.qa-update-title h3 {
+    margin: 0; /* Ensure no extra margin for the title */
+    flex-grow: 1; /* Allow the title to take up remaining space */
+}
+
+.supervisor_logo_cont{
+    text-align: center;
+    width: 300px;
+    margin: 0px auto;
+    cursor: pointer;
+}
+
+
+
+.accordion-toggle:focus {
+    outline: none; /* Optional: Remove focus outline for cleaner look */
+}
+
+.box-color-4555{ /* רווחה  */
+    background-color: #04A9AD;
+}
+.box-color-4561{ /* מסטיק  */
+    background-color: #006EA0;
+}
+.box-color-4559{ /* מתוק  */
+    background-color: #91C83E;
+}
+
+.qa-update-item{
+    margin-bottom: 20px;
+}
+
+.accordion-toggle {
+    margin-left: auto; /* Push the button to the left */
+    padding: 5px 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.accordion-toggle[data-state="expanded"]::after {
+    content: "↑"; /* Up caret when expanded */
+}
+
+.accordion-toggle[data-state="collapsed"]::after {
+    content: "↓"; /* Down caret when collapsed */
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+.category-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.category-card:hover {
+    background-color: #f1f1f1;
+}
+.category-icon {
+    margin-bottom: 10px;
+}
+.category-icon img {
+    max-width: 50px;
+    height: auto;
+}
+.dashicons {
+    font-size: 40px;
+    line-height: 1;
+    color: #0073aa;
+}
+.category-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.category-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.category-card:hover {
+    background-color: var(--hover_color);
+    color: white;
+}
+
+/* .category-description:hover{
+    color: white;
+} */
+
+.category-card:hover + .category-description,
+.category-card:hover .category-description {
+    background-color: var(--hover_color);
+    color: white; /* Example text color */
+}
+.supervisor-two-column {
+    display: grid;
+    grid-template-columns: 20% 80%; /* Ensures sidebar is always the second column */
+    grid-gap: 50px;
+}
+
+.supervisor-two-column-content{
+    display: grid;
+    grid-template-columns: 70% 30%; /* Ensures sidebar is always the second column */
+    grid-gap: 50px;
+}
+
+.supervisor_header_links{
+    text-align: center;
+}
+
+.supervisor_header_links a{
+    color: black !important;
+    margin: 0 20px;
+}
+
+.supervisor_header_links a:hover{
+    text-decoration: underline;
+}
+
+.assistant{
+    font-family: 'Assistant', sans-serif;
+}
+
+.assistant-bold{
+    font-family: 'Assistant', sans-serif;
+    font-weight:bold;
+}
+
+
+  .light-green-bkg{
+    background-color:#F3F9F9;
+  }
+
+  .supervisor-search {
+    display: grid;
+    grid-template-columns: 1fr 40px; /* Input takes full width, button stays 40px */
+    align-items: center;
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid #ccc;
+    background-color: white;
+    direction: rtl;
+}
+
+.supervisor-search-bar {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    text-align: right;
+    background: none;
+    width: 100%;
+    margin: 0 !important;
+}
+
+.search-button {
+    background-color: #bfc0c0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.search-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.supervisor-search-bar {
+    margin: 0 !important;
+    border: 0 !important;
+    box-shadow: 0 !important;
+}
+
+.supervisor-even-columns{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 80%;
+    grid-gap: 50px;
+}
+
+.updates-title a{
+    color:white !important;
+}
+.updates-title a:hover{
+    text-decoration:underline;
+}
+
+.acf-fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 20px 40px; /* Space between columns */
+    margin: 20px auto;
+    background: #e5e5e5; /* Uniform light gray background */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.acf-field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align text properly */
+    font-size: 16px;
+}
+.acf-field a:hover{
+    text-decoration: underline;
+}
+.acf-field strong {
+    font-weight: bold;
+    margin-left: 5px; /* Space between key and value */
+}
+
+.acf-field a {
+    word-break: break-word; /* Ensure long URLs wrap */
+    color: #0073aa;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:white; 
+    display:block; 
+    border-radius:0;
+}
+
+.sidebar-button {
+    margin: 0 10px 20px 10px;
+    padding: 10px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.sidebar-button:hover {
+    
+    background-color: var(--main_color);
+    border: 2px solid var(--outline_color);
+    color: white;
+}
+
+.supervisor_button_active {
+    background-color: var(--main_color);
+    border: 2px solid var(--outline_color);
+    color: white;
+    cursor: none;
+}
+
+.dir_left{
+    direction: ltr;
+    text-align: left;
+}
+
+.org-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px; /* This keeps space between columns */
+    margin-top: 20px;
+}
+
+.org-description{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.org-card {
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    background-color: white;
+    position: relative; /* Ensure border stays within each item */
+}
+
+.org-card:hover {
+   color:black;
+   background-color:#f7ece9;
+}
+
+/* Add bottom border to every row except the last one */
+.org-card:nth-last-child(n+3) { 
+    border-bottom: 1px solid black;
+    padding-bottom: 10px; /* Optional: Add some spacing */
+}
+
+/* Add bottom border only to the first row of elements */
+.org-card:nth-child(-n+2) {
+    border-bottom: 1px solid black;
+}
+
+.org-info{
+    text-align: right;
+}
+
+/* icons */
+.fa-solid, .fas {
+    color: var(--main_color);
+    width:14px;
+}
+
+.icon-space{
+    margin: 0px 0px 0px 5px;
+}
+
+@media (max-width: 768px) {
+    .acf-fields-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+}

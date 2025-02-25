@@ -1,88 +1,131 @@
 <?php
-/**
- * Plugin Name: Supervisor Plugin
- * Description: A plugin to manage custom post types for ארגונים, עדכונים, and ביבליוגרפיה.
- * Version: 1.0
- * Author: Your Name
- */
+/*
+Plugin Name: Supervisor Plugin
+Description: Custom functionality for Supervisor pages.
+Version: 1.0
+Author: Daniel Soloway
+*/
 
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+// Include configuration file
 require_once plugin_dir_path(__FILE__) . 'config.php';
 
-// 1. Register Custom Post Types
-function register_qa_cpts() {
-    // CPT: ארגונים
-    register_post_type('qa_orgs', [
-        'labels' => [
-            'name' => __('ארגונים', 'text-domain'),
-            'singular_name' => __('ארגון', 'text-domain'),
-            'add_new' => __('הוסף חדש', 'text-domain'),
-            'add_new_item' => __('הוסף ארגון חדש', 'text-domain'),
-            'edit_item' => __('ערוך ארגון', 'text-domain'),
-            'new_item' => __('ארגון חדש', 'text-domain'),
-            'view_item' => __('הצג ארגון', 'text-domain'),
-            'search_items' => __('חפש ארגונים', 'text-domain'),
-            'not_found' => __('לא נמצאו ארגונים', 'text-domain'),
-            'not_found_in_trash' => __('לא נמצאו ארגונים באשפה', 'text-domain'),
-        ],
-        'public' => true,
-        'has_archive' => false,
-        'rewrite' => ['slug' => 'qa-orgs'],
-        'supports' => ['title', 'editor', 'thumbnail'],
-    ]);
+// Include post type and taxonomy registration
+require_once plugin_dir_path(__FILE__) . 'inc/register_posts_and_tax.php';
 
-    // CPT: עדכונים
-    register_post_type('qa_updates', [
-        'labels' => [
-            'name' => __('עדכונים', 'text-domain'),
-            'singular_name' => __('עדכון', 'text-domain'),
-            'add_new' => __('הוסף חדש', 'text-domain'),
-            'add_new_item' => __('הוסף עדכון חדש', 'text-domain'),
-            'edit_item' => __('ערוך עדכון', 'text-domain'),
-            'new_item' => __('עדכון חדש', 'text-domain'),
-            'view_item' => __('הצג עדכון', 'text-domain'),
-            'search_items' => __('חפש עדכונים', 'text-domain'),
-            'not_found' => __('לא נמצאו עדכונים', 'text-domain'),
-            'not_found_in_trash' => __('לא נמצאו עדכונים באשפה', 'text-domain'),
-        ],
-        'public' => true,
-        'has_archive' => true,
-        'rewrite' => ['slug' => 'qa-updates'],
-        'supports' => ['title', 'editor', 'thumbnail'],
-    ]);
+// Enqueue styles and scripts
+function enqueue_alternate_header_assets() {
+    global $template; // Get the currently loaded template file
 
-    // CPT: ביבליוגרפיה
-    register_post_type('qa_bib_items', [
-        'labels' => [
-            'name' => __('פריטים ביבליוגרפיים', 'text-domain'),
-            'singular_name' => __('פריט ביבליוגרפי', 'text-domain'),
-            'add_new' => __('הוסף חדש', 'text-domain'),
-            'add_new_item' => __('הוסף פריט ביבליוגרפי חדש', 'text-domain'),
-            'edit_item' => __('ערוך פריט ביבליוגרפי', 'text-domain'),
-            'new_item' => __('פריט ביבליוגרפי חדש', 'text-domain'),
-            'view_item' => __('הצג פריט ביבליוגרפי', 'text-domain'),
-            'search_items' => __('חפש פריטים ביבליוגרפיים', 'text-domain'),
-            'not_found' => __('לא נמצאו פריטים ביבליוגרפיים', 'text-domain'),
-            'not_found_in_trash' => __('לא נמצאו פריטים ביבליוגרפיים באשפה', 'text-domain'),
-        ],
-        'public' => true,
-        'has_archive' => false,
-        'rewrite' => ['slug' => 'qa-bib-items'],
-        'supports' => ['title', 'editor', 'thumbnail'],
-    ]);
+    $plugin_templates = [
+        'supervisor-home.php',
+        'supervisor-updates.php',
+        'supervisor-content.php',
+        'supervisor-bib_cats.php',
+        'supervisor-qa_orgs.php',
+        'taxonomy-qa_bib_cats.php', // Ensure taxonomy template is included
+    ];
 
+    $singles = ['qa_bibs', 'qa_orgs', 'qa_updates', 'qa_bib_items'];
+    $post_type_archives = ['qa_updates', 'qa_bib_items'];
+    $is_taxonomy = is_tax('qa_bib_cats'); // Check if it's a taxonomy archive
+
+    $is_plugin_template = in_array(basename($template), $plugin_templates);
+    $is_archive = is_post_type_archive($post_type_archives);
+    $is_single = is_singular($singles);
+
+    // error_log('Checking template enqueue: ' . $template);
+    // error_log('Is plugin template? ' . ($is_plugin_template ? 'Yes' : 'No'));
+    // error_log('Is taxonomy archive? ' . ($is_taxonomy ? 'Yes' : 'No'));
+    // error_log('Is archive? ' . ($is_archive ? 'Yes' : 'No'));
+    // error_log('Is single? ' . ($is_single ? 'Yes' : 'No'));
+
+    if ($is_plugin_template || $is_archive || $is_single || $is_taxonomy) {
+        error_log('Enqueueing CSS & JS for: ' . $template);
+    
+        // Enqueue CSS
+        wp_enqueue_style(
+            'supervisor-styles',
+            plugins_url('/assets/css/supervisor-styles.css', __FILE__),
+            [],
+            filemtime(plugin_dir_path(__FILE__) . 'assets/css/supervisor-styles.css')
+        );
+    
+        // Enqueue Custom JavaScript
+        // wp_enqueue_script(
+        //     'supervisor-scripts',
+        //     plugins_url('/assets/js/supervisor-scripts.js', __FILE__), // Path to JS file
+        //     ['jquery'], // Dependencies (remove 'jquery' if not needed)
+        //     filemtime(plugin_dir_path(__FILE__) . 'assets/js/supervisor-scripts.js'),
+        //     true // Load in the footer
+        // );
+    
+        // Enqueue Font Awesome
+        wp_enqueue_script(
+            'font-awesome',
+            'https://kit.fontawesome.com/c1b1058543.js',
+            [],
+            null, // No version needed
+            false // Load in the header (FontAwesome should load early)
+        );
+    }
 }
-add_action('init', 'register_qa_cpts');
+add_action('wp_enqueue_scripts', 'enqueue_alternate_header_assets');
 
-// 2. Flush Rewrite Rules on Activation/Deactivation
-function supervisor_rewrite_flush() {
-    register_qa_cpts();
+// Load custom templates
+function supervisor_load_template($template) {
+    $page_id = get_queried_object_id();
+
+    $custom_templates_by_id = [
+        SUPERVISOR_BIB_CATS => 'supervisor-bib_cats.php',
+        SUPERVISOR_ORGS => 'supervisor-qa_orgs.php',
+        SUPERVISOR_HOME => 'supervisor-home.php',
+        SUPERVISOR_UPDATES => 'supervisor-updates.php',
+        SUPERVISOR_INTRO_TEXT => 'supervisor-content.php',
+        SUPERVISOR_ABOUT => 'supervisor-content.php',
+        SUPERVISOR_CONTACT => 'supervisor-content.php',
+    ];
+
+    if (isset($custom_templates_by_id[$page_id]) && file_exists(plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$page_id])) {
+        return plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$page_id];
+    }
+
+    return $template;
+}
+add_filter('template_include', 'supervisor_load_template');
+
+// Register AJAX endpoint
+function register_custom_ajax_endpoint() {
+    add_rewrite_rule('^custom-ajax-endpoint/?$', 'index.php?custom_ajax=1', 'top');
+}
+add_action('init', 'register_custom_ajax_endpoint');
+
+function add_custom_query_vars($vars) {
+    $vars[] = 'custom_ajax';
+    return $vars;
+}
+add_filter('query_vars', 'add_custom_query_vars');
+
+function handle_custom_ajax_request() {
+    if (get_query_var('custom_ajax') == 1) {
+        echo json_encode(['status' => 'success', 'message' => 'AJAX request handled!']);
+        exit;
+    }
+}
+add_action('template_redirect', 'handle_custom_ajax_request');
+
+// Flush rewrite rules on activation
+function flush_supervisor_rewrites() {
+    register_custom_ajax_endpoint();
     flush_rewrite_rules();
 }
-register_activation_hook(__FILE__, 'supervisor_rewrite_flush');
-register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
+register_activation_hook(__FILE__, 'flush_supervisor_rewrites');
 
-// 3. Load Templates for Custom Post Types
+// Cleanup on deactivation
+function supervisor_plugin_deactivation() {
+    flush_rewrite_rules();
+}
+register_deactivation_hook(__FILE__, 'supervisor_plugin_deactivation');
+
 function supervisor_load_templates($template) {
     global $post;
 
@@ -104,238 +147,10 @@ function supervisor_load_templates($template) {
 }
 add_filter('template_include', 'supervisor_load_templates');
 
-function register_additional_taxonomies() {
-    // Register "qa_themes"
-    $themes_labels = [
-        'name' => __('נושאים', 'text-domain'),
-        'singular_name' => __('נושא', 'text-domain'),
-        'search_items' => __('חפש נושאים', 'text-domain'),
-        'all_items' => __('כל הנושאים', 'text-domain'),
-        'parent_item' => __('נושא אב', 'text-domain'),
-        'parent_item_colon' => __('נושא אב:', 'text-domain'),
-        'edit_item' => __('ערוך נושא', 'text-domain'),
-        'update_item' => __('עדכן נושא', 'text-domain'),
-        'add_new_item' => __('הוסף נושא חדש', 'text-domain'),
-        'new_item_name' => __('שם נושא חדש', 'text-domain'),
-        'menu_name' => __('נושאים', 'text-domain'),
-    ];
-
-    register_taxonomy('qa_themes', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
-        'labels' => $themes_labels,
-        'hierarchical' => true, // Enables hierarchical structure (like categories)
-        'public' => true, // Allows taxonomy to be publicly queryable
-        'show_ui' => true, // Shows taxonomy UI in the admin
-        'show_in_nav_menus' => false, // Disable in navigation menus
-        'show_in_rest' => true, // Enable for block editor and REST API
-        'rewrite' => ['slug' => 'qa-themes'], // Rewrite slug
-    ]);
-
-    // Register "qa_tags"
-    $tags_labels = [
-        'name' => __('טגים', 'text-domain'),
-        'singular_name' => __('טג', 'text-domain'),
-        'search_items' => __('חפש טגים', 'text-domain'),
-        'all_items' => __('כל הטגים', 'text-domain'),
-        'edit_item' => __('ערוך טג', 'text-domain'),
-        'update_item' => __('עדכן טג', 'text-domain'),
-        'add_new_item' => __('הוסף טג חדש', 'text-domain'),
-        'new_item_name' => __('שם טג חדש', 'text-domain'),
-        'menu_name' => __('טגים', 'text-domain'),
-    ];
-
-    register_taxonomy('qa_tags', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
-        'labels' => $tags_labels,
-        'hierarchical' => false, // Non-hierarchical (like tags)
-        'public' => true, // Allows taxonomy to be publicly queryable
-        'show_ui' => true, // Shows taxonomy UI in the admin
-        'show_in_rest' => true, // Enable for block editor and REST API
-        'rewrite' => ['slug' => 'qa-tags'], // Rewrite slug
-    ]);
-}
-add_action('init', 'register_additional_taxonomies');
-
-function register_qa_bib_cats_taxonomy() {
-    register_taxonomy('qa_bib_cats', 'qa_bib_items', [
-        'labels' => [
-            'name' => __('קטגוריות ביבליוגרפיה', 'text-domain'),
-            'singular_name' => __('קטגוריה ביבליוגרפיה', 'text-domain'),
-            'search_items' => __('חפש קטגוריות ביבליוגרפיה', 'text-domain'),
-            'all_items' => __('כל הקטגוריות', 'text-domain'),
-            'parent_item' => __('קטגוריית אב', 'text-domain'),
-            'parent_item_colon' => __('קטגוריית אב:', 'text-domain'),
-            'edit_item' => __('ערוך קטגוריה', 'text-domain'),
-            'update_item' => __('עדכן קטגוריה', 'text-domain'),
-            'add_new_item' => __('הוסף קטגוריה חדשה', 'text-domain'),
-            'new_item_name' => __('שם קטגוריה חדשה', 'text-domain'),
-            'menu_name' => __('קטגוריות ביבליוגרפיה', 'text-domain'),
-        ],
-        'hierarchical' => false, // Allows parent-child structure
-        'show_admin_column' => true, // Displays the taxonomy in the post list view
-        'rewrite' => ['slug' => 'qa-bib-cats'], // Friendly URL slug
-        'show_in_rest' => true, // Enables REST API and Gutenberg support
-    ]);
-}
-add_action('init', 'register_qa_bib_cats_taxonomy');
-
-function add_default_themes_terms() {
-    $terms = ['חינוך', 'רווחה', 'בריאות']; // Replace with your terms
-    foreach ($terms as $term) {
-        if (!term_exists($term, 'qa_themes')) {
-            wp_insert_term($term, 'qa_themes');
-        }
+function supervisor_force_taxonomy_template($template) {
+    if (is_tax('qa_bib_cats') && file_exists(plugin_dir_path(__FILE__) . 'templates/taxonomy-qa_bib_cats.php')) {
+        return plugin_dir_path(__FILE__) . 'templates/taxonomy-qa_bib_cats.php';
     }
-}
-register_activation_hook(__FILE__, 'add_default_themes_terms');
-
-function display_taxonomies($post_id, $taxonomy_labels) {
-    foreach ($taxonomy_labels as $taxonomy_slug => $label) {
-        $terms = get_the_terms($post_id, $taxonomy_slug);
-
-        echo '<p><strong>' . esc_html($label) . ':</strong> ';
-        if ($terms && !is_wp_error($terms)) {
-            $term_names = array_map(function($term) {
-                return $term->name;
-            }, $terms);
-            echo implode(', ', array_map('esc_html', $term_names));
-        } else {
-            echo __('ללא', 'text-domain');
-        }
-        echo '</p>';
-    }
-}
-
-function enqueue_alternate_header_assets() {
-    // Define templates and post type archives requiring alternate assets
-    $templates = ['supervisor-home.php', 'supervisor-content.php', 'supervisor-bib_cats.php'];
-    $singles = ['qa_bibs', 'qa_orgs', 'qa_updates']; // Post type slugs
-    $post_type_archives = ['qa_updates'];
-
-    // Check if the current request matches the conditions
-    $is_template = is_page_template($templates);
-    $is_archive = is_post_type_archive($post_type_archives);
-    $is_single = is_singular($singles);
-
-    if ($is_template || $is_archive || $is_single) {
-        // Enqueue the alternate header styles
-        wp_enqueue_style(
-            'alternate-header-styles',
-            plugins_url('supervisor-plugin/assets/css/supervisor-styles.css', dirname(__FILE__)),
-            [],
-            '1.0'
-        );
-
-        // Enqueue the alternate header scripts
-        wp_enqueue_script(
-            'alternate-header-scripts',
-            plugins_url('supervisor-plugin/assets/js/supervisor-scripts.js', dirname(__FILE__)),
-            ['jquery'], // Dependencies
-            '1.0', // Version
-            true // Load in the footer
-        );
-
-        // Enqueue the AJAX search script
-        wp_enqueue_script(
-            'ajax-search-script',
-            plugins_url('assets/js/ajax-search.js', __FILE__), // Dynamically generate the JS URL
-            ['jquery'], // Dependencies
-            '1.0', // Version
-            true // Load in the footer
-        );  
-    
-       
-    }
-}
-add_action('wp_enqueue_scripts', 'enqueue_alternate_header_assets');
-
-// Register the custom page templates
-function supervisor_add_templates($templates) {
-    $templates['supervisor-home.php'] = 'Supervisor Home';
-    $templates['supervisor-content.php'] = 'Supervisor Content';
-    return $templates;
-}
-add_filter('theme_page_templates', 'supervisor_add_templates');
-
-// // Add the custom Supervisor Content
-// function supervisor_add_template($templates) {
-    
-//     return $templates;
-// }
-// add_filter('theme_page_templates', 'supervisor_add_template');
-
-   // intro text
-//    if (is_page(SUPERVISOR_INTRO_TEXT) && file_exists(plugin_dir_path(__FILE__) . 'templates/page-qa_content.php')) {
-//     return plugin_dir_path(__FILE__) . 'templates/page-qa_content.php';
-
-
-function supervisor_load_template($template) {
-    // Check for Supervisor Home page template
-    if (get_page_template_slug() === 'supervisor-home.php') {
-        $template = plugin_dir_path(__FILE__) . 'templates/supervisor-home.php';
-    }
-
-    // Check for qa_updates archive
-    if (is_post_type_archive('qa_updates')) {
-        $archive_template = plugin_dir_path(__FILE__) . 'templates/archive-qa_updates.php';
-        if (file_exists($archive_template)) {
-            $template = $archive_template;
-        }
-    }
-
     return $template;
 }
-add_filter('template_include', 'supervisor_load_template');
-
-add_action('init', 'register_custom_ajax_endpoint');
-function register_custom_ajax_endpoint() {
-    add_rewrite_rule('^ajax-handler/?$', 'index.php?custom_ajax=1', 'top');
-    flush_rewrite_rules(false); // Use this only once to regenerate rewrite rules
-}
-
-add_action('query_vars', 'add_custom_ajax_query_var');
-function add_custom_ajax_query_var($query_vars) {
-    $query_vars[] = 'custom_ajax';
-    return $query_vars;
-}
-
-add_action('template_redirect', 'handle_custom_ajax_requests');
-function handle_custom_ajax_requests() {
-    if (get_query_var('custom_ajax') == 1) {
-        // Handle your AJAX logic here
-        header('Content-Type: application/json');
-
-        // Collect and process data
-        $response = [
-            'success' => true,
-            'message' => 'Custom AJAX handler working!',
-            'data' => $_POST, // Example
-        ];
-
-        echo json_encode($response);
-        exit;
-    }
-}
-
-
-include_once plugin_dir_path(__FILE__) . 'inc/bib_admin_page.php';
-
-
-function qa_bib_custom_template($template) {
-    global $post;
-
-    // Define an array of custom templates mapped to page IDs
-    $custom_templates_by_id = [
-        SUPERVISOR_BIB_CATS => 'supervisor-bib_cats.php',  // Example: Page ID 101 loads page-bib_cats.php
-        SUPERVISOR_HOME => 'supervisor-home.php',
-        SUPERVISOR_INTRO_TEXT => 'supervisor-content.php' 
-    ];
-
- 
-
-    // Check by Page ID
-    if (isset($custom_templates_by_id[$post->ID]) && file_exists(plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$post->ID])) {
-        return plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$post->ID];
-    }
-
-    return $template;
-}
-add_filter('template_include', 'qa_bib_custom_template');
+add_filter('template_include', 'supervisor_force_taxonomy_template');

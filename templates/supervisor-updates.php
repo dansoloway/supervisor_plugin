@@ -1,10 +1,10 @@
 <?php
-/* Template Name: Archive QA Updates */
+/* Template Name: Supervisor QA Updates */
 get_header('supervisor');
 
 ?>
 
-<div class="archive-qa-updates">
+<div class="supervisor-two-column">
 
     <!-- Right: AJAX Search Component -->
     <?php 
@@ -33,7 +33,7 @@ get_header('supervisor');
                 $themes = get_the_terms($post_id, 'qa_themes');
                 $tags = get_the_terms($post_id, 'qa_tags');
 
-                echo '<div class="taxonomy-boxes">';
+                echo '<div class="taxonomy-boxes light-green-bkg">';
                 if ($themes) {
                     foreach ($themes as $theme) {
                         echo '<span class="taxonomy-box theme-box box-color-'.esc_html($theme->term_taxonomy_id).'">' . esc_html($theme->name) . '</span>';
@@ -46,7 +46,7 @@ get_header('supervisor');
                 }
                 echo '</div>'; // End of taxonomy-boxes
 
-                echo '<div style="background-color:#F3F9F9">';
+                echo '<div class="light-green-bkg">';
                     echo '<div class="qa-update-title">';
                     echo '<h3>' . get_the_title() . '</h3>';
 

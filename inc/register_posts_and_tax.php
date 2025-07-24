@@ -70,19 +70,19 @@ add_filter('template_include', 'supervisor_load_templates');
 function register_additional_taxonomies() {
     // Register "qa_themes"
     $themes_labels = [
-        'name' => __('נושאים', 'text-domain'),
-        'singular_name' => __('נושא', 'text-domain'),
-        'search_items' => __('חפש נושאים', 'text-domain'),
-        'all_items' => __('כל הנושאים', 'text-domain'),
-        'parent_item' => __('נושא אב', 'text-domain'),
-        'parent_item_colon' => __('נושא אב:', 'text-domain'),
-        'edit_item' => __('ערוך נושא', 'text-domain'),
-        'update_item' => __('עדכן נושא', 'text-domain'),
-        'add_new_item' => __('הוסף נושא חדש', 'text-domain'),
-        'new_item_name' => __('שם נושא חדש', 'text-domain'),
-        'menu_name' => __('נושאים', 'text-domain'),
+        'name' => __('תחומים', 'text-domain'),
+        'singular_name' => __('תחום', 'text-domain'),
+        'search_items' => __('חפש תחומים', 'text-domain'),
+        'all_items' => __('כל התחומים', 'text-domain'),
+        'parent_item' => __('תחום אב', 'text-domain'),
+        'parent_item_colon' => __('תחום אב:', 'text-domain'),
+        'edit_item' => __('ערוך תחום', 'text-domain'),
+        'update_item' => __('עדכן תחום', 'text-domain'),
+        'add_new_item' => __('הוסף תחום חדש', 'text-domain'),
+        'new_item_name' => __('שם תחום חדש', 'text-domain'),
+        'menu_name' => __('תחומים', 'text-domain'),
     ];
-
+    
     register_taxonomy('qa_themes', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
         'labels' => $themes_labels,
         'hierarchical' => true, // Enables hierarchical structure (like categories)
@@ -95,26 +95,26 @@ function register_additional_taxonomies() {
 
     // Register "qa_tags"
     $tags_labels = [
-        'name' => __('טגים', 'text-domain'),
-        'singular_name' => __('טג', 'text-domain'),
-        'search_items' => __('חפש טגים', 'text-domain'),
-        'all_items' => __('כל הטגים', 'text-domain'),
-        'edit_item' => __('ערוך טג', 'text-domain'),
-        'update_item' => __('עדכן טג', 'text-domain'),
-        'add_new_item' => __('הוסף טג חדש', 'text-domain'),
-        'new_item_name' => __('שם טג חדש', 'text-domain'),
-        'menu_name' => __('טגים', 'text-domain'),
+        'name' => __('נושאי מפתח', 'text-domain'),
+        'singular_name' => __('נושא מפתח', 'text-domain'),
+        'search_items' => __('חפש נושאי מפתח', 'text-domain'),
+        'all_items' => __('כל נושאי המפתח', 'text-domain'),
+        'edit_item' => __('ערוך נושא מפתח', 'text-domain'),
+        'update_item' => __('עדכן נושא מפתח', 'text-domain'),
+        'add_new_item' => __('הוסף נושא מפתח חדש', 'text-domain'),
+        'new_item_name' => __('שם נושא מפתח חדש', 'text-domain'),
+        'menu_name' => __('נושאי מפתח', 'text-domain'),
     ];
 
     register_taxonomy('qa_tags', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
         'labels' => $tags_labels,
-        'hierarchical' => false, // Non-hierarchical (like tags)
+        'hierarchical' => true, // Non-hierarchical (like tags)
         'public' => true, // Allows taxonomy to be publicly queryable
         'show_ui' => true, // Shows taxonomy UI in the admin
         'show_in_rest' => true, // Enable for block editor and REST API
         'rewrite' => ['slug' => 'qa-tags'], // Rewrite slug
     ]);
-}
+    }
 add_action('init', 'register_additional_taxonomies');
 
 function register_qa_bib_cats_taxonomy() {

@@ -6,8 +6,9 @@
     --search-text-color: black;
     --search-input-background: white;
     --search-border-color: #C4A99A; /* Soft border color */
-}
+    /* CB8774 */
 
+}
 /* General Styles */
 body {
     font-family: 'Assistant', sans-serif;
@@ -48,6 +49,7 @@ body {
     align-items: center;
     padding: 20px;
     font-family: Arial, sans-serif;
+    margin: 0 10%;
 }
 
 .supervisor-content {
@@ -65,7 +67,7 @@ body {
 
 .supervisor-two-column-content {
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 30% 70%;
     grid-gap: 50px;
 }
 
@@ -136,6 +138,7 @@ body {
     border: 2px solid var(--outline_color);
     color: white;
     width: 100%;
+    margin: 0 0 37px 0;
 }
 
 .vertical-button:hover {
@@ -160,7 +163,7 @@ body {
 
 .sidebar-button {
     background-color: white;
-    border: 2px solid black;
+    border: 2px solid var(--main_color);
     font-size: 18px;
     color: black;
     width: 100%;
@@ -194,6 +197,7 @@ body {
     background: none;
     width: 100%;
     margin: 0 !important;
+    box-shadow: none !important;
 }
 
 .search-button {
@@ -258,9 +262,10 @@ body {
 }
 
 .update-date {
-    font-size: 14px;
+    font-size: 18px;
     color: var(--main_color);
     margin-bottom: 0px !important;
+    margin-top: 5px;
 }
 
 /* Accordions */
@@ -285,6 +290,13 @@ body {
     outline: none;
 }
 
+.accordion-content {
+    display: none;
+    padding: 5px 0 !important;
+    border:none !important;
+    color: #0a0a0a !important;
+}
+
 /* Taxonomy Boxes */
 .taxonomy-box {
     margin-left: 10px;
@@ -302,8 +314,17 @@ body {
 
 .qa-update-title {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Stack title and date */
+    align-items: flex-start; /* Align text to the left */
+    position: relative; /* Needed for absolute positioning */
+}
+
+.accordion-icon{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%); /* Keep icon centered vertically */
+    cursor: pointer;
 }
 
 .qa-update-title h3 {
@@ -491,6 +512,35 @@ body {
     font-weight:bold;
 }
 
+.qa-updates-list{
+    width: 80%;
+}
+
+.qa-update-item{
+    margin: 20px 0;
+    cursor: pointer;
+    border-bottom: 1px solid #B1B4B6 !important;
+    padding: 20px;
+
+}
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a, .pagination span {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination .current {
+    background-color: #333;
+    color: #fff;
+}
 /* Media Queries */
 @media (max-width: 768px) {
     .acf-fields-grid {

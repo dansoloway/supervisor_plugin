@@ -4,11 +4,28 @@ get_header('supervisor'); ?>
 
 <div class="supervisor-home">
     <!-- Text Search Bar -->
-    <div class="supervisor-search">
-        <input type="text" placeholder="חפש..." class="supervisor-search-bar" />
-    </div>
+    <?php
+        $search_bar_path = PLUGIN_ROOT . 'inc/top_search_bar.php';
+        
+
+        if (file_exists($search_bar_path)) {
+            require_once $search_bar_path;
+        } else {
+            error_log('Search bar file not found: ' . $search_bar_path);
+        }
+    ?>
 
     <div class="supervisor-content supervisor-two-column-content">
+
+        <?php
+            $sidebar_path =  PLUGIN_ROOT . 'inc/sidebar.php';
+
+            if (file_exists($sidebar_path)) {
+                require_once $sidebar_path;
+            } else {
+                error_log('Sidebar file not found: ' . $sidebar_path);
+            }
+        ?>
 
         <div>
             <?php echo the_content();  ?>
@@ -16,16 +33,7 @@ get_header('supervisor'); ?>
 
         <!-- Vertical Buttons -->
          
-       <?php
-       //require_once trailingslashit(dirname(__FILE__, 2)) . 'inc/sidebar.php';
-       require_once PLUGIN_ROOT . 'inc/sidebar.php';
-
-        if (file_exists($sidebar_path)) {
-            require_once $sidebar_path;
-        } else {
-            error_log('Sidebar file not found: ' . $sidebar_path);
-        }
-       ?>
+      
 
     </div>
 

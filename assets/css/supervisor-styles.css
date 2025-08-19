@@ -152,6 +152,7 @@ body {
     font-size: 15px;
     color: var(--sv-text);
     background: transparent;
+    margin: 0;
 }
 
 .search-button {
@@ -189,12 +190,13 @@ body {
 /* Header strip full-bleed - NO border radius */
 .updates-header {
     background: var(--sv-blue-strip);
-    color: #FFFFFF;
+    color: #000000;
     font-weight: 800;
     font-size: 16px;
     margin: -20px -20px 0;
     padding: 12px 16px;
     border-radius: 0;
+    text-align: center;
 }
 
 /* List items */
@@ -266,10 +268,11 @@ body {
     padding: 0 20px;
     border-radius: 9999px;
     background: var(--sv-blue);
-    color: #FFFFFF;
+    color: #000000;
     font-weight: 700;
     text-decoration: none;
     transition: background .2s;
+    text-align: center;
 }
 
 .more-updates-button:hover {
@@ -310,10 +313,11 @@ body {
     padding: 0 20px;
     border-radius: 9999px;
     background: var(--sv-blue);
-    color: #FFFFFF;
+    color: #000000;
     font-weight: 700;
     text-decoration: none;
     transition: background .2s;
+    text-align: center;
 }
 
 .knowledge-map-button:hover {

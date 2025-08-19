@@ -60,13 +60,14 @@
     align-items: start;
 }
 
-.knowledge-map-section {
-    order: 1;   /* LEFT */
+.knowledge-map-card.card{
+    border: none;
+}
+.center-content-section, .knowledge-map-section{
+    width: 80%;
+    margin: 0px auto;
 }
 
-.center-content-section {
-    order: 2;  /* RIGHT */
-}
 
 @media (max-width: 991px) {
     .supervisor-main-content {
@@ -127,8 +128,7 @@
     align-items: center;
     gap: 0;
     background: #FFFFFF;
-    border: 1px solid var(--sv-border);
-    border-radius: 9999px;
+    border-radius: 0px;
     padding: 3px;
     height: 44px;
 }
@@ -137,13 +137,14 @@
     flex: 1;
     height: 38px;
     padding: 0 16px;
-    border: none;
-    border-radius: 9999px;
+    border: 1px solid;
+    border-radius: 0;
     outline: 0;
     font-size: 15px;
     color: var(--sv-text);
     background: transparent;
     margin: 0;
+    border: 1px solid var(--sv-border);
 }
 
 .search-button {
@@ -174,7 +175,6 @@
 .card {
     background: #FFFFFF;
     border: 1px solid var(--sv-border);
-    border-radius: 12px;
     padding: 20px;
 }
 
@@ -224,24 +224,24 @@
 .update-title {
     margin: 0;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.4;
 }
 
 .update-title a {
     color: var(--sv-text);
     text-decoration: none;
+    font-size: 16px;
 }
 
 .update-title a:hover {
-    color: var(--sv-blue);
     text-decoration: underline;
 }
 
 .update-date {
     margin: 4px 0 0;
-    font-size: 12px;
-    color: var(--sv-text-2);
+    font-size: 14px;
+    color: var(--sv-blue-strip);
 }
 
 /* Footer button */
@@ -255,14 +255,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 42px;
     padding: 0 20px;
-    border-radius: 9999px;
+    border-radius: 0;
     background: var(--sv-blue);
     color: #000000;
     font-weight: 700;
     text-decoration: none;
-    transition: background .2s;
     text-align: center;
 }
 
@@ -335,7 +333,8 @@
 .intro-content p {
     margin: 0 0 8px;
     color: var(--sv-text);
-    line-height: 1.7;
+    font-style: italic;
+    font-weight: 600;
 }
 
 /* ===== FOCUS STATES ===== */

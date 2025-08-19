@@ -24,7 +24,6 @@ get_header('supervisor');
 
     <!-- Introductory Text Block -->
     <div class="intro-text-block">
-        <h1 class="intro-title">בקרת איכות בשירותים חברתיים</h1>
         <div class="intro-content">
             <p>מערכת בקרת האיכות בשירותים חברתיים נועדה להבטיח שהשירותים הניתנים לאזרחים עומדים בסטנדרטים הגבוהים ביותר של איכות, מקצועיות ואפקטיביות.</p>
             <p>המערכת כוללת כלים מתקדמים לניטור, הערכה ושיפור מתמיד של השירותים החברתיים בישראל.</p>
@@ -34,18 +33,19 @@ get_header('supervisor');
     <!-- Main Content Area - 2 Column Layout -->
     <div class="supervisor-main-content">
 
-        <!-- Right Column: Search and Updates -->
+      
+         <!-- Right Column: Search and Updates -->
         <div class="center-content-section">
             <!-- Search Bar -->
             <div class="search-section">
                 <form class="supervisor-search" role="search" action="/חיפוש-גלובלי/">
+                    <input type="search" name="text" placeholder="חיפוש" class="supervisor-search-bar" aria-label="שדה חיפוש">
                     <button class="search-button" aria-label="חיפוש">
                         <svg class="search-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="13" cy="13" r="9" stroke="white" stroke-width="4"></circle>
                             <line x1="19" y1="19" x2="28" y2="28" stroke="white" stroke-width="4"></line>
                         </svg>
                     </button>
-                    <input type="search" name="text" placeholder="חיפוש" class="supervisor-search-bar" aria-label="שדה חיפוש">
                     <input type="hidden" name="q" value="1">
                 </form>
             </div>
@@ -72,7 +72,7 @@ get_header('supervisor');
 
                             echo '<div class="update-item">';
                             echo '<div class="update-content">';
-                            echo '<div class="update-bullet"></div>';
+                            echo '<div class=""></div>';
                             echo '<div class="update-text">';
                             echo '<h3 class="update-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
                             if ($formatted_date) {
@@ -89,12 +89,11 @@ get_header('supervisor');
                     ?>
                 </div>
 
-                <div class="updates-footer">
+                <div class="updates-header">
                     <a class="more-updates-button" href="<?php echo get_the_permalink(SUPERVISOR_UPDATES)?>">לעדכונים נוספים</a>
                 </div>
             </div>
         </div>
-        
      <!-- Left Column: Knowledge Map Diagram -->
      <div class="knowledge-map-section">
             <div class="knowledge-map-card card">
@@ -108,7 +107,7 @@ get_header('supervisor');
             </div>
         </div>
 
-
+ 
 
        
 

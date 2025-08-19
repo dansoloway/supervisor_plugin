@@ -7,6 +7,3 @@
         </svg>
     </button>
 </div>
-
-<br>
-<br>

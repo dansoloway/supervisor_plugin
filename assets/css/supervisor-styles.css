@@ -1,3 +1,14 @@
+/* TEST: This should make the page background red if CSS is loading */
+body {
+    background-color: #fff !important;
+}
+
+/* TEST: This should make the supervisor-home container very obvious */
+.supervisor-home {
+    border: 5px solid red !important;
+    background: #f0f0f0 !important;
+}
+
 :root {
     --blue: #0A72B5;          /* primary brand */
     --blue-dark: #095C96;     /* hover/active */
@@ -45,43 +56,18 @@ body {
     margin: 16px 0 4px; 
 }
 
-/* Navigation - Pill Style */
-.site-nav {
-    display: flex; 
-    justify-content: center; 
-    gap: 12px;
-    padding: 12px 0; 
-    flex-wrap: wrap;
+/* Navigation - Basic Pill Style */
+nav.site-nav.supervisor_header_links {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    padding: 8px 0 12px !important;
+    flex-wrap: wrap !important;
 }
 
-.supervisor-home .site-nav { 
-    padding: 8px 0 12px; 
-}
-
-.site-nav a {
-    display: inline-flex; 
-    align-items: center;
-    padding: 10px 18px; 
-    border-radius: 9999px;
-    background: #fff; 
-    border: 1px solid var(--border);
-    color: var(--text); 
-    font-weight: 600; 
-    text-decoration: none;
-    transition: background .2s, color .2s, border-color .2s, box-shadow .2s;
-}
-
-.supervisor-home .site-nav a {
-    padding: 8px 16px;
-    border: 1px solid #E8EEF5;
-    border-radius: 9999px;
-    background: #fff;
-    color: #1F2937;
-    font-weight: 600;
-}
-
-/* More specific selectors to override any conflicts */
-.supervisor-home .site-nav.supervisor_header_links a {
+nav.site-nav.supervisor_header_links a {
+    display: inline-flex !important;
+    align-items: center !important;
     padding: 8px 16px !important;
     border: 1px solid #E8EEF5 !important;
     border-radius: 9999px !important;
@@ -89,32 +75,14 @@ body {
     color: #1F2937 !important;
     font-weight: 600 !important;
     text-decoration: none !important;
+    cursor: pointer !important;
+    margin: 0 6px !important;
 }
 
-.site-nav a:hover, 
-.site-nav a:focus-visible {
-    background: var(--blue); 
-    border-color: var(--blue); 
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(10,114,181,.18);
-    outline: 0;
-}
-
-.supervisor-home .site-nav a:hover,
-.supervisor-home .site-nav a:focus-visible {
-    background: #0A72B5; 
-    border-color: #0A72B5;
-    color: #fff;
-    box-shadow: 0 1px 6px rgba(10,114,181,.16);
-}
-
-/* More specific hover selectors */
-.supervisor-home .site-nav.supervisor_header_links a:hover,
-.supervisor-home .site-nav.supervisor_header_links a:focus-visible {
-    background: #0A72B5 !important; 
+nav.site-nav.supervisor_header_links a:hover {
+    background: #0A72B5 !important;
     border-color: #0A72B5 !important;
     color: #fff !important;
-    box-shadow: 0 1px 6px rgba(10,114,181,.16) !important;
 }
 
 /* Focus states for accessibility */
@@ -823,86 +791,7 @@ body {
     }
 }
 
-/* Animation Classes */
-.animate-in {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Mobile Navigation */
-@media (max-width: 768px) {
-    .supervisor_header_links {
-        flex-direction: column;
-        gap: 10px;
-        padding: 20px;
-        position: relative;
-    }
-    
-    .supervisor_header_links.mobile-active {
-        display: flex;
-    }
-    
-    .mobile-nav-toggle {
-        display: block;
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-bottom: 15px;
-    }
-    
-    .mobile-nav-toggle:hover {
-        background: var(--accent-color);
-    }
-}
-
-/* Enhanced Interactive Elements */
-.quadrant.active {
-    background-color: rgba(0,116,184,0.15);
-    transform: scale(1.05);
-}
-
-.center-node.active {
-    background: var(--accent-color);
-    transform: translate(-50%, -50%) scale(1.1);
-}
-
-/* Loading States */
-.loading {
-    opacity: 0.7;
-    pointer-events: none;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid var(--primary-color);
-    border-top: 2px solid transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+/* Remove all animation and loading state CSS - keeping only basics */
 
 /* Focus States for Accessibility */
 .quadrant:focus,
@@ -1101,4 +990,65 @@ body {
     border-color: #0A72B5 !important;
     color: #fff !important;
     box-shadow: 0 1px 6px rgba(10,114,181,.16) !important;
+}
+
+/* DEBUG: Force navigation styling with very specific selectors */
+nav.site-nav.supervisor_header_links {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    padding: 8px 0 12px !important;
+    flex-wrap: wrap !important;
+    background: yellow !important; /* DEBUG: Should be visible */
+}
+
+nav.site-nav.supervisor_header_links a {
+    all: unset !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 8px 16px !important;
+    border: 2px solid #E8EEF5 !important;
+    border-radius: 9999px !important;
+    background: #fff !important;
+    color: #1F2937 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    margin: 0 6px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+nav.site-nav.supervisor_header_links a:hover {
+    background: #0A72B5 !important;
+    border-color: #0A72B5 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(10,114,181,0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Also target the direct child links */
+.supervisor-home nav.site-nav a {
+    all: unset !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 8px 16px !important;
+    border: 2px solid #E8EEF5 !important;
+    border-radius: 9999px !important;
+    background: #fff !important;
+    color: #1F2937 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    margin: 0 6px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+.supervisor-home nav.site-nav a:hover {
+    background: #0A72B5 !important;
+    border-color: #0A72B5 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(10,114,181,0.3) !important;
+    transform: translateY(-1px) !important;
 }

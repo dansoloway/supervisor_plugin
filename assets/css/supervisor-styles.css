@@ -5,8 +5,8 @@ body {
 
 /* TEST: This should make the supervisor-home container very obvious */
 .supervisor-home {
-    border: 5px solid red !important;
-    background: #f0f0f0 !important;
+    border: none !important;
+    background: #fff !important;
 }
 
 :root {
@@ -63,6 +63,7 @@ nav.site-nav.supervisor_header_links {
     gap: 12px !important;
     padding: 8px 0 12px !important;
     flex-wrap: wrap !important;
+    background: transparent !important;
 }
 
 nav.site-nav.supervisor_header_links a {
@@ -77,6 +78,7 @@ nav.site-nav.supervisor_header_links a {
     text-decoration: none !important;
     cursor: pointer !important;
     margin: 0 6px !important;
+    transition: all 0.2s ease !important;
 }
 
 nav.site-nav.supervisor_header_links a:hover {
@@ -990,65 +992,4 @@ nav.site-nav.supervisor_header_links a:hover {
     border-color: #0A72B5 !important;
     color: #fff !important;
     box-shadow: 0 1px 6px rgba(10,114,181,.16) !important;
-}
-
-/* DEBUG: Force navigation styling with very specific selectors */
-nav.site-nav.supervisor_header_links {
-    display: flex !important;
-    justify-content: center !important;
-    gap: 12px !important;
-    padding: 8px 0 12px !important;
-    flex-wrap: wrap !important;
-    background: yellow !important; /* DEBUG: Should be visible */
-}
-
-nav.site-nav.supervisor_header_links a {
-    all: unset !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    padding: 8px 16px !important;
-    border: 2px solid #E8EEF5 !important;
-    border-radius: 9999px !important;
-    background: #fff !important;
-    color: #1F2937 !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    transition: all 0.2s ease !important;
-    cursor: pointer !important;
-    margin: 0 6px !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-}
-
-nav.site-nav.supervisor_header_links a:hover {
-    background: #0A72B5 !important;
-    border-color: #0A72B5 !important;
-    color: #fff !important;
-    box-shadow: 0 2px 8px rgba(10,114,181,0.3) !important;
-    transform: translateY(-1px) !important;
-}
-
-/* Also target the direct child links */
-.supervisor-home nav.site-nav a {
-    all: unset !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    padding: 8px 16px !important;
-    border: 2px solid #E8EEF5 !important;
-    border-radius: 9999px !important;
-    background: #fff !important;
-    color: #1F2937 !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    transition: all 0.2s ease !important;
-    cursor: pointer !important;
-    margin: 0 6px !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-}
-
-.supervisor-home nav.site-nav a:hover {
-    background: #0A72B5 !important;
-    border-color: #0A72B5 !important;
-    color: #fff !important;
-    box-shadow: 0 2px 8px rgba(10,114,181,0.3) !important;
-    transform: translateY(-1px) !important;
 }

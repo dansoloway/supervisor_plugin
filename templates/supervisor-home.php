@@ -33,21 +33,8 @@ get_header('supervisor');
 
     <!-- Main Content Area - 2 Column Layout -->
     <div class="supervisor-main-content">
-        
-     <!-- Left Column: Knowledge Map Diagram -->
-     <div class="knowledge-map-section">
-            <div class="knowledge-map-card card">
-                <div class="knowledge-map-header">מפת ידע</div>
-                <div class="knowledge-map-diagram">
-                    <img src="<?php echo plugins_url('assets/img/knowledge_map.png', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
-                </div>
-                <div class="knowledge-map-footer">
-                    <a href="#" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
-                </div>
-            </div>
-        </div>
 
-    <!-- Right Column: Search and Updates -->
+        <!-- Right Column: Search and Updates -->
         <div class="center-content-section">
             <!-- Search Bar -->
             <div class="search-section">
@@ -107,6 +94,21 @@ get_header('supervisor');
                 </div>
             </div>
         </div>
+        
+     <!-- Left Column: Knowledge Map Diagram -->
+     <div class="knowledge-map-section">
+            <div class="knowledge-map-card card">
+                <div class="knowledge-map-header">מפת ידע</div>
+                <div class="knowledge-map-diagram">
+                    <img src="<?php echo plugins_url('assets/img/knowledge_map.png', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
+                </div>
+                <div class="knowledge-map-footer">
+                    <a href="#" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
+                </div>
+            </div>
+        </div>
+
+
 
        
 

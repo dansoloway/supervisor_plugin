@@ -101,19 +101,23 @@ body {
     direction: rtl;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0;
+    background: #FFFFFF;
+    border: 1px solid var(--sv-border);
+    border-radius: 9999px;
+    padding: 2px;
 }
 
 .supervisor-search-bar {
     flex: 1;
     height: 36px;
     padding: 0 12px;
-    border: 1px solid var(--sv-border);
+    border: none;
     border-radius: 9999px;
     outline: 0;
     font-size: 14px;
     color: var(--sv-text);
-    background: #FFFFFF;
+    background: transparent;
 }
 
 .search-button {
@@ -123,7 +127,7 @@ body {
     display: inline-grid;
     place-items: center;
     border: 0;
-    border-radius: 50%;
+    border-radius: 0;
     background: var(--sv-blue);
     color: #FFFFFF;
     cursor: pointer;
@@ -148,7 +152,7 @@ body {
     padding: 20px;
 }
 
-/* Header strip full-bleed */
+/* Header strip full-bleed - NO border radius */
 .updates-header {
     background: var(--sv-blue-strip);
     color: #FFFFFF;
@@ -156,7 +160,7 @@ body {
     font-size: 16px;
     margin: -20px -20px 0;
     padding: 10px 14px;
-    border-radius: 12px 12px 0 0;
+    border-radius: 0;
 }
 
 /* List items */
@@ -281,6 +285,9 @@ body {
     background: var(--sv-blue-600);
 }
 
+.supervisor_logo_cont{
+    text-align: center;
+}
 /* ===== INTRO BLOCK SPACING ===== */
 .intro-text-block {
     max-width: 820px;

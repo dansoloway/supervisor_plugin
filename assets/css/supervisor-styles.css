@@ -1,13 +1,4 @@
-/* TEST: This should make the page background red if CSS is loading */
-body {
-    background-color: #fff !important;
-}
 
-/* ===== TEST STYLE - REMOVE AFTER VERIFICATION ===== */
-.supervisor-home {
-    border: 5px solid red !important;
-    background: yellow !important;
-}
 
 /* ===== FOUNDATION CSS OVERRIDES ===== */
 /* Prevent Foundation from interfering with our custom design */

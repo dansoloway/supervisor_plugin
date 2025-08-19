@@ -38,15 +38,16 @@ get_header('supervisor');
         <div class="center-content-section">
             <!-- Search Bar -->
             <div class="search-section">
-                <?php
-                    $search_bar_path = PLUGIN_ROOT . 'inc/top_search_bar.php';
-                    
-                    if (file_exists($search_bar_path)) {
-                        require_once $search_bar_path;
-                    } else {
-                        error_log('Search bar file not found: ' . $search_bar_path);
-                    }
-                ?>
+                <form class="supervisor-search" role="search" action="/חיפוש-גלובלי/">
+                    <button class="search-button" aria-label="חיפוש">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="13" cy="13" r="9" stroke="white" stroke-width="4"></circle>
+                            <line x1="19" y1="19" x2="28" y2="28" stroke="white" stroke-width="4"></line>
+                        </svg>
+                    </button>
+                    <input type="search" name="text" placeholder="חיפוש" class="supervisor-search-bar" aria-label="שדה חיפוש">
+                    <input type="hidden" name="q" value="1">
+                </form>
             </div>
 
             <!-- Updates Box -->

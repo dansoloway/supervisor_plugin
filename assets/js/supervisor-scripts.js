@@ -5,6 +5,12 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Remove inline animation styles that override CSS
+    const animatedElements = document.querySelectorAll('.animate-in');
+    animatedElements.forEach(element => {
+        element.removeAttribute('style');
+    });
+    
     // Knowledge Map Interaction
     const quadrants = document.querySelectorAll('.quadrant');
     const centerNode = document.querySelector('.center-node');
@@ -76,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Enhanced hover effects for buttons
-    const buttons = document.querySelectorAll('.vertical-button, .more-updates-button');
+    const buttons = document.querySelectorAll('.vertical-button, .more-updates-button, .knowledge-map-button');
     buttons.forEach(button => {
         button.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-2px)';
@@ -126,24 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add loading animations
-    function addLoadingAnimations() {
-        const cards = document.querySelectorAll('.knowledge-map-card, .updates-box, .vertical-buttons');
-        cards.forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                card.style.transition = 'all 0.6s ease';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, index * 200);
-        });
-    }
-    
-    // Initialize loading animations
-    addLoadingAnimations();
-    
     // Responsive navigation toggle (for mobile)
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     if (mobileNavToggle) {
@@ -163,28 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
-    // Intersection Observer for scroll animations
-    if ('IntersectionObserver' in window) {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements for scroll animations
-        const animateElements = document.querySelectorAll('.intro-text-block, .knowledge-map-card, .updates-box');
-        animateElements.forEach(element => {
-            observer.observe(element);
-        });
-    }
 });
 
 // Utility functions

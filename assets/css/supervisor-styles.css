@@ -80,6 +80,17 @@ body {
     font-weight: 600;
 }
 
+/* More specific selectors to override any conflicts */
+.supervisor-home .site-nav.supervisor_header_links a {
+    padding: 8px 16px !important;
+    border: 1px solid #E8EEF5 !important;
+    border-radius: 9999px !important;
+    background: #fff !important;
+    color: #1F2937 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
 .site-nav a:hover, 
 .site-nav a:focus-visible {
     background: var(--blue); 
@@ -95,6 +106,15 @@ body {
     border-color: #0A72B5;
     color: #fff;
     box-shadow: 0 1px 6px rgba(10,114,181,.16);
+}
+
+/* More specific hover selectors */
+.supervisor-home .site-nav.supervisor_header_links a:hover,
+.supervisor-home .site-nav.supervisor_header_links a:focus-visible {
+    background: #0A72B5 !important; 
+    border-color: #0A72B5 !important;
+    color: #fff !important;
+    box-shadow: 0 1px 6px rgba(10,114,181,.16) !important;
 }
 
 /* Focus states for accessibility */
@@ -1049,4 +1069,36 @@ body {
 
 .knowledge-map-button:hover { 
     background: #095C96; 
+}
+
+/* Override inline styles that might interfere */
+.knowledge-map-card,
+.updates-box,
+.more-updates-button {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Ensure proper styling takes precedence */
+.supervisor-home .site-nav a {
+    all: unset;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 8px 16px !important;
+    border: 1px solid #E8EEF5 !important;
+    border-radius: 9999px !important;
+    background: #fff !important;
+    color: #1F2937 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: background .2s, color .2s, border-color .2s, box-shadow .2s !important;
+    cursor: pointer !important;
+}
+
+.supervisor-home .site-nav a:hover {
+    background: #0A72B5 !important;
+    border-color: #0A72B5 !important;
+    color: #fff !important;
+    box-shadow: 0 1px 6px rgba(10,114,181,.16) !important;
 }

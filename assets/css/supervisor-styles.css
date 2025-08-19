@@ -210,12 +210,13 @@ body {
     padding: 20px;
 }
 
-.section-title { 
+/* Remove old section title styles - now using header strips */
+/* .section-title { 
     font-size: 18px; 
     font-weight: 700; 
     color: #0A72B5; 
     margin: 0 0 12px; 
-}
+} */
 
 .knowledge-map-diagram {
     position: relative;
@@ -930,7 +931,7 @@ body {
 
 .updates-list { 
     margin: 0; 
-    padding: 0; 
+    padding: 20px; 
 }
 
 .update-item {
@@ -990,5 +991,40 @@ body {
 }
 
 .more-updates-button:hover { 
+    background: #095C96; 
+}
+
+/* Knowledge Map Card Styles */
+.knowledge-map-header {
+    background: #0069A8; 
+    color: #fff; 
+    font-weight: 800; 
+    font-size: 18px;
+    margin: -20px -20px 0; 
+    padding: 10px 14px; 
+    border-radius: 12px 12px 0 0;
+}
+
+.knowledge-map-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.knowledge-map-button {
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    height: 42px; 
+    padding: 0 16px; 
+    border-radius: 9999px;
+    background: #0A72B5; 
+    color: #fff; 
+    font-weight: 700; 
+    text-decoration: none; 
+    transition: background .2s;
+}
+
+.knowledge-map-button:hover { 
     background: #095C96; 
 }

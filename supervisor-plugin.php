@@ -41,8 +41,8 @@ function enqueue_alternate_header_assets() {
     error_log('Is archive? ' . ($is_archive ? 'Yes' : 'No'));
     error_log('Is single? ' . ($is_single ? 'Yes' : 'No'));
 
-    // TEMPORARILY: Load CSS on ALL pages for testing
-    error_log('Enqueueing CSS & JS for ALL pages (temporary debug)');
+    // Load CSS on ALL pages for now to ensure it works
+    error_log('Enqueueing CSS & JS for ALL pages');
     
     // Enqueue CSS with cache busting and high priority
     wp_enqueue_style(
@@ -52,18 +52,6 @@ function enqueue_alternate_header_assets() {
         time(), // Force cache refresh
         'all' // Media type
     );
-    
-    // Add inline styles to ensure they load
-    wp_add_inline_style('supervisor-styles', '
-        .supervisor-home {
-            border: 5px solid red !important;
-            background: yellow !important;
-        }
-        .supervisor-search-bar {
-            height: 38px !important;
-            background: pink !important;
-        }
-    ');
 
     // Enqueue Custom JavaScript
     wp_enqueue_script(

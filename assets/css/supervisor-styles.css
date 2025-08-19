@@ -56,53 +56,54 @@ body {
     margin: 16px 0 4px; 
 }
 
-/* Navigation - Single Pill Container Style */
+/* Navigation - Individual White Buttons with Gray Container */
 nav.site-nav.supervisor_header_links {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    background: #E8EEF5 !important;
+    background: #F3F4F6 !important;
     border-radius: 9999px !important;
-    padding: 8px 16px !important;
+    padding: 8px !important;
     margin: 8px 0 12px !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    gap: 0 !important;
 }
 
 nav.site-nav.supervisor_header_links a {
     display: inline-flex !important;
     align-items: center !important;
     padding: 8px 16px !important;
-    color: #1F2937 !important;
+    background: #FFFFFF !important;
+    color: #374151 !important;
     font-weight: 600 !important;
     text-decoration: none !important;
     cursor: pointer !important;
-    position: relative !important;
     border-radius: 6px !important;
     transition: all 0.2s ease !important;
+    position: relative !important;
 }
 
-/* Add vertical separators between menu items */
+/* Add vertical separators BETWEEN buttons */
 nav.site-nav.supervisor_header_links a:not(:last-child)::after {
     content: '' !important;
     position: absolute !important;
-    right: -8px !important;
+    left: -4px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     width: 1px !important;
-    height: 20px !important;
+    height: 24px !important;
     background: #D1D5DB !important;
 }
 
-/* Hover state - light background */
+/* Hover state - light blue background */
 nav.site-nav.supervisor_header_links a:hover {
-    background: rgba(10, 114, 181, 0.1) !important;
-    color: #0A72B5 !important;
+    background: #EFF6FF !important;
+    color: #1F40AF !important;
 }
 
 /* Active state for current page */
 nav.site-nav.supervisor_header_links a.active {
-    background: rgba(10, 114, 181, 0.15) !important;
-    color: #0A72B5 !important;
+    background: #DBEAFE !important;
+    color: #1E40AF !important;
 }
 
 /* Focus states for accessibility */

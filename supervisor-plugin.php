@@ -33,43 +33,57 @@ function enqueue_alternate_header_assets() {
     $is_archive = is_post_type_archive($post_type_archives);
     $is_single = is_singular($singles);
 
-    // error_log('Checking template enqueue: ' . $template);
-    // error_log('Is plugin template? ' . ($is_plugin_template ? 'Yes' : 'No'));
-    // error_log('Is taxonomy archive? ' . ($is_taxonomy ? 'Yes' : 'No'));
-    // error_log('Is archive? ' . ($is_archive ? 'Yes' : 'No'));
-    // error_log('Is single? ' . ($is_single ? 'Yes' : 'No'));
+    // Debug logging
+    error_log('=== SUPERVISOR CSS DEBUG ===');
+    error_log('Template: ' . $template);
+    error_log('Is plugin template? ' . ($is_plugin_template ? 'Yes' : 'No'));
+    error_log('Is taxonomy archive? ' . ($is_taxonomy ? 'Yes' : 'No'));
+    error_log('Is archive? ' . ($is_archive ? 'Yes' : 'No'));
+    error_log('Is single? ' . ($is_single ? 'Yes' : 'No'));
 
-    if ($is_plugin_template || $is_archive || $is_single || $is_taxonomy) {
-        error_log('Enqueueing CSS & JS for: ' . $template);
+    // TEMPORARILY: Load CSS on ALL pages for testing
+    error_log('Enqueueing CSS & JS for ALL pages (temporary debug)');
     
-        // Enqueue CSS with cache busting
-        wp_enqueue_style(
-            'supervisor-styles',
-            plugins_url('/assets/css/supervisor-styles.css', __FILE__),
-            [],
-            time() // Force cache refresh
-        );
+    // Enqueue CSS with cache busting and high priority
+    wp_enqueue_style(
+        'supervisor-styles',
+        plugins_url('/assets/css/supervisor-styles.css', __FILE__),
+        [],
+        time(), // Force cache refresh
+        'all' // Media type
+    );
     
-        // Enqueue Custom JavaScript
-        wp_enqueue_script(
-            'supervisor-scripts',
-            plugins_url('/assets/js/supervisor-scripts.js', __FILE__), // Path to JS file
-            [], // Dependencies
-            time(), // Force cache refresh
-            true // Load in the footer
-        );
-    
-        // Enqueue Font Awesome
-        wp_enqueue_script(
-            'font-awesome',
-            'https://kit.fontawesome.com/c1b1058543.js',
-            [],
-            null, // No version needed
-            false // Load in the header (FontAwesome should load early)
-        );
-    }
+    // Add inline styles to ensure they load
+    wp_add_inline_style('supervisor-styles', '
+        .supervisor-home {
+            border: 5px solid red !important;
+            background: yellow !important;
+        }
+        .supervisor-search-bar {
+            height: 38px !important;
+            background: pink !important;
+        }
+    ');
+
+    // Enqueue Custom JavaScript
+    wp_enqueue_script(
+        'supervisor-scripts',
+        plugins_url('/assets/js/supervisor-scripts.js', __FILE__), // Path to JS file
+        [], // Dependencies
+        time(), // Force cache refresh
+        true // Load in the footer
+    );
+
+    // Enqueue Font Awesome
+    wp_enqueue_script(
+        'font-awesome',
+        'https://kit.fontawesome.com/c1b1058543.js',
+        [],
+        null, // No version needed
+        false // Load in the header (FontAwesome should load early)
+    );
 }
-add_action('wp_enqueue_scripts', 'enqueue_alternate_header_assets');
+add_action('wp_enqueue_scripts', 'enqueue_alternate_header_assets', 999); // High priority
 
 // Load custom templates
 function supervisor_load_template($template) {

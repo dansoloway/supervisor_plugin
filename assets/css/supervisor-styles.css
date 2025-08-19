@@ -3,10 +3,10 @@ body {
     background-color: #fff !important;
 }
 
-/* TEST: This should make the supervisor-home container very obvious */
+/* ===== TEST STYLE - REMOVE AFTER VERIFICATION ===== */
 .supervisor-home {
-    border: none !important;
-    background: #fff !important;
+    border: 5px solid red !important;
+    background: yellow !important;
 }
 
 /* ===== FOUNDATION CSS OVERRIDES ===== */

@@ -42,12 +42,12 @@ function enqueue_alternate_header_assets() {
     if ($is_plugin_template || $is_archive || $is_single || $is_taxonomy) {
         error_log('Enqueueing CSS & JS for: ' . $template);
     
-        // Enqueue CSS
+        // Enqueue CSS with cache busting
         wp_enqueue_style(
             'supervisor-styles',
             plugins_url('/assets/css/supervisor-styles.css', __FILE__),
             [],
-            filemtime(plugin_dir_path(__FILE__) . 'assets/css/supervisor-styles.css')
+            time() // Force cache refresh
         );
     
         // Enqueue Custom JavaScript
@@ -55,7 +55,7 @@ function enqueue_alternate_header_assets() {
             'supervisor-scripts',
             plugins_url('/assets/js/supervisor-scripts.js', __FILE__), // Path to JS file
             [], // Dependencies
-            filemtime(plugin_dir_path(__FILE__) . 'assets/js/supervisor-scripts.js'),
+            time(), // Force cache refresh
             true // Load in the footer
         );
     

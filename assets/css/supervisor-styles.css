@@ -12,78 +12,17 @@ body {
 /* ===== FOUNDATION CSS OVERRIDES ===== */
 /* Prevent Foundation from interfering with our custom design */
 
-/* Override Foundation button styles that might affect our buttons */
-.supervisor-home .button,
-.supervisor-home .button:hover,
-.supervisor-home .button:focus,
-.supervisor-home button,
-.supervisor-home button:hover,
-.supervisor-home button:focus {
-    background: inherit !important;
-    border: inherit !important;
-    color: inherit !important;
-    font-family: inherit !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    text-decoration: inherit !important;
-    padding: inherit !important;
-    margin: inherit !important;
-    border-radius: inherit !important;
-    box-shadow: inherit !important;
-    display: inherit !important;
-    align-items: inherit !important;
-    justify-content: inherit !important;
+/* Only override Foundation classes that might conflict, not our custom classes */
+.supervisor-home .foundation-button,
+.supervisor-home .foundation-input,
+.supervisor-home .foundation-nav {
+    /* Only target Foundation-specific classes, not generic elements */
 }
 
-/* Override Foundation form styles that might affect our search bar */
-.supervisor-home input[type="text"],
-.supervisor-home input[type="search"],
-.supervisor-home input[type="email"],
-.supervisor-home input[type="password"] {
-    background: inherit !important;
-    border: inherit !important;
-    border-radius: inherit !important;
-    padding: inherit !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    box-shadow: inherit !important;
-    margin: inherit !important;
-    width: inherit !important;
-    height: inherit !important;
-    box-sizing: inherit !important;
-}
-
-/* Override Foundation navigation styles that might affect our nav */
-.supervisor-home .top-bar,
-.supervisor-home .top-bar ul,
-.supervisor-home .top-bar li,
-.supervisor-home .top-bar a,
-.supervisor-home nav,
-.supervisor-home nav ul,
-.supervisor-home nav li,
-.supervisor-home nav a {
-    background: inherit !important;
-    border: inherit !important;
-    color: inherit !important;
-    font-family: inherit !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    text-decoration: inherit !important;
-    padding: inherit !important;
-    margin: inherit !important;
-    border-radius: inherit !important;
-    box-shadow: inherit !important;
-    display: inherit !important;
-    flex-direction: inherit !important;
-    align-items: inherit !important;
-    justify-content: inherit !important;
-    list-style: inherit !important;
-}
-
-/* Override Foundation grid classes */
-.supervisor-home .row,
-.supervisor-home .column,
-.supervisor-home .columns {
+/* Override Foundation grid classes that might interfere */
+.supervisor-home .row.foundation-row,
+.supervisor-home .column.foundation-column,
+.supervisor-home .columns.foundation-columns {
     box-sizing: border-box !important;
     margin: inherit !important;
     padding: inherit !important;
@@ -91,10 +30,10 @@ body {
     float: inherit !important;
 }
 
-/* Override Foundation card/panel styles */
-.supervisor-home .card,
-.supervisor-home .panel,
-.supervisor-home .callout {
+/* Override Foundation card/panel styles that might conflict */
+.supervisor-home .foundation-card,
+.supervisor-home .foundation-panel,
+.supervisor-home .foundation-callout {
     background: inherit !important;
     border: inherit !important;
     border-radius: inherit !important;

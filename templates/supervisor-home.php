@@ -3,6 +3,51 @@
 get_header('supervisor');
 ?>
 
+<style>
+/* Force styles directly in template */
+.supervisor-home {
+    border: 5px solid red !important;
+    background: yellow !important;
+}
+.supervisor-search-bar {
+    height: 38px !important;
+    background: pink !important;
+    flex: 1 !important;
+    padding: 0 16px !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    outline: 0 !important;
+    font-size: 15px !important;
+    color: #1F2937 !important;
+    background: pink !important;
+    margin: 0 !important;
+}
+.supervisor-search {
+    direction: rtl !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E5EAF0 !important;
+    border-radius: 9999px !important;
+    padding: 3px !important;
+    height: 44px !important;
+}
+.search-button {
+    height: 38px !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #B3CBE7 !important;
+    color: #FFFFFF !important;
+    cursor: pointer !important;
+    transition: background .2s !important;
+}
+</style>
+
 <div class="supervisor-home">
 
     <!-- Navigation Menu -->

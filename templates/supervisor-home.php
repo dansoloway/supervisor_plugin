@@ -6,12 +6,21 @@ get_header('supervisor');
 <div class="supervisor-home">
 
     <!-- Navigation Menu -->
-    <?php
-        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
-        if (file_exists($nav_path)) {
-            require_once $nav_path;
-        }
-    ?>
+    <nav class="site-nav supervisor_header_links" aria-label="ראשי">
+        <?php
+            $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+            if (file_exists($nav_path)) {
+                ob_start();
+                require_once $nav_path;
+                $nav_content = ob_get_clean();
+                // Extract just the links from the navigation file
+                preg_match_all('/<a[^>]*>.*?<\/a>/s', $nav_content, $matches);
+                if (!empty($matches[0])) {
+                    echo implode('', $matches[0]);
+                }
+            }
+        ?>
+    </nav>
 
     <!-- Introductory Text Block -->
     <div class="intro-text-block">
@@ -22,37 +31,20 @@ get_header('supervisor');
         </div>
     </div>
 
-    <!-- Main Content Area - 3 Column Layout -->
+    <!-- Main Content Area - 2 Column Layout -->
     <div class="supervisor-main-content">
         
         <!-- Left Column: Knowledge Map Diagram -->
         <div class="knowledge-map-section">
-            <div class="knowledge-map-card">
+            <div class="knowledge-map-card card">
                 <h2 class="section-title">מפת ידע</h2>
                 <div class="knowledge-map-diagram">
                     <img src="<?php echo plugins_url('assets/img/knowledge_map.png', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
-                    <div class="knowledge-map-overlay">
-                        <div class="quadrant quadrant-1" data-section="policy">
-                            <span class="quadrant-label">מדיניות</span>
-                        </div>
-                        <div class="quadrant quadrant-2" data-section="control">
-                            <span class="quadrant-label">בקרה</span>
-                        </div>
-                        <div class="quadrant quadrant-3" data-section="characterization">
-                            <span class="quadrant-label">אפיון</span>
-                        </div>
-                        <div class="quadrant quadrant-4" data-section="distribution">
-                            <span class="quadrant-label">הפצת מידע וידע</span>
-                        </div>
-                        <div class="center-node">
-                            <span class="center-label">בקרת איכות</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Center Column: Search and Updates -->
+        <!-- Right Column: Search and Updates -->
         <div class="center-content-section">
             <!-- Search Bar -->
             <div class="search-section">
@@ -68,8 +60,8 @@ get_header('supervisor');
             </div>
 
             <!-- Updates Box -->
-            <div class="updates-box">
-                <h2 class="updates-title">עדכונים</h2>
+            <div class="updates-box card">
+                <div class="updates-header">עדכונים</div>
 
                 <div class="updates-list">
                     <?php
@@ -104,15 +96,6 @@ get_header('supervisor');
                 <div class="updates-footer">
                     <a class="more-updates-button" href="<?php echo get_the_permalink(SUPERVISOR_UPDATES)?>">לעדכונים נוספים</a>
                 </div>
-            </div>
-        </div>
-
-        <!-- Right Column: Navigation Buttons -->
-        <div class="navigation-buttons-section">
-            <div class="vertical-buttons">
-                <a class="vertical-button assistant-bold" href="<?php echo get_the_permalink(SUPERVISOR_INTRO_TEXT) ?>">פיקוח על שירותים חברתיים</a>
-                <a class="vertical-button assistant-bold" href="<?php echo get_the_permalink(SUPERVISOR_ORGS) ?>">ארגוני פיקוח מן העולם</a>
-                <a class="vertical-button assistant-bold" href="<?php echo get_the_permalink(SUPERVISOR_BIB_CATS) ?>">נושאי מפתח בתחום הפיקוח</a>
             </div>
         </div>
 

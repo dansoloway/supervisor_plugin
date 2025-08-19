@@ -13,9 +13,9 @@ body {
 
 /* Color Tokens */
 :root {
-    --sv-blue: #0A72B5;       /* primary */
-    --sv-blue-600: #095C96;   /* hover */
-    --sv-blue-strip: #0069A8; /* updates header strip */
+    --sv-blue: #B3CBE7;       /* primary - consistent everywhere */
+    --sv-blue-600: #9BB8D9;   /* hover - slightly darker */
+    --sv-blue-strip: #B3CBE7; /* updates header strip - same as primary */
     --sv-text: #1F2937;
     --sv-text-2: #4B5563;
     --sv-card: #FFFFFF;
@@ -94,7 +94,7 @@ body {
 
 /* ===== SEARCH BAR ===== */
 .search-section {
-    margin: 0 0 12px;
+    margin: 0 0 16px;
 }
 
 .supervisor-search {
@@ -105,25 +105,26 @@ body {
     background: #FFFFFF;
     border: 1px solid var(--sv-border);
     border-radius: 9999px;
-    padding: 2px;
+    padding: 3px;
+    height: 44px;
 }
 
 .supervisor-search-bar {
     flex: 1;
-    height: 36px;
-    padding: 0 12px;
+    height: 38px;
+    padding: 0 16px;
     border: none;
     border-radius: 9999px;
     outline: 0;
-    font-size: 14px;
+    font-size: 15px;
     color: var(--sv-text);
     background: transparent;
 }
 
 .search-button {
-    height: 36px;
-    width: 36px;
-    min-width: 36px;
+    height: 38px;
+    width: 38px;
+    min-width: 38px;
     display: inline-grid;
     place-items: center;
     border: 0;
@@ -139,8 +140,8 @@ body {
 }
 
 .search-icon {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
 }
 
 /* ===== UPDATES BOX ===== */
@@ -159,7 +160,7 @@ body {
     font-weight: 800;
     font-size: 16px;
     margin: -20px -20px 0;
-    padding: 10px 14px;
+    padding: 12px 16px;
     border-radius: 0;
 }
 
@@ -180,9 +181,9 @@ body {
 .update-content {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 10px;
-    align-items: center;
-    padding: 12px 0;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 0;
 }
 
 /* Small blue bullet at right (RTL) */
@@ -191,13 +192,14 @@ body {
     height: 8px;
     border-radius: 50%;
     background: var(--sv-blue);
+    margin-top: 6px;
 }
 
 .update-title {
     margin: 0;
     font-size: 15px;
     font-weight: 700;
-    line-height: 1.35;
+    line-height: 1.4;
 }
 
 .update-title a {
@@ -220,15 +222,15 @@ body {
 .updates-footer {
     display: flex;
     justify-content: center;
-    padding-top: 8px;
+    padding-top: 12px;
 }
 
 .more-updates-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    padding: 0 16px;
+    height: 42px;
+    padding: 0 20px;
     border-radius: 9999px;
     background: var(--sv-blue);
     color: #FFFFFF;
@@ -264,15 +266,15 @@ body {
 }
 
 .knowledge-map-footer {
-    margin-top: 12px;
+    margin-top: 16px;
 }
 
 .knowledge-map-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    padding: 0 18px;
+    height: 42px;
+    padding: 0 20px;
     border-radius: 9999px;
     background: var(--sv-blue);
     color: #FFFFFF;
@@ -291,7 +293,7 @@ body {
 /* ===== INTRO BLOCK SPACING ===== */
 .intro-text-block {
     max-width: 820px;
-    margin: 0 auto 16px;
+    margin: 0 auto 20px;
     text-align: right;
 }
 
@@ -299,7 +301,7 @@ body {
     font-size: 22px;
     font-weight: 800;
     color: var(--sv-blue);
-    margin: 0 0 6px;
+    margin: 0 0 8px;
 }
 
 .intro-content p {

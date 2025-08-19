@@ -83,10 +83,15 @@ get_header('supervisor');
                             $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
 
                             echo '<div class="update-item">';
+                            echo '<div class="update-content">';
+                            echo '<div class="update-bullet"></div>';
+                            echo '<div class="update-text">';
                             echo '<h3 class="update-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
                             if ($formatted_date) {
                                 echo '<p class="update-date">' . esc_html($formatted_date) . '</p>';
                             }
+                            echo '</div>';
+                            echo '</div>';
                             echo '</div>';
                         }
                         wp_reset_postdata();

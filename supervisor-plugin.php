@@ -51,13 +51,13 @@ function enqueue_alternate_header_assets() {
         );
     
         // Enqueue Custom JavaScript
-        // wp_enqueue_script(
-        //     'supervisor-scripts',
-        //     plugins_url('/assets/js/supervisor-scripts.js', __FILE__), // Path to JS file
-        //     ['jquery'], // Dependencies (remove 'jquery' if not needed)
-        //     filemtime(plugin_dir_path(__FILE__) . 'assets/js/supervisor-scripts.js'),
-        //     true // Load in the footer
-        // );
+        wp_enqueue_script(
+            'supervisor-scripts',
+            plugins_url('/assets/js/supervisor-scripts.js', __FILE__), // Path to JS file
+            [], // Dependencies
+            filemtime(plugin_dir_path(__FILE__) . 'assets/js/supervisor-scripts.js'),
+            true // Load in the footer
+        );
     
         // Enqueue Font Awesome
         wp_enqueue_script(

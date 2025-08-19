@@ -9,19 +9,46 @@ get_header('supervisor');
     border: 5px solid red !important;
     background: yellow !important;
 }
-.supervisor-search-bar {
-    height: 38px !important;
-    background: pink !important;
-    flex: 1 !important;
-    padding: 0 16px !important;
-    border: none !important;
-    border-radius: 9999px !important;
-    outline: 0 !important;
-    font-size: 15px !important;
-    color: #1F2937 !important;
-    background: pink !important;
-    margin: 0 !important;
+
+/* Navigation - pill buttons with proper border radius */
+.supervisor-home .site-nav {
+    direction: rtl !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    flex-wrap: wrap !important;
+    background: #EEF4FA !important;
+    border: 1px solid #D8E4EF !important;
+    border-radius: 28px !important;
+    padding: 6px !important;
+    margin: 8px auto 14px !important;
+    max-width: 980px !important;
 }
+
+.supervisor-home .site-nav a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 18px !important;
+    border-radius: 9999px !important;
+    color: #1F2937 !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    transition: background .2s, color .2s !important;
+}
+
+.supervisor-home .site-nav a + a {
+    margin-inline-start: 6px !important;
+}
+
+.supervisor-home .site-nav a:hover,
+.supervisor-home .site-nav a:focus-visible {
+    background: #B3CBE7 !important;
+    color: #FFFFFF !important;
+    outline: 0 !important;
+}
+
+/* Search bar - one cohesive pill with proper border radius */
 .supervisor-search {
     direction: rtl !important;
     display: flex !important;
@@ -33,6 +60,20 @@ get_header('supervisor');
     padding: 3px !important;
     height: 44px !important;
 }
+
+.supervisor-search-bar {
+    height: 38px !important;
+    background: transparent !important;
+    flex: 1 !important;
+    padding: 0 16px !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    outline: 0 !important;
+    font-size: 15px !important;
+    color: #1F2937 !important;
+    margin: 0 !important;
+}
+
 .search-button {
     height: 38px !important;
     width: 38px !important;
@@ -45,6 +86,60 @@ get_header('supervisor');
     color: #FFFFFF !important;
     cursor: pointer !important;
     transition: background .2s !important;
+}
+
+/* Updates box - sharp corners on ribbons */
+.updates-header {
+    background: #B3CBE7 !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+    margin: -20px -20px 0 !important;
+    padding: 12px 16px !important;
+    border-radius: 0 !important;
+    text-align: center !important;
+}
+
+.more-updates-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 42px !important;
+    padding: 0 20px !important;
+    border-radius: 9999px !important;
+    background: #B3CBE7 !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: background .2s !important;
+    text-align: center !important;
+}
+
+/* Knowledge map card - sharp corners on ribbons */
+.knowledge-map-header {
+    background: #B3CBE7 !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+    margin: -20px -20px 0 !important;
+    padding: 12px 16px !important;
+    border-radius: 0 !important;
+    text-align: center !important;
+}
+
+.knowledge-map-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 42px !important;
+    padding: 0 20px !important;
+    border-radius: 9999px !important;
+    background: #B3CBE7 !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: background .2s !important;
+    text-align: center !important;
 }
 </style>
 

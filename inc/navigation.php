@@ -3,17 +3,124 @@
  * Supervisor Navigation Component
  * This file contains the main navigation menu for the supervisor plugin
  */
+
+// Define the navigation menu structure
+$supervisor_menu = [
+    [
+        'title' => 'אודות',
+        'url' => get_the_permalink(SUPERVISOR_ABOUT),
+        'is_active' => is_page(SUPERVISOR_ABOUT),
+        'has_dropdown' => false,
+        'submenu' => []
+    ],
+    [
+        'title' => 'תחומי פעילות',
+        'url' => get_the_permalink(SUPERVISOR_INTRO_TEXT),
+        'is_active' => is_page(SUPERVISOR_INTRO_TEXT),
+        'has_dropdown' => false,
+        'submenu' => []
+    ],
+    [
+        'title' => 'מפת ידע',
+        'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
+        'is_active' => is_page(SUPERVISOR_BIB_CATS),
+        'has_dropdown' => true,
+        'submenu' => [
+            [
+                'title' => 'קטגוריות ביבליוגרפיות',
+                'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
+                'is_active' => is_page(SUPERVISOR_BIB_CATS)
+            ],
+            // Add more submenu items here as needed
+            // [
+            //     'title' => 'Another Submenu Item',
+            //     'url' => 'https://example.com',
+            //     'is_active' => false
+            // ]
+        ]
+    ],
+    [
+        'title' => 'עדכונים',
+        'url' => get_the_permalink(SUPERVISOR_UPDATES),
+        'is_active' => is_page(SUPERVISOR_UPDATES),
+        'has_dropdown' => false,
+        'submenu' => []
+    ],
+    [
+        'title' => 'צור קשר',
+        'url' => get_the_permalink(SUPERVISOR_CONTACT),
+        'is_active' => is_page(SUPERVISOR_CONTACT),
+        'has_dropdown' => false,
+        'submenu' => []
+    ]
+];
+
+// Function to render navigation items
+function render_nav_item($item) {
+    $classes = ['nav-item'];
+    
+    if ($item['is_active']) {
+        $classes[] = 'active';
+    }
+    
+    if ($item['has_dropdown']) {
+        $classes[] = 'dropdown';
+    }
+    
+    $class_string = implode(' ', $classes);
+    
+    echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '">';
+    
+    if ($item['has_dropdown']) {
+        echo '<span class="dropdown-text">' . esc_html($item['title']) . '</span>';
+        echo '<svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
+        echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+        echo '</svg>';
+    } else {
+        echo esc_html($item['title']);
+    }
+    
+    echo '</a>';
+}
+
+// Function to render submenu (for future dropdown functionality)
+function render_submenu($submenu_items) {
+    if (empty($submenu_items)) {
+        return;
+    }
+    
+    echo '<div class="submenu">';
+    foreach ($submenu_items as $submenu_item) {
+        $submenu_classes = ['submenu-item'];
+        if ($submenu_item['is_active']) {
+            $submenu_classes[] = 'active';
+        }
+        
+        echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
+        echo esc_html($submenu_item['title']);
+        echo '</a>';
+    }
+    echo '</div>';
+}
 ?>
 
 <div class="supervisor_header_links">
-    <a href="<?php echo get_the_permalink(SUPERVISOR_ABOUT); ?>" class="nav-item <?php echo is_page(SUPERVISOR_ABOUT) ? 'active' : ''; ?>">אודות</a>
-    <a href="<?php echo get_the_permalink(SUPERVISOR_INTRO_TEXT); ?>" class="nav-item <?php echo is_page(SUPERVISOR_INTRO_TEXT) ? 'active' : ''; ?>">תחומי פעילות</a>
-    <a href="<?php echo get_the_permalink(SUPERVISOR_BIB_CATS); ?>" class="nav-item dropdown <?php echo is_page(SUPERVISOR_BIB_CATS) ? 'active' : ''; ?>">
-        <span class="dropdown-text">מפת ידע</span>
-        <svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </a>
-    <a href="<?php echo get_the_permalink(SUPERVISOR_UPDATES); ?>" class="nav-item <?php echo is_page(SUPERVISOR_UPDATES) ? 'active' : ''; ?>">עדכונים</a>
-    <a href="<?php echo get_the_permalink(SUPERVISOR_CONTACT); ?>" class="nav-item <?php echo is_page(SUPERVISOR_CONTACT) ? 'active' : ''; ?>">צור קשר</a>
+    <?php
+    foreach ($supervisor_menu as $menu_item) {
+        render_nav_item($menu_item);
+    }
+    ?>
+</div>
+
+<!-- Submenu container for dropdown functionality -->
+<div class="submenu-container" style="display: none;">
+    <?php
+    foreach ($supervisor_menu as $menu_item) {
+        if ($menu_item['has_dropdown'] && !empty($menu_item['submenu'])) {
+            echo '<div class="submenu-wrapper" data-parent="' . esc_attr($menu_item['title']) . '">';
+            render_submenu($menu_item['submenu']);
+            echo '</div>';
+        }
+    }
+    ?>
 </div>

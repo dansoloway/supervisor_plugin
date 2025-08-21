@@ -25,19 +25,7 @@ $supervisor_menu = [
         'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
         'is_active' => is_page(SUPERVISOR_BIB_CATS),
         'has_dropdown' => true,
-        'submenu' => [
-            [
-                'title' => 'קטגוריות ביבליוגרפיות',
-                'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
-                'is_active' => is_page(SUPERVISOR_BIB_CATS)
-            ],
-            // Add more submenu items here as needed
-            // [
-            //     'title' => 'Another Submenu Item',
-            //     'url' => 'https://example.com',
-            //     'is_active' => false
-            // ]
-        ]
+        'submenu' => []
     ],
     [
         'title' => 'עדכונים',

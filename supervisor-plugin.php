@@ -12,6 +12,24 @@ require_once plugin_dir_path(__FILE__) . 'config.php';
 // Include post type and taxonomy registration
 require_once plugin_dir_path(__FILE__) . 'inc/register_posts_and_tax.php';
 
+// Enqueue Google Fonts
+function enqueue_supervisor_google_fonts() {
+    // Add preconnect links for better performance
+    add_action('wp_head', function() {
+        echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+        echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+    }, 1);
+    
+    // Enqueue Heebo font with only 700 weight
+    wp_enqueue_style(
+        'supervisor-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Heebo:wght@700&display=swap',
+        [],
+        null
+    );
+}
+add_action('wp_enqueue_scripts', 'enqueue_supervisor_google_fonts', 1); // Load early
+
 // Enqueue styles and scripts
 function enqueue_alternate_header_assets() {
     global $template; // Get the currently loaded template file
@@ -48,7 +66,7 @@ function enqueue_alternate_header_assets() {
     wp_enqueue_style(
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
-        [],
+        ['supervisor-google-fonts'], // Make sure CSS loads after fonts
         time(), // Force cache refresh
         'all' // Media type
     );

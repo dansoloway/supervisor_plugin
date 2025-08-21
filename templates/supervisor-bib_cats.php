@@ -5,6 +5,14 @@ error_log('Loading supervisor-bib_cats.php template');
 ?>
 
 <div class="supervisor-container">
+    <!-- Navigation Menu -->
+    <?php
+        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+        if (file_exists($nav_path)) {
+            require_once $nav_path;
+        }
+    ?>
+
     <!-- Main Content -->
     <div class="supervisor-main supervisor-two-column">
 

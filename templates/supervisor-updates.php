@@ -22,6 +22,14 @@ $updates_query = new WP_Query($args);
 
 <div class="supervisor-two-column">
 
+    <!-- Navigation Menu -->
+    <?php
+        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+        if (file_exists($nav_path)) {
+            require_once $nav_path;
+        }
+    ?>
+
     <!-- Right: AJAX Search Component -->
     <?php 
     require_once(WP_PLUGIN_DIR . '/supervisor-plugin/inc/sidebar.php');

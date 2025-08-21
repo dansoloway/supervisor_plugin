@@ -9,6 +9,14 @@ error_log('Loading taxonomy-qa_bib_cats.php template');
 ?>
 
 <div class="supervisor-home">
+    <!-- Navigation Menu -->
+    <?php
+        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+        if (file_exists($nav_path)) {
+            require_once $nav_path;
+        }
+    ?>
+
     <h1><?php echo esc_html($term->name); ?></h1>
     <p><?php echo esc_html(term_description($term->term_id, 'qa_bib_cats')); ?></p>
 

@@ -46,7 +46,7 @@
     --sv-border: #E5EAF0;
     --sv-divider: #D7DEE7;
     --sv-bar: #EEF4FA;        /* nav bar bg */
-    --sv-bar-border: #D8E4EF; /* nav bar border */
+    --sv-bar-border: #A0B4C8; /* nav bar border - darker */
 }
 
 /* Font Tokens */
@@ -181,6 +181,63 @@
 
 .supervisor-home .site-nav .dropdown-text {
     white-space: nowrap;
+}
+
+/* ===== DROPDOWN MENU ===== */
+.supervisor-home .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--sv-bar);
+    border: 2px solid var(--sv-bar-border);
+    border-radius: 12px;
+    margin-top: 8px;
+    padding: 8px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+    min-width: 200px;
+}
+
+.supervisor-home .dropdown-menu.show {
+    display: block;
+}
+
+.supervisor-home .dropdown-menu a {
+    display: block;
+    padding: 12px 16px;
+    color: var(--sv-text);
+    text-decoration: none;
+    font-family: var(--sv-font-primary);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.4;
+    transition: background .2s, color .2s;
+    border-bottom: 1px solid var(--sv-bar-border);
+    margin: 0 8px;
+    border-radius: 8px;
+}
+
+.supervisor-home .dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.supervisor-home .dropdown-menu a:hover,
+.supervisor-home .dropdown-menu a:focus-visible {
+    background: var(--sv-blue);
+    color: #FFFFFF;
+    outline: 0;
+}
+
+/* Dropdown positioning for RTL */
+.supervisor-home .site-nav a.dropdown {
+    position: relative;
+}
+
+.supervisor-home .site-nav a.dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
 }
 
 /* ===== SEARCH BAR ===== */
@@ -409,6 +466,49 @@
     font-family: var(--sv-font-primary);
     font-style: italic;
     font-weight: 600;
+}
+
+/* ===== CONTENT PAGE STYLING ===== */
+.supervisor-content {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 20px 16px 48px;
+}
+
+.supervisor-two-column-content {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.supervisor-two-column-content > div:last-child {
+    padding: 0;
+    margin: 0;
+}
+
+.supervisor-two-column-content h1,
+.supervisor-two-column-content h2,
+.supervisor-two-column-content h3,
+.supervisor-two-column-content h4,
+.supervisor-two-column-content h5,
+.supervisor-two-column-content h6 {
+    font-family: var(--sv-font-primary);
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.supervisor-two-column-content p {
+    font-family: var(--sv-font-primary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: justify;
+}
+
+@media (max-width: 991px) {
+    .supervisor-two-column-content {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ===== HEADINGS AND TITLES ===== */

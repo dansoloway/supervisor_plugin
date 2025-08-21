@@ -25,7 +25,23 @@ $supervisor_menu = [
         'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
         'is_active' => is_page(SUPERVISOR_BIB_CATS),
         'has_dropdown' => true,
-        'submenu' => []
+        'submenu' => [
+            [
+                'title' => 'מהי מפת הידע',
+                'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
+                'is_active' => is_page(SUPERVISOR_BIB_CATS)
+            ],
+            [
+                'title' => 'נושאי מפתח',
+                'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
+                'is_active' => false
+            ],
+            [
+                'title' => 'ארגוני פיקוח',
+                'url' => get_the_permalink(SUPERVISOR_ORGS),
+                'is_active' => is_page(SUPERVISOR_ORGS)
+            ]
+        ]
     ],
     [
         'title' => 'עדכונים',
@@ -64,6 +80,22 @@ function render_nav_item($item) {
         echo '<svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
         echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
         echo '</svg>';
+        
+        // Add dropdown menu
+        if (!empty($item['submenu'])) {
+            echo '<div class="dropdown-menu">';
+            foreach ($item['submenu'] as $submenu_item) {
+                $submenu_classes = ['submenu-item'];
+                if ($submenu_item['is_active']) {
+                    $submenu_classes[] = 'active';
+                }
+                
+                echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
+                echo esc_html($submenu_item['title']);
+                echo '</a>';
+            }
+            echo '</div>';
+        }
     } else {
         echo esc_html($item['title']);
     }

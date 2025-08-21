@@ -41,4 +41,47 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Dropdown menu functionality
+    const dropdownItems = document.querySelectorAll('.supervisor-home .site-nav a.dropdown');
+    dropdownItems.forEach(dropdown => {
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+        
+        if (dropdownMenu) {
+            // Show dropdown on hover
+            dropdown.addEventListener('mouseenter', function() {
+                // Close any other open dropdowns
+                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                    if (menu !== dropdownMenu) {
+                        menu.classList.remove('show');
+                    }
+                });
+                
+                dropdownMenu.classList.add('show');
+            });
+            
+            // Hide dropdown when mouse leaves
+            dropdown.addEventListener('mouseleave', function() {
+                dropdownMenu.classList.remove('show');
+            });
+            
+            // Keep dropdown open when hovering over the menu
+            dropdownMenu.addEventListener('mouseenter', function() {
+                dropdownMenu.classList.add('show');
+            });
+            
+            dropdownMenu.addEventListener('mouseleave', function() {
+                dropdownMenu.classList.remove('show');
+            });
+        }
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                menu.classList.remove('show');
+            });
+        }
+    });
 });

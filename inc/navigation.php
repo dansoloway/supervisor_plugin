@@ -124,13 +124,13 @@ function render_submenu($submenu_items) {
 }
 ?>
 
-<div class="supervisor_header_links">
+<nav class="site-nav supervisor_header_links" aria-label="ראשי">
     <?php
     foreach ($supervisor_menu as $menu_item) {
         render_nav_item($menu_item);
     }
     ?>
-</div>
+</nav>
 
 <!-- Submenu container for dropdown functionality -->
 <div class="submenu-container" style="display: none;">

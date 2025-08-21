@@ -147,6 +147,10 @@
     color: #FFFFFF;
     outline: 0;
     border-radius: 20px;
+    margin: -6px 0; /* Negative margin to extend beyond parent padding */
+    padding: 16px 18px; /* Increase padding to compensate */
+    height: calc(100% + 12px); /* Extend beyond parent padding */
+    align-self: stretch;
 }
 
 /* Active state */
@@ -154,6 +158,10 @@
     background: var(--sv-blue);
     color: #FFFFFF;
     border-radius: 20px;
+    margin: -6px 0; /* Negative margin to extend beyond parent padding */
+    padding: 16px 18px; /* Increase padding to compensate */
+    height: calc(100% + 12px); /* Extend beyond parent padding */
+    align-self: stretch;
 }
 
 /* Dropdown styling */

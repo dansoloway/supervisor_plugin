@@ -20,7 +20,7 @@ $args = [
 $updates_query = new WP_Query($args);
 ?>
 
-<div class="supervisor-two-column">
+<div class="supervisor-home">
 
     <!-- Navigation Menu -->
     <?php

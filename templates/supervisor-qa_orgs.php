@@ -4,7 +4,7 @@ get_header('supervisor');
 error_log('Loading supervisor-qa_orgs.php template');
 ?>
 
-<div class="supervisor-container">
+<div class="supervisor-home">
     <!-- Navigation Menu -->
     <?php
         $nav_path = PLUGIN_ROOT . 'inc/navigation.php';

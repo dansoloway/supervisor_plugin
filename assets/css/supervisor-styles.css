@@ -92,6 +92,8 @@
     padding: 6px;
     margin: 8px auto 14px;
     max-width: 980px;
+    height: 59px;
+    align-items: center;
 }
 
 .supervisor-home .site-nav a {
@@ -99,22 +101,61 @@
     align-items: center;
     justify-content: center;
     padding: 10px 18px;
-    border-radius: 9999px;
     color: var(--sv-text);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 25px;
     transition: background .2s, color .2s;
+    position: relative;
+    height: 100%;
+    flex: 1;
+    min-width: 0;
 }
 
-.supervisor-home .site-nav a + a {
-    margin-inline-start: 6px;
+/* Add borders between menu items */
+.supervisor-home .site-nav a:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 70%;
+    background-color: var(--sv-bar-border);
 }
 
+/* Hover effect */
 .supervisor-home .site-nav a:hover,
 .supervisor-home .site-nav a:focus-visible {
     background: var(--sv-blue);
     color: #FFFFFF;
     outline: 0;
+}
+
+/* Active state */
+.supervisor-home .site-nav a.active {
+    background: var(--sv-blue);
+    color: #000000;
+}
+
+/* Dropdown styling */
+.supervisor-home .site-nav a.dropdown {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.supervisor-home .site-nav .dropdown-icon {
+    transition: transform 0.2s ease;
+}
+
+.supervisor-home .site-nav a.dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.supervisor-home .site-nav .dropdown-text {
+    white-space: nowrap;
 }
 
 /* ===== SEARCH BAR ===== */

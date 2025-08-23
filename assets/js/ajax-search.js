@@ -69,7 +69,7 @@ jQuery(document).ready(function ($) {
                                 if (item && item.title && item.link) {
                                     output += `
                                         <div class="qa-update-item">
-                                            <div class="light-green-bkg accordion-header">
+                                            <div class="light-green-bkg accordion-header" data-accordion="search-${item.link.split('/').pop()}">
                                                 <div class="qa-update-title">
                                                     <h3><a href="${item.link}" class="search-result-link">${item.title}</a></h3>
                                                     <span class="post-type-label">${item.type === 'qa_updates' ? 'עדכון' : item.type === 'qa_orgs' ? 'ארגון' : 'ביבליוגרפיה'}</span>
@@ -84,8 +84,10 @@ jQuery(document).ready(function ($) {
                             output = '<p class="no-results">לא נמצאו תוצאות.</p>';
                         }
 
-                        // Display the results on the page
                         $('.qa-updates-list').html(output);
+                        
+                        // Initialize accordion functionality for search results
+                        initializeSearchAccordions();
                     } else {
                         console.error('Error in response:', response);
                         $('.qa-updates-list').html('<p class="error">שגיאה בחיפוש.</p>');
@@ -102,4 +104,32 @@ jQuery(document).ready(function ($) {
             $('.ajax-search-results').html('<p class="error">שגיאה בלתי צפויה.</p>');
         }
     });
+    
+    // Initialize accordion functionality for search results
+    function initializeSearchAccordions() {
+        const accordions = document.querySelectorAll('.accordion-header');
+        
+        accordions.forEach(header => {
+            header.addEventListener('click', function (e) {
+                // Don't trigger accordion if clicking on a link
+                if (e.target.tagName === 'A') {
+                    return;
+                }
+                
+                const accordionId = this.getAttribute('data-accordion');
+                const content = document.getElementById('accordion-' + accordionId);
+                const icon = document.getElementById('icon-' + accordionId);
+                
+                if (content && icon) {
+                    if (content.style.display === 'none') {
+                        content.style.display = 'block';
+                        icon.innerHTML = '⌃';
+                    } else {
+                        content.style.display = 'none';
+                        icon.innerHTML = '⌄';
+                    }
+                }
+            });
+        });
+    }
 });

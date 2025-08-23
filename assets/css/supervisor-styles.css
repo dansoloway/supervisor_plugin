@@ -95,10 +95,11 @@
 
 .supervisor-content-area {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 350px 1fr;
     gap: 30px;
     align-items: start;
     margin-top: 20px;
+    direction: ltr;
 }
 
 /* ===== AJAX SEARCH STYLES ===== */
@@ -270,6 +271,15 @@
     margin-top: 20px;
 }
 
+.search-results-container .qa-update-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.search-results-container .qa-update-item:last-child {
+    border-bottom: none;
+}
+
 .search-result-link {
     color: var(--sv-text);
     text-decoration: none;
@@ -309,6 +319,7 @@
     .supervisor-content-area {
         grid-template-columns: 1fr;
         gap: 20px;
+        direction: rtl;
     }
     
     .ajax-search-component {

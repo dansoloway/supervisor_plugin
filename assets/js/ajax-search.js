@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
             // Only search if there's a search term or selected filters
             if (!searchText && selectedThemes.length === 0 && selectedTags.length === 0) {
                 console.log('No search criteria provided');
-                $('.ajax-search-results').html('<p class="no-results">אנא הכנס טקסט לחיפוש או בחר קטגוריות</p>');
+                $('.qa-updates-list').html('<p class="no-results">אנא הכנס טקסט לחיפוש או בחר קטגוריות</p>');
                 return;
             }
             
@@ -64,33 +64,37 @@ jQuery(document).ready(function ($) {
                         let output = '';
 
                         if (results.length > 0) {
-                            output += '<ul class="search-results-list">';
+                            output += '<div class="search-results-container">';
                             results.forEach((item) => {
                                 if (item && item.title && item.link) {
                                     output += `
-                                        <li class="search-result-item">
-                                            <a href="${item.link}" class="search-result-link">
-                                                ${item.title}
-                                            </a>
-                                        </li>
+                                        <div class="qa-update-item">
+                                            <div class="light-green-bkg accordion-header">
+                                                <div class="qa-update-title">
+                                                    <h3><a href="${item.link}" class="search-result-link">${item.title}</a></h3>
+                                                    <span class="post-type-label">${item.type === 'qa_updates' ? 'עדכון' : item.type === 'qa_orgs' ? 'ארגון' : 'ביבליוגרפיה'}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     `;
                                 }
                             });
-                            output += '</ul>';
+                            output += '</div>';
                         } else {
                             output = '<p class="no-results">לא נמצאו תוצאות.</p>';
                         }
 
-                        $('.ajax-search-results').html(output);
+                        // Display the results on the page
+                        $('.qa-updates-list').html(output);
                     } else {
                         console.error('Error in response:', response);
-                        $('.ajax-search-results').html('<p class="error">שגיאה בחיפוש.</p>');
+                        $('.qa-updates-list').html('<p class="error">שגיאה בחיפוש.</p>');
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error('AJAX request failed:', status, error);
                     console.error('Response text:', xhr.responseText);
-                    $('.ajax-search-results').html('<p class="error">שגיאה בחיבור לשרת.</p>');
+                    $('.qa-updates-list').html('<p class="error">שגיאה בחיבור לשרת.</p>');
                 },
             });
         } catch (error) {

@@ -266,48 +266,30 @@
 }
 
 /* ===== SEARCH RESULTS STYLES ===== */
-.ajax-search-results {
+.search-results-container {
     margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--sv-border);
-}
-
-.search-results-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.search-result-item {
-    padding: 16px 0;
-    border-bottom: 1px solid var(--sv-border);
-    transition: background-color 0.2s;
-}
-
-.search-result-item:hover {
-    background-color: var(--sv-bar);
-    margin: 0 -12px;
-    padding: 16px 12px;
-    border-radius: 8px;
-}
-
-.search-result-item:last-child {
-    border-bottom: none;
 }
 
 .search-result-link {
     color: var(--sv-text);
     text-decoration: none;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 1.4;
-    display: block;
     transition: color 0.2s;
 }
 
 .search-result-link:hover {
     color: var(--sv-blue);
     text-decoration: none;
+}
+
+.post-type-label {
+    background: var(--sv-blue);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 10px;
 }
 
 /* ===== QA UPDATES LIST STYLES ===== */

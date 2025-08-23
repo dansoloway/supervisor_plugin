@@ -90,6 +90,10 @@ $search_text = sanitize_text_field($_POST['search_text'] ?? '');
 $qa_themes = $_POST['qa_themes'] ?? [];
 $qa_tags = $_POST['qa_tags'] ?? [];
 
+// Log raw input before processing
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - Raw qa_themes before processing: " . print_r($qa_themes, true) . "\n", FILE_APPEND);
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - Raw qa_tags before processing: " . print_r($qa_tags, true) . "\n", FILE_APPEND);
+
 // Ensure arrays are properly formatted
 if (!is_array($qa_themes)) {
     $qa_themes = [$qa_themes];
@@ -98,13 +102,25 @@ if (!is_array($qa_tags)) {
     $qa_tags = [$qa_tags];
 }
 
+// Log after array conversion
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - qa_themes after array conversion: " . print_r($qa_themes, true) . "\n", FILE_APPEND);
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - qa_tags after array conversion: " . print_r($qa_tags, true) . "\n", FILE_APPEND);
+
 // Sanitize array values and filter out empty ones
 $qa_themes = array_map('sanitize_text_field', array_filter($qa_themes, function($value) {
-    return !empty(trim($value));
+    $trimmed = trim($value);
+    $is_empty = empty($trimmed);
+    return !$is_empty;
 }));
 $qa_tags = array_map('sanitize_text_field', array_filter($qa_tags, function($value) {
-    return !empty(trim($value));
+    $trimmed = trim($value);
+    $is_empty = empty($trimmed);
+    return !$is_empty;
 }));
+
+// Log after filtering
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - qa_themes after filtering: " . print_r($qa_themes, true) . "\n", FILE_APPEND);
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - qa_tags after filtering: " . print_r($qa_tags, true) . "\n", FILE_APPEND);
 
 // Log decoded values
 file_put_contents($log_file, date('Y-m-d H:i:s') . " - Search text: $search_text\n", FILE_APPEND);
@@ -124,25 +140,42 @@ if (!empty($search_text)) {
 
 // Add taxonomy filters
 $tax_query = [];
+
+// Only add themes if we have valid non-empty values
 if (!empty($qa_themes) && count($qa_themes) > 0) {
-    $tax_query[] = [
-        'taxonomy' => 'qa_themes',
-        'field'    => 'slug',
-        'terms'    => $qa_themes,
-        'operator' => 'IN',
-    ];
+    // Double-check that we don't have empty values
+    $valid_themes = array_filter($qa_themes, function($theme) {
+        return !empty(trim($theme));
+    });
+    
+    if (!empty($valid_themes)) {
+        $tax_query[] = [
+            'taxonomy' => 'qa_themes',
+            'field'    => 'slug',
+            'terms'    => $valid_themes,
+            'operator' => 'IN',
+        ];
+    }
 }
 
+// Only add tags if we have valid non-empty values
 if (!empty($qa_tags) && count($qa_tags) > 0) {
-    $tax_query[] = [
-        'taxonomy' => 'qa_tags',
-        'field'    => 'slug',
-        'terms'    => $qa_tags,
-        'operator' => 'IN',
-    ];
+    // Double-check that we don't have empty values
+    $valid_tags = array_filter($qa_tags, function($tag) {
+        return !empty(trim($tag));
+    });
+    
+    if (!empty($valid_tags)) {
+        $tax_query[] = [
+            'taxonomy' => 'qa_tags',
+            'field'    => 'slug',
+            'terms'    => $valid_tags,
+            'operator' => 'IN',
+        ];
+    }
 }
 
-// Include tax_query only if filters are provided and not empty
+// Include tax_query only if we have valid filters
 if (!empty($tax_query) && count($tax_query) > 0) {
     if (count($tax_query) > 1) {
         $args['tax_query'] = [

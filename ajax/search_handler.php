@@ -109,12 +109,19 @@ file_put_contents($log_file, date('Y-m-d H:i:s') . " - qa_themes after array con
 file_put_contents($log_file, date('Y-m-d H:i:s') . " - qa_tags after array conversion: " . print_r($qa_tags, true) . "\n", FILE_APPEND);
 
 // Sanitize array values and filter out empty ones
-$qa_themes = array_map('sanitize_text_field', array_filter($qa_themes, function($value) {
+$qa_themes = array_map(function($value) {
+    $decoded = urldecode($value);
+    return sanitize_text_field($decoded);
+}, array_filter($qa_themes, function($value) {
     $trimmed = trim($value);
     $is_empty = empty($trimmed);
     return !$is_empty;
 }));
-$qa_tags = array_map('sanitize_text_field', array_filter($qa_tags, function($value) {
+
+$qa_tags = array_map(function($value) {
+    $decoded = urldecode($value);
+    return sanitize_text_field($decoded);
+}, array_filter($qa_tags, function($value) {
     $trimmed = trim($value);
     $is_empty = empty($trimmed);
     return !$is_empty;

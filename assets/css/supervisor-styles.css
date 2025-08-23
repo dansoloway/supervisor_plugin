@@ -225,6 +225,26 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.secondary-button {
+    background: #f8f9fa;
+    color: var(--sv-text);
+    border: 1px solid var(--sv-border);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    direction: rtl;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.secondary-button:hover {
+    background: #e9ecef;
+    border-color: var(--sv-blue);
+}
+
 .ajax-search-results {
     margin-top: 15px;
     padding-top: 15px;

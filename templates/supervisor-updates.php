@@ -34,85 +34,88 @@ $updates_query = new WP_Query($args);
     <div class="supervisor-content-area">
         <!-- Left: QA Updates List -->
         <div class="qa-updates-list">
-            <?php
-            if ($updates_query->have_posts()):
-                while ($updates_query->have_posts()):
-                    $updates_query->the_post();
-                    $post_id = get_the_ID();
+            <div class="initial-content" style="display: none;">
+                <?php
+                if ($updates_query->have_posts()):
+                    while ($updates_query->have_posts()):
+                        $updates_query->the_post();
+                        $post_id = get_the_ID();
 
-                    // Taxonomies & Custom Field Section
-                    $themes = get_the_terms($post_id, 'qa_themes');
-                    $tags = get_the_terms($post_id, 'qa_tags');
-                    $link = get_field('qa_updates_link');
+                        // Taxonomies & Custom Field Section
+                        $themes = get_the_terms($post_id, 'qa_themes');
+                        $tags = get_the_terms($post_id, 'qa_tags');
+                        $link = get_field('qa_updates_link');
 
-                    $raw_date = get_field('qa_updates_date'); // ACF date field
-                    $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
+                        $raw_date = get_field('qa_updates_date'); // ACF date field
+                        $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
 
-                    echo '<div class="qa-update-item">';
+                        echo '<div class="qa-update-item">';
 
-                    // Accordion Header (Clickable)
-                    echo '<div class="light-green-bkg accordion-header" data-accordion="' . esc_attr($post_id) . '">';
-                        echo '<div class="qa-update-title">';
-                            echo '<h3>' . get_the_title() . '</h3>';
-                            echo '<span class="update-date">' . esc_html($formatted_date) . '</span>';
-                            echo '<span class="accordion-icon" id="icon-' . esc_attr($post_id) . '">⌄</span>';
-                        echo '</div>'; // qa-update-title
-                    echo '</div>'; // accordion-header
+                        // Accordion Header (Clickable)
+                        echo '<div class="light-green-bkg accordion-header" data-accordion="' . esc_attr($post_id) . '">';
+                            echo '<div class="qa-update-title">';
+                                echo '<h3>' . get_the_title() . '</h3>';
+                                echo '<span class="update-date">' . esc_html($formatted_date) . '</span>';
+                                echo '<span class="accordion-icon" id="icon-' . esc_attr($post_id) . '">⌄</span>';
+                            echo '</div>'; // qa-update-title
+                        echo '</div>'; // accordion-header
 
-                    // Accordion Content (Hidden by Default)
-                    echo '<div class="accordion-content" id="accordion-' . esc_attr($post_id) . '" style="display: none;">';
-                        echo '<p>' . get_the_content() . '</p>';
+                        // Accordion Content (Hidden by Default)
+                        echo '<div class="accordion-content" id="accordion-' . esc_attr($post_id) . '" style="display: none;">';
+                            echo '<p>' . get_the_content() . '</p>';
 
-                        echo '<div class="taxonomy-boxes">';
-                        
-                        // Tags (qa_tags)
-                        if ($tags) {
-                            $tag_names = array_map(fn($tag) => esc_html($tag->name), $tags);
-                            echo '<p><strong>נושאי מפתח:</strong> ' . implode(', ', $tag_names) . '</p>';
-                        }
+                            echo '<div class="taxonomy-boxes">';
+                            
+                            // Tags (qa_tags)
+                            if ($tags) {
+                                $tag_names = array_map(fn($tag) => esc_html($tag->name), $tags);
+                                echo '<p><strong>נושאי מפתח:</strong> ' . implode(', ', $tag_names) . '</p>';
+                            }
 
-                        // Themes (qa_themes)
-                        if ($themes) {
-                            $theme_names = array_map(fn($theme) => esc_html($theme->name), $themes);
-                            echo '<p><strong>תחומים:</strong> ' . implode(', ', $theme_names) . '</p>';
-                        }
+                            // Themes (qa_themes)
+                            if ($themes) {
+                                $theme_names = array_map(fn($theme) => esc_html($theme->name), $themes);
+                                echo '<p><strong>תחומים:</strong> ' . implode(', ', $theme_names) . '</p>';
+                            }
 
-                        // External Link
-                        if ($link) {
-                            echo '<p><strong>לקישור:</strong> <a href="' . esc_url($link) . '" target="_blank">' . esc_url($link) . '</a></p>';
-                        }
+                            // External Link
+                            if ($link) {
+                                echo '<p><strong>לקישור:</strong> <a href="' . esc_url($link) . '" target="_blank">' . esc_url($link) . '</a></p>';
+                            }
 
-                        echo '</div>'; // taxonomy-boxes
-                    echo '</div>'; // accordion-content
+                            echo '</div>'; // taxonomy-boxes
+                        echo '</div>'; // accordion-content
 
-                    echo '</div>'; // qa-update-item
-                endwhile;
+                        echo '</div>'; // qa-update-item
+                    endwhile;
 
-               // Pagination (Numbers only, no "Next" or "Prev")
-               $total_pages = $updates_query->max_num_pages;
+                   // Pagination (Numbers only, no "Next" or "Prev")
+                   $total_pages = $updates_query->max_num_pages;
 
-               if ($total_pages > 1) {
-                   $pagination_links = paginate_links([
-                       'total'     => $total_pages,
-                       'current'   => $paged,
-                       'prev_next' => false,
-                       'type'      => 'array',
-                   ]);
-               
-                   if ($pagination_links) {
-                       echo '<div class="pagination">';
-                       foreach ($pagination_links as $link) {
-                           echo '<span style="display: inline-block; margin-right: 8px;">' . $link . '</span>';
+                   if ($total_pages > 1) {
+                       $pagination_links = paginate_links([
+                           'total'     => $total_pages,
+                           'current'   => $paged,
+                           'prev_next' => false,
+                           'type'      => 'array',
+                       ]);
+                   
+                       if ($pagination_links) {
+                           echo '<div class="pagination">';
+                           foreach ($pagination_links as $link) {
+                               echo '<span style="display: inline-block; margin-right: 8px;">' . $link . '</span>';
+                           }
+                           echo '</div>';
                        }
-                       echo '</div>';
                    }
-               }
 
-                wp_reset_postdata();
-            else:
-                echo '<p>אין עדכונים זמינים</p>';
-            endif;
-            ?>
+                    wp_reset_postdata();
+                else:
+                    echo '<p>אין עדכונים זמינים</p>';
+                endif;
+                ?>
+            </div>
+            <div class="search-results-container"></div>
         </div>
 
         <!-- Right: AJAX Search Component -->

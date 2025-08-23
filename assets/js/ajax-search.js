@@ -102,4 +102,39 @@ jQuery(document).ready(function ($) {
             $('.ajax-search-results').html('<p class="error">שגיאה בלתי צפויה.</p>');
         }
     });
+    
+    // Show All Updates Button
+    $('#show-all-updates').on('click', function (e) {
+        e.preventDefault();
+        
+        // Show the initial content (all updates)
+        $('.initial-content').show();
+        $('.search-results-container').empty();
+        
+        // Reinitialize accordion functionality
+        initializeAccordions();
+    });
+    
+    // Initialize accordion functionality
+    function initializeAccordions() {
+        const accordions = document.querySelectorAll('.accordion-header');
+        
+        accordions.forEach(header => {
+            header.addEventListener('click', function () {
+                const postId = this.getAttribute('data-accordion');
+                const content = document.getElementById('accordion-' + postId);
+                const icon = document.getElementById('icon-' + postId);
+                
+                if (content && icon) {
+                    if (content.style.display === 'none') {
+                        content.style.display = 'block';
+                        icon.innerHTML = '⌃';
+                    } else {
+                        content.style.display = 'none';
+                        icon.innerHTML = '⌄';
+                    }
+                }
+            });
+        });
+    }
 });

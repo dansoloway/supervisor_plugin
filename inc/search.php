@@ -57,6 +57,7 @@
         </div>
 
         <button type="button" id="search-submit">חפש</button>
+        <button type="button" id="show-all-updates" class="secondary-button">הצג את כל העדכונים</button>
     </form>
     <div class="ajax-search-results"></div>
 </div>

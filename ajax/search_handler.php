@@ -98,9 +98,13 @@ if (!is_array($qa_tags)) {
     $qa_tags = [$qa_tags];
 }
 
-// Sanitize array values
-$qa_themes = array_map('sanitize_text_field', array_filter($qa_themes));
-$qa_tags = array_map('sanitize_text_field', array_filter($qa_tags));
+// Sanitize array values and filter out empty ones
+$qa_themes = array_map('sanitize_text_field', array_filter($qa_themes, function($value) {
+    return !empty(trim($value));
+}));
+$qa_tags = array_map('sanitize_text_field', array_filter($qa_tags, function($value) {
+    return !empty(trim($value));
+}));
 
 // Log decoded values
 file_put_contents($log_file, date('Y-m-d H:i:s') . " - Search text: $search_text\n", FILE_APPEND);
@@ -120,7 +124,7 @@ if (!empty($search_text)) {
 
 // Add taxonomy filters
 $tax_query = [];
-if (!empty($qa_themes)) {
+if (!empty($qa_themes) && count($qa_themes) > 0) {
     $tax_query[] = [
         'taxonomy' => 'qa_themes',
         'field'    => 'slug',
@@ -129,7 +133,7 @@ if (!empty($qa_themes)) {
     ];
 }
 
-if (!empty($qa_tags)) {
+if (!empty($qa_tags) && count($qa_tags) > 0) {
     $tax_query[] = [
         'taxonomy' => 'qa_tags',
         'field'    => 'slug',
@@ -138,8 +142,8 @@ if (!empty($qa_tags)) {
     ];
 }
 
-// Include tax_query only if filters are provided
-if (!empty($tax_query)) {
+// Include tax_query only if filters are provided and not empty
+if (!empty($tax_query) && count($tax_query) > 0) {
     if (count($tax_query) > 1) {
         $args['tax_query'] = [
             'relation' => 'AND',

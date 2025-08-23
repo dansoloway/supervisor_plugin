@@ -17,6 +17,10 @@
                         'hide_empty' => false,
                     ]);
                     foreach ($themes as $theme) {
+                        // Skip terms with empty slugs
+                        if (empty(trim($theme->slug))) {
+                            continue;
+                        }
                         echo '<label class="checkbox-label">';
                         echo '<input type="checkbox" name="qa_themes[]" value="' . esc_attr($theme->slug) . '">';
                         echo esc_html($theme->name);
@@ -38,6 +42,10 @@
                         'hide_empty' => false,
                     ]);
                     foreach ($tags as $tag) {
+                        // Skip terms with empty slugs
+                        if (empty(trim($tag->slug))) {
+                            continue;
+                        }
                         echo '<label class="checkbox-label">';
                         echo '<input type="checkbox" name="qa_tags[]" value="' . esc_attr($tag->slug) . '">';
                         echo esc_html($tag->name);

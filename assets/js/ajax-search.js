@@ -13,8 +13,16 @@ jQuery(document).ready(function ($) {
             selectedTags.push($(this).val());
         });
         
+        const searchText = $('#search-text').val().trim();
+        
+        // Only search if there's a search term or selected filters
+        if (!searchText && selectedThemes.length === 0 && selectedTags.length === 0) {
+            $('.ajax-search-results').html('<p class="no-results">אנא הכנס טקסט לחיפוש או בחר קטגוריות</p>');
+            return;
+        }
+        
         const searchData = {
-            search_text: $('#search-text').val(),
+            search_text: searchText,
             qa_themes: selectedThemes,
             qa_tags: selectedTags,
         };

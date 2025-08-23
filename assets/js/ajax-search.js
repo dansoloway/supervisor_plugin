@@ -73,12 +73,18 @@ jQuery(document).ready(function ($) {
                                             <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">
                                                 <div class="qa-update-title">
                                                     <h3>${item.title}</h3>
+                                                    <span class="update-date">${item.date || ''}</span>
                                                     <span class="post-type-label">${item.type === 'qa_updates' ? 'עדכון' : item.type === 'qa_orgs' ? 'ארגון' : 'ביבליוגרפיה'}</span>
                                                     <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
                                                 </div>
                                             </div>
                                             <div class="accordion-content" id="accordion-${accordionId}" style="display: none;">
-                                                <p><a href="${item.link}" class="search-result-link">לחץ כאן לצפייה בתוכן המלא</a></p>
+                                                <p>${item.content || ''}</p>
+                                                <div class="taxonomy-boxes">
+                                                    ${item.tags && item.tags.length > 0 ? `<p><strong>נושאי מפתח:</strong> ${item.tags.join(', ')}</p>` : ''}
+                                                    ${item.themes && item.themes.length > 0 ? `<p><strong>תחומים:</strong> ${item.themes.join(', ')}</p>` : ''}
+                                                    ${item.source_link ? `<p><strong>לקישור:</strong> <a href="${item.source_link}" target="_blank">${item.source_link}</a></p>` : ''}
+                                                </div>
                                             </div>
                                         </div>
                                     `;

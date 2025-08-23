@@ -207,10 +207,26 @@ $results = [];
 if ($query->have_posts()) {
     while ($query->have_posts()) {
         $query->the_post();
+        $post_id = get_the_ID();
+        
+        // Get taxonomy data
+        $themes = get_the_terms($post_id, 'qa_themes');
+        $tags = get_the_terms($post_id, 'qa_tags');
+        $link = get_field('qa_updates_link');
+        
+        // Get date
+        $raw_date = get_field('qa_updates_date');
+        $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
+        
         $results[] = [
             'title' => get_the_title(),
             'link'  => get_permalink(),
             'type'  => get_post_type(),
+            'content' => get_the_content(),
+            'date' => $formatted_date,
+            'themes' => $themes ? array_map(fn($theme) => $theme->name, $themes) : [],
+            'tags' => $tags ? array_map(fn($tag) => $tag->name, $tags) : [],
+            'source_link' => $link,
         ];
     }
 }

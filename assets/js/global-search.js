@@ -5,7 +5,7 @@ jQuery(document).ready(function ($) {
         return;
     }
     
-    $('#search-submit').on('click', function (e) {
+    $('#global-search-submit').on('click', function (e) {
         e.preventDefault();
         
         try {
@@ -26,16 +26,16 @@ jQuery(document).ready(function ($) {
                 }
             });
             
-            const searchText = $('#search-text').val().trim();
+            const searchText = $('#global-search-text').val().trim();
             
-            console.log('Search text:', searchText);
+            console.log('Global search text:', searchText);
             console.log('Selected themes:', selectedThemes);
             console.log('Selected tags:', selectedTags);
             
             // Only search if there's a search term or selected filters
             if (!searchText && selectedThemes.length === 0 && selectedTags.length === 0) {
                 console.log('No search criteria provided');
-                $('.ajax-search-results').html('<p class="no-results">אנא הכנס טקסט לחיפוש או בחר קטגוריות</p>');
+                $('.global-search-results').html('<p class="no-results">אנא הכנס טקסט לחיפוש או בחר קטגוריות</p>');
                 return;
             }
             
@@ -43,10 +43,10 @@ jQuery(document).ready(function ($) {
                 search_text: searchText,
                 qa_themes: selectedThemes,
                 qa_tags: selectedTags,
-                post_types: ['qa_updates'], // Only search updates on this page
+                post_types: ['qa_orgs', 'qa_updates', 'qa_bibs'], // Search all post types
             };
 
-            console.log('Search data being sent:', searchData);
+            console.log('Global search data being sent:', searchData);
 
             // Use dynamic URL based on current site
             const ajaxUrl = window.location.origin + '/wp-content/plugins/supervisor-plugin/ajax/search_handler.php';
@@ -57,21 +57,23 @@ jQuery(document).ready(function ($) {
                 data: searchData,
                 dataType: 'json',
                 success: function (response) {
-                    console.log('AJAX response:', response);
+                    console.log('Global AJAX response:', response);
                     
                     if (response && response.success) {
                         const results = response.data || [];
                         let output = '';
 
                         if (results.length > 0) {
-                            output += '<ul class="search-results-list">';
+                            output += '<ul class="global-search-results-list">';
                             results.forEach((item) => {
                                 if (item && item.title && item.link) {
+                                    const postTypeLabel = getPostTypeLabel(item.type);
                                     output += `
-                                        <li class="search-result-item">
-                                            <a href="${item.link}" class="search-result-link">
+                                        <li class="global-search-result-item">
+                                            <a href="${item.link}" class="global-search-result-link">
                                                 ${item.title}
                                             </a>
+                                            <span class="post-type-label">${postTypeLabel}</span>
                                         </li>
                                     `;
                                 }
@@ -81,21 +83,31 @@ jQuery(document).ready(function ($) {
                             output = '<p class="no-results">לא נמצאו תוצאות.</p>';
                         }
 
-                        $('.ajax-search-results').html(output);
+                        $('.global-search-results').html(output);
                     } else {
                         console.error('Error in response:', response);
-                        $('.ajax-search-results').html('<p class="error">שגיאה בחיפוש.</p>');
+                        $('.global-search-results').html('<p class="error">שגיאה בחיפוש.</p>');
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('AJAX request failed:', status, error);
+                    console.error('Global AJAX request failed:', status, error);
                     console.error('Response text:', xhr.responseText);
-                    $('.ajax-search-results').html('<p class="error">שגיאה בחיבור לשרת.</p>');
+                    $('.global-search-results').html('<p class="error">שגיאה בחיבור לשרת.</p>');
                 },
             });
         } catch (error) {
-            console.error('Error in search function:', error);
-            $('.ajax-search-results').html('<p class="error">שגיאה בלתי צפויה.</p>');
+            console.error('Error in global search function:', error);
+            $('.global-search-results').html('<p class="error">שגיאה בלתי צפויה.</p>');
         }
     });
+    
+    // Helper function to get Hebrew labels for post types
+    function getPostTypeLabel(postType) {
+        const labels = {
+            'qa_orgs': 'ארגונים',
+            'qa_updates': 'עדכונים',
+            'qa_bibs': 'ביבליוגרפיה'
+        };
+        return labels[postType] || postType;
+    }
 });

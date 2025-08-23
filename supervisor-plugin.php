@@ -89,6 +89,15 @@ function enqueue_alternate_header_assets() {
         true // Load in the footer
     );
 
+    // Enqueue Global Search JavaScript (for global search pages)
+    wp_enqueue_script(
+        'global-search',
+        plugins_url('/assets/js/global-search.js', __FILE__),
+        ['jquery'], // Dependencies
+        time(), // Force cache refresh
+        true // Load in the footer
+    );
+
     // Enqueue Font Awesome
     wp_enqueue_script(
         'font-awesome',

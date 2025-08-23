@@ -67,13 +67,18 @@ jQuery(document).ready(function ($) {
                             output += '<div class="search-results-container">';
                             results.forEach((item) => {
                                 if (item && item.title && item.link) {
+                                    const accordionId = 'search-' + item.link.split('/').pop();
                                     output += `
                                         <div class="qa-update-item">
-                                            <div class="light-green-bkg accordion-header" data-accordion="search-${item.link.split('/').pop()}">
+                                            <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">
                                                 <div class="qa-update-title">
-                                                    <h3><a href="${item.link}" class="search-result-link">${item.title}</a></h3>
+                                                    <h3>${item.title}</h3>
                                                     <span class="post-type-label">${item.type === 'qa_updates' ? 'עדכון' : item.type === 'qa_orgs' ? 'ארגון' : 'ביבליוגרפיה'}</span>
+                                                    <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
                                                 </div>
+                                            </div>
+                                            <div class="accordion-content" id="accordion-${accordionId}" style="display: none;">
+                                                <p><a href="${item.link}" class="search-result-link">לחץ כאן לצפייה בתוכן המלא</a></p>
                                             </div>
                                         </div>
                                     `;
@@ -111,11 +116,6 @@ jQuery(document).ready(function ($) {
         
         accordions.forEach(header => {
             header.addEventListener('click', function (e) {
-                // Don't trigger accordion if clicking on a link
-                if (e.target.tagName === 'A') {
-                    return;
-                }
-                
                 const accordionId = this.getAttribute('data-accordion');
                 const content = document.getElementById('accordion-' + accordionId);
                 const icon = document.getElementById('icon-' + accordionId);

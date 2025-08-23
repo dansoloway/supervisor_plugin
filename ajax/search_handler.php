@@ -1,38 +1,23 @@
 <?php
 // Load WordPress environment dynamically
-$wp_load_path = dirname(dirname(dirname(dirname(__FILE__)))) . '/wp-load.php';
-if (file_exists($wp_load_path)) {
-    require_once $wp_load_path;
-} else {
-    // Fallback for different server configurations
-    $wp_load_path = dirname(dirname(dirname(__FILE__))) . '/wp-load.php';
-    if (file_exists($wp_load_path)) {
-        require_once $wp_load_path;
-    } else {
-        // Try to find wp-load.php in common locations
-        $possible_paths = [
-            dirname(dirname(dirname(dirname(__FILE__)))) . '/wp-load.php',
-            dirname(dirname(dirname(__FILE__))) . '/wp-load.php',
-            dirname(dirname(__FILE__)) . '/wp-load.php',
-            dirname(__FILE__) . '/wp-load.php',
-        ];
-        
-        $wp_loaded = false;
-        foreach ($possible_paths as $path) {
-            if (file_exists($path)) {
-                require_once $path;
-                $wp_loaded = true;
-                break;
-            }
-        }
-        
-        if (!$wp_loaded) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'WordPress not found']);
-            exit;
-        }
-    }
-}
+$wp_loaded = false;
+
+// Try multiple common WordPress load paths
+$possible_paths = [
+    // Standard WordPress structure
+    dirname(dirname(dirname(dirname(__FILE__)))) . '/wp-load.php',
+    dirname(dirname(dirname(__FILE__))) . '/wp-load.php',
+    dirname(dirname(__FILE__)) . '/wp-load.php',
+    dirname(__FILE__) . '/wp-load.php',
+    
+    // Kinsta staging specific paths
+    '/www/brookdalejdcorg_480/public/wp-load.php',
+    '/www/brookdalejdcorg_480/public_html/wp-load.php',
+    
+    // Common hosting paths
+    $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php',
+    dirname($_SERVER['DOCUMENT_ROOT']) . '/wp-load.php',
+];
 
 // Log file path (create logs directory if it doesn't exist)
 $log_dir = dirname(__FILE__) . '/../logs';
@@ -40,6 +25,62 @@ if (!file_exists($log_dir)) {
     mkdir($log_dir, 0755, true);
 }
 $log_file = $log_dir . '/search_log.txt';
+
+// Log the search attempt
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - Starting WordPress load attempt\n", FILE_APPEND);
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - Current file: " . __FILE__ . "\n", FILE_APPEND);
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - Document root: " . ($_SERVER['DOCUMENT_ROOT'] ?? 'not set') . "\n", FILE_APPEND);
+
+// Try each possible path
+foreach ($possible_paths as $path) {
+    file_put_contents($log_file, date('Y-m-d H:i:s') . " - Trying path: $path\n", FILE_APPEND);
+    
+    if (file_exists($path)) {
+        file_put_contents($log_file, date('Y-m-d H:i:s') . " - Found WordPress at: $path\n", FILE_APPEND);
+        require_once $path;
+        $wp_loaded = true;
+        break;
+    }
+}
+
+// If WordPress still not loaded, try to find it by searching up the directory tree
+if (!$wp_loaded) {
+    file_put_contents($log_file, date('Y-m-d H:i:s') . " - WordPress not found in common paths, searching directory tree\n", FILE_APPEND);
+    
+    $current_dir = dirname(__FILE__);
+    $max_depth = 10; // Prevent infinite loops
+    
+    for ($i = 0; $i < $max_depth; $i++) {
+        $wp_load_path = $current_dir . '/wp-load.php';
+        file_put_contents($log_file, date('Y-m-d H:i:s') . " - Searching: $wp_load_path\n", FILE_APPEND);
+        
+        if (file_exists($wp_load_path)) {
+            file_put_contents($log_file, date('Y-m-d H:i:s') . " - Found WordPress at: $wp_load_path\n", FILE_APPEND);
+            require_once $wp_load_path;
+            $wp_loaded = true;
+            break;
+        }
+        
+        $current_dir = dirname($current_dir);
+        if ($current_dir === '/' || $current_dir === '') {
+            break; // Reached root
+        }
+    }
+}
+
+// If WordPress still not loaded, return error
+if (!$wp_loaded) {
+    file_put_contents($log_file, date('Y-m-d H:i:s') . " - WordPress not found after all attempts\n", FILE_APPEND);
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: POST');
+    header('Access-Control-Allow-Headers: Content-Type');
+    echo json_encode(['success' => false, 'message' => 'WordPress not found']);
+    exit;
+}
+
+// Log successful WordPress load
+file_put_contents($log_file, date('Y-m-d H:i:s') . " - WordPress loaded successfully\n", FILE_APPEND);
 
 // Log raw POST data
 file_put_contents($log_file, date('Y-m-d H:i:s') . " - Raw POST Data: " . print_r($_POST, true) . "\n", FILE_APPEND);

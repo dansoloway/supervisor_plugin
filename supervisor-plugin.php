@@ -80,6 +80,15 @@ function enqueue_alternate_header_assets() {
         true // Load in the footer
     );
 
+    // Enqueue AJAX Search JavaScript
+    wp_enqueue_script(
+        'ajax-search',
+        plugins_url('/assets/js/ajax-search.js', __FILE__),
+        ['jquery'], // Dependencies
+        time(), // Force cache refresh
+        true // Load in the footer
+    );
+
     // Enqueue Font Awesome
     wp_enqueue_script(
         'font-awesome',

@@ -86,6 +86,136 @@
     }
 }
 
+/* ===== AJAX SEARCH STYLES ===== */
+.ajax-search-component {
+    background: var(--sv-card);
+    border: 1px solid var(--sv-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.ajax-search-component form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.search-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.search-input label {
+    font-weight: 600;
+    color: var(--sv-text);
+    font-size: 14px;
+}
+
+.search-input input[type="text"] {
+    padding: 10px 12px;
+    border: 1px solid var(--sv-border);
+    border-radius: 6px;
+    font-size: 14px;
+    direction: rtl;
+}
+
+.taxonomy-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.taxonomy-filter {
+    border: 1px solid var(--sv-border);
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.filter-title label {
+    font-weight: 600;
+    color: var(--sv-text);
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    direction: rtl;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin: 0;
+}
+
+#search-submit {
+    background: var(--sv-blue);
+    color: var(--sv-text);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    direction: rtl;
+}
+
+#search-submit:hover {
+    background: var(--sv-blue-600);
+}
+
+.ajax-search-results {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--sv-border);
+}
+
+.search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-result-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--sv-border);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-link {
+    color: var(--sv-blue);
+    text-decoration: none;
+    font-weight: 500;
+    direction: rtl;
+    display: block;
+}
+
+.search-result-link:hover {
+    text-decoration: underline;
+}
+
+.no-results, .error {
+    color: var(--sv-text-2);
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
 /* ===== HORIZONTAL MENU BAR (PILLS) ===== */
 .supervisor-home .site-nav {
     direction: rtl;

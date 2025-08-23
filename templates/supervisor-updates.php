@@ -32,7 +32,6 @@ $updates_query = new WP_Query($args);
 
     <!-- Right: AJAX Search Component -->
     <?php 
-    require_once(WP_PLUGIN_DIR . '/supervisor-plugin/inc/sidebar.php');
     require_once(WP_PLUGIN_DIR . '/supervisor-plugin/inc/search.php');
     ?>
 

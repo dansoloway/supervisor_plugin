@@ -91,10 +91,14 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+}
+
+.supervisor-content-area {
     display: grid;
     grid-template-columns: 1fr 350px;
     gap: 30px;
     align-items: start;
+    margin-top: 20px;
 }
 
 /* ===== AJAX SEARCH STYLES ===== */
@@ -317,9 +321,12 @@
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
     .supervisor-home {
+        padding: 16px;
+    }
+    
+    .supervisor-content-area {
         grid-template-columns: 1fr;
         gap: 20px;
-        padding: 16px;
     }
     
     .ajax-search-component {

@@ -71,13 +71,12 @@ $updates_query = new WP_Query($args);
                             // Tags (qa_tags)
                             if ($tags) {
                                 $tag_names = array_map(fn($tag) => esc_html($tag->name), $tags);
-                                echo '<p><strong>נושאי מפתח:</strong> ' . implode(', ', $tag_names) . '</p>';
+                                echo '<p><strong>תחומים:</strong> ' . implode(', ', $tag_names) . '</p>';
                             }
-
                             // Themes (qa_themes)
                             if ($themes) {
                                 $theme_names = array_map(fn($theme) => esc_html($theme->name), $themes);
-                                echo '<p><strong>תחומים:</strong> ' . implode(', ', $theme_names) . '</p>';
+                                echo '<p><strong>נושאי מפתח:</strong> ' . implode(', ', $theme_names) . '</p>';
                             }
 
                             // External Link

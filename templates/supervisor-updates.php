@@ -34,6 +34,8 @@ $updates_query = new WP_Query($args);
     <div class="supervisor-content-area">
         <!-- Left: QA Updates List -->
         <div class="qa-updates-list">
+           
+            <div class="search-results-container"></div>
             <div class="initial-content" style="display: none;">
                 <?php
                 if ($updates_query->have_posts()):
@@ -115,7 +117,6 @@ $updates_query = new WP_Query($args);
                 endif;
                 ?>
             </div>
-            <div class="search-results-container"></div>
         </div>
 
         <!-- Right: AJAX Search Component -->

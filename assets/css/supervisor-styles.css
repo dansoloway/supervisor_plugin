@@ -277,9 +277,17 @@
     margin-top: 20px;
 }
 
+.qa-update-item {
+    direction: rtl;
+}
+
+.accordion-content {
+    border: none;
+}
+
 .search-results-container .qa-update-item {
     padding: 20px 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #aab1c0;
 }
 
 .search-results-container .qa-update-item:last-child {

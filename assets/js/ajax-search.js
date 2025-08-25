@@ -5,9 +5,8 @@ jQuery(document).ready(function ($) {
         return;
     }
     
-    $('#search-submit').on('click', function (e) {
-        e.preventDefault();
-        
+    // Function to perform search
+    function performSearch() {
         try {
             // Properly collect checkbox values
             const selectedThemes = [];
@@ -101,19 +100,39 @@ jQuery(document).ready(function ($) {
                         // Initialize accordion functionality for search results
                         initializeSearchAccordions();
                     } else {
-                        console.error('Error in response:', response);
-                        $('.qa-updates-list').html('<p class="error">שגיאה בחיפוש.</p>');
+                        console.error('Search failed:', response);
+                        $('.qa-updates-list').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>');
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('AJAX request failed:', status, error);
-                    console.error('Response text:', xhr.responseText);
-                    $('.qa-updates-list').html('<p class="error">שגיאה בחיבור לשרת.</p>');
-                },
+                    console.error('AJAX error:', error);
+                    console.error('Status:', status);
+                    console.error('Response:', xhr.responseText);
+                    $('.qa-updates-list').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>');
+                }
             });
         } catch (error) {
             console.error('Error in search function:', error);
-            $('.ajax-search-results').html('<p class="error">שגיאה בלתי צפויה.</p>');
+            $('.qa-updates-list').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>');
+        }
+    }
+    
+    // Event listeners for search buttons
+    $('#search-submit').on('click', function (e) {
+        e.preventDefault();
+        performSearch();
+    });
+    
+    $('.search-button').on('click', function (e) {
+        e.preventDefault();
+        performSearch();
+    });
+    
+    // Also allow Enter key in search input
+    $('#search-text').on('keypress', function (e) {
+        if (e.which === 13) { // Enter key
+            e.preventDefault();
+            performSearch();
         }
     });
     

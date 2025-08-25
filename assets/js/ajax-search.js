@@ -138,10 +138,19 @@ jQuery(document).ready(function ($) {
     
     // Initialize accordion functionality for search results
     function initializeSearchAccordions() {
-        const accordions = document.querySelectorAll('.accordion-header');
+        // Only target accordions within search results
+        const searchResultsContainer = document.querySelector('.search-results-container');
+        if (!searchResultsContainer) return;
         
-        accordions.forEach(header => {
-            header.addEventListener('click', function (e) {
+        const searchAccordions = searchResultsContainer.querySelectorAll('.accordion-header');
+        
+        searchAccordions.forEach(header => {
+            // Remove any existing click listeners by cloning
+            const newHeader = header.cloneNode(true);
+            header.parentNode.replaceChild(newHeader, header);
+            
+            // Add new click listener
+            newHeader.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
@@ -153,7 +162,7 @@ jQuery(document).ready(function ($) {
                 
                 if (!content || !icon) return;
                 
-                // Close all other accordions first
+                // Close all other accordions first (both search and main)
                 const allAccordions = document.querySelectorAll('.accordion-header');
                 allAccordions.forEach(otherHeader => {
                     if (otherHeader !== this) {

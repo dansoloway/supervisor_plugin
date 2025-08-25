@@ -859,8 +859,9 @@
 }
 
 /* Filter Button */
-.supervisor-home .filter-button {
-    width: 100%;
+.supervisor-home .filter-button,
+.supervisor-home #search-submit {
+    width: 100% !important;
     height: 44px;
     background: #AFC6E8;
     color: white;
@@ -870,8 +871,12 @@
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    margin: 0;
-    box-sizing: border-box;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
 }
 
 .filter-button:hover {

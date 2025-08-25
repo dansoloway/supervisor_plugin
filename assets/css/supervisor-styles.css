@@ -336,6 +336,7 @@
 
 .title-date-container {
     flex: 1;
+    padding: 0 0 10px 3px;
 }
 
 .update-date {

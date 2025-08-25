@@ -64,9 +64,9 @@ jQuery(document).ready(function ($) {
 
                         if (results.length > 0) {
                             output += '<div class="search-results-container">';
-                            results.forEach((item) => {
+                            results.forEach((item, index) => {
                                 if (item && item.title && item.link) {
-                                    const accordionId = 'search-' + item.link.split('/').pop();
+                                    const accordionId = 'search-result-' + index;
                                     output += `
                                         <div class="qa-update-item">
                                             <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">

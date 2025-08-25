@@ -35,6 +35,11 @@
 
 /* ===== SUPERVISOR PLUGIN STYLES - COMPLETE REDESIGN ===== */
 
+/* RTL Direction for entire plugin */
+.supervisor-plugin {
+    direction: rtl;
+}
+
 /* Color Tokens */
 :root {
     --sv-blue: #B3CBE7;       /* primary - consistent everywhere */
@@ -91,15 +96,16 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    direction: rtl;
 }
 
 .supervisor-content-area {
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: 30% 1fr;
     gap: 30px;
     align-items: start;
     margin-top: 20px;
-    direction: ltr;
+    direction: rtl;
 }
 
 /* ===== AJAX SEARCH STYLES ===== */
@@ -319,7 +325,6 @@
     .supervisor-content-area {
         grid-template-columns: 1fr;
         gap: 20px;
-        direction: rtl;
     }
     
     .ajax-search-component {

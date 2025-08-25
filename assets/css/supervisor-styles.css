@@ -742,7 +742,7 @@
     width: 32px;
     height: 32px;
     border: none;
-    border-radius: 50%;
+    border-radius: 0;
     background: #AFC6E8;
     color: white;
     display: flex;

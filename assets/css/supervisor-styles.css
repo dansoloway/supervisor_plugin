@@ -318,7 +318,7 @@
 
 .qa-update-title {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 15px;
 }
@@ -328,10 +328,16 @@
     flex: 1;
 }
 
+.title-date-container {
+    flex: 1;
+}
+
 .update-date {
     font-size: 16px;
     color: var(--sv-text-2);
     font-weight: 500;
+    display: block;
+    margin-top: 8px;
 }
 
 .accordion-icon {

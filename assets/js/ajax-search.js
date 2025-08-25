@@ -72,8 +72,10 @@ jQuery(document).ready(function ($) {
                                         <div class="qa-update-item">
                                             <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">
                                                 <div class="qa-update-title">
-                                                    <h3>${item.title}</h3>
-                                                    <span class="update-date">${item.date || ''}</span>
+                                                    <div class="title-date-container">
+                                                        <h3>${item.title}</h3>
+                                                        <span class="update-date">${item.date || ''}</span>
+                                                    </div>
                                                     <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
                                                 </div>
                                             </div>

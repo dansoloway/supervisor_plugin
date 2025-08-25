@@ -316,6 +316,31 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.qa-update-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.qa-update-title h3 {
+    margin: 0;
+    flex: 1;
+}
+
+.update-date {
+    font-size: 16px;
+    color: var(--sv-text-2);
+    font-weight: 500;
+}
+
+.accordion-icon {
+    font-size: 18px;
+    color: var(--sv-text);
+    cursor: pointer;
+    margin-right: auto;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
     .supervisor-home {

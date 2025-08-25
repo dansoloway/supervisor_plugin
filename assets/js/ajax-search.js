@@ -74,7 +74,6 @@ jQuery(document).ready(function ($) {
                                                 <div class="qa-update-title">
                                                     <h3>${item.title}</h3>
                                                     <span class="update-date">${item.date || ''}</span>
-                                                    <span class="post-type-label">${item.type === 'qa_updates' ? 'עדכון' : item.type === 'qa_orgs' ? 'ארגון' : 'ביבליוגרפיה'}</span>
                                                     <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
                                                 </div>
                                             </div>

@@ -283,10 +283,11 @@
 
 .accordion-content {
     border: none;
+    padding: 1rem 0 0 0;
 }
 
 .search-results-container .qa-update-item {
-    padding: 20px 0;
+    padding: 30px 0 0 0;
     border-bottom: 1px solid #aab1c0;
 }
 
@@ -338,9 +339,9 @@
 }
 
 .update-date {
-    font-size: 16px;
-    color: var(--sv-text-2);
+    font-size: 20px;
     font-weight: 500;
+    color: var(--sv-text-2);
     display: block;
     margin-top: 8px;
 }

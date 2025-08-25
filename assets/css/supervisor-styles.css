@@ -679,7 +679,7 @@
 .supervisor-home .ajax-search-component {
     background: #E9F1F7;
     border-radius: 12px;
-    padding: 16px;
+    padding: 16px 16px 16px 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
@@ -725,6 +725,7 @@
     color: #344054;
     background: transparent;
     transition: border-color 0.2s ease;
+    margin: 0 0 0 0 !important;
 }
 
 .supervisor-home .search-input-field:focus {
@@ -800,11 +801,11 @@
 }
 
 .supervisor-home .filter-listbox {
-    height: 140px;
+    /* height: 140px; */
     overflow-y: auto;
     background: white;
     border: 1px solid #D9E2EC;
-    border-radius: 8px;
+    border-radius: 0px;
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -869,7 +870,8 @@
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    margin-top: 6px;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .filter-button:hover {
@@ -888,7 +890,7 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .supervisor-home .ajax-search-component {
-        padding: 14px;
+        padding: 14px 14px 14px 20px;
         gap: 10px;
     }
     
@@ -912,7 +914,7 @@
 
 @media (max-width: 480px) {
     .supervisor-home .ajax-search-component {
-        padding: 12px;
+        padding: 12px 12px 12px 16px;
         gap: 8px;
     }
     

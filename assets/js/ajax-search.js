@@ -142,33 +142,41 @@ jQuery(document).ready(function ($) {
         
         accordions.forEach(header => {
             header.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 const accordionId = this.getAttribute('data-accordion');
+                if (!accordionId) return;
+                
                 const content = document.getElementById('accordion-' + accordionId);
                 const icon = document.getElementById('icon-' + accordionId);
                 
+                if (!content || !icon) return;
+                
                 // Close all other accordions first
-                accordions.forEach(otherHeader => {
+                const allAccordions = document.querySelectorAll('.accordion-header');
+                allAccordions.forEach(otherHeader => {
                     if (otherHeader !== this) {
                         const otherAccordionId = otherHeader.getAttribute('data-accordion');
-                        const otherContent = document.getElementById('accordion-' + otherAccordionId);
-                        const otherIcon = document.getElementById('icon-' + otherAccordionId);
-                        
-                        if (otherContent && otherContent.style.display !== 'none') {
-                            otherContent.style.display = 'none';
-                            if (otherIcon) otherIcon.innerHTML = '⌄';
+                        if (otherAccordionId) {
+                            const otherContent = document.getElementById('accordion-' + otherAccordionId);
+                            const otherIcon = document.getElementById('icon-' + otherAccordionId);
+                            
+                            if (otherContent && otherIcon) {
+                                otherContent.style.display = 'none';
+                                otherIcon.innerHTML = '⌄';
+                            }
                         }
                     }
                 });
                 
                 // Toggle the clicked accordion
-                if (content && icon) {
-                    if (content.style.display === 'none') {
-                        content.style.display = 'block';
-                        icon.innerHTML = '⌃';
-                    } else {
-                        content.style.display = 'none';
-                        icon.innerHTML = '⌄';
-                    }
+                if (content.style.display === 'none' || content.style.display === '') {
+                    content.style.display = 'block';
+                    icon.innerHTML = '⌃';
+                } else {
+                    content.style.display = 'none';
+                    icon.innerHTML = '⌄';
                 }
             });
         });

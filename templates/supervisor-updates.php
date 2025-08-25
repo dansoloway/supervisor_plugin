@@ -129,38 +129,58 @@ $updates_query = new WP_Query($args);
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const accordions = document.querySelectorAll('.accordion-header');
+        function initializeAccordions() {
+            const accordions = document.querySelectorAll('.accordion-header');
 
-        accordions.forEach(header => {
-            header.addEventListener('click', function () {
-                const postId = this.getAttribute('data-accordion');
-                const content = document.getElementById('accordion-' + postId);
-                const icon = document.getElementById('icon-' + postId);
+            accordions.forEach(header => {
+                header.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const postId = this.getAttribute('data-accordion');
+                    if (!postId) return;
+                    
+                    const content = document.getElementById('accordion-' + postId);
+                    const icon = document.getElementById('icon-' + postId);
+                    
+                    if (!content || !icon) return;
 
-                // Close all other accordions first
-                accordions.forEach(otherHeader => {
-                    if (otherHeader !== this) {
-                        const otherPostId = otherHeader.getAttribute('data-accordion');
-                        const otherContent = document.getElementById('accordion-' + otherPostId);
-                        const otherIcon = document.getElementById('icon-' + otherPostId);
-                        
-                        if (otherContent && otherContent.style.display !== 'none') {
-                            otherContent.style.display = 'none';
-                            if (otherIcon) otherIcon.innerHTML = '⌄';
+                    // Close all other accordions first
+                    const allAccordions = document.querySelectorAll('.accordion-header');
+                    allAccordions.forEach(otherHeader => {
+                        if (otherHeader !== this) {
+                            const otherPostId = otherHeader.getAttribute('data-accordion');
+                            if (otherPostId) {
+                                const otherContent = document.getElementById('accordion-' + otherPostId);
+                                const otherIcon = document.getElementById('icon-' + otherPostId);
+                                
+                                if (otherContent && otherIcon) {
+                                    otherContent.style.display = 'none';
+                                    otherIcon.innerHTML = '⌄';
+                                }
+                            }
                         }
+                    });
+
+                    // Toggle the clicked accordion
+                    if (content.style.display === 'none' || content.style.display === '') {
+                        content.style.display = 'block';
+                        icon.innerHTML = '⌃';
+                    } else {
+                        content.style.display = 'none';
+                        icon.innerHTML = '⌄';
                     }
                 });
-
-                // Toggle the clicked accordion
-                if (content.style.display === 'none') {
-                    content.style.display = 'block';
-                    icon.innerHTML = '⌃';
-                } else {
-                    content.style.display = 'none';
-                    icon.innerHTML = '⌄';
-                }
             });
-        });
+        }
+
+        // Initialize accordions on page load
+        initializeAccordions();
+        
+        // Re-initialize when search results are loaded
+        if (typeof window !== 'undefined') {
+            window.initializeAccordions = initializeAccordions;
+        }
     });
 </script>
 

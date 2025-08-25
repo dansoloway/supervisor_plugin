@@ -813,7 +813,7 @@
 }
 
 /* ===== AJAX SEARCH COMPONENT - NEW DESIGN ===== */
-.ajax-search-component {
+.supervisor-home .ajax-search-component {
     background: #E9F1F7;
     border-radius: 12px;
     padding: 24px;
@@ -826,18 +826,18 @@
 }
 
 /* Search Section */
-.search-section {
+.supervisor-home .search-section {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.search-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1F2937;
-    margin: 0;
-    line-height: 1.2;
+.supervisor-home .search-title {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #1F2937 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
 }
 
 .search-input-container {

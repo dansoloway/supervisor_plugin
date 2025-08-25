@@ -23,28 +23,6 @@
                     <div class="filter-group-title">נושאי מפתח</div>
                     <div class="filter-listbox">
                         <?php
-                        $themes = get_terms([
-                            'taxonomy' => 'qa_themes',
-                            'hide_empty' => false,
-                        ]);
-                        foreach ($themes as $theme) {
-                            if (empty(trim($theme->slug))) {
-                                continue;
-                            }
-                            echo '<label class="checkbox-label">';
-                            echo '<input type="checkbox" name="qa_themes[]" value="' . esc_attr($theme->slug) . '">';
-                            echo '<span class="checkbox-text">' . esc_html($theme->name) . '</span>';
-                            echo '</label>';
-                        }
-                        ?>
-                    </div>
-                </div>
-
-                <!-- Areas -->
-                <div class="taxonomy-filter">
-                    <div class="filter-group-title">תחומים</div>
-                    <div class="filter-listbox">
-                        <?php
                         $tags = get_terms([
                             'taxonomy' => 'qa_tags',
                             'hide_empty' => false,
@@ -56,6 +34,28 @@
                             echo '<label class="checkbox-label">';
                             echo '<input type="checkbox" name="qa_tags[]" value="' . esc_attr($tag->slug) . '">';
                             echo '<span class="checkbox-text">' . esc_html($tag->name) . '</span>';
+                            echo '</label>';
+                        }
+                        ?>
+                    </div>
+                </div>
+
+                <!-- Areas -->
+                <div class="taxonomy-filter">
+                    <div class="filter-group-title">תחומים</div>
+                    <div class="filter-listbox">
+                        <?php
+                        $themes = get_terms([
+                            'taxonomy' => 'qa_themes',
+                            'hide_empty' => false,
+                        ]);
+                        foreach ($themes as $theme) {
+                            if (empty(trim($theme->slug))) {
+                                continue;
+                            }
+                            echo '<label class="checkbox-label">';
+                            echo '<input type="checkbox" name="qa_themes[]" value="' . esc_attr($theme->slug) . '">';
+                            echo '<span class="checkbox-text">' . esc_html($theme->name) . '</span>';
                             echo '</label>';
                         }
                         ?>

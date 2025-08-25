@@ -146,6 +146,21 @@ jQuery(document).ready(function ($) {
                 const content = document.getElementById('accordion-' + accordionId);
                 const icon = document.getElementById('icon-' + accordionId);
                 
+                // Close all other accordions first
+                accordions.forEach(otherHeader => {
+                    if (otherHeader !== this) {
+                        const otherAccordionId = otherHeader.getAttribute('data-accordion');
+                        const otherContent = document.getElementById('accordion-' + otherAccordionId);
+                        const otherIcon = document.getElementById('icon-' + otherAccordionId);
+                        
+                        if (otherContent && otherContent.style.display !== 'none') {
+                            otherContent.style.display = 'none';
+                            if (otherIcon) otherIcon.innerHTML = '⌄';
+                        }
+                    }
+                });
+                
+                // Toggle the clicked accordion
                 if (content && icon) {
                     if (content.style.display === 'none') {
                         content.style.display = 'block';

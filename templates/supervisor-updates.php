@@ -137,6 +137,21 @@ $updates_query = new WP_Query($args);
                 const content = document.getElementById('accordion-' + postId);
                 const icon = document.getElementById('icon-' + postId);
 
+                // Close all other accordions first
+                accordions.forEach(otherHeader => {
+                    if (otherHeader !== this) {
+                        const otherPostId = otherHeader.getAttribute('data-accordion');
+                        const otherContent = document.getElementById('accordion-' + otherPostId);
+                        const otherIcon = document.getElementById('icon-' + otherPostId);
+                        
+                        if (otherContent && otherContent.style.display !== 'none') {
+                            otherContent.style.display = 'none';
+                            if (otherIcon) otherIcon.innerHTML = '⌄';
+                        }
+                    }
+                });
+
+                // Toggle the clicked accordion
                 if (content.style.display === 'none') {
                     content.style.display = 'block';
                     icon.innerHTML = '⌃';

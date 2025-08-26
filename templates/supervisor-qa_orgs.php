@@ -16,17 +16,6 @@ error_log('Loading supervisor-qa_orgs.php template');
     <!-- Main Content -->
     <div class="supervisor-main supervisor-two-column">
 
-        <!-- Column 2: Sidebar -->
-        <?php
-            require_once PLUGIN_ROOT . 'inc/sidebar.php';
-
-            if (file_exists($sidebar_path)) {
-                require_once $sidebar_path;
-            } else {
-                error_log('Sidebar file not found: ' . $sidebar_path);
-            }
-       ?>
-
         <!-- Column 1: Organizations Grid -->
         <div class="categories-container"> 
             <h1 class="page-title">ארגוני פיקוח</h1>

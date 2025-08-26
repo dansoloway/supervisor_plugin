@@ -1333,33 +1333,19 @@
     text-decoration: none;
     color: var(--sv-text);
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     position: relative;
     overflow: hidden;
 }
 
 .org-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: var(--sv-blue);
     border-color: var(--sv-blue);
     color: var(--sv-text);
+    transform: none;
+    box-shadow: none;
 }
 
-.org-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--sv-blue);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
 
-.org-card:hover::before {
-    transform: scaleX(1);
-}
 
 .org-title {
     font-family: var(--sv-font-primary);

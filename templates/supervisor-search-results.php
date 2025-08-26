@@ -145,6 +145,23 @@ $total_results = $search_query->found_posts;
         }
     ?>
 
+    <!-- New Search Section -->
+    <div class="new-search-section">
+        <div class="new-search-container">
+            <h2>חיפוש נוסף</h2>
+            <p class="new-search-description">חפש מידע נוסף במערכת בקרת האיכות</p>
+            <form class="supervisor-search" role="search" action="<?php echo home_url('/supervisor-search/'); ?>">
+                <input type="search" name="supervisor_search" placeholder="הקלד מילות חיפוש..." class="supervisor-search-bar" aria-label="שדה חיפוש נוסף">
+                <button class="search-button" aria-label="חיפוש">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="13" cy="13" r="9" stroke="white" stroke-width="4"></circle>
+                        <line x1="19" y1="19" x2="28" y2="28" stroke="white" stroke-width="4"></line>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Search Results Header -->
     <div class="search-results-header">
         <h1>תוצאות חיפוש</h1>

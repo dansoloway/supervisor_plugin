@@ -95,25 +95,30 @@ jQuery(document).ready(function ($) {
                             output = '<p class="no-results">לא נמצאו תוצאות.</p>';
                         }
 
-                        $('.qa-updates-list').html(output);
+                        // Hide initial content and show search results
+                        $('.initial-content').hide();
+                        $('.search-results-container').html(output).show();
                         
                         // Initialize accordion functionality for search results
                         initializeSearchAccordions();
                     } else {
                         console.error('Search failed:', response);
-                        $('.qa-updates-list').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>');
+                        $('.initial-content').hide();
+                        $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error('AJAX error:', error);
                     console.error('Status:', status);
                     console.error('Response:', xhr.responseText);
-                    $('.qa-updates-list').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>');
+                    $('.initial-content').hide();
+                    $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
                 }
             });
         } catch (error) {
             console.error('Error in search function:', error);
-            $('.qa-updates-list').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>');
+            $('.initial-content').hide();
+            $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
         }
     }
     

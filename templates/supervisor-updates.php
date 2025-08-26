@@ -3,7 +3,7 @@
 get_header('supervisor');
 
 // Set number of posts per page (change this value as needed)
-$posts_per_page = 1; 
+$posts_per_page = 5; 
 
 // Get the current pagination page
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -35,8 +35,8 @@ $updates_query = new WP_Query($args);
         <!-- Left: QA Updates List -->
         <div class="qa-updates-list">
            
-            <div class="search-results-container"></div>
-            <div class="initial-content" style="display: none;">
+            <div class="search-results-container" style="display: none;"></div>
+            <div class="initial-content">
                 <?php
                 if ($updates_query->have_posts()):
                     while ($updates_query->have_posts()):

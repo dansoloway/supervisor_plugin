@@ -1,69 +1,83 @@
 <?php
-/* Template Name: Supervisor Content */
+/* Template Name: Supervisor Single Organization */
 get_header('supervisor'); 
 ?>
-<div class="supervisor-container">
-    <div class="supervisor-two-column">
-        <!-- Sidebar Section -->
-        <div>
-        <?php
-            $sidebar_path = trailingslashit(dirname(__FILE__, 2)) . 'inc/sidebar.php';
+<div class="supervisor-home supervisor-single-org">
+    <!-- Navigation Menu -->
+    <?php
+        $nav_path = plugin_dir_path(__FILE__) . '../inc/navigation.php';
+        if (file_exists($nav_path)) {
+            require_once $nav_path;
+        }
+    ?>
 
-            if (file_exists($sidebar_path)) {
-                require_once $sidebar_path;
-            } else {
-                error_log('Sidebar file not found: ' . $sidebar_path);
-            }
-            ?>
+    <!-- Main Content -->
+    <div class="supervisor-main-content">
+        <?php 
+        while (have_posts()) : the_post();
+            $acf_fields = get_fields();
+            $org_title = get_the_title();
+            $org_subtitle = $acf_fields['qa_subtitle'] ?? '';
+            $org_country = $acf_fields['qa_country'] ?? '';
+            $org_year = $acf_fields['qa_yearoffounding'] ?? '';
+            $org_services = $acf_fields['qa_services_supervised'] ?? '';
+            $org_link = $acf_fields['qa_link'] ?? '';
+            $org_report = $acf_fields['qa_yearly_report'] ?? '';
             
-            </div>
-            <div>
-                <?php 
-                while (have_posts()) : the_post();
-
-                    $acf_fields = get_fields();
-                    echo '<h1 class="dir_left" style="margin-top:0px">' . esc_html(get_the_title()) . ' - '.$acf_fields['qa_subtitle'].'</h1>';
-                    
-                    // Define the ACF fields with their corresponding display names
-                    $acf_field_labels = [
-                        'qa_yearoffounding' => 'שנת הקמה',
-                        'qa_gov_agency' => 'משרד ממשלתי אחראי',
-                        'qa_link' => 'אתר הארגון',
-                        'qa_services_supervised' => 'שירותים מפוקחים',
-                        'qa_yearly_report' => 'דוח שנתי',
-                    ];
-
-                    // Get all ACF field values
-                    
-
-                    // Check if any fields exist before rendering the div
-                    $non_empty_fields = array_filter($acf_fields);
-
-                    if (!empty($non_empty_fields)) : ?>
-                        <div class="acf-fields-grid">
-                            <?php 
-                            // Loop through fields and display only non-empty ones
-                            foreach ($acf_field_labels as $key => $label) {
-                                if (!empty($acf_fields[$key])) {
-                                    echo '<div class="acf-field"><strong>' . esc_html($label) . ':</strong> ';
-                                    // Handle links separately
-                                    if ($key === 'qa_link' || $key === 'qa_yearly_report') {
-                                        echo '<a href="' . esc_url($acf_fields[$key]) . '" target="_blank">' . esc_html($acf_fields[$key]) . '</a>';
-                                    } else {
-                                        echo esc_html($acf_fields[$key]);
-                                    }
-                                    echo '</div>';
-                                }
-                            }
-                            ?>
-                        </div>
-                    <?php endif; 
-                endwhile;
-                ?>
-
-                <?php echo '<div>' . apply_filters('the_content', get_the_content()) . '</div>'; ?>
-            </div>
+            // Get taxonomy terms
+            $terms = get_the_terms(get_the_ID(), 'qa_themes');
+            $org_themes = $terms && !is_wp_error($terms)
+                ? implode(', ', wp_list_pluck($terms, 'name'))
+                : '';
+        ?>
         
+        <!-- Organization Title -->
+        <div class="org-header">
+            <h1 class="org-main-title"><?php echo esc_html($org_title); ?> - <?php echo esc_html($org_subtitle); ?></h1>
+        </div>
+
+        <!-- Information Boxes -->
+        <div class="org-info-boxes">
+            <div class="info-box left-box">
+                <div class="info-item">
+                    <span class="info-label">סטטוס:</span>
+                    <span class="info-value">ארגון פעיל</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">אוכלוסיית יעד:</span>
+                    <span class="info-value"><?php echo esc_html($org_services); ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">מספר קטלוג:</span>
+                    <span class="info-value"><?php echo esc_html($org_year); ?></span>
+                </div>
+            </div>
+            
+            <div class="info-box right-box">
+                <div class="info-item">
+                    <span class="info-label">חוקרים:</span>
+                    <span class="info-value"><?php echo esc_html($org_themes); ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">תחומים:</span>
+                    <span class="info-value"><?php echo esc_html($org_services); ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">שנת פרסום:</span>
+                    <span class="info-value"><?php echo esc_html($org_year); ?></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- General Text Section -->
+        <div class="org-content">
+            <h2 class="content-title">מלל כללי על הארגון</h2>
+            <div class="content-text">
+                <?php echo apply_filters('the_content', get_the_content()); ?>
+            </div>
+        </div>
+
+        <?php endwhile; ?>
     </div>
 </div>
 

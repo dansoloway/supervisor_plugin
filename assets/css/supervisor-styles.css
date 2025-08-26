@@ -1321,14 +1321,14 @@
 .org-card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 30px;
+    gap: 0;
     margin-top: 30px;
 }
 
 .org-card {
     background: white;
-    border: 2px solid var(--sv-border);
-    border-radius: 12px;
+    border: 1px solid #000000;
+    border-radius: 0;
     padding: 30px;
     text-decoration: none;
     color: var(--sv-text);
@@ -1343,6 +1343,17 @@
     color: var(--sv-text);
     transform: none;
     box-shadow: none;
+}
+
+/* Add bottom border to every row except the last one */
+.org-card:nth-last-child(n+3) { 
+    border-bottom: 1px solid #000000;
+    padding-bottom: 30px;
+}
+
+/* Add bottom border only to the first row of elements */
+.org-card:nth-child(-n+2) {
+    border-bottom: 1px solid #000000;
 }
 
 
@@ -1404,7 +1415,7 @@
     
     .org-card-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 0;
     }
     
     .org-card {
@@ -1435,5 +1446,169 @@
     
     .org-title {
         font-size: 18px;
+    }
+}
+
+/* ===== SINGLE ORGANIZATION PAGE STYLING ===== */
+.supervisor-single-org .supervisor-main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Organization Header */
+.supervisor-single-org .org-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.supervisor-single-org .org-main-title {
+    font-family: var(--sv-font-primary);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--sv-text);
+    margin: 0;
+    line-height: 1.3;
+    text-align: center;
+}
+
+/* Information Boxes */
+.supervisor-single-org .org-info-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 40px;
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.supervisor-single-org .info-box {
+    padding: 25px;
+    background: #f5f5f5;
+    position: relative;
+}
+
+.supervisor-single-org .info-box.left-box {
+    border-right: 1px solid #e0e0e0;
+}
+
+.supervisor-single-org .info-box.right-box {
+    border-left: 1px solid #e0e0e0;
+}
+
+.supervisor-single-org .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    direction: rtl;
+    text-align: right;
+}
+
+.supervisor-single-org .info-item:last-child {
+    margin-bottom: 0;
+}
+
+.supervisor-single-org .info-label {
+    font-family: var(--sv-font-primary);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--sv-text);
+    min-width: 120px;
+    margin-left: 15px;
+}
+
+.supervisor-single-org .info-value {
+    font-family: var(--sv-font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--sv-text);
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* Content Section */
+.supervisor-single-org .org-content {
+    margin-top: 40px;
+}
+
+.supervisor-single-org .content-title {
+    font-family: var(--sv-font-primary);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sv-text);
+    margin: 0 0 20px 0;
+    text-align: right;
+}
+
+.supervisor-single-org .content-text {
+    font-family: var(--sv-font-primary);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--sv-text);
+    text-align: justify;
+    direction: rtl;
+}
+
+.supervisor-single-org .content-text p {
+    margin-bottom: 15px;
+}
+
+.supervisor-single-org .content-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .supervisor-single-org .supervisor-main-content {
+        padding: 20px 15px;
+    }
+    
+    .supervisor-single-org .org-main-title {
+        font-size: 24px;
+    }
+    
+    .supervisor-single-org .org-info-boxes {
+        grid-template-columns: 1fr;
+    }
+    
+    .supervisor-single-org .info-box.left-box {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .supervisor-single-org .info-box.right-box {
+        border-left: none;
+    }
+    
+    .supervisor-single-org .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .supervisor-single-org .info-label {
+        margin-left: 0;
+        margin-bottom: 5px;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .supervisor-single-org .org-main-title {
+        font-size: 20px;
+    }
+    
+    .supervisor-single-org .info-box {
+        padding: 20px;
+    }
+    
+    .supervisor-single-org .content-title {
+        font-size: 18px;
+    }
+    
+    .supervisor-single-org .content-text {
+        font-size: 15px;
     }
 }

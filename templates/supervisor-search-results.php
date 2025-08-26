@@ -19,43 +19,80 @@ $args = [
 if (!empty($search_term)) {
     // First, get posts that match the search term in title/content
     $title_content_posts = get_posts([
-        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'],
         'posts_per_page' => -1,
         's' => $search_term,
         'fields' => 'ids'
     ]);
     
-    // Get posts that have matching taxonomy terms
-    $taxonomy_posts = get_posts([
-        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items
-        'posts_per_page' => -1,
-        'tax_query' => [
-            'relation' => 'OR',
-            [
-                'taxonomy' => 'qa_themes',
-                'field' => 'name',
-                'terms' => $search_term,
-                'operator' => 'LIKE'
-            ],
-            [
-                'taxonomy' => 'qa_tags',
-                'field' => 'name',
-                'terms' => $search_term,
-                'operator' => 'LIKE'
-            ],
-            [
-                'taxonomy' => 'qa_bib_cats',
-                'field' => 'name',
-                'terms' => $search_term,
-                'operator' => 'LIKE'
-            ]
-        ],
+    // Get posts that have matching taxonomy terms - FIXED LOGIC
+    $taxonomy_posts = [];
+    
+    // Get all terms that contain the search term
+    $matching_themes = get_terms([
+        'taxonomy' => 'qa_themes',
+        'name__like' => $search_term,
+        'hide_empty' => false,
         'fields' => 'ids'
     ]);
     
+    $matching_tags = get_terms([
+        'taxonomy' => 'qa_tags',
+        'name__like' => $search_term,
+        'hide_empty' => false,
+        'fields' => 'ids'
+    ]);
+    
+    $matching_bib_cats = get_terms([
+        'taxonomy' => 'qa_bib_cats',
+        'name__like' => $search_term,
+        'hide_empty' => false,
+        'fields' => 'ids'
+    ]);
+    
+    // Only search for posts if we found matching terms
+    if (!empty($matching_themes) || !empty($matching_tags) || !empty($matching_bib_cats)) {
+        $tax_query = [];
+        
+        if (!empty($matching_themes)) {
+            $tax_query[] = [
+                'taxonomy' => 'qa_themes',
+                'field' => 'term_id',
+                'terms' => $matching_themes
+            ];
+        }
+        
+        if (!empty($matching_tags)) {
+            $tax_query[] = [
+                'taxonomy' => 'qa_tags',
+                'field' => 'term_id',
+                'terms' => $matching_tags
+            ];
+        }
+        
+        if (!empty($matching_bib_cats)) {
+            $tax_query[] = [
+                'taxonomy' => 'qa_bib_cats',
+                'field' => 'term_id',
+                'terms' => $matching_bib_cats
+            ];
+        }
+        
+        if (!empty($tax_query)) {
+            $tax_query['relation'] = 'OR';
+            
+            $taxonomy_posts = get_posts([
+                'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'],
+                'posts_per_page' => -1,
+                'tax_query' => $tax_query,
+                'fields' => 'ids'
+            ]);
+        }
+    }
+    
     // Get posts that have matching custom fields
     $meta_posts = get_posts([
-        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'],
         'posts_per_page' => -1,
         'meta_query' => [
             'relation' => 'OR',
@@ -75,7 +112,7 @@ if (!empty($search_term)) {
                 'compare' => 'LIKE'
             ],
             [
-                'key' => 'orignial_link', // Fixed: correct field name for bibliography (with typo as it exists in DB)
+                'key' => 'orignial_link',
                 'value' => $search_term,
                 'compare' => 'LIKE'
             ]

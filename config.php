@@ -11,6 +11,6 @@ define("SUPERVISOR_ORGS", '27928');
 define("SUPERVISOR_ABOUT", '27908');
 define("SUPERVISOR_CONTACT", '27912');
 define("SUPERVISOR_INTRO_TEXT", '27901');
-define("SUPERVISOR_ACTIVITIES", '27930'); // Add your actual page ID here
+define("SUPERVISOR_ACTIVITIES", '28029'); // Add your actual page ID here
 
 ?>

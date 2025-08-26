@@ -140,6 +140,76 @@ function register_qa_bib_cats_taxonomy() {
 }
 add_action('init', 'register_qa_bib_cats_taxonomy');
 
+// ===== FONT AWESOME ICON SUPPORT FOR TAXONOMY TERMS =====
+
+// Add custom fields to taxonomy term edit form
+function add_taxonomy_icon_field($term) {
+    // Get the current icon value
+    $icon = get_term_meta($term->term_id, 'fa_icon', true);
+    ?>
+    <tr class="form-field">
+        <th scope="row">
+            <label for="fa_icon">Font Awesome Icon</label>
+        </th>
+        <td>
+            <input type="text" name="fa_icon" id="fa_icon" value="<?php echo esc_attr($icon); ?>" class="regular-text" />
+            <p class="description">
+                Enter Font Awesome icon class (e.g., <code>fas fa-book</code>, <code>fas fa-graduation-cap</code>). 
+                <br>Leave empty to use default icon.
+            </p>
+            <div class="icon-preview" style="margin-top: 10px;">
+                <?php if (!empty($icon)): ?>
+                    <i class="<?php echo esc_attr($icon); ?>" style="font-size: 24px; color: #0073aa;"></i>
+                    <span style="margin-left: 10px;"><?php echo esc_html($icon); ?></span>
+                <?php endif; ?>
+            </div>
+        </td>
+    </tr>
+    <?php
+}
+
+// Add custom fields to taxonomy term add form
+function add_taxonomy_icon_field_add() {
+    ?>
+    <div class="form-field">
+        <label for="fa_icon">Font Awesome Icon</label>
+        <input type="text" name="fa_icon" id="fa_icon" class="regular-text" />
+        <p class="description">
+            Enter Font Awesome icon class (e.g., <code>fas fa-book</code>, <code>fas fa-graduation-cap</code>). 
+            <br>Leave empty to use default icon.
+        </p>
+    </div>
+    <?php
+}
+
+// Save the custom field
+function save_taxonomy_icon_field($term_id) {
+    if (isset($_POST['fa_icon'])) {
+        $icon = sanitize_text_field($_POST['fa_icon']);
+        update_term_meta($term_id, 'fa_icon', $icon);
+    }
+}
+
+// Add hooks for qa_bib_cats taxonomy
+add_action('qa_bib_cats_edit_form_fields', 'add_taxonomy_icon_field', 10, 1);
+add_action('qa_bib_cats_add_form_fields', 'add_taxonomy_icon_field_add');
+add_action('edited_qa_bib_cats', 'save_taxonomy_icon_field', 10, 1);
+add_action('created_qa_bib_cats', 'save_taxonomy_icon_field', 10, 1);
+
+// Helper function to get icon for a term
+function get_term_fa_icon($term_id, $default_icon = 'fas fa-folder') {
+    $icon = get_term_meta($term_id, 'fa_icon', true);
+    return !empty($icon) ? $icon : $default_icon;
+}
+
+// Helper function to get icon for a term by term object
+function get_term_fa_icon_by_term($term, $default_icon = 'fas fa-folder') {
+    if (is_object($term) && isset($term->term_id)) {
+        return get_term_fa_icon($term->term_id, $default_icon);
+    }
+    return $default_icon;
+}
+
 function add_default_themes_terms() {
     $terms = ['חינוך', 'רווחה', 'בריאות']; // Replace with your terms
     foreach ($terms as $term) {

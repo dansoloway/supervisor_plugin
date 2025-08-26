@@ -1703,6 +1703,33 @@ body .supervisor-bib-cats .categories-grid {
     color: white;
 }
 
+/* ===== TAXONOMY TERMS WITH ICONS ===== */
+.taxonomy-term {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 8px 4px 0;
+    padding: 4px 8px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--sv-text);
+}
+
+.taxonomy-term i {
+    font-size: 12px;
+    color: var(--sv-blue);
+}
+
+.taxonomy-term:hover {
+    background: var(--sv-blue);
+    color: white;
+}
+
+.taxonomy-term:hover i {
+    color: white;
+}
+
 /* No Categories Message */
 .supervisor-bib-cats .no-categories {
     text-align: center;

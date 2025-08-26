@@ -255,10 +255,37 @@ $total_results = $search_query->found_posts;
                                     <p><?php echo get_the_content(); ?></p>
                                     <div class="taxonomy-boxes">
                                         <?php if ($tags): ?>
-                                            <p><strong>נושאי מפתח:</strong> <?php echo implode(', ', array_map(fn($tag) => esc_html($tag->name), $tags)); ?></p>
+                                            <p><strong>נושאי מפתח:</strong> 
+                                                <?php foreach ($tags as $tag): ?>
+                                                    <span class="taxonomy-term">
+                                                        <i class="<?php echo get_term_fa_icon($tag->term_id, 'fas fa-tag'); ?>"></i>
+                                                        <?php echo esc_html($tag->name); ?>
+                                                    </span>
+                                                <?php endforeach; ?>
+                                            </p>
                                         <?php endif; ?>
                                         <?php if ($themes): ?>
-                                            <p><strong>תחומים:</strong> <?php echo implode(', ', array_map(fn($theme) => esc_html($theme->name), $themes)); ?></p>
+                                            <p><strong>תחומים:</strong> 
+                                                <?php foreach ($themes as $theme): ?>
+                                                    <span class="taxonomy-term">
+                                                        <i class="<?php echo get_term_fa_icon($theme->term_id, 'fas fa-folder'); ?>"></i>
+                                                        <?php echo esc_html($theme->name); ?>
+                                                    </span>
+                                                <?php endforeach; ?>
+                                            </p>
+                                        <?php endif; ?>
+                                        <?php 
+                                        // Get bibliography categories for this post
+                                        $bib_cats = get_the_terms($post_id, 'qa_bib_cats');
+                                        if ($bib_cats): ?>
+                                            <p><strong>קטגוריות ביבליוגרפיה:</strong> 
+                                                <?php foreach ($bib_cats as $bib_cat): ?>
+                                                    <span class="taxonomy-term">
+                                                        <i class="<?php echo get_term_fa_icon($bib_cat->term_id, 'fas fa-book'); ?>"></i>
+                                                        <?php echo esc_html($bib_cat->name); ?>
+                                                    </span>
+                                                <?php endforeach; ?>
+                                            </p>
                                         <?php endif; ?>
                                         <?php if ($link): ?>
                                             <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>

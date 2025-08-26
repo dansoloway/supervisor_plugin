@@ -23,30 +23,6 @@ error_log('Loading supervisor-bib_cats.php template');
 
         <div class="categories-grid">
             <?php
-            // Array of random Font Awesome icons
-            $random_icons = [
-                'fas fa-book',
-                'fas fa-graduation-cap',
-                'fas fa-microscope',
-                'fas fa-flask',
-                'fas fa-chart-line',
-                'fas fa-lightbulb',
-                'fas fa-cogs',
-                'fas fa-rocket',
-                'fas fa-palette',
-                'fas fa-music',
-                'fas fa-camera',
-                'fas fa-code',
-                'fas fa-leaf',
-                'fas fa-heart',
-                'fas fa-star',
-                'fas fa-gem',
-                'fas fa-diamond',
-                'fas fa-crown',
-                'fas fa-trophy',
-                'fas fa-medal'
-            ];
-            
             // Fetch all categories in the 'qa_bib_cats' taxonomy
             $categories = get_terms([
                 'taxonomy' => 'qa_bib_cats',
@@ -58,8 +34,8 @@ error_log('Loading supervisor-bib_cats.php template');
                     $description = get_term_meta($category->term_id, 'qa_bib_description', true);
                     // Link to search page with category as search term
                     $search_url = home_url('/supervisor-search/') . '?supervisor_search=' . urlencode($category->name);
-                    // Use random icon from array, cycling through if more categories than icons
-                    $icon = $random_icons[$index % count($random_icons)];
+                    // Get custom Font Awesome icon for this term, or use default
+                    $icon = get_term_fa_icon($category->term_id, 'fas fa-folder');
                     ?>
                     <a href="<?php echo esc_url($search_url); ?>" class="category-card">
                         <div class="category-icon">

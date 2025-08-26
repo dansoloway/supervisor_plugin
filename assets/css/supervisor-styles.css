@@ -552,50 +552,7 @@
     color: var(--sv-text);
 }
 
-.supervisor-home .dropdown-menu .submenu-item.active {
-    background-color: var(--sv-blue);
-    color: white;
-}
 
-.supervisor-home .dropdown-menu.show {
-    display: block;
-}
-
-.supervisor-home .dropdown-menu a {
-    display: block;
-    padding: 12px 16px;
-    color: var(--sv-text);
-    text-decoration: none;
-    font-family: var(--sv-font-primary);
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 1.4;
-    transition: background .2s, color .2s;
-    border-bottom: 1px solid var(--sv-bar-border);
-    margin: 0 8px;
-    border-radius: 8px;
-}
-
-.supervisor-home .dropdown-menu a:last-child {
-    border-bottom: none;
-}
-
-.supervisor-home .dropdown-menu a:hover,
-.supervisor-home .dropdown-menu a:focus-visible {
-    background: var(--sv-blue);
-    color: #FFFFFF;
-    outline: 0;
-}
-
-/* Dropdown positioning for RTL */
-.supervisor-home .site-nav a.dropdown {
-    position: relative;
-}
-
-.supervisor-home .site-nav a.dropdown .dropdown-menu {
-    right: 0;
-    left: auto;
-}
 
 /* ===== SEARCH BAR ===== */
 .search-section {

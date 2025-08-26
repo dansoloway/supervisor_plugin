@@ -1565,3 +1565,190 @@
         font-size: 15px;
     }
 }
+
+/* ===== BIBLIOGRAPHY CATEGORIES PAGE STYLING ===== */
+.supervisor-bib-cats .bib-cats-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Page Header */
+.supervisor-bib-cats .page-title {
+    font-family: var(--sv-font-primary);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--sv-text);
+    text-align: center;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+}
+
+.supervisor-bib-cats .intro-text {
+    font-family: var(--sv-font-primary);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--sv-text);
+    margin-bottom: 40px;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Categories Grid */
+.supervisor-bib-cats .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Category Cards */
+.supervisor-bib-cats .category-card {
+    background: white;
+    border: 2px solid var(--sv-border);
+    border-radius: 12px;
+    padding: 30px;
+    text-decoration: none;
+    color: var(--sv-text);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.supervisor-bib-cats .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--sv-blue);
+    color: var(--sv-text);
+}
+
+.supervisor-bib-cats .category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--sv-blue);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.supervisor-bib-cats .category-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Category Icon */
+.supervisor-bib-cats .category-icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.supervisor-bib-cats .category-icon i,
+.supervisor-bib-cats .category-icon .dashicons {
+    font-size: 48px;
+    color: var(--sv-blue);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.supervisor-bib-cats .category-icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+/* Category Title */
+.supervisor-bib-cats .category-title {
+    font-family: var(--sv-font-primary);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--sv-text);
+    margin: 0 0 15px 0;
+    line-height: 1.3;
+}
+
+/* Category Description */
+.supervisor-bib-cats .category-description {
+    font-family: var(--sv-font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--sv-text-2);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* No Categories Message */
+.supervisor-bib-cats .no-categories {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-family: var(--sv-font-primary);
+    font-size: 16px;
+    color: var(--sv-text-2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .supervisor-bib-cats .bib-cats-content {
+        padding: 20px 15px;
+    }
+    
+    .supervisor-bib-cats .page-title {
+        font-size: 28px;
+    }
+    
+    .supervisor-bib-cats .intro-text {
+        font-size: 16px;
+    }
+    
+    .supervisor-bib-cats .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .supervisor-bib-cats .category-card {
+        padding: 25px;
+    }
+    
+    .supervisor-bib-cats .category-title {
+        font-size: 20px;
+    }
+    
+    .supervisor-bib-cats .category-description {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .supervisor-bib-cats .page-title {
+        font-size: 24px;
+    }
+    
+    .supervisor-bib-cats .category-card {
+        padding: 20px;
+    }
+    
+    .supervisor-bib-cats .category-icon i,
+    .supervisor-bib-cats .category-icon .dashicons {
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .supervisor-bib-cats .category-icon img {
+        width: 40px;
+        height: 40px;
+    }
+}

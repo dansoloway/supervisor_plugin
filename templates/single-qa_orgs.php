@@ -12,7 +12,7 @@ get_header('supervisor');
     ?>
 
     <!-- Main Content -->
-    <div class="supervisor-main-content">
+    <div class="single-org-content">
         <?php 
         while (have_posts()) : the_post();
             $acf_fields = get_fields();

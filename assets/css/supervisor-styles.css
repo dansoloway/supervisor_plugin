@@ -1403,6 +1403,9 @@
     max-width: none;
     margin: 0;
     padding: 40px 20px;
+    display: block !important;
+    grid-template-columns: none !important;
+    gap: 0 !important;
 }
 
 /* Organization Header */

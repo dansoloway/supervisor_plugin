@@ -4,7 +4,7 @@ get_header('supervisor');
 error_log('Loading supervisor-qa_orgs.php template');
 ?>
 
-<div class="supervisor-home">
+<div class="supervisor-home supervisor-qa_orgs">
     <!-- Navigation Menu -->
     <?php
         $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
@@ -29,10 +29,12 @@ error_log('Loading supervisor-qa_orgs.php template');
 
         <!-- Column 1: Organizations Grid -->
         <div class="categories-container"> 
+            <h1 class="page-title">ארגוני פיקוח</h1>
             <p>
                 כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתה כאן יהיה טקסט הקדמה קצר המסביר למה בחרנו את הארגונים האלה
+            </p>
 
-                <div class="org-card-grid">
+            <div class="org-card-grid">
     <?php
     // Query organizations (qa_orgs)
     $args = [

@@ -1283,3 +1283,171 @@
 .no-results p:last-child {
     margin-bottom: 0;
 }
+
+/* ===== ORGANIZATIONS PAGE STYLING ===== */
+.supervisor-qa_orgs .supervisor-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.supervisor-qa_orgs .categories-container {
+    flex: 1;
+    padding: 0 40px;
+}
+
+.supervisor-qa_orgs .page-title {
+    font-family: var(--sv-font-primary);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--sv-text);
+    text-align: center;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+}
+
+.supervisor-qa_orgs .categories-container > p {
+    font-family: var(--sv-font-primary);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--sv-text);
+    margin-bottom: 40px;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.org-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.org-card {
+    background: white;
+    border: 2px solid var(--sv-border);
+    border-radius: 12px;
+    padding: 30px;
+    text-decoration: none;
+    color: var(--sv-text);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.org-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--sv-blue);
+    color: var(--sv-text);
+}
+
+.org-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--sv-blue);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.org-card:hover::before {
+    transform: scaleX(1);
+}
+
+.org-title {
+    font-family: var(--sv-font-primary);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--sv-text);
+    margin: 0 0 15px 0;
+    line-height: 1.3;
+    text-align: right;
+}
+
+.org-description {
+    font-family: var(--sv-font-primary);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--sv-text-2);
+    margin: 0 0 25px 0;
+    line-height: 1.5;
+    text-align: right;
+}
+
+.org-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    text-align: right;
+    direction: rtl;
+}
+
+.org-info:last-child {
+    margin-bottom: 0;
+}
+
+.org-info i {
+    color: var(--sv-blue);
+    font-size: 16px;
+    margin-left: 12px;
+    margin-right: 0;
+    width: 16px;
+    text-align: center;
+}
+
+.org-info span {
+    font-family: var(--sv-font-primary);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sv-text-2);
+    flex: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .supervisor-qa_orgs .categories-container {
+        padding: 0 20px;
+    }
+    
+    .org-card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .org-card {
+        padding: 25px;
+    }
+    
+    .org-title {
+        font-size: 20px;
+    }
+    
+    .org-description {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .supervisor-qa_orgs .supervisor-main {
+        padding: 20px 10px;
+    }
+    
+    .supervisor-qa_orgs .categories-container {
+        padding: 0 10px;
+    }
+    
+    .org-card {
+        padding: 20px;
+    }
+    
+    .org-title {
+        font-size: 18px;
+    }
+}

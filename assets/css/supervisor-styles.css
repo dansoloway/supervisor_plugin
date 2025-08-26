@@ -1451,8 +1451,9 @@
 
 /* ===== SINGLE ORGANIZATION PAGE STYLING ===== */
 .supervisor-single-org .supervisor-main-content {
-    max-width: 1000px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     padding: 40px 20px;
 }
 
@@ -1477,11 +1478,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0;
-    margin-bottom: 40px;
+    margin: 40px -20px;
     background: #f5f5f5;
     border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    border-radius: 0;
     overflow: hidden;
+    width: calc(100% + 40px);
 }
 
 .supervisor-single-org .info-box {
@@ -1514,7 +1516,7 @@
 .supervisor-single-org .info-label {
     font-family: var(--sv-font-primary);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--sv-text);
     min-width: 120px;
     margin-left: 15px;
@@ -1546,10 +1548,13 @@
 .supervisor-single-org .content-text {
     font-family: var(--sv-font-primary);
     font-size: 16px;
+    font-weight: 400;
     line-height: 1.6;
     color: var(--sv-text);
     text-align: justify;
     direction: rtl;
+    width: 100%;
+    max-width: none;
 }
 
 .supervisor-single-org .content-text p {

@@ -505,7 +505,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: white;
+    background: var(--sv-blue);
     border: 1px solid var(--sv-border);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -513,18 +513,7 @@
     display: none;
     min-width: 200px;
     margin-top: 0;
-    /* Add padding to create hover bridge */
-    padding-top: 8px;
-}
-
-.supervisor-home .dropdown-menu::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: transparent;
+    padding: 0;
 }
 
 .supervisor-home .dropdown-menu.show {
@@ -536,17 +525,23 @@
     padding: 12px 16px;
     color: var(--sv-text);
     text-decoration: none;
-    border-bottom: 1px solid var(--sv-border);
+    border-bottom: 1px solid #E5E7EB;
     transition: background-color 0.2s ease;
+    font-family: var(--sv-font-primary);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.4;
+    background: var(--sv-blue);
 }
 
 .supervisor-home .dropdown-menu .submenu-item:last-child {
     border-bottom: none;
 }
 
-.supervisor-home .dropdown-menu .submenu-item:hover {
-    background-color: var(--sv-bar);
-    color: var(--sv-text);
+.supervisor-home .dropdown-menu .submenu-item:hover,
+.supervisor-home .dropdown-menu .submenu-item.active {
+    background-color: var(--sv-blue-600);
+    color: #FFFFFF;
 }
 
 .supervisor-home .dropdown-menu .submenu-item.active {

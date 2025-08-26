@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (e.target.classList.contains('submenu-item')) {
                     // Allow the link to work normally
                     e.stopPropagation();
+                    console.log('Submenu item clicked:', e.target.href);
                     // Don't prevent default - let the link navigate
                 }
             });

@@ -533,6 +533,7 @@
     line-height: 1.4;
     background: var(--sv-blue);
     border-radius: 0;
+    cursor: pointer;
 }
 
 .supervisor-home .dropdown-menu .submenu-item:last-child {

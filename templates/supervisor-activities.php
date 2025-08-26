@@ -11,7 +11,7 @@ get_header('supervisor');
 
     <!-- Navigation Menu -->
     <?php
-        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+        $nav_path = plugin_dir_path(__FILE__) . '../inc/navigation.php';
         if (file_exists($nav_path)) {
             require_once $nav_path;
         }
@@ -75,7 +75,7 @@ get_header('supervisor');
 
 .activity-card,
 .activity-card-full {
-    background: #f8f9fa;
+    background: #ffffff;
     border-radius: 12px;
     padding: 32px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -97,7 +97,7 @@ get_header('supervisor');
 .activity-icon {
     width: 80px;
     height: 80px;
-    background: #e9ecef;
+    background: #ffffff;
     border-radius: 50%;
     display: flex;
     align-items: center;

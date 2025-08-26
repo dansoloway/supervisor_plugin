@@ -15,8 +15,8 @@ $supervisor_menu = [
     ],
     [
         'title' => 'תחומי פעילות',
-        'url' => get_the_permalink(SUPERVISOR_INTRO_TEXT),
-        'is_active' => is_page(SUPERVISOR_INTRO_TEXT),
+        'url' => get_the_permalink(SUPERVISOR_ACTIVITIES),
+        'is_active' => is_page(SUPERVISOR_ACTIVITIES),
         'has_dropdown' => false,
         'submenu' => []
     ],

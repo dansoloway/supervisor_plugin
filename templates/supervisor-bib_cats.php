@@ -56,11 +56,12 @@ error_log('Loading supervisor-bib_cats.php template');
             if (!empty($categories)) :
                 foreach ($categories as $index => $category) :
                     $description = get_term_meta($category->term_id, 'qa_bib_description', true);
-                    $category_link = get_term_link($category);
+                    // Link to search page with category as search term
+                    $search_url = home_url('/supervisor-search/') . '?supervisor_search=' . urlencode($category->name);
                     // Use random icon from array, cycling through if more categories than icons
                     $icon = $random_icons[$index % count($random_icons)];
                     ?>
-                    <a href="<?php echo esc_url($category_link); ?>" class="category-card">
+                    <a href="<?php echo esc_url($search_url); ?>" class="category-card">
                         <div class="category-icon">
                             <i class="<?php echo esc_attr($icon); ?>"></i>
                         </div>

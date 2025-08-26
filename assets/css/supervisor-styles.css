@@ -1604,9 +1604,6 @@ body .supervisor-bib-cats .categories-grid {
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 40px !important;
     margin-top: 30px !important;
-    /* Debug: Add a border to make sure CSS is loading */
-    border: 5px solid red !important;
-    background-color: yellow !important;
 }
 
 /* Category Cards */
@@ -1697,8 +1694,8 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-arrow i {
-    font-size: 16px;
-    color: var(--sv-blue);
+    font-size: 20px;
+    color: #000000;
     transition: color 0.3s ease;
 }
 

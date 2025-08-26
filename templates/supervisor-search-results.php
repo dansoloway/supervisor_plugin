@@ -6,6 +6,10 @@ get_header('supervisor');
 $search_term = $_GET['supervisor_search'] ?? '';
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
+// Debug logging
+error_log('Supervisor Search Debug - Search term: ' . $search_term);
+error_log('Supervisor Search Debug - GET params: ' . print_r($_GET, true));
+
 // Build comprehensive search query
 $args = [
     'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items instead of qa_bibs

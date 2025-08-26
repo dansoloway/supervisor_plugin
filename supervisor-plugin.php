@@ -177,6 +177,12 @@ function flush_supervisor_rewrites() {
 }
 register_activation_hook(__FILE__, 'flush_supervisor_rewrites');
 
+// Force flush rewrite rules on plugin update
+function supervisor_force_rewrite_flush() {
+    flush_rewrite_rules();
+}
+add_action('init', 'supervisor_force_rewrite_flush', 999);
+
 // Cleanup on deactivation
 function supervisor_plugin_deactivation() {
     flush_rewrite_rules();

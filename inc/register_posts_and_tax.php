@@ -118,7 +118,7 @@ function register_additional_taxonomies() {
 add_action('init', 'register_additional_taxonomies');
 
 function register_qa_bib_cats_taxonomy() {
-    register_taxonomy('qa_bib_cats', 'qa_bib_items', [
+    register_taxonomy('qa_bib_cats', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
         'labels' => [
             'name' => __('קטגוריות ביבליוגרפיה', 'text-domain'),
             'singular_name' => __('קטגוריה ביבליוגרפיה', 'text-domain'),

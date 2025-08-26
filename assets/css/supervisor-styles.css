@@ -751,7 +751,7 @@
     color: #9CA3AF;
 }
 
-.supervisor-home .search-button {
+.supervisor-home .ajax-search-component .search-button {
     position: absolute;
     left: 0;
     width: 40px;

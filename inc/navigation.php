@@ -27,7 +27,7 @@ $supervisor_menu = [
         'has_dropdown' => true,
         'submenu' => [
             [
-                'title' => 'מהי מפת הידע',
+                'title' => 'מהי מפת ידע',
                 'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
                 'is_active' => is_page(SUPERVISOR_BIB_CATS)
             ],

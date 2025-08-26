@@ -1,0 +1,217 @@
+<?php
+/* Template Name: Supervisor Search Results */
+get_header('supervisor');
+
+// Get search parameters
+$search_term = get_query_var('s') ?: $_GET['s'] ?? '';
+$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+// Build query for all post types
+$args = [
+    'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+    'posts_per_page' => 20,
+    'paged' => $paged,
+    'orderby' => 'date',
+    'order' => 'DESC',
+];
+
+// Add search term if provided
+if (!empty($search_term)) {
+    $args['s'] = $search_term;
+}
+
+$search_query = new WP_Query($args);
+$total_results = $search_query->found_posts;
+?>
+
+<div class="supervisor-home">
+    <!-- Navigation Menu -->
+    <?php
+        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+        if (file_exists($nav_path)) {
+            require_once $nav_path;
+        }
+    ?>
+
+    <!-- Search Results Header -->
+    <div class="search-results-header">
+        <h1>תוצאות חיפוש</h1>
+        <?php if (!empty($search_term)): ?>
+            <p class="search-query">חיפוש עבור: <strong><?php echo esc_html($search_term); ?></strong></p>
+        <?php endif; ?>
+        <p class="results-count">נמצאו <?php echo $total_results; ?> תוצאות</p>
+    </div>
+
+    <!-- Search Results Content -->
+    <div class="search-results-content">
+        <?php if ($search_query->have_posts()): ?>
+            <div class="search-results-list">
+                <?php
+                $result_index = 0;
+                while ($search_query->have_posts()):
+                    $search_query->the_post();
+                    $post_id = get_the_ID();
+                    $post_type = get_post_type();
+                    $accordion_id = 'search-result-' . $result_index;
+                    $result_index++;
+                    
+                    // Get post type specific data
+                    switch ($post_type) {
+                        case 'qa_updates':
+                            $themes = get_the_terms($post_id, 'qa_themes');
+                            $tags = get_the_terms($post_id, 'qa_tags');
+                            $link = get_field('qa_updates_link');
+                            $raw_date = get_field('qa_updates_date');
+                            $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
+                            break;
+                            
+                        case 'qa_bibs':
+                            $link = get_field('qa_bibs_link');
+                            $formatted_date = '';
+                            break;
+                            
+                        case 'qa_orgs':
+                            $link = get_field('qa_orgs_link');
+                            $formatted_date = '';
+                            break;
+                    }
+                    ?>
+
+                    <div class="qa-update-item">
+                        <!-- Accordion Header -->
+                        <div class="light-green-bkg accordion-header" data-accordion="<?php echo esc_attr($accordion_id); ?>">
+                            <div class="qa-update-title">
+                                <div class="title-date-container">
+                                    <h3><?php echo get_the_title(); ?></h3>
+                                    <?php if (!empty($formatted_date)): ?>
+                                        <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
+                                    <?php endif; ?>
+                                </div>
+                                <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Content -->
+                        <div class="accordion-content" id="accordion-<?php echo esc_attr($accordion_id); ?>" style="display: none;">
+                            <?php if ($post_type === 'qa_updates'): ?>
+                                <!-- Updates Content -->
+                                <p><?php echo get_the_content(); ?></p>
+                                <div class="taxonomy-boxes">
+                                    <?php if ($tags): ?>
+                                        <p><strong>נושאי מפתח:</strong> <?php echo implode(', ', array_map(fn($tag) => esc_html($tag->name), $tags)); ?></p>
+                                    <?php endif; ?>
+                                    <?php if ($themes): ?>
+                                        <p><strong>תחומים:</strong> <?php echo implode(', ', array_map(fn($theme) => esc_html($theme->name), $themes)); ?></p>
+                                    <?php endif; ?>
+                                    <?php if ($link): ?>
+                                        <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                    <?php endif; ?>
+                                </div>
+                            <?php elseif ($post_type === 'qa_bibs'): ?>
+                                <!-- Bibliography Content -->
+                                <p><?php echo get_the_content(); ?></p>
+                                <?php if ($link): ?>
+                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                <?php endif; ?>
+                            <?php elseif ($post_type === 'qa_orgs'): ?>
+                                <!-- Organizations Content -->
+                                <p><?php echo get_the_content(); ?></p>
+                                <?php if ($link): ?>
+                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                <?php endwhile; ?>
+            </div>
+
+            <!-- Pagination -->
+            <?php
+            $total_pages = $search_query->max_num_pages;
+            if ($total_pages > 1):
+            ?>
+                <div class="pagination">
+                    <?php
+                    $pagination_links = paginate_links([
+                        'total' => $total_pages,
+                        'current' => $paged,
+                        'prev_next' => false,
+                        'type' => 'array',
+                    ]);
+                    
+                    if ($pagination_links):
+                        foreach ($pagination_links as $link):
+                            echo '<span style="display: inline-block; margin-right: 8px;">' . $link . '</span>';
+                        endforeach;
+                    endif;
+                    ?>
+                </div>
+            <?php endif; ?>
+
+        <?php else: ?>
+            <!-- No Results -->
+            <div class="no-results">
+                <p>לא נמצאו תוצאות עבור החיפוש שלך.</p>
+                <p>נסה לשנות את מילות החיפוש או לחזור לדף החיפוש.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function initializeAccordions() {
+            const accordions = document.querySelectorAll('.accordion-header');
+
+            accordions.forEach(header => {
+                header.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const accordionId = this.getAttribute('data-accordion');
+                    if (!accordionId) return;
+                    
+                    const content = document.getElementById('accordion-' + accordionId);
+                    const icon = document.getElementById('icon-' + accordionId);
+                    
+                    if (!content || !icon) return;
+
+                    // Close all other accordions first
+                    const allAccordions = document.querySelectorAll('.accordion-header');
+                    allAccordions.forEach(otherHeader => {
+                        if (otherHeader !== this) {
+                            const otherAccordionId = otherHeader.getAttribute('data-accordion');
+                            if (otherAccordionId) {
+                                const otherContent = document.getElementById('accordion-' + otherAccordionId);
+                                const otherIcon = document.getElementById('icon-' + otherAccordionId);
+                                
+                                if (otherContent && otherIcon) {
+                                    otherContent.style.display = 'none';
+                                    otherIcon.innerHTML = '⌄';
+                                }
+                            }
+                        }
+                    });
+
+                    // Toggle the clicked accordion
+                    if (content.style.display === 'none' || content.style.display === '') {
+                        content.style.display = 'block';
+                        icon.innerHTML = '⌃';
+                    } else {
+                        content.style.display = 'none';
+                        icon.innerHTML = '⌄';
+                    }
+                });
+            });
+        }
+
+        // Initialize accordions on page load
+        initializeAccordions();
+    });
+</script>
+
+<?php
+wp_reset_postdata();
+get_footer();
+?>

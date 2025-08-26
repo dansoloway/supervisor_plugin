@@ -41,6 +41,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-bib_cats.php',
         'supervisor-qa_orgs.php',
         'taxonomy-qa_bib_cats.php', // Ensure taxonomy template is included
+        'supervisor-search-results.php', // Add search results template
     ];
 
     $singles = ['qa_bibs', 'qa_orgs', 'qa_updates', 'qa_bib_items'];
@@ -192,3 +193,19 @@ function supervisor_force_taxonomy_template($template) {
     return $template;
 }
 add_filter('template_include', 'supervisor_force_taxonomy_template');
+
+// Handle search results page
+function supervisor_handle_search_results($template) {
+    // Check if this is a search request
+    if (isset($_GET['s']) && !empty($_GET['s'])) {
+        // Check if we're on a specific search results page or if it's a general search
+        if (is_page() || is_home() || is_search()) {
+            $search_results_template = plugin_dir_path(__FILE__) . 'templates/supervisor-search-results.php';
+            if (file_exists($search_results_template)) {
+                return $search_results_template;
+            }
+        }
+    }
+    return $template;
+}
+add_filter('template_include', 'supervisor_handle_search_results', 20);

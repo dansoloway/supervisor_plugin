@@ -5,26 +5,66 @@
  * Run this once to populate the database with test data
  */
 
-// Load WordPress
-require_once dirname(__FILE__) . '/wp-load.php';
+// WP-CLI automatically loads WordPress, so we don't need to load it manually
+if (!defined('ABSPATH')) {
+    // If not running via WP-CLI, try to load WordPress
+    $wp_loaded = false;
+    
+    // Try multiple common WordPress load paths
+    $possible_paths = [
+        dirname(__FILE__) . '/wp-load.php',
+        dirname(dirname(__FILE__)) . '/wp-load.php',
+        dirname(dirname(dirname(__FILE__))) . '/wp-load.php',
+        $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php',
+    ];
+    
+    foreach ($possible_paths as $path) {
+        if (file_exists($path)) {
+            require_once $path;
+            $wp_loaded = true;
+            break;
+        }
+    }
+    
+    if (!$wp_loaded) {
+        die('WordPress not found. Please run this script from the WordPress root directory or via WP-CLI.');
+    }
+}
 
 // Check if we're in admin or can run this safely
 if (!current_user_can('manage_options')) {
     die('Insufficient permissions to run this script.');
 }
 
-echo "<h1>Creating Seed Content for Supervisor Plugin</h1>";
+// Output function that works with both WP-CLI and browser
+function output_message($message) {
+    if (defined('WP_CLI') && WP_CLI) {
+        WP_CLI::log($message);
+    } else {
+        echo $message . "<br>";
+    }
+}
+
+if (defined('WP_CLI') && WP_CLI) {
+    WP_CLI::log("Creating Seed Content for Supervisor Plugin");
+} else {
+    echo "<h1>Creating Seed Content for Supervisor Plugin</h1>";
+}
 
 // Function to create taxonomy terms if they don't exist
 function create_taxonomy_terms() {
-    echo "<h2>Creating Taxonomy Terms...</h2>";
+    if (defined('WP_CLI') && WP_CLI) {
+        WP_CLI::log("Creating Taxonomy Terms...");
+    } else {
+        echo "<h2>Creating Taxonomy Terms...</h2>";
+    }
     
     // Themes
     $themes = ['חינוך', 'רווחה', 'בריאות', 'תעסוקה', 'ביטחון', 'תחבורה'];
     foreach ($themes as $theme) {
         if (!term_exists($theme, 'qa_themes')) {
             wp_insert_term($theme, 'qa_themes');
-            echo "Created theme: $theme<br>";
+            output_message("Created theme: $theme");
         }
     }
     
@@ -33,7 +73,7 @@ function create_taxonomy_terms() {
     foreach ($tags as $tag) {
         if (!term_exists($tag, 'qa_tags')) {
             wp_insert_term($tag, 'qa_tags');
-            echo "Created tag: $tag<br>";
+            output_message("Created tag: $tag");
         }
     }
     
@@ -42,14 +82,18 @@ function create_taxonomy_terms() {
     foreach ($bib_cats as $cat) {
         if (!term_exists($cat, 'qa_bib_cats')) {
             wp_insert_term($cat, 'qa_bib_cats');
-            echo "Created bibliography category: $cat<br>";
+            output_message("Created bibliography category: $cat");
         }
     }
 }
 
 // Function to create QA Updates
 function create_qa_updates() {
-    echo "<h2>Creating QA Updates...</h2>";
+    if (defined('WP_CLI') && WP_CLI) {
+        WP_CLI::log("Creating QA Updates...");
+    } else {
+        echo "<h2>Creating QA Updates...</h2>";
+    }
     
     $updates = [
         [
@@ -110,14 +154,18 @@ function create_qa_updates() {
                 wp_set_object_terms($post_id, $update['tags'], 'qa_tags');
             }
             
-            echo "Created update: {$update['title']}<br>";
+            output_message("Created update: {$update['title']}");
         }
     }
 }
 
 // Function to create QA Organizations
 function create_qa_orgs() {
-    echo "<h2>Creating QA Organizations...</h2>";
+    if (defined('WP_CLI') && WP_CLI) {
+        WP_CLI::log("Creating QA Organizations...");
+    } else {
+        echo "<h2>Creating QA Organizations...</h2>";
+    }
     
     $organizations = [
         [
@@ -185,14 +233,18 @@ function create_qa_orgs() {
                 wp_set_object_terms($post_id, $org['tags'], 'qa_tags');
             }
             
-            echo "Created organization: {$org['title']}<br>";
+            output_message("Created organization: {$org['title']}");
         }
     }
 }
 
 // Function to create QA Bibliography Items
 function create_qa_bib_items() {
-    echo "<h2>Creating QA Bibliography Items...</h2>";
+    if (defined('WP_CLI') && WP_CLI) {
+        WP_CLI::log("Creating QA Bibliography Items...");
+    } else {
+        echo "<h2>Creating QA Bibliography Items...</h2>";
+    }
     
     $bibliography_items = [
         [
@@ -262,7 +314,7 @@ function create_qa_bib_items() {
                 wp_set_object_terms($post_id, $item['tags'], 'qa_tags');
             }
             
-            echo "Created bibliography item: {$item['title']}<br>";
+            output_message("Created bibliography item: {$item['title']}");
         }
     }
 }
@@ -274,18 +326,32 @@ try {
     create_qa_orgs();
     create_qa_bib_items();
     
-    echo "<h2>Seed Content Creation Complete!</h2>";
-    echo "<p>Created sample content for testing search functionality:</p>";
-    echo "<ul>";
-    echo "<li>4 QA Updates with themes and tags</li>";
-    echo "<li>3 QA Organizations with custom fields</li>";
-    echo "<li>5 QA Bibliography Items with categories</li>";
-    echo "<li>6 Themes, 8 Tags, and 4 Bibliography Categories</li>";
-    echo "</ul>";
-    echo "<p>You can now test the search functionality with realistic content!</p>";
+    if (defined('WP_CLI') && WP_CLI) {
+        WP_CLI::success("Seed Content Creation Complete!");
+        WP_CLI::log("Created sample content for testing search functionality:");
+        WP_CLI::log("- 4 QA Updates with themes and tags");
+        WP_CLI::log("- 3 QA Organizations with custom fields");
+        WP_CLI::log("- 5 QA Bibliography Items with categories");
+        WP_CLI::log("- 6 Themes, 8 Tags, and 4 Bibliography Categories");
+        WP_CLI::log("You can now test the search functionality with realistic content!");
+    } else {
+        echo "<h2>Seed Content Creation Complete!</h2>";
+        echo "<p>Created sample content for testing search functionality:</p>";
+        echo "<ul>";
+        echo "<li>4 QA Updates with themes and tags</li>";
+        echo "<li>3 QA Organizations with custom fields</li>";
+        echo "<li>5 QA Bibliography Items with categories</li>";
+        echo "<li>6 Themes, 8 Tags, and 4 Bibliography Categories</li>";
+        echo "</ul>";
+        echo "<p>You can now test the search functionality with realistic content!</p>";
+    }
     
 } catch (Exception $e) {
-    echo "<h2>Error Creating Seed Content</h2>";
-    echo "<p>Error: " . $e->getMessage() . "</p>";
+    if (defined('WP_CLI') && WP_CLI) {
+        WP_CLI::error("Error Creating Seed Content: " . $e->getMessage());
+    } else {
+        echo "<h2>Error Creating Seed Content</h2>";
+        echo "<p>Error: " . $e->getMessage() . "</p>";
+    }
 }
 ?>

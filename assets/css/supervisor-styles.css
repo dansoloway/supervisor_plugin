@@ -58,6 +58,56 @@
     text-decoration: underline;
 }
 
+/* ===== PAGINATION STYLING ===== */
+.pagination {
+    direction: rtl;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.pagination span {
+    display: inline-block;
+    margin: 0 !important;
+}
+
+.pagination a,
+.pagination span.current {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    text-decoration: none;
+    font-family: var(--sv-font-primary);
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.pagination a {
+    color: #9CA3AF;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.pagination a:hover {
+    color: var(--sv-blue);
+    background: transparent;
+    border: 1px solid var(--sv-blue);
+}
+
+.pagination span.current {
+    color: white;
+    background: var(--sv-blue);
+    border: 1px solid var(--sv-blue);
+    font-weight: 600;
+}
+
 /* ===== FOUNDATION CSS OVERRIDES ===== */
 /* Prevent Foundation from interfering with our custom design */
 

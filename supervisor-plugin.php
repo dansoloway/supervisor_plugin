@@ -69,7 +69,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        time(), // Force cache refresh
+        '1.0.1', // Version bump to force cache refresh
         'all' // Media type
     );
 
@@ -119,6 +119,10 @@ function enqueue_alternate_header_assets() {
         null, // No version needed
         false // Load in the header (FontAwesome should load early)
     );
+    
+    // Dequeue conflicting styles if they exist
+    wp_dequeue_style('styles-orig');
+    wp_deregister_style('styles-orig');
 }
 add_action('wp_enqueue_scripts', 'enqueue_alternate_header_assets', 999); // High priority
 

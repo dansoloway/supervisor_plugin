@@ -23,6 +23,30 @@ error_log('Loading supervisor-bib_cats.php template');
 
         <div class="categories-grid">
             <?php
+            // Array of random Font Awesome icons
+            $random_icons = [
+                'fas fa-book',
+                'fas fa-graduation-cap',
+                'fas fa-microscope',
+                'fas fa-flask',
+                'fas fa-chart-line',
+                'fas fa-lightbulb',
+                'fas fa-cogs',
+                'fas fa-rocket',
+                'fas fa-palette',
+                'fas fa-music',
+                'fas fa-camera',
+                'fas fa-code',
+                'fas fa-leaf',
+                'fas fa-heart',
+                'fas fa-star',
+                'fas fa-gem',
+                'fas fa-diamond',
+                'fas fa-crown',
+                'fas fa-trophy',
+                'fas fa-medal'
+            ];
+            
             // Fetch all categories in the 'qa_bib_cats' taxonomy
             $categories = get_terms([
                 'taxonomy' => 'qa_bib_cats',
@@ -30,25 +54,21 @@ error_log('Loading supervisor-bib_cats.php template');
             ]);
 
             if (!empty($categories)) :
-                foreach ($categories as $category) :
-                    $icon = get_term_meta($category->term_id, 'qa_bib_icon', true);
+                foreach ($categories as $index => $category) :
                     $description = get_term_meta($category->term_id, 'qa_bib_description', true);
                     $category_link = get_term_link($category);
+                    // Use random icon from array, cycling through if more categories than icons
+                    $icon = $random_icons[$index % count($random_icons)];
                     ?>
                     <a href="<?php echo esc_url($category_link); ?>" class="category-card">
                         <div class="category-icon">
-                            <?php if (!empty($icon)) : ?>
-                                <?php if (strpos($icon, 'dashicons-') !== false) : ?>
-                                    <span class="dashicons <?php echo esc_attr($icon); ?>"></span>
-                                <?php else : ?>
-                                    <img src="<?php echo esc_url($icon); ?>" alt="<?php echo esc_attr($category->name); ?>" />
-                                <?php endif; ?>
-                            <?php else : ?>
-                                <i class="fas fa-folder"></i>
-                            <?php endif; ?>
+                            <i class="<?php echo esc_attr($icon); ?>"></i>
                         </div>
                         <h2 class="category-title"><?php echo esc_html($category->name); ?></h2>
                         <p class="category-description"><?php echo esc_html($description); ?></p>
+                        <div class="category-arrow">
+                            <i class="fas fa-arrow-left"></i>
+                        </div>
                     </a>
                 <?php endforeach;
             else : ?>

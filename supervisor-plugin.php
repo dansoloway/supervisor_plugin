@@ -42,6 +42,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-qa_orgs.php',
         'taxonomy-qa_bib_cats.php', // Ensure taxonomy template is included
         'supervisor-search-results.php', // Add search results template
+        'supervisor-activities.php', // Add activities template
     ];
 
     $singles = ['qa_bibs', 'qa_orgs', 'qa_updates', 'qa_bib_items'];
@@ -133,6 +134,7 @@ function supervisor_load_template($template) {
         SUPERVISOR_INTRO_TEXT => 'supervisor-content.php',
         SUPERVISOR_ABOUT => 'supervisor-content.php',
         SUPERVISOR_CONTACT => 'supervisor-content.php',
+        SUPERVISOR_ACTIVITIES => 'supervisor-activities.php',
     ];
 
     if (isset($custom_templates_by_id[$page_id]) && file_exists(plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$page_id])) {

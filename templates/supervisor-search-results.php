@@ -145,7 +145,7 @@ $total_results = $search_query->found_posts;
         }
     ?>
 
-    <!-- New Search Section -->
+    <!-- New Search Section 
     <div class="new-search-section">
         <div class="new-search-container">
             <h2>חיפוש נוסף</h2>
@@ -161,6 +161,7 @@ $total_results = $search_query->found_posts;
             </form>
         </div>
     </div>
+    -->
 
     <!-- Search Results Header -->
     <div class="search-results-header">

@@ -20,10 +20,10 @@ function enqueue_supervisor_google_fonts() {
         echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
     }, 1);
     
-    // Enqueue Heebo font with only 700 weight
+    // Enqueue Heebo font with all weights
     wp_enqueue_style(
         'supervisor-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Heebo:wght@700&display=swap',
+        'https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap',
         [],
         null
     );

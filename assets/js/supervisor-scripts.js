@@ -80,21 +80,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.add('active');
             });
             
-            // Hide dropdown when mouse leaves
+            // Hide dropdown when mouse leaves (but with delay to allow clicking)
+            let hideTimeout;
             dropdown.addEventListener('mouseleave', function() {
-                dropdownMenu.classList.remove('show');
-                dropdown.classList.remove('active');
+                hideTimeout = setTimeout(() => {
+                    dropdownMenu.classList.remove('show');
+                    dropdown.classList.remove('active');
+                }, 150); // Small delay to allow clicking
             });
             
             // Keep dropdown open when hovering over the menu
             dropdownMenu.addEventListener('mouseenter', function() {
+                clearTimeout(hideTimeout);
                 dropdownMenu.classList.add('show');
                 dropdown.classList.add('active');
             });
             
             dropdownMenu.addEventListener('mouseleave', function() {
-                dropdownMenu.classList.remove('show');
-                dropdown.classList.remove('active');
+                hideTimeout = setTimeout(() => {
+                    dropdownMenu.classList.remove('show');
+                    dropdown.classList.remove('active');
+                }, 150);
+            });
+            
+            // Allow clicking on submenu items
+            dropdownMenu.addEventListener('click', function(e) {
+                if (e.target.classList.contains('submenu-item')) {
+                    // Allow the link to work normally
+                    e.stopPropagation();
+                    // Don't prevent default - let the link navigate
+                }
             });
         }
     });

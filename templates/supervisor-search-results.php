@@ -6,7 +6,7 @@ get_header('supervisor');
 $search_term = $_GET['supervisor_search'] ?? '';
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-// Build query for all post types
+// Build comprehensive search query
 $args = [
     'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
     'posts_per_page' => 20,
@@ -15,9 +15,84 @@ $args = [
     'order' => 'DESC',
 ];
 
-// Add search term if provided
+// Enhanced search query that includes custom fields and taxonomies
 if (!empty($search_term)) {
-    $args['s'] = $search_term;
+    // First, get posts that match the search term in title/content
+    $title_content_posts = get_posts([
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+        'posts_per_page' => -1,
+        's' => $search_term,
+        'fields' => 'ids'
+    ]);
+    
+    // Get posts that have matching taxonomy terms
+    $taxonomy_posts = get_posts([
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+        'posts_per_page' => -1,
+        'tax_query' => [
+            'relation' => 'OR',
+            [
+                'taxonomy' => 'qa_themes',
+                'field' => 'name',
+                'terms' => $search_term,
+                'operator' => 'LIKE'
+            ],
+            [
+                'taxonomy' => 'qa_tags',
+                'field' => 'name',
+                'terms' => $search_term,
+                'operator' => 'LIKE'
+            ],
+            [
+                'taxonomy' => 'qa_bib_cats',
+                'field' => 'name',
+                'terms' => $search_term,
+                'operator' => 'LIKE'
+            ]
+        ],
+        'fields' => 'ids'
+    ]);
+    
+    // Get posts that have matching custom fields
+    $meta_posts = get_posts([
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+        'posts_per_page' => -1,
+        'meta_query' => [
+            'relation' => 'OR',
+            [
+                'key' => 'qa_updates_link',
+                'value' => $search_term,
+                'compare' => 'LIKE'
+            ],
+            [
+                'key' => 'qa_updates_date',
+                'value' => $search_term,
+                'compare' => 'LIKE'
+            ],
+            [
+                'key' => 'qa_bibs_link',
+                'value' => $search_term,
+                'compare' => 'LIKE'
+            ],
+            [
+                'key' => 'qa_orgs_link',
+                'value' => $search_term,
+                'compare' => 'LIKE'
+            ]
+        ],
+        'fields' => 'ids'
+    ]);
+    
+    // Combine all post IDs and remove duplicates
+    $all_post_ids = array_unique(array_merge($title_content_posts, $taxonomy_posts, $meta_posts));
+    
+    if (!empty($all_post_ids)) {
+        $args['post__in'] = $all_post_ids;
+        $args['orderby'] = 'post__in'; // Maintain the order we want
+    } else {
+        // If no results found, return empty query
+        $args['post__in'] = [0]; // This will return no results
+    }
 }
 
 $search_query = new WP_Query($args);

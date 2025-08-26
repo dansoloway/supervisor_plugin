@@ -155,6 +155,7 @@ add_action('template_redirect', 'handle_custom_ajax_request');
 // Flush rewrite rules on activation
 function flush_supervisor_rewrites() {
     register_custom_ajax_endpoint();
+    supervisor_add_search_endpoint();
     flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, 'flush_supervisor_rewrites');
@@ -196,16 +197,50 @@ add_filter('template_include', 'supervisor_force_taxonomy_template');
 
 // Handle search results page
 function supervisor_handle_search_results($template) {
-    // Check if this is a search request
-    if (isset($_GET['s']) && !empty($_GET['s'])) {
-        // Check if we're on a specific search results page or if it's a general search
-        if (is_page() || is_home() || is_search()) {
-            $search_results_template = plugin_dir_path(__FILE__) . 'templates/supervisor-search-results.php';
-            if (file_exists($search_results_template)) {
-                return $search_results_template;
-            }
+    // Check if this is a supervisor search request
+    if (isset($_GET['supervisor_search']) && !empty($_GET['supervisor_search'])) {
+        $search_results_template = plugin_dir_path(__FILE__) . 'templates/supervisor-search-results.php';
+        if (file_exists($search_results_template)) {
+            return $search_results_template;
         }
     }
     return $template;
 }
 add_filter('template_include', 'supervisor_handle_search_results', 20);
+
+// Register supervisor search endpoint
+function supervisor_add_search_endpoint() {
+    add_rewrite_rule(
+        '^supervisor-search/?$',
+        'index.php?supervisor_search=1',
+        'top'
+    );
+}
+add_action('init', 'supervisor_add_search_endpoint');
+
+// Add query vars
+function supervisor_add_query_vars($vars) {
+    $vars[] = 'supervisor_search';
+    return $vars;
+}
+add_filter('query_vars', 'supervisor_add_query_vars');
+
+// Handle supervisor search endpoint
+function supervisor_handle_search_endpoint() {
+    if (get_query_var('supervisor_search') == '1') {
+        $search_results_template = plugin_dir_path(__FILE__) . 'templates/supervisor-search-results.php';
+        if (file_exists($search_results_template)) {
+            include $search_results_template;
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'supervisor_handle_search_endpoint');
+
+// Helper function to get supervisor search URL
+function get_supervisor_search_url($search_term = '') {
+    if (!empty($search_term)) {
+        return home_url('/supervisor-search/?supervisor_search=' . urlencode($search_term));
+    }
+    return home_url('/supervisor-search/');
+}

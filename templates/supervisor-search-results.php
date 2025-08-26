@@ -2,8 +2,8 @@
 /* Template Name: Supervisor Search Results */
 get_header('supervisor');
 
-// Get search parameters
-$search_term = get_query_var('s') ?: $_GET['s'] ?? '';
+// Get search parameters - use plugin-specific parameter
+$search_term = $_GET['supervisor_search'] ?? '';
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 // Build query for all post types

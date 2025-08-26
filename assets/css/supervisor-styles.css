@@ -1,5 +1,21 @@
 
 
+/* ===== GLOBAL LINK COLOR OVERRIDES ===== */
+/* Override any external CSS that sets link colors */
+.supervisor-home a,
+.supervisor-home a:link,
+.supervisor-home a:visited,
+.supervisor-home a:hover,
+.supervisor-home a:focus,
+.supervisor-home a:active {
+    color: var(--sv-blue) !important;
+}
+
+.supervisor-home a:hover,
+.supervisor-home a:focus {
+    color: var(--sv-blue-600) !important;
+}
+
 /* ===== FOUNDATION CSS OVERRIDES ===== */
 /* Prevent Foundation from interfering with our custom design */
 

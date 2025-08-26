@@ -241,25 +241,36 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 15px;
+    position: relative;
 }
 
 .qa-update-title h3 {
     margin: 0;
     flex: 1;
+    display: block;
+}
+
+.qa-update-title .update-date {
+    display: block;
+    font-size: 14px;
+    color: var(--sv-text-2);
+    margin-top: 4px;
+    font-weight: 400;
 }
 
 .title-date-container {
     flex: 1;
-    padding: 0 0 10px 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
-
-
 
 .accordion-icon {
     font-size: 18px;
     color: var(--sv-text);
     cursor: pointer;
     margin-right: auto;
+    flex-shrink: 0;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

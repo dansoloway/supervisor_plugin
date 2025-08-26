@@ -56,8 +56,10 @@ $updates_query = new WP_Query($args);
                         // Accordion Header (Clickable)
                         echo '<div class="light-green-bkg accordion-header" data-accordion="' . esc_attr($post_id) . '">';
                             echo '<div class="qa-update-title">';
-                                echo '<h3>' . get_the_title() . '</h3>';
-                                echo '<span class="update-date">' . esc_html($formatted_date) . '</span>';
+                                echo '<div class="title-date-container">';
+                                    echo '<h3>' . get_the_title() . '</h3>';
+                                    echo '<span class="update-date">' . esc_html($formatted_date) . '</span>';
+                                echo '</div>'; // title-date-container
                                 echo '<span class="accordion-icon" id="icon-' . esc_attr($post_id) . '">⌄</span>';
                             echo '</div>'; // qa-update-title
                         echo '</div>'; // accordion-header

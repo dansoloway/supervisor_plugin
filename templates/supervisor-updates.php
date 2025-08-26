@@ -84,7 +84,7 @@ $updates_query = new WP_Query($args);
 
                             // External Link
                             if ($link) {
-                                echo '<p><strong>למקור:</strong> <a href="' . esc_url($link) . '" target="_blank">' . esc_url($link) . '</a></p>';
+                                echo '<p><strong>למקור:</strong> <a href="' . esc_url($link) . '" target="_blank" class="source-link">' . esc_url($link) . '</a></p>';
                             }
 
                             echo '</div>'; // taxonomy-boxes

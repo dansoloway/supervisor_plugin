@@ -45,6 +45,19 @@
     color: var(--sv-text) !important;
 }
 
+/* ===== SOURCE LINK STYLING ===== */
+.source-link {
+    direction: ltr !important;
+    color: var(--sv-blue) !important;
+    text-decoration: none;
+}
+
+.source-link:hover,
+.source-link:focus {
+    color: var(--sv-blue-600) !important;
+    text-decoration: underline;
+}
+
 /* ===== FOUNDATION CSS OVERRIDES ===== */
 /* Prevent Foundation from interfering with our custom design */
 

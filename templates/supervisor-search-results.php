@@ -224,7 +224,7 @@ $total_results = $search_query->found_posts;
                             <div class="accordion-content" style="display: block;">
                                 <p><?php echo get_the_content(); ?></p>
                                 <?php if ($link): ?>
-                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -257,14 +257,14 @@ $total_results = $search_query->found_posts;
                                             <p><strong>תחומים:</strong> <?php echo implode(', ', array_map(fn($theme) => esc_html($theme->name), $themes)); ?></p>
                                         <?php endif; ?>
                                         <?php if ($link): ?>
-                                            <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                            <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
                                         <?php endif; ?>
                                     </div>
                                 <?php elseif ($post_type === 'qa_orgs'): ?>
                                     <!-- Organizations Content -->
                                     <p><?php echo get_the_content(); ?></p>
                                     <?php if ($link): ?>
-                                        <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                        <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </div>

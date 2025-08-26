@@ -83,7 +83,7 @@ jQuery(document).ready(function ($) {
                                                 <div class="taxonomy-boxes">
                                                     ${item.tags && item.tags.length > 0 ? `<p><strong>נושאי מפתח:</strong> ${item.tags.join(', ')}</p>` : ''}
                                                     ${item.themes && item.themes.length > 0 ? `<p><strong>תחומים:</strong> ${item.themes.join(', ')}</p>` : ''}
-                                                    ${item.source_link ? `<p><strong>לקישור:</strong> <a href="${item.source_link}" target="_blank">${item.source_link}</a></p>` : ''}
+                                                    ${item.source_link ? `<p><strong>לקישור:</strong> <a href="${item.source_link}" target="_blank" class="source-link">${item.source_link}</a></p>` : ''}
                                                 </div>
                                             </div>
                                         </div>

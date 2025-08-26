@@ -1321,13 +1321,13 @@
 .org-card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 0;
+    gap: 20px;
     margin-top: 30px;
 }
 
 .org-card {
     background: white;
-    border: 1px solid #000000;
+    border-bottom: 1px solid #000000;
     border-radius: 0;
     padding: 30px;
     text-decoration: none;
@@ -1345,16 +1345,7 @@
     box-shadow: none;
 }
 
-/* Add bottom border to every row except the last one */
-.org-card:nth-last-child(n+3) { 
-    border-bottom: 1px solid #000000;
-    padding-bottom: 30px;
-}
 
-/* Add bottom border only to the first row of elements */
-.org-card:nth-child(-n+2) {
-    border-bottom: 1px solid #000000;
-}
 
 
 
@@ -1415,7 +1406,7 @@
     
     .org-card-grid {
         grid-template-columns: 1fr;
-        gap: 0;
+        gap: 15px;
     }
     
     .org-card {

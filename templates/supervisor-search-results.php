@@ -152,51 +152,69 @@ $total_results = $search_query->found_posts;
                     }
                     ?>
 
-                    <div class="qa-update-item">
-                        <!-- Accordion Header -->
-                        <div class="light-green-bkg accordion-header" data-accordion="<?php echo esc_attr($accordion_id); ?>">
-                            <div class="qa-update-title">
-                                <div class="title-date-container">
-                                    <h3><?php echo get_the_title(); ?></h3>
-                                    <?php if (!empty($formatted_date)): ?>
-                                        <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
-                                    <?php endif; ?>
+                    <?php if ($post_type === 'qa_bib_items'): ?>
+                        <!-- Bibliography Item - Content visible directly -->
+                        <div class="qa-update-item">
+                            <div class="light-green-bkg">
+                                <div class="qa-update-title">
+                                    <div class="title-date-container">
+                                        <h3><?php echo get_the_title(); ?></h3>
+                                        <?php if (!empty($formatted_date)): ?>
+                                            <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                                <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>
+                            </div>
+                            <!-- Bibliography Content - Always visible -->
+                            <div class="accordion-content" style="display: block;">
+                                <p><?php echo get_the_content(); ?></p>
+                                <?php if ($link): ?>
+                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                <?php endif; ?>
                             </div>
                         </div>
+                    <?php else: ?>
+                        <!-- Other post types - Accordion behavior -->
+                        <div class="qa-update-item">
+                            <!-- Accordion Header -->
+                            <div class="light-green-bkg accordion-header" data-accordion="<?php echo esc_attr($accordion_id); ?>">
+                                <div class="qa-update-title">
+                                    <div class="title-date-container">
+                                        <h3><?php echo get_the_title(); ?></h3>
+                                        <?php if (!empty($formatted_date)): ?>
+                                            <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>
+                                </div>
+                            </div>
 
-                        <!-- Accordion Content -->
-                        <div class="accordion-content" id="accordion-<?php echo esc_attr($accordion_id); ?>" style="display: none;">
-                            <?php if ($post_type === 'qa_updates'): ?>
-                                <!-- Updates Content -->
-                                <p><?php echo get_the_content(); ?></p>
-                                <div class="taxonomy-boxes">
-                                    <?php if ($tags): ?>
-                                        <p><strong>נושאי מפתח:</strong> <?php echo implode(', ', array_map(fn($tag) => esc_html($tag->name), $tags)); ?></p>
-                                    <?php endif; ?>
-                                    <?php if ($themes): ?>
-                                        <p><strong>תחומים:</strong> <?php echo implode(', ', array_map(fn($theme) => esc_html($theme->name), $themes)); ?></p>
-                                    <?php endif; ?>
+                            <!-- Accordion Content -->
+                            <div class="accordion-content" id="accordion-<?php echo esc_attr($accordion_id); ?>" style="display: none;">
+                                <?php if ($post_type === 'qa_updates'): ?>
+                                    <!-- Updates Content -->
+                                    <p><?php echo get_the_content(); ?></p>
+                                    <div class="taxonomy-boxes">
+                                        <?php if ($tags): ?>
+                                            <p><strong>נושאי מפתח:</strong> <?php echo implode(', ', array_map(fn($tag) => esc_html($tag->name), $tags)); ?></p>
+                                        <?php endif; ?>
+                                        <?php if ($themes): ?>
+                                            <p><strong>תחומים:</strong> <?php echo implode(', ', array_map(fn($theme) => esc_html($theme->name), $themes)); ?></p>
+                                        <?php endif; ?>
+                                        <?php if ($link): ?>
+                                            <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php elseif ($post_type === 'qa_orgs'): ?>
+                                    <!-- Organizations Content -->
+                                    <p><?php echo get_the_content(); ?></p>
                                     <?php if ($link): ?>
                                         <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
                                     <?php endif; ?>
-                                </div>
-                            <?php elseif ($post_type === 'qa_bib_items'): ?>
-                                <!-- Bibliography Content -->
-                                <p><?php echo get_the_content(); ?></p>
-                                <?php if ($link): ?>
-                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
                                 <?php endif; ?>
-                            <?php elseif ($post_type === 'qa_orgs'): ?>
-                                <!-- Organizations Content -->
-                                <p><?php echo get_the_content(); ?></p>
-                                <?php if ($link): ?>
-                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
-                                <?php endif; ?>
-                            <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
 
                 <?php endwhile; ?>
             </div>

@@ -32,8 +32,8 @@ if (!defined('ABSPATH')) {
 }
 
 // Check if we're in admin or can run this safely
-if (!current_user_can('manage_options')) {
-    die('Insufficient permissions to run this script.');
+if (!defined('WP_CLI') && !current_user_can('manage_options')) {
+    die('Insufficient permissions to run this script. Please run via WP-CLI or as an admin user.');
 }
 
 // Output function that works with both WP-CLI and browser

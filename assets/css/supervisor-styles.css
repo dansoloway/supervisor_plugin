@@ -462,7 +462,19 @@
     z-index: 1000;
     display: none;
     min-width: 200px;
-    margin-top: 4px;
+    margin-top: 0;
+    /* Add padding to create hover bridge */
+    padding-top: 8px;
+}
+
+.supervisor-home .dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: transparent;
 }
 
 .supervisor-home .dropdown-menu.show {

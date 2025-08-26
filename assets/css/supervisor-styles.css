@@ -406,28 +406,38 @@
     border-radius: 0px;
     padding: 3px;
     height: 44px;
+    border: 1px solid var(--sv-border);
+    overflow: hidden;
 }
 
 .supervisor-search-bar {
     flex: 1;
     height: 38px;
     padding: 0 16px;
-    border: 1px solid;
+    border: none;
     border-radius: 0;
     outline: 0;
     font-size: 15px;
     color: var(--sv-text);
     background: transparent;
     margin: 0;
-    border: 1px solid var(--sv-border);
+}
+
+.supervisor-search-bar:focus {
+    outline: none;
+}
+
+.supervisor-search-bar::placeholder {
+    color: #9CA3AF;
 }
 
 .search-button {
     height: 38px;
     width: 38px;
     min-width: 38px;
-    display: inline-grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 0;
     border-radius: 0;
     background: var(--sv-blue);
@@ -443,6 +453,7 @@
 .search-icon {
     width: 20px;
     height: 20px;
+    display: block;
 }
 .updates-box {
     padding: 0 !important;
@@ -520,7 +531,7 @@
 
 .update-date {
     margin: 4px 0 0;
-    font-size: 16px;
+    font-size: 16pupx;
     color: var(--sv-blue-strip);
 }
 

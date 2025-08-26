@@ -8,7 +8,7 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 // Build comprehensive search query
 $args = [
-    'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+    'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items instead of qa_bibs
     'posts_per_page' => 20,
     'paged' => $paged,
     'orderby' => 'date',
@@ -19,7 +19,7 @@ $args = [
 if (!empty($search_term)) {
     // First, get posts that match the search term in title/content
     $title_content_posts = get_posts([
-        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items
         'posts_per_page' => -1,
         's' => $search_term,
         'fields' => 'ids'
@@ -27,7 +27,7 @@ if (!empty($search_term)) {
     
     // Get posts that have matching taxonomy terms
     $taxonomy_posts = get_posts([
-        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items
         'posts_per_page' => -1,
         'tax_query' => [
             'relation' => 'OR',
@@ -55,7 +55,7 @@ if (!empty($search_term)) {
     
     // Get posts that have matching custom fields
     $meta_posts = get_posts([
-        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bibs'],
+        'post_type' => ['qa_updates', 'qa_orgs', 'qa_bib_items'], // Fixed: qa_bib_items
         'posts_per_page' => -1,
         'meta_query' => [
             'relation' => 'OR',
@@ -70,12 +70,12 @@ if (!empty($search_term)) {
                 'compare' => 'LIKE'
             ],
             [
-                'key' => 'qa_bibs_link',
+                'key' => 'qa_orgs_link',
                 'value' => $search_term,
                 'compare' => 'LIKE'
             ],
             [
-                'key' => 'qa_orgs_link',
+                'key' => 'orignial_link', // Fixed: correct field name for bibliography (with typo as it exists in DB)
                 'value' => $search_term,
                 'compare' => 'LIKE'
             ]
@@ -140,8 +140,8 @@ $total_results = $search_query->found_posts;
                             $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
                             break;
                             
-                        case 'qa_bibs':
-                            $link = get_field('qa_bibs_link');
+                        case 'qa_bib_items': // Fixed: correct post type name
+                            $link = get_field('orignial_link'); // Fixed: correct field name with typo
                             $formatted_date = '';
                             break;
                             
@@ -182,7 +182,7 @@ $total_results = $search_query->found_posts;
                                         <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_url($link); ?></a></p>
                                     <?php endif; ?>
                                 </div>
-                            <?php elseif ($post_type === 'qa_bibs'): ?>
+                            <?php elseif ($post_type === 'qa_bib_items'): ?>
                                 <!-- Bibliography Content -->
                                 <p><?php echo get_the_content(); ?></p>
                                 <?php if ($link): ?>

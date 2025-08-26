@@ -66,32 +66,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
             
-            // Show dropdown on hover (optional)
+            // Show dropdown on hover with delay to prevent jitter
+            let showTimeout;
             dropdown.addEventListener('mouseenter', function() {
-                // Close any other open dropdowns
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                    if (menu !== dropdownMenu) {
-                        menu.classList.remove('show');
-                        menu.parentElement.classList.remove('active');
-                    }
-                });
-                
-                dropdownMenu.classList.add('show');
-                dropdown.classList.add('active');
+                clearTimeout(hideTimeout);
+                showTimeout = setTimeout(() => {
+                    // Close any other open dropdowns
+                    document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                        if (menu !== dropdownMenu) {
+                            menu.classList.remove('show');
+                            menu.parentElement.classList.remove('active');
+                        }
+                    });
+                    
+                    dropdownMenu.classList.add('show');
+                    dropdown.classList.add('active');
+                }, 100); // Small delay to prevent accidental opening
             });
             
-            // Hide dropdown when mouse leaves (but with delay to allow clicking)
+            // Hide dropdown when mouse leaves (but with longer delay to allow clicking)
             let hideTimeout;
             dropdown.addEventListener('mouseleave', function() {
+                clearTimeout(showTimeout);
                 hideTimeout = setTimeout(() => {
                     dropdownMenu.classList.remove('show');
                     dropdown.classList.remove('active');
-                }, 150); // Small delay to allow clicking
+                }, 300); // Longer delay to allow clicking
             });
             
             // Keep dropdown open when hovering over the menu
             dropdownMenu.addEventListener('mouseenter', function() {
                 clearTimeout(hideTimeout);
+                clearTimeout(showTimeout);
                 dropdownMenu.classList.add('show');
                 dropdown.classList.add('active');
             });
@@ -100,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideTimeout = setTimeout(() => {
                     dropdownMenu.classList.remove('show');
                     dropdown.classList.remove('active');
-                }, 150);
+                }, 200);
             });
             
             // Allow clicking on submenu items

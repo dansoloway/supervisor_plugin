@@ -1,19 +1,48 @@
 
 
 /* ===== GLOBAL LINK COLOR OVERRIDES ===== */
-/* Override any external CSS that sets link colors */
-.supervisor-home a:not(.site-nav a),
-.supervisor-home a:not(.site-nav a):link,
-.supervisor-home a:not(.site-nav a):visited,
-.supervisor-home a:not(.site-nav a):hover,
-.supervisor-home a:not(.site-nav a):focus,
-.supervisor-home a:not(.site-nav a):active {
+/* Override any external CSS that sets link colors - but exclude important home page links */
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button),
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):link,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):visited,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):focus,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):active {
     color: var(--sv-blue) !important;
 }
 
-.supervisor-home a:not(.site-nav a):hover,
-.supervisor-home a:not(.site-nav a):focus {
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):focus {
     color: var(--sv-blue-600) !important;
+}
+
+/* ===== HOME PAGE SPECIFIC LINK COLORS ===== */
+/* Ensure home page links have correct colors */
+.supervisor-home .update-title a,
+.supervisor-home .update-title a:link,
+.supervisor-home .update-title a:visited,
+.supervisor-home .update-title a:hover,
+.supervisor-home .update-title a:focus,
+.supervisor-home .update-title a:active {
+    color: var(--sv-text) !important;
+}
+
+.supervisor-home .more-updates-button,
+.supervisor-home .more-updates-button:link,
+.supervisor-home .more-updates-button:visited,
+.supervisor-home .more-updates-button:hover,
+.supervisor-home .more-updates-button:focus,
+.supervisor-home .more-updates-button:active {
+    color: var(--sv-text) !important;
+}
+
+.supervisor-home .knowledge-map-button,
+.supervisor-home .knowledge-map-button:link,
+.supervisor-home .knowledge-map-button:visited,
+.supervisor-home .knowledge-map-button:hover,
+.supervisor-home .knowledge-map-button:focus,
+.supervisor-home .knowledge-map-button:active {
+    color: var(--sv-text) !important;
 }
 
 /* ===== FOUNDATION CSS OVERRIDES ===== */

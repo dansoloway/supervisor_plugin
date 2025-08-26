@@ -99,6 +99,17 @@ function enqueue_alternate_header_assets() {
         true // Load in the footer
     );
 
+    // Enqueue Home Search JavaScript (only on home page)
+    if (is_page(SUPERVISOR_HOME)) {
+        wp_enqueue_script(
+            'home-search',
+            plugins_url('/assets/js/home-search.js', __FILE__),
+            ['jquery'], // Dependencies
+            time(), // Force cache refresh
+            true // Load in the footer
+        );
+    }
+
     // Enqueue Font Awesome
     wp_enqueue_script(
         'font-awesome',

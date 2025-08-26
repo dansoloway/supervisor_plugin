@@ -404,8 +404,6 @@
     gap: 0;
     background: #FFFFFF;
     border-radius: 0px;
-    padding: 3px;
-    height: 44px;
     border: 1px solid var(--sv-border);
     overflow: hidden;
 }
@@ -417,7 +415,7 @@
     border: none;
     border-radius: 0;
     outline: 0;
-    font-size: 15px;
+    font-size: 18px;
     color: var(--sv-text);
     background: transparent;
     margin: 0;

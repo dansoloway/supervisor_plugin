@@ -117,18 +117,19 @@ jQuery(document).ready(function ($) {
         }
     }
     
-    // Event listeners for search buttons
+    // Event listeners for search buttons (only for AJAX search component)
     $('#search-submit').on('click', function (e) {
         e.preventDefault();
         performSearch();
     });
     
-    $('.search-button').on('click', function (e) {
+    // Only target search buttons within the AJAX search component
+    $('.ajax-search-component .search-button').on('click', function (e) {
         e.preventDefault();
         performSearch();
     });
     
-    // Also allow Enter key in search input
+    // Also allow Enter key in search input (only for AJAX search component)
     $('#search-text').on('keypress', function (e) {
         if (e.which === 13) { // Enter key
             e.preventDefault();

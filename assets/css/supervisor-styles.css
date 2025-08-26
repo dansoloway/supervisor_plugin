@@ -362,17 +362,56 @@
 }
 
 /* Dropdown styling */
-.supervisor-home .site-nav a.dropdown {
+.supervisor-home .site-nav .nav-item.dropdown {
     display: flex;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
+    padding: 10px 18px;
+    color: var(--sv-text) !important;
+    text-decoration: none;
+    font-family: var(--sv-font-primary);
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 25px;
+    transition: background .2s, color .2s;
+    position: relative;
+    height: 100%;
+    flex: 1;
+    min-width: 0;
+    border-radius: 20px;
+    margin: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.supervisor-home .site-nav .nav-item.dropdown:hover,
+.supervisor-home .site-nav .nav-item.dropdown:focus-visible {
+    background: var(--sv-blue);
+    color: #FFFFFF !important;
+    outline: 0;
+    border-radius: 20px;
+    margin: -6px 0;
+    padding: 16px 18px;
+    height: calc(100% + 12px);
+    align-self: stretch;
+}
+
+.supervisor-home .site-nav .nav-item.dropdown.active {
+    background: var(--sv-blue);
+    color: #FFFFFF !important;
+    border-radius: 20px;
+    margin: -6px 0;
+    padding: 16px 18px;
+    height: calc(100% + 12px);
+    align-self: stretch;
 }
 
 .supervisor-home .site-nav .dropdown-icon {
     transition: transform 0.2s ease;
 }
 
-.supervisor-home .site-nav a.dropdown:hover .dropdown-icon {
+.supervisor-home .site-nav .nav-item.dropdown:hover .dropdown-icon,
+.supervisor-home .site-nav .nav-item.dropdown.active .dropdown-icon {
     transform: rotate(180deg);
 }
 
@@ -386,15 +425,41 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--sv-bar);
-    border: 2px solid var(--sv-bar-border);
-    border-radius: 12px;
-    margin-top: 8px;
-    padding: 8px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+    border: 1px solid var(--sv-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;
     min-width: 200px;
+    margin-top: 4px;
+}
+
+.supervisor-home .dropdown-menu.show {
+    display: block;
+}
+
+.supervisor-home .dropdown-menu .submenu-item {
+    display: block;
+    padding: 12px 16px;
+    color: var(--sv-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--sv-border);
+    transition: background-color 0.2s ease;
+}
+
+.supervisor-home .dropdown-menu .submenu-item:last-child {
+    border-bottom: none;
+}
+
+.supervisor-home .dropdown-menu .submenu-item:hover {
+    background-color: var(--sv-bar);
+    color: var(--sv-text);
+}
+
+.supervisor-home .dropdown-menu .submenu-item.active {
+    background-color: var(--sv-blue);
+    color: white;
 }
 
 .supervisor-home .dropdown-menu.show {

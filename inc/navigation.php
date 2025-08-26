@@ -21,13 +21,13 @@ $supervisor_menu = [
         'submenu' => []
     ],
     [
-        'title' => 'מפת ידע',
-        'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
+        'title' => 'מפת היעד',
+        'url' => '#', // Changed to # to prevent navigation, will be handled by JavaScript
         'is_active' => is_page(SUPERVISOR_BIB_CATS),
         'has_dropdown' => true,
         'submenu' => [
             [
-                'title' => 'מהי מפת ידע',
+                'title' => 'מהי מפת היעד',
                 'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
                 'is_active' => is_page(SUPERVISOR_BIB_CATS)
             ],
@@ -73,9 +73,9 @@ function render_nav_item($item) {
     
     $class_string = implode(' ', $classes);
     
-    echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '">';
-    
+    // For dropdown items, prevent default navigation
     if ($item['has_dropdown']) {
+        echo '<div class="' . esc_attr($class_string) . '">';
         echo '<span class="dropdown-text">' . esc_html($item['title']) . '</span>';
         echo '<svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
         echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
@@ -96,11 +96,12 @@ function render_nav_item($item) {
             }
             echo '</div>';
         }
+        echo '</div>';
     } else {
+        echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '">';
         echo esc_html($item['title']);
+        echo '</a>';
     }
-    
-    echo '</a>';
 }
 
 // Function to render submenu (for future dropdown functionality)

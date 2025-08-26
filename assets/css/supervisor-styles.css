@@ -206,8 +206,8 @@
 
 .qa-update-item {
     direction: rtl;
-    padding: 40px 0 0 0;
-    border-bottom: 1px solid #aab1c0;
+    padding: 40px 0 20px 0;
+    border-bottom: 1px solid #CACCCD;
 }
 
 .qa-update-item:last-child {
@@ -220,8 +220,8 @@
 }
 
 .search-results-container .qa-update-item {
-    padding: 40px 0 0 0;
-    border-bottom: 1px solid #aab1c0;
+    padding: 40px 0 20px 0;
+    border-bottom: 1px solid #CACCCD;
 }
 
 .search-results-container .qa-update-item:last-child {
@@ -271,7 +271,7 @@
 
 .qa-update-title .update-date {
     display: block;
-    font-size: 16px;
+    font-size: 18px;
     color: var(--sv-blue);
     margin-top: 6px;
     font-weight: 500;
@@ -677,12 +677,6 @@
 
 .update-title a:hover {
     text-decoration: underline;
-}
-
-.update-date {
-    margin: 4px 0 0;
-    font-size: 16pupx;
-    color: var(--sv-blue-strip);
 }
 
 /* Footer button */

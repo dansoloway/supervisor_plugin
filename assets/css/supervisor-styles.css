@@ -507,7 +507,7 @@
     right: 0;
     background: var(--sv-blue);
     border: 1px solid var(--sv-border);
-    border-radius: 8px;
+    border-radius: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;
@@ -525,13 +525,14 @@
     padding: 12px 16px;
     color: var(--sv-text);
     text-decoration: none;
-    border-bottom: 1px solid #E5E7EB;
+    border-bottom: 1px solid #FFFFFF;
     transition: background-color 0.2s ease;
     font-family: var(--sv-font-primary);
     font-weight: 700;
     font-size: 16px;
     line-height: 1.4;
     background: var(--sv-blue);
+    border-radius: 0;
 }
 
 .supervisor-home .dropdown-menu .submenu-item:last-child {
@@ -541,7 +542,7 @@
 .supervisor-home .dropdown-menu .submenu-item:hover,
 .supervisor-home .dropdown-menu .submenu-item.active {
     background-color: var(--sv-blue-600);
-    color: #FFFFFF;
+    color: var(--sv-text);
 }
 
 .supervisor-home .dropdown-menu .submenu-item.active {

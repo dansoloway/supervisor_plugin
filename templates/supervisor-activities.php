@@ -4,9 +4,20 @@
  * Displays three main activity areas: Conferences, Distribution, and Workshops
  */
 
-get_header(); ?>
+get_header('supervisor');
+?>
 
 <div class="supervisor-home">
+
+    <!-- Navigation Menu -->
+    <?php
+        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+        if (file_exists($nav_path)) {
+            require_once $nav_path;
+        }
+    ?>
+
+    <!-- Main Content Area -->
     <div class="supervisor-main-content">
         
         <!-- Top Row: Conferences and Distribution Cards -->
@@ -57,6 +68,9 @@ get_header(); ?>
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     margin-bottom: 24px;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .activity-card,
@@ -83,7 +97,7 @@ get_header(); ?>
 .activity-icon {
     width: 80px;
     height: 80px;
-    background: white;
+    background: #e9ecef;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -112,6 +126,14 @@ get_header(); ?>
     margin: 0;
     font-family: var(--sv-font-body);
     text-align: right;
+}
+
+/* Override main content layout for activities page */
+.supervisor-home .supervisor-main-content {
+    grid-template-columns: 1fr;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
 }
 
 /* Responsive Design */

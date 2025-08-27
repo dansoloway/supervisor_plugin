@@ -423,7 +423,7 @@ g.update-date {
     background: var(--sv-blue);
     color: #FFFFFF !important;
     outline: 0;
-    border-radius: 20px;
+    border-radius: 0;
     margin: -6px 0; /* Negative margin to extend beyond parent padding */
     padding: 16px 18px; /* Increase padding to compensate */
     height: calc(100% + 12px); /* Extend beyond parent padding */
@@ -1438,6 +1438,21 @@ g.update-date {
     padding: 25px;
     background: #f5f5f5;
     position: relative;
+    transition: all 0.3s ease;
+}
+
+.supervisor-single-org .info-box:hover {
+    background: var(--sv-blue);
+    color: white;
+}
+
+.supervisor-single-org .info-box:hover .info-label,
+.supervisor-single-org .info-box:hover .info-value {
+    color: white;
+}
+
+.supervisor-single-org .info-box:hover i {
+    color: white !important;
 }
 
 .supervisor-single-org .info-box.left-box {

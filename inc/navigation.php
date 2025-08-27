@@ -22,7 +22,7 @@ $supervisor_menu = [
     ],
     [
         'title' => 'מפת היעד',
-        'url' => '#', // Changed to # to prevent navigation, will be handled by JavaScript
+        'url' => '#', // Will be handled by JavaScript
         'is_active' => is_page(SUPERVISOR_BIB_CATS),
         'has_dropdown' => true,
         'submenu' => [
@@ -73,55 +73,34 @@ function render_nav_item($item) {
     
     $class_string = implode(' ', $classes);
     
-    // For dropdown items, prevent default navigation
+    // All items are now anchor tags for consistency
+    echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '">';
+    echo '<span class="nav-text">' . esc_html($item['title']) . '</span>';
+    
+    // Add dropdown icon if needed
     if ($item['has_dropdown']) {
-        echo '<div class="' . esc_attr($class_string) . '">';
-        echo '<span class="dropdown-text">' . esc_html($item['title']) . '</span>';
         echo '<svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
         echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
         echo '</svg>';
-        
-        // Add dropdown menu
-        if (!empty($item['submenu'])) {
-            echo '<div class="dropdown-menu">';
-            foreach ($item['submenu'] as $submenu_item) {
-                $submenu_classes = ['submenu-item'];
-                if ($submenu_item['is_active']) {
-                    $submenu_classes[] = 'active';
-                }
-                
-                echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
-                echo esc_html($submenu_item['title']);
-                echo '</a>';
-            }
-            echo '</div>';
-        }
-        echo '</div>';
-    } else {
-        echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '">';
-        echo esc_html($item['title']);
-        echo '</a>';
-    }
-}
-
-// Function to render submenu (for future dropdown functionality)
-function render_submenu($submenu_items) {
-    if (empty($submenu_items)) {
-        return;
     }
     
-    echo '<div class="submenu">';
-    foreach ($submenu_items as $submenu_item) {
-        $submenu_classes = ['submenu-item'];
-        if ($submenu_item['is_active']) {
-            $submenu_classes[] = 'active';
+    echo '</a>';
+    
+    // Add dropdown menu as sibling element
+    if ($item['has_dropdown'] && !empty($item['submenu'])) {
+        echo '<div class="dropdown-menu" data-parent="' . esc_attr($item['title']) . '">';
+        foreach ($item['submenu'] as $submenu_item) {
+            $submenu_classes = ['submenu-item'];
+            if ($submenu_item['is_active']) {
+                $submenu_classes[] = 'active';
+            }
+            
+            echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
+            echo esc_html($submenu_item['title']);
+            echo '</a>';
         }
-        
-        echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
-        echo esc_html($submenu_item['title']);
-        echo '</a>';
+        echo '</div>';
     }
-    echo '</div>';
 }
 ?>
 
@@ -132,16 +111,3 @@ function render_submenu($submenu_items) {
     }
     ?>
 </nav>
-
-<!-- Submenu container for dropdown functionality -->
-<div class="submenu-container" style="display: none;">
-    <?php
-    foreach ($supervisor_menu as $menu_item) {
-        if ($menu_item['has_dropdown'] && !empty($menu_item['submenu'])) {
-            echo '<div class="submenu-wrapper" data-parent="' . esc_attr($menu_item['title']) . '">';
-            render_submenu($menu_item['submenu']);
-            echo '</div>';
-        }
-    }
-    ?>
-</div>

@@ -43,11 +43,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Dropdown menu functionality
-    const dropdownItems = document.querySelectorAll('.supervisor-home .site-nav .nav-item.dropdown');
+    const dropdownItems = document.querySelectorAll('.supervisor-home .site-nav a.dropdown');
+    
     dropdownItems.forEach(dropdown => {
-        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+        // Find the dropdown menu that follows this dropdown item
+        const dropdownMenu = dropdown.nextElementSibling;
         
-        if (dropdownMenu) {
+        if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
             // Toggle dropdown on click
             dropdown.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
                     if (menu !== dropdownMenu) {
                         menu.classList.remove('show');
-                        menu.parentElement.classList.remove('active');
+                        menu.previousElementSibling.classList.remove('active');
                     }
                 });
                 
@@ -66,67 +68,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.toggle('active');
             });
             
-            // Show dropdown on hover with delay to prevent jitter
-            let showTimeout;
+            // Show dropdown on hover
             dropdown.addEventListener('mouseenter', function() {
-                clearTimeout(hideTimeout);
-                showTimeout = setTimeout(() => {
-                    // Close any other open dropdowns
-                    document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                        if (menu !== dropdownMenu) {
-                            menu.classList.remove('show');
-                            menu.parentElement.classList.remove('active');
-                        }
-                    });
-                    
-                    dropdownMenu.classList.add('show');
-                    dropdown.classList.add('active');
-                }, 100); // Small delay to prevent accidental opening
+                // Close any other open dropdowns
+                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                    if (menu !== dropdownMenu) {
+                        menu.classList.remove('show');
+                        menu.previousElementSibling.classList.remove('active');
+                    }
+                });
+                
+                dropdownMenu.classList.add('show');
+                dropdown.classList.add('active');
             });
             
-            // Hide dropdown when mouse leaves (but with longer delay to allow clicking)
-            let hideTimeout;
+            // Hide dropdown when mouse leaves
             dropdown.addEventListener('mouseleave', function() {
-                clearTimeout(showTimeout);
-                hideTimeout = setTimeout(() => {
-                    dropdownMenu.classList.remove('show');
-                    dropdown.classList.remove('active');
-                }, 300); // Longer delay to allow clicking
+                dropdownMenu.classList.remove('show');
+                dropdown.classList.remove('active');
             });
             
             // Keep dropdown open when hovering over the menu
             dropdownMenu.addEventListener('mouseenter', function() {
-                clearTimeout(hideTimeout);
-                clearTimeout(showTimeout);
                 dropdownMenu.classList.add('show');
                 dropdown.classList.add('active');
             });
             
             dropdownMenu.addEventListener('mouseleave', function() {
-                hideTimeout = setTimeout(() => {
-                    dropdownMenu.classList.remove('show');
-                    dropdown.classList.remove('active');
-                }, 200);
-            });
-            
-            // Allow clicking on submenu items
-            dropdownMenu.addEventListener('click', function(e) {
-                if (e.target.classList.contains('submenu-item')) {
-                    // Allow the link to work normally
-                    e.stopPropagation();
-                    console.log('Submenu item clicked:', e.target.href);
-                    // Don't prevent default - let the link navigate
-                }
+                dropdownMenu.classList.remove('show');
+                dropdown.classList.remove('active');
             });
         }
     });
     
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
+        if (!e.target.closest('.dropdown') && !e.target.closest('.dropdown-menu')) {
             document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
                 menu.classList.remove('show');
-                menu.parentElement.classList.remove('active');
+                menu.previousElementSibling.classList.remove('active');
             });
         }
     });

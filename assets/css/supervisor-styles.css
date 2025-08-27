@@ -191,9 +191,9 @@
 
 /* Font Tokens */
 :root {
-    --sv-font-primary: 'Heebo', sans-serif;    /* Main font for menu and titles */
-    --sv-font-secondary: 'Heebo', sans-serif;  /* Secondary font (can be different) */
-    --sv-font-body: 'Heebo', sans-serif;       /* Body text font */
+    --sv-font-primary: 'Secular One', sans-serif;    /* Main font for menu and titles */
+    --sv-font-secondary: 'Secular One', sans-serif;  /* Secondary font (can be different) */
+    --sv-font-body: 'Secular One', sans-serif;       /* Body text font */
 }
 
 /* ===== LAYOUT GRID + ORDER ===== */
@@ -494,15 +494,14 @@ g.update-date {
 .supervisor-home .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    right: 0; /* RTL: align to right edge of parent */
     background: var(--sv-blue);
     border: 1px solid var(--sv-bar-border);
     border-radius: 0 0 8px 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;
-    min-width: 200px;
+    width: 200px; /* Fixed width instead of min-width */
     margin-top: 0;
     padding: 0;
 }

@@ -422,13 +422,13 @@ g.update-date {
 }
 
 /* Add borders between menu items - RTL positioning */
-.supervisor-home .site-nav a:nth-child(1)::after, /* אודות */
-.supervisor-home .site-nav a:nth-child(2)::after, /* תחומי פעילות */
-.supervisor-home .site-nav a:nth-child(3)::after, /* מפת ידע */
-.supervisor-home .site-nav a:nth-child(4)::after { /* עדכונים */
+.supervisor-home .site-nav a:nth-child(1)::after, /* צור קשר */
+.supervisor-home .site-nav a:nth-child(2)::after, /* עדכונים */
+.supervisor-home .site-nav a:nth-child(3)::after, /* מפת היעד */
+.supervisor-home .site-nav a:nth-child(4)::after { /* תחומי פעילות */
     content: '';
     position: absolute;
-    right: 0; /* RTL: border on the right side */
+    left: 0; /* RTL: border on the left side */
     top: 50%;
     transform: translateY(-50%);
     width: 2px;
@@ -436,11 +436,11 @@ g.update-date {
     background-color: var(--sv-bar-border);
 }
 
-/* Add left border for the middle item (מפת היעד) */
+/* Add right border for the middle item (מפת היעד) */
 .supervisor-home .site-nav a:nth-child(3)::before {
     content: '';
     position: absolute;
-    left: 0; /* RTL: border on the left side */
+    right: 0; /* RTL: border on the right side */
     top: 50%;
     transform: translateY(-50%);
     width: 2px;

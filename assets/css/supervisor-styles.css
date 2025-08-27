@@ -490,7 +490,7 @@ g.update-date {
     transform: translateX(-50%); /* Center the dropdown under its parent */
     background: var(--sv-blue);
     border: 1px solid var(--sv-bar-border);
-    border-radius: 0 0 8px 8px;
+    border-radius: 0; /* Remove border radius */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;

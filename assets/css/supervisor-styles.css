@@ -163,7 +163,7 @@
     --sv-bar-border: #A0B4C8; /* nav bar border - darker */
     
     /* Typography Variables */
-    --sv-font-primary: 'Secular One', sans-serif;
+    --sv-font-primary: 'Assistant', sans-serif;
     --sv-font-secondary: 'Secular One', sans-serif;
     
     /* Spacing Variables */
@@ -220,7 +220,7 @@
 
 /* ===== TAXONOMY ARCHIVE PAGE STYLING ===== */
 .taxonomy-content .page-title {
-    font-family: var(--sv-font-primary);
+    font-family: var(--sv-font-secondary);
     font-size: 24px;
     font-weight: 700;
     color: var(--sv-text);
@@ -1026,7 +1026,7 @@
     border-radius: 0;
     background: var(--sv-blue);
     color: #000000;
-    font-family: var(--sv-font-primary);
+    font-family: var(--sv-font-secondary);
     font-weight: 700;
     text-decoration: none;
     text-align: center;
@@ -1070,7 +1070,7 @@
     border-radius: 9999px;
     background: var(--sv-blue);
     color: #000000;
-    font-family: var(--sv-font-primary);
+    font-family: var(--sv-font-secondary);
     font-weight: 700;
     text-decoration: none;
     transition: background .2s;
@@ -1093,7 +1093,7 @@
 }
 
 .intro-title {
-    font-family: var(--sv-font-primary);
+    font-family: var(--sv-font-secondary);
     font-size: 22px;
     font-weight: 800;
     color: var(--sv-blue);

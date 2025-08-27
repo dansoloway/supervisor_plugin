@@ -43,6 +43,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-content.php',
         'supervisor-bib_cats.php',
         'supervisor-qa_orgs.php',
+        'supervisor-knowledge-map.php', // Add knowledge map template
         'taxonomy-qa_tags.php', // Updated to use qa_tags taxonomy template
         'supervisor-search-results.php', // Add search results template
         'supervisor-activities.php', // Add activities template
@@ -271,90 +272,3 @@ function get_supervisor_search_url($search_term = '') {
     return home_url('/supervisor-search/');
 }
 
-// ===== ADMIN MENU FOR ICON MANAGEMENT =====
-function add_supervisor_admin_menu() {
-    add_submenu_page(
-        'edit.php?post_type=qa_bib_items',
-        'Manage Category Icons',
-        'Category Icons',
-        'manage_options',
-        'supervisor-category-icons',
-        'supervisor_category_icons_page'
-    );
-}
-add_action('admin_menu', 'add_supervisor_admin_menu');
-
-function supervisor_category_icons_page() {
-    if (isset($_POST['submit_icons'])) {
-        // Handle icon updates
-        $terms = get_terms([
-            'taxonomy' => 'qa_bib_cats',
-            'hide_empty' => false,
-        ]);
-        
-        foreach ($terms as $term) {
-            $field_name = 'fa_icon_' . $term->term_id;
-            if (isset($_POST[$field_name])) {
-                $icon = sanitize_text_field($_POST[$field_name]);
-                update_term_meta($term->term_id, 'fa_icon', $icon);
-            }
-        }
-        echo '<div class="notice notice-success"><p>Icons updated successfully!</p></div>';
-    }
-    
-    $terms = get_terms([
-        'taxonomy' => 'qa_bib_cats',
-        'hide_empty' => false,
-    ]);
-    ?>
-    <div class="wrap">
-        <h1>Manage Category Icons</h1>
-        <p>Set Font Awesome icons for each bibliography category. These icons will appear on the category cards and in search results.</p>
-        
-        <form method="post">
-            <table class="wp-list-table widefat fixed striped">
-                <thead>
-                    <tr>
-                        <th>Category Name</th>
-                        <th>Current Icon</th>
-                        <th>Icon Class</th>
-                        <th>Preview</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($terms as $term): 
-                        $current_icon = get_term_meta($term->term_id, 'fa_icon', true);
-                    ?>
-                    <tr>
-                        <td><strong><?php echo esc_html($term->name); ?></strong></td>
-                        <td><?php echo esc_html($current_icon ?: 'Default (fas fa-folder)'); ?></td>
-                        <td>
-                            <input type="text" name="fa_icon_<?php echo $term->term_id; ?>" 
-                                   value="<?php echo esc_attr($current_icon); ?>" 
-                                   placeholder="fas fa-book" style="width: 200px;" />
-                        </td>
-                        <td>
-                            <?php if (!empty($current_icon)): ?>
-                                <i class="<?php echo esc_attr($current_icon); ?>" style="font-size: 20px; color: #0073aa;"></i>
-                            <?php else: ?>
-                                <i class="fas fa-folder" style="font-size: 20px; color: #ccc;"></i>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            
-            <p class="description">
-                <strong>Popular Font Awesome Icons:</strong><br>
-                <code>fas fa-book</code>, <code>fas fa-graduation-cap</code>, <code>fas fa-microscope</code>, 
-                <code>fas fa-flask</code>, <code>fas fa-chart-line</code>, <code>fas fa-lightbulb</code>, 
-                <code>fas fa-cogs</code>, <code>fas fa-rocket</code>, <code>fas fa-palette</code>, 
-                <code>fas fa-music</code>, <code>fas fa-camera</code>, <code>fas fa-code</code>
-            </p>
-            
-            <?php submit_button('Update All Icons', 'primary', 'submit_icons'); ?>
-        </form>
-    </div>
-    <?php
-}

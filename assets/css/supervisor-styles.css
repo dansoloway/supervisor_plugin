@@ -475,6 +475,58 @@
   margin-top: .25rem;
 }
 
+/* Very specific CSS rules for knowledge map links - ensure they are always white and visible */
+.supervisor-knowledge-map a,
+.supervisor-knowledge-map a:link,
+.supervisor-knowledge-map a:visited,
+.supervisor-knowledge-map a:hover,
+.supervisor-knowledge-map a:focus,
+.supervisor-knowledge-map a:active {
+  color: white !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+.supervisor-knowledge-map a:hover {
+  color: white !important;
+  text-decoration: underline !important;
+  background-color: transparent !important;
+}
+
+.supervisor-knowledge-map .arrow-list a,
+.supervisor-knowledge-map .arrow-list a:link,
+.supervisor-knowledge-map .arrow-list a:visited,
+.supervisor-knowledge-map .arrow-list a:hover,
+.supervisor-knowledge-map .arrow-list a:focus,
+.supervisor-knowledge-map .arrow-list a:active {
+  color: white !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+.supervisor-knowledge-map .arrow-list a:hover {
+  color: white !important;
+  text-decoration: underline !important;
+  background-color: transparent !important;
+}
+
+.supervisor-knowledge-map .arrow-list .sub a,
+.supervisor-knowledge-map .arrow-list .sub a:link,
+.supervisor-knowledge-map .arrow-list .sub a:visited,
+.supervisor-knowledge-map .arrow-list .sub a:hover,
+.supervisor-knowledge-map .arrow-list .sub a:focus,
+.supervisor-knowledge-map .arrow-list .sub a:active {
+  color: white !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+.supervisor-knowledge-map .arrow-list .sub a:hover {
+  color: white !important;
+  text-decoration: underline !important;
+  background-color: transparent !important;
+}
+
 /* 5) responsive: stack columns on small screens */
 @media (max-width: 900px){
   .supervisor-knowledge-map .knowledge-layout{

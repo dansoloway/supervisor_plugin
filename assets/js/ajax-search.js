@@ -5,6 +5,19 @@ jQuery(document).ready(function ($) {
         return;
     }
     
+    // Debounce function to prevent too many requests
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
     // Function to perform search
     function performSearch() {
         try {
@@ -122,6 +135,9 @@ jQuery(document).ready(function ($) {
         }
     }
     
+    // Debounced version of performSearch for automatic filtering
+    const debouncedSearch = debounce(performSearch, 300);
+    
     // Event listeners for search buttons (only for AJAX search component)
     $('#search-submit').on('click', function (e) {
         e.preventDefault();
@@ -139,6 +155,21 @@ jQuery(document).ready(function ($) {
         if (e.which === 13) { // Enter key
             e.preventDefault();
             performSearch();
+        }
+    });
+    
+    // Automatic filtering for checkboxes
+    $('input[name="qa_themes[]"], input[name="qa_tags[]"]').on('change', function() {
+        // Only trigger automatic search if there are any checkboxes checked or if there's search text
+        const hasCheckedBoxes = $('input[name="qa_themes[]"]:checked, input[name="qa_tags[]"]:checked').length > 0;
+        const hasSearchText = $('#search-text').val().trim() !== '';
+        
+        if (hasCheckedBoxes || hasSearchText) {
+            debouncedSearch();
+        } else {
+            // If no filters are selected and no search text, show initial content
+            $('.search-results-container').hide();
+            $('.initial-content').show();
         }
     });
     

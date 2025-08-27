@@ -368,7 +368,7 @@
 }
 
 /* 1) grid container: 3 columns on desktop, 1 column on mobile */
-.knowledge-layout{
+.supervisor-knowledge-map .knowledge-layout{
   --gap: clamp(16px, 3vw, 32px);
   display: grid;
   grid-template-columns: 1fr minmax(420px, 560px) 1fr; /* L | CENTER | R */
@@ -381,21 +381,21 @@
 }
 
 /* 2) assign areas */
-.col-left  { grid-area: left;  }
-.col-center{ grid-area: center;}
-.col-right { grid-area: right; }
+.supervisor-knowledge-map .col-left  { grid-area: left;  }
+.supervisor-knowledge-map .col-center{ grid-area: center;}
+.supervisor-knowledge-map .col-right { grid-area: right; }
 
 /* 3) make the center graphic keep its aspect ratio and scale */
-.col-center{
+.supervisor-knowledge-map .col-center{
   display: grid;
   place-items: center;
 }
-.col-center .svg-frame{
+.supervisor-knowledge-map .col-center .svg-frame{
   width: 100%;
   aspect-ratio: 1 / 1;
 }
-.col-center .svg-frame > img,
-.col-center svg{
+.supervisor-knowledge-map .col-center .svg-frame > img,
+.supervisor-knowledge-map .col-center svg{
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -403,16 +403,16 @@
 
 /* 4) lists: RTL, right-aligned, custom arrows */
 /* Side columns: top group sticks up, bottom group sticks down */
-.col-left,
-.col-right{
+.supervisor-knowledge-map .col-left,
+.supervisor-knowledge-map .col-right{
   display: flex;
   flex-direction: column;
   justify-content: space-around;    /* changed from space-between to space-around for closer spacing */
   gap: 24px;                        /* space between green/pink blocks */
 }
 
-.col-left .arrow-list,
-.col-right .arrow-list{
+.supervisor-knowledge-map .col-left .arrow-list,
+.supervisor-knowledge-map .col-right .arrow-list{
   list-style: none;
   margin: 0; padding: 0;
   display: grid;
@@ -423,14 +423,14 @@
   max-width: 28ch;       /* keeps multi-line items tidy */
 }
 
-.arrow-list li{
+.supervisor-knowledge-map .arrow-list li{
   position: relative;
   line-height: 1.4;
   padding-inline: 0;          /* reset */
 }
 
 /* base chevron, points inward with an SVG so it renders crisp */
-.arrow-list li::before{
+.supervisor-knowledge-map .arrow-list li::before{
   content: "";
   position: absolute;
   top: .25em;
@@ -442,24 +442,24 @@
 }
 
 /* RIGHT column: chevron sits on the LEFT (toward center) */
-.col-right .arrow-list li{
+.supervisor-knowledge-map .col-right .arrow-list li{
   padding-inline-start: 1.4em;   /* space for icon on the left in RTL */
 }
-.col-right .arrow-list li::before{
+.supervisor-knowledge-map .col-right .arrow-list li::before{
   inset-inline-start: 0;
   transform: scaleX(1);          /* → */
 }
 
 /* LEFT column: chevron sits on the RIGHT (toward center) and mirrored */
-.col-left .arrow-list li{
+.supervisor-knowledge-map .col-left .arrow-list li{
   padding-inline-end: 1.4em;     /* space for icon on the right in RTL */
 }
-.col-left .arrow-list li::before{
+.supervisor-knowledge-map .col-left .arrow-list li::before{
   inset-inline-end: 0;
   transform: scaleX(-1);         /* ← mirror so it points inward */
 }
 
-.arrow-list .sub{
+.supervisor-knowledge-map .arrow-list .sub{
   font-weight: 400;
   color: #616161;
   font-size: .92em;
@@ -469,7 +469,7 @@
 
 /* 5) responsive: stack columns on small screens */
 @media (max-width: 900px){
-  .knowledge-layout{
+  .supervisor-knowledge-map .knowledge-layout{
     grid-template-columns: 1fr;
     grid-template-areas:
       "center"
@@ -478,12 +478,13 @@
     gap: 24px;
   }
   /* Mobile: stack normally (no top/bottom pinning) */
-  .col-left, .col-right{
+  .supervisor-knowledge-map .col-left, 
+  .supervisor-knowledge-map .col-right{
     justify-content: flex-start;
     gap: 12px;
   }
-  .col-left .arrow-list,
-  .col-right .arrow-list{ max-width: none; }
+  .supervisor-knowledge-map .col-left .arrow-list,
+  .supervisor-knowledge-map .col-right .arrow-list{ max-width: none; }
 }
 
 

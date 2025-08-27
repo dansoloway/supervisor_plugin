@@ -4,13 +4,24 @@
  * Creates proper academic bibliography entries with real citations and web links
  */
 
-// Load WordPress
-require_once('wp-load.php');
+// Load WordPress - more robust method
+$wp_load_path = '';
+$current_dir = __DIR__;
 
-// Check if user is admin
-if (!current_user_can('manage_options')) {
-    wp_die('Access denied');
+// Try to find wp-load.php by going up directories
+for ($i = 0; $i < 10; $i++) {
+    if (file_exists($current_dir . '/wp-load.php')) {
+        $wp_load_path = $current_dir . '/wp-load.php';
+        break;
+    }
+    $current_dir = dirname($current_dir);
 }
+
+if (empty($wp_load_path)) {
+    die('Could not find wp-load.php. Please ensure this script is in a WordPress installation.');
+}
+
+require_once($wp_load_path);
 
 echo '<div style="font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; background: #f9f9f9; border-radius: 8px;">';
 echo '<h1 style="color: #333;">יצירת תוכן ביבליוגרפי אמיתי</h1>';

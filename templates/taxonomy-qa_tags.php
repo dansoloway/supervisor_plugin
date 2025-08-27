@@ -31,10 +31,14 @@ error_log('Loading taxonomy-qa_tags.php template');
         </h1>
         
         <p class="intro-text" style="text-align: right;">
-            כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתה כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה
-            נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד
-            הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר
-            כיצד הרשימה נבנתה
+            <?php 
+            $description = get_term_meta($term->term_id, 'qa_bib_description', true);
+            if ($description) {
+                echo esc_html($description);
+            } else {
+                echo 'כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתה';
+            }
+            ?>
         </p>
 
         <div class="bib-items-list">

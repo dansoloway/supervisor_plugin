@@ -15,6 +15,9 @@ require_once plugin_dir_path(__FILE__) . 'inc/register_posts_and_tax.php';
 // Include bibliography admin functionality
 require_once plugin_dir_path(__FILE__) . 'inc/bib_admin_page.php';
 
+// Include consolidated admin menu
+require_once plugin_dir_path(__FILE__) . 'inc/admin-menu.php';
+
 // Enqueue Google Fonts
 function enqueue_supervisor_google_fonts() {
     // Add preconnect links for better performance

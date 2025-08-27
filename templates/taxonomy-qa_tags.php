@@ -8,10 +8,10 @@ $term = get_queried_object();
 error_log('Loading taxonomy-qa_tags.php template');
 ?>
 
-<div class="supervisor-home">
+<div class="supervisor-home supervisor-taxonomy">
     <!-- Navigation Menu -->
     <?php
-        $nav_path = PLUGIN_ROOT . 'inc/navigation.php';
+        $nav_path = plugin_dir_path(__FILE__) . '../inc/navigation.php';
         if (file_exists($nav_path)) {
             require_once $nav_path;
         }

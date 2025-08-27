@@ -318,6 +318,17 @@
     padding: 40px 20px;
 }
 
+/* ===== TAXONOMY ARCHIVE PAGE LAYOUT ===== */
+.supervisor-taxonomy {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.supervisor-taxonomy .taxonomy-content {
+    margin-top: 20px;
+}
+
 /* ===== KNOWLEDGE MAP PAGE STYLING ===== */
 .supervisor-knowledge-map {
     max-width: 1200px;

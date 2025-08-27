@@ -1347,6 +1347,9 @@ g.update-date {
     text-align: center;
 }
 
+.org-card:hover .org-info i {
+    color: white;
+}
 .org-info span {
     font-family: var(--sv-font-primary);
     font-size: 14px;

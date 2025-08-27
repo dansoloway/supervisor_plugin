@@ -196,7 +196,12 @@ $total_results = $search_query->found_posts;
                             $tags = get_the_terms($post_id, 'qa_tags');
                             $link = get_field('qa_updates_link');
                             $raw_date = get_field('qa_updates_date');
-                            $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
+                            if ($raw_date) {
+                                $formatted_date = date_i18n('F Y', strtotime($raw_date));
+                            } else {
+                                // Fallback to post date if ACF field is empty
+                                $formatted_date = get_the_date('F Y');
+                            }
                             break;
                             
                         case 'qa_bib_items': // Fixed: correct post type name
@@ -218,9 +223,7 @@ $total_results = $search_query->found_posts;
                                 <div class="qa-update-title">
                                     <div class="title-date-container">
                                         <h3><?php echo get_the_title(); ?></h3>
-                                        <?php if (!empty($formatted_date)): ?>
-                                            <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
-                                        <?php endif; ?>
+                                        <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -240,9 +243,7 @@ $total_results = $search_query->found_posts;
                                 <div class="qa-update-title">
                                     <div class="title-date-container">
                                         <h3><?php echo get_the_title(); ?></h3>
-                                        <?php if (!empty($formatted_date)): ?>
-                                            <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
-                                        <?php endif; ?>
+                                        <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
                                     </div>
                                     <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>
                                 </div>

@@ -374,7 +374,7 @@
   grid-template-columns: 1fr minmax(420px, 560px) 1fr; /* L | CENTER | R */
   grid-template-areas: "left center right";
   gap: var(--gap);
-  align-items: stretch;     /* Make the grid rows stretch so side columns can match center height */
+  align-items: center;     /* Changed back to center to prevent stretching */
   max-width: 1200px;
   margin: 0 auto;
   padding-inline: clamp(12px, 3vw, 24px);
@@ -407,7 +407,7 @@
 .col-right{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;   /* key line - pushes first list to top and second list to bottom */
+  justify-content: space-around;    /* changed from space-between to space-around for closer spacing */
   gap: 24px;                        /* space between green/pink blocks */
 }
 

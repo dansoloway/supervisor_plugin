@@ -17,11 +17,16 @@ error_log('Loading supervisor-bib_cats.php template');
     <div class="bib-cats-content">
         <h1 class="page-title" style="text-align: right;">נושאי מפתח</h1>
         
-        <p class=" style="text-align: right;">
-        כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתה כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה
-נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד
-הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר
-כיצד הרשימה נבנתה
+        <p class="intro-text" style="text-align: right;">
+            <?php 
+            // Get the page description or use default text
+            $page_description = get_post_meta(get_the_ID(), 'page_description', true);
+            if ($page_description) {
+                echo esc_html($page_description);
+            } else {
+                echo 'כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתה';
+            }
+            ?>
         </p>
 
         <div class="categories-grid">

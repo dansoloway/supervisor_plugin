@@ -409,7 +409,7 @@ g.update-date {
 .supervisor-home .site-nav a:nth-child(4)::after { /* עדכונים */
     content: '';
     position: absolute;
-    left: 0; /* RTL: border on the left side */
+    right: 0; /* RTL: border on the right side */
     top: 50%;
     transform: translateY(-50%);
     width: 2px;
@@ -467,22 +467,22 @@ g.update-date {
 .supervisor-home .site-nav .nav-item.dropdown:hover,
 .supervisor-home .site-nav .nav-item.dropdown:focus-visible {
     background: var(--sv-blue);
-    color: var(--sv-text) !important;
+    color: #FFFFFF !important;
     outline: 0;
     border-radius: 0;
-    margin: 0;
-    padding: 10px 18px;
-    height: 100%;
+    margin: -6px 0; /* Negative margin to extend beyond parent padding */
+    padding: 16px 18px; /* Increase padding to compensate */
+    height: calc(100% + 12px); /* Extend beyond parent padding */
     align-self: stretch;
 }
 
 .supervisor-home .site-nav .nav-item.dropdown.active {
     background: var(--sv-blue);
-    color: var(--sv-text) !important;
+    color: #FFFFFF !important;
     border-radius: 0;
-    margin: 0;
-    padding: 10px 18px;
-    height: 100%;
+    margin: -6px 0; /* Negative margin to extend beyond parent padding */
+    padding: 16px 18px; /* Increase padding to compensate */
+    height: calc(100% + 12px); /* Extend beyond parent padding */
     align-self: stretch;
 }
 

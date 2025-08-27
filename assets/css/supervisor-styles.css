@@ -189,12 +189,7 @@
     --sv-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Font Tokens */
-:root {
-    --sv-font-primary: 'Secular One', sans-serif;    /* Main font for menu and titles */
-    --sv-font-secondary: 'Secular One', sans-serif;  /* Secondary font (can be different) */
-    --sv-font-body: 'Secular One', sans-serif;       /* Body text font */
-}
+/* Font Tokens - Consolidated into main :root section above */
 
 /* ===== LAYOUT GRID + ORDER ===== */
 .supervisor-main-content {
@@ -494,7 +489,8 @@ g.update-date {
 .supervisor-home .dropdown-menu {
     position: absolute;
     top: 100%;
-    right: 0; /* RTL: align to right edge of parent */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center the dropdown under its parent */
     background: var(--sv-blue);
     border: 1px solid var(--sv-bar-border);
     border-radius: 0 0 8px 8px;

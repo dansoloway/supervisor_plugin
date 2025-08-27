@@ -18,25 +18,25 @@ add_action('admin_enqueue_scripts', 'qa_bib_enqueue_admin_scripts');
 
 // Add custom fields to taxonomy edit screen
 function qa_tags_custom_fields($term) {
-    $icon = get_term_meta($term->term_id, 'qa_bib_icon', true);
+    $icon = get_term_meta($term->term_id, 'fa_icon', true);
     $description = get_term_meta($term->term_id, 'qa_bib_description', true);
     ?>
     <tr class="form-field">
         <th scope="row">
-            <label for="qa_bib_icon"><?php esc_html_e('Category Icon', 'text-domain'); ?></label>
+            <label for="fa_icon"><?php esc_html_e('אייקון Font Awesome', 'text-domain'); ?></label>
         </th>
         <td>
-            <input type="text" name="qa_bib_icon" id="qa_bib_icon" value="<?php echo esc_attr($icon); ?>" placeholder="Enter Dashicon class or image URL">
-            <p class="description"><?php esc_html_e('Use a Dashicon class (e.g., dashicons-book) or an image URL.', 'text-domain'); ?></p>
+            <input type="text" name="fa_icon" id="fa_icon" value="<?php echo esc_attr($icon); ?>" placeholder="fa-solid fa-compass">
+            <p class="description"><?php esc_html_e('השתמש במחלקת אייקון Font Awesome (למשל, fa-solid fa-compass).', 'text-domain'); ?></p>
         </td>
     </tr>
     <tr class="form-field">
         <th scope="row">
-            <label for="qa_bib_description"><?php esc_html_e('Category Description', 'text-domain'); ?></label>
+            <label for="qa_bib_description"><?php esc_html_e('תיאור הקטגוריה', 'text-domain'); ?></label>
         </th>
         <td>
             <textarea name="qa_bib_description" id="qa_bib_description" rows="3"><?php echo esc_textarea($description); ?></textarea>
-            <p class="description"><?php esc_html_e('Short description for this category.', 'text-domain'); ?></p>
+            <p class="description"><?php esc_html_e('תיאור קצר לקטגוריה זו.', 'text-domain'); ?></p>
         </td>
     </tr>
     <?php
@@ -45,8 +45,8 @@ add_action('qa_tags_edit_form_fields', 'qa_tags_custom_fields', 10, 2);
 
 // Save custom fields
 function save_qa_tags_custom_fields($term_id) {
-    if (isset($_POST['qa_bib_icon'])) {
-        update_term_meta($term_id, 'qa_bib_icon', sanitize_text_field($_POST['qa_bib_icon']));
+    if (isset($_POST['fa_icon'])) {
+        update_term_meta($term_id, 'fa_icon', sanitize_text_field($_POST['fa_icon']));
     }
     if (isset($_POST['qa_bib_description'])) {
         update_term_meta($term_id, 'qa_bib_description', sanitize_textarea_field($_POST['qa_bib_description']));
@@ -58,12 +58,12 @@ add_action('edited_qa_tags', 'save_qa_tags_custom_fields', 10, 2);
 function qa_bib_render_admin_page() {
     ?>
     <div class="wrap" style="direction:rtl; text-align:right">
-        <h1><?php esc_html_e('Bibliography Manager', 'text-domain'); ?></h1>
+        <h1><?php esc_html_e('מנהל ביבליוגרפיה', 'text-domain'); ?></h1>
         
         <form method="post" action="">
             <?php wp_nonce_field('qa_bib_admin_save', 'qa_bib_nonce'); ?>
 
-            <h2><?php esc_html_e('Categories', 'text-domain'); ?></h2>
+            <h2><?php esc_html_e('קטגוריות', 'text-domain'); ?></h2>
             <?php
             // Fetch categories (qa_tags)
             $categories = get_terms([
@@ -73,15 +73,19 @@ function qa_bib_render_admin_page() {
 
             if (!empty($categories)) {
                 foreach ($categories as $category) {
-                    $icon = get_term_meta($category->term_id, 'qa_bib_icon', true);
+                    $icon = get_term_meta($category->term_id, 'fa_icon', true);
                     $description = get_term_meta($category->term_id, 'qa_bib_description', true);
 
                     echo '<div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">';
-                    echo '<h3>' . esc_html($category->name) . '</h3>';
+                    echo '<h3>';
+                    if ($icon) {
+                        echo '<i class="' . esc_attr($icon) . '" style="margin-left: 8px; color: #0073aa;"></i>';
+                    }
+                    echo esc_html($category->name) . '</h3>';
 
                     // Icon field
                     echo '<p><label for="category_icon_' . esc_attr($category->term_id) . '">' . esc_html__('אייקון:', 'text-domain') . '</label>';
-                    echo '<input type="text" name="category_icon[' . esc_attr($category->term_id) . ']" id="category_icon_' . esc_attr($category->term_id) . '" value="' . esc_attr($icon) . '" placeholder="Dashicon or image URL"></p>';
+                    echo '<input type="text" name="category_icon[' . esc_attr($category->term_id) . ']" id="category_icon_' . esc_attr($category->term_id) . '" value="' . esc_attr($icon) . '" placeholder="fa-solid fa-compass"></p>';
 
                     // Description field
                     echo '<p><label for="category_description_' . esc_attr($category->term_id) . '">' . esc_html__('תיאור:', 'text-domain') . '</label>';
@@ -136,7 +140,7 @@ function qa_bib_render_admin_page() {
                             echo '</li>';
                         }
                     } else {
-                        echo '<li style="padding: 5px; color: #888;">' . esc_html__('No items found in this category.', 'text-domain') . '</li>';
+                        echo '<li style="padding: 5px; color: #888;">' . esc_html__('לא נמצאו פריטים בקטגוריה זו.', 'text-domain') . '</li>';
                     }
                     echo '</ul>';
 
@@ -144,12 +148,12 @@ function qa_bib_render_admin_page() {
                     echo '</div>';
                 }
             } else {
-                echo '<p>' . esc_html__('No categories found.', 'text-domain') . '</p>';
+                echo '<p>' . esc_html__('לא נמצאו קטגוריות.', 'text-domain') . '</p>';
             }
             ?>
 
             <p>
-                <button type="submit" name="save_qa_bib" class="button button-primary"><?php esc_html_e('Save Changes', 'text-domain'); ?></button>
+                <button type="submit" name="save_qa_bib" class="button button-primary"><?php esc_html_e('שמור שינויים', 'text-domain'); ?></button>
             </p>
         </form>
 
@@ -212,7 +216,7 @@ function qa_bib_save_admin_settings() {
         // Save Category Icons and Descriptions
         if (!empty($_POST['category_icon'])) {
             foreach ($_POST['category_icon'] as $term_id => $icon) {
-                update_term_meta($term_id, 'qa_bib_icon', sanitize_text_field($icon));
+                update_term_meta($term_id, 'fa_icon', sanitize_text_field($icon));
             }
         }
         if (!empty($_POST['category_description'])) {

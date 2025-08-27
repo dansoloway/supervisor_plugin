@@ -524,12 +524,8 @@ g.update-date {
 }
 
 .supervisor-home .dropdown-menu .submenu-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.supervisor-home .dropdown-menu .submenu-item.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    font-weight: 700;
+    background-color: #CEDDEF;
+    color: #000000 !important;
 }
 
 

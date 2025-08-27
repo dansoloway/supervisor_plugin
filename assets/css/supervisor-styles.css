@@ -372,8 +372,8 @@ g.update-date {
     flex-wrap: wrap;
     background: var(--sv-bar);
     border: 2px solid var(--sv-bar-border);
-    border-radius: 28px;
-    padding: 6px;
+    /* border-radius: 28px; */
+    padding: 6px 0px;
     margin: 8px auto 14px;
     max-width: 980px;
     height: 59px;
@@ -434,7 +434,7 @@ g.update-date {
 .supervisor-home .site-nav a.active {
     background: var(--sv-blue);
     color: #FFFFFF !important;
-    border-radius: 20px;
+    border-radius: 0;
     margin: -6px 0; /* Negative margin to extend beyond parent padding */
     padding: 16px 18px; /* Increase padding to compensate */
     height: calc(100% + 12px); /* Extend beyond parent padding */
@@ -1618,7 +1618,7 @@ body .supervisor-bib-cats .categories-grid {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     position: relative;
     overflow: hidden;
-    text-align: center;
+    text-align: right;
     display: flex;
     flex-direction: column;
     min-height: 200px;
@@ -1635,7 +1635,7 @@ body .supervisor-bib-cats .categories-grid {
 .supervisor-bib-cats .category-icon {
     margin-bottom: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     flex-shrink: 0;
 }

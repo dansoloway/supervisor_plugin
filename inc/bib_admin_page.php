@@ -198,18 +198,19 @@ function qa_bib_render_admin_page() {
     <?php
 }
 
-function qa_bib_admin_menu() {
-    add_menu_page(
-        __('ניהול פרטי ביבליוגרפיה', 'text-domain'), // Page title
-        __('ניהול פרטי ביבליוגרפיה', 'text-domain'),       // Menu title
-        'manage_options',                          // Capability (Admin access)
-        'qa_bib_manager',                          // Slug (important for URL)
-        'qa_bib_render_admin_page',                // Callback function
-        'dashicons-list-view',                     // Admin menu icon
-        25                                         // Position in menu
-    );
-}
-add_action('admin_menu', 'qa_bib_admin_menu');
+// OLD MENU - REMOVED - Now handled by consolidated admin menu
+// function qa_bib_admin_menu() {
+//     add_menu_page(
+//         __('ניהול פרטי ביבליוגרפיה', 'text-domain'), // Page title
+//         __('ניהול פרטי ביבליוגרפיה', 'text-domain'),       // Menu title
+//         'manage_options',                          // Capability (Admin access)
+//         'qa_bib_manager',                          // Slug (important for URL)
+//         'qa_bib_render_admin_page',                // Callback function
+//         'dashicons-list-view',                     // Admin menu icon
+//         25                                         // Position in menu
+//     );
+// }
+// add_action('admin_menu', 'qa_bib_admin_menu');
 
 function qa_bib_save_admin_settings() {
     if (isset($_POST['qa_bib_nonce']) && check_admin_referer('qa_bib_admin_save', 'qa_bib_nonce')) {

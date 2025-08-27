@@ -325,8 +325,16 @@ function supervisor_settings_page() {
     <?php
 }
 
-// Remove the old standalone bibliography admin menu
+// Remove the old standalone bibliography admin menu and any other unwanted menus
 function remove_old_bibliography_menu() {
     remove_menu_page('qa_bib_manager');
+    
+    // Also remove any other potential unwanted menu items
+    remove_menu_page('supervisor-category-icons'); // Remove if exists
+    remove_menu_page('supervisor-category-manager'); // Remove if exists
+    
+    // Remove any submenu pages that might be duplicated
+    remove_submenu_page('supervisor-admin', 'supervisor-category-icons');
+    remove_submenu_page('supervisor-admin', 'supervisor-category-manager');
 }
 add_action('admin_menu', 'remove_old_bibliography_menu', 999); // High priority to run after the old menu is added

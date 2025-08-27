@@ -276,28 +276,28 @@
     font-weight: normal;
     color: var(--sv-text);
     margin-bottom: 8px;
-    text-align: right;
+    text-align: left;
 }
 
 .bib-original-link {
     margin-bottom: 10px;
-    text-align: right;
+    text-align: left;
 }
 
 .bib-original-link a {
-    color: #0000EE;
+    color: #0000EE !important;
     text-decoration: none;
     font-size: 14px;
     font-weight: normal;
 }
 
 .bib-original-link a:hover {
-    color: #0000EE;
+    color: #0000EE !important;
     text-decoration: underline;
 }
 
 .bib-original-link a:visited {
-    color: #0000EE;
+    color: #0000EE !important;
 }
 
 .bib-content {
@@ -1966,7 +1966,6 @@
     color: var(--sv-text);
     margin-bottom: 40px;
     text-align: center;
-    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }

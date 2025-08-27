@@ -1438,21 +1438,6 @@ g.update-date {
     padding: 25px;
     background: #f5f5f5;
     position: relative;
-    transition: all 0.3s ease;
-}
-
-.supervisor-single-org .info-box:hover {
-    background: var(--sv-blue);
-    color: white;
-}
-
-.supervisor-single-org .info-box:hover .info-label,
-.supervisor-single-org .info-box:hover .info-value {
-    color: white;
-}
-
-.supervisor-single-org .info-box:hover i {
-    color: white !important;
 }
 
 .supervisor-single-org .info-box.left-box {

@@ -12,6 +12,6 @@ define("SUPERVISOR_ABOUT", '27908');
 define("SUPERVISOR_CONTACT", '27912');
 define("SUPERVISOR_INTRO_TEXT", '27901');
 define("SUPERVISOR_ACTIVITIES", '28029'); // Add your actual page ID here
-define("SUPERVISOR_KNOWLEDGE_MAP", '28030'); // Knowledge Map page ID
+define("SUPERVISOR_KNOWLEDGE_MAP", '28040'); // Knowledge Map page ID
 
 ?>

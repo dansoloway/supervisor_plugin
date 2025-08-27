@@ -151,17 +151,14 @@
 /* Color Tokens */
 :root {
     /* Color Variables */
-    --sv-blue: #0073AA;
-    --sv-blue-600: #005A87;
-    --sv-blue-700: #004466;
-    --sv-text: #333333;
-    --sv-text-2: #666666;
-    --sv-border: #E0E0E0;
-    --sv-background: #FFFFFF;
-    --sv-background-2: #F8F9FA;
-    --sv-success: #28A745;
-    --sv-warning: #FFC107;
-    --sv-error: #DC3545;
+    --sv-blue: #B3CBE7;       /* primary - consistent everywhere */
+    --sv-blue-600: #9BB8D9;   /* hover - slightly darker */
+    --sv-blue-strip: #B3CBE7; /* updates header strip - same as primary */
+    --sv-text: #1F2937;
+    --sv-text-2: #4B5563;
+    --sv-card: #FFFFFF;
+    --sv-border: #E5EAF0;
+    --sv-divider: #D7DEE7;
     --sv-bar: #EEF4FA;        /* nav bar bg */
     --sv-bar-border: #A0B4C8; /* nav bar border - darker */
     

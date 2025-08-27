@@ -219,6 +219,31 @@
 }
 
 /* ===== TAXONOMY ARCHIVE PAGE STYLING ===== */
+.taxonomy-content .page-title {
+    font-family: var(--sv-font-primary);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--sv-text);
+    text-align: right;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+}
+
+.taxonomy-content .page-title i {
+    font-size: 24px;
+    margin-left: 12px;
+    color: var(--sv-blue);
+}
+
+.taxonomy-content .intro-text {
+    font-family: var(--sv-font-primary);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--sv-text-2);
+    margin-bottom: 30px;
+    text-align: right;
+}
+
 .bib-items-list {
     margin-top: 30px;
 }

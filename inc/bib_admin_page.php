@@ -17,7 +17,7 @@ function qa_bib_enqueue_admin_scripts($hook) {
 add_action('admin_enqueue_scripts', 'qa_bib_enqueue_admin_scripts');
 
 // Add custom fields to taxonomy edit screen
-function qa_bib_cats_custom_fields($term) {
+function qa_tags_custom_fields($term) {
     $icon = get_term_meta($term->term_id, 'qa_bib_icon', true);
     $description = get_term_meta($term->term_id, 'qa_bib_description', true);
     ?>
@@ -41,10 +41,10 @@ function qa_bib_cats_custom_fields($term) {
     </tr>
     <?php
 }
-add_action('qa_bib_cats_edit_form_fields', 'qa_bib_cats_custom_fields', 10, 2);
+add_action('qa_tags_edit_form_fields', 'qa_tags_custom_fields', 10, 2);
 
 // Save custom fields
-function save_qa_bib_cats_custom_fields($term_id) {
+function save_qa_tags_custom_fields($term_id) {
     if (isset($_POST['qa_bib_icon'])) {
         update_term_meta($term_id, 'qa_bib_icon', sanitize_text_field($_POST['qa_bib_icon']));
     }
@@ -52,7 +52,7 @@ function save_qa_bib_cats_custom_fields($term_id) {
         update_term_meta($term_id, 'qa_bib_description', sanitize_textarea_field($_POST['qa_bib_description']));
     }
 }
-add_action('edited_qa_bib_cats', 'save_qa_bib_cats_custom_fields', 10, 2);
+add_action('edited_qa_tags', 'save_qa_tags_custom_fields', 10, 2);
 
 
 function qa_bib_render_admin_page() {
@@ -65,9 +65,9 @@ function qa_bib_render_admin_page() {
 
             <h2><?php esc_html_e('Categories', 'text-domain'); ?></h2>
             <?php
-            // Fetch categories (qa_bib_cats)
+            // Fetch categories (qa_tags)
             $categories = get_terms([
-                'taxonomy' => 'qa_bib_cats',
+                'taxonomy' => 'qa_tags',
                 'hide_empty' => false,
             ]);
 
@@ -93,7 +93,7 @@ function qa_bib_render_admin_page() {
                         'post_type' => 'qa_bib_items',
                         'tax_query' => [
                             [
-                                'taxonomy' => 'qa_bib_cats',
+                                'taxonomy' => 'qa_tags',
                                 'field' => 'term_id',
                                 'terms' => $category->term_id,
                             ],
@@ -121,7 +121,7 @@ function qa_bib_render_admin_page() {
                     error_log("Querying items for category: " . $category->name . " (Term ID: " . $category->term_id . ")");
                     error_log("Query Args: " . print_r([
                         'post_type' => 'qa_bib_items',
-                        'taxonomy' => 'qa_bib_cats',
+                        'taxonomy' => 'qa_tags',
                         'field' => 'term_id',
                         'terms' => $category->term_id,
                     ], true));

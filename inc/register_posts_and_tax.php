@@ -117,28 +117,7 @@ function register_additional_taxonomies() {
     }
 add_action('init', 'register_additional_taxonomies');
 
-function register_qa_bib_cats_taxonomy() {
-    register_taxonomy('qa_bib_cats', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
-        'labels' => [
-            'name' => __('קטגוריות ביבליוגרפיה', 'text-domain'),
-            'singular_name' => __('קטגוריה ביבליוגרפיה', 'text-domain'),
-            'search_items' => __('חפש קטגוריות ביבליוגרפיה', 'text-domain'),
-            'all_items' => __('כל הקטגוריות', 'text-domain'),
-            'parent_item' => __('קטגוריית אב', 'text-domain'),
-            'parent_item_colon' => __('קטגוריית אב:', 'text-domain'),
-            'edit_item' => __('ערוך קטגוריה', 'text-domain'),
-            'update_item' => __('עדכן קטגוריה', 'text-domain'),
-            'add_new_item' => __('הוסף קטגוריה חדשה', 'text-domain'),
-            'new_item_name' => __('שם קטגוריה חדשה', 'text-domain'),
-            'menu_name' => __('קטגוריות ביבליוגרפיה', 'text-domain'),
-        ],
-        'hierarchical' => false, // Allows parent-child structure
-        'show_admin_column' => true, // Displays the taxonomy in the post list view
-        'rewrite' => ['slug' => 'qa-bib-cats'], // Friendly URL slug
-        'show_in_rest' => true, // Enables REST API and Gutenberg support
-    ]);
-}
-add_action('init', 'register_qa_bib_cats_taxonomy');
+// qa_bib_cats taxonomy removed - functionality moved to qa_tags
 
 // ===== FONT AWESOME ICON SUPPORT FOR TAXONOMY TERMS =====
 
@@ -190,11 +169,11 @@ function save_taxonomy_icon_field($term_id) {
     }
 }
 
-// Add hooks for qa_bib_cats taxonomy
-add_action('qa_bib_cats_edit_form_fields', 'add_taxonomy_icon_field', 10, 1);
-add_action('qa_bib_cats_add_form_fields', 'add_taxonomy_icon_field_add');
-add_action('edited_qa_bib_cats', 'save_taxonomy_icon_field', 10, 1);
-add_action('created_qa_bib_cats', 'save_taxonomy_icon_field', 10, 1);
+// Add hooks for qa_tags taxonomy
+add_action('qa_tags_edit_form_fields', 'add_taxonomy_icon_field', 10, 1);
+add_action('qa_tags_add_form_fields', 'add_taxonomy_icon_field_add');
+add_action('edited_qa_tags', 'save_taxonomy_icon_field', 10, 1);
+add_action('created_qa_tags', 'save_taxonomy_icon_field', 10, 1);
 
 // Helper function to get icon for a term
 function get_term_fa_icon($term_id, $default_icon = 'fas fa-folder') {

@@ -43,14 +43,14 @@ function enqueue_alternate_header_assets() {
         'supervisor-content.php',
         'supervisor-bib_cats.php',
         'supervisor-qa_orgs.php',
-        'taxonomy-qa_bib_cats.php', // Ensure taxonomy template is included
+        'taxonomy-qa_tags.php', // Updated to use qa_tags taxonomy template
         'supervisor-search-results.php', // Add search results template
         'supervisor-activities.php', // Add activities template
     ];
 
     $singles = ['qa_bibs', 'qa_orgs', 'qa_updates', 'qa_bib_items'];
     $post_type_archives = ['qa_updates', 'qa_bib_items'];
-    $is_taxonomy = is_tax('qa_bib_cats'); // Check if it's a taxonomy archive
+    $is_taxonomy = is_tax('qa_tags'); // Check if it's a taxonomy archive
 
     $is_plugin_template = in_array(basename($template), $plugin_templates);
     $is_archive = is_post_type_archive($post_type_archives);
@@ -214,8 +214,8 @@ function supervisor_load_templates($template) {
 add_filter('template_include', 'supervisor_load_templates');
 
 function supervisor_force_taxonomy_template($template) {
-    if (is_tax('qa_bib_cats') && file_exists(plugin_dir_path(__FILE__) . 'templates/taxonomy-qa_bib_cats.php')) {
-        return plugin_dir_path(__FILE__) . 'templates/taxonomy-qa_bib_cats.php';
+    if (is_tax('qa_tags') && file_exists(plugin_dir_path(__FILE__) . 'templates/taxonomy-qa_tags.php')) {
+        return plugin_dir_path(__FILE__) . 'templates/taxonomy-qa_tags.php';
     }
     return $template;
 }

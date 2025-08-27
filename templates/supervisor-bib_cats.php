@@ -23,9 +23,9 @@ error_log('Loading supervisor-bib_cats.php template');
 
         <div class="categories-grid">
             <?php
-            // Fetch all categories in the 'qa_bib_cats' taxonomy
+            // Fetch all categories in the 'qa_tags' taxonomy
             $categories = get_terms([
-                'taxonomy' => 'qa_bib_cats',
+                'taxonomy' => 'qa_tags',
                 'hide_empty' => false,
             ]);
 

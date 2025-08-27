@@ -48,7 +48,7 @@ if (!empty($search_term)) {
     ]);
     
     $matching_bib_cats = get_terms([
-        'taxonomy' => 'qa_bib_cats',
+        'taxonomy' => 'qa_tags',
         'name__like' => $search_term,
         'hide_empty' => false,
         'fields' => 'ids'
@@ -76,7 +76,7 @@ if (!empty($search_term)) {
         
         if (!empty($matching_bib_cats)) {
             $tax_query[] = [
-                'taxonomy' => 'qa_bib_cats',
+                'taxonomy' => 'qa_tags',
                 'field' => 'term_id',
                 'terms' => $matching_bib_cats
             ];
@@ -276,9 +276,9 @@ $total_results = $search_query->found_posts;
                                         <?php endif; ?>
                                         <?php 
                                         // Get bibliography categories for this post
-                                        $bib_cats = get_the_terms($post_id, 'qa_bib_cats');
+                                        $bib_cats = get_the_terms($post_id, 'qa_tags');
                                         if ($bib_cats): ?>
-                                            <p><strong>קטגוריות ביבליוגרפיה:</strong> 
+                                            <p><strong>נושאי מפתח:</strong> 
                                                 <?php foreach ($bib_cats as $bib_cat): ?>
                                                     <span class="taxonomy-term">
                                                         <i class="<?php echo get_term_fa_icon($bib_cat->term_id, 'fas fa-book'); ?>"></i>

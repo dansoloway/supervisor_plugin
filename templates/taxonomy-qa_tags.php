@@ -21,13 +21,12 @@ error_log('Loading taxonomy-qa_tags.php template');
     <div class="taxonomy-content">
         <h1 class="page-title">
             <?php 
-            echo '<span>' . esc_html($term->name) . '</span>';
             // Get and display the icon for this term
             $icon = get_term_fa_icon($term->term_id, 'fas fa-folder');
             if ($icon) {
                 echo '<i class="' . esc_attr($icon) . '"></i>';
             }
-             
+            echo '<span>' . esc_html($term->name) . '</span>';
             ?>
         </h1>
         
@@ -64,28 +63,25 @@ error_log('Loading taxonomy-qa_tags.php template');
                 while ($query->have_posts()) : $query->the_post();
                     ?>
                     <div class="bib-item" data-post-id="<?php echo get_the_ID(); ?>">
-                        <div class="bib-header">
-                            <i class="fas fa-chevron-down bib-toggle"></i>
-                            <div class="bib-reference"><?php the_title(); ?></div>
-                        </div>
+                        <div class="bib-reference"><?php the_title(); ?></div>
+                        <?php
+                        // Get the ACF field "original_link"
+                        $original_link = get_field('orignial_link');
+                        if ($original_link) :
+                        ?>
+                            <div class="bib-original-link">
+                                <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer">
+                                    <?php echo esc_html($original_link); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
                         <div class="bib-content" style="display: none;">
                             <p class="bib-description">
-                                כאן יהיה מלל המסביר על המקור ועל הארגון האנגלי ה CQC גיבש מדיניות פיקוח על רשויות מקומיות
-                                כאן יהיה מלל המסביר על המקור ועל הארגון האנגלי ה CQC גיבש מדיניות פיקוח על רשויות מקומיות
-                                כאן יהיה מלל המסביר על המקור ועל הארגון האנגלי ה CQC גיבש מדיניות פיקוח על רשויות מקומיות
+                                <?php the_content(); ?>
                             </p>
-                            <?php
-                            // Get the ACF field "original_link"
-                            $original_link = get_field('orignial_link');
-                            if ($original_link) :
-                            ?>
-                                <p class="bib-original-link">
-                                    <strong>למקור: </strong> 
-                                    <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer">
-                                        <?php echo esc_html($original_link); ?>
-                                    </a>
-                                </p>
-                            <?php endif; ?>
+                        </div>
+                        <div class="bib-toggle-container">
+                            <i class="fas fa-chevron-down bib-toggle"></i>
                         </div>
                     </div>
                 <?php endwhile;

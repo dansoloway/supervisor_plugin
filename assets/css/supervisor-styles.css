@@ -231,93 +231,102 @@
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
+    direction: rtl;
 }
 
 .taxonomy-content .page-title i {
     font-size: 20px;
     color: var(--sv-blue);
-    order: 1;
+    order: 2;
 }
 
 .taxonomy-content .page-title span {
-    order: 2;
+    order: 1;
 }
 
 .taxonomy-content .intro-text {
     font-family: var(--sv-font-primary);
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.6;
-    color: var(--sv-text-2);
+    color: var(--sv-text);
     margin-bottom: 30px;
     text-align: right;
 }
 
+/* Bibliography Items Styling */
 .bib-items-list {
     margin-top: 30px;
 }
 
 .bib-item {
-    border: 1px solid var(--sv-border);
-    border-radius: 8px;
-    margin-bottom: 15px;
-    background: white;
-    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.bib-header {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    cursor: pointer;
-    background: #f8f9fa;
-    border-bottom: 1px solid var(--sv-border);
-    transition: background-color 0.2s ease;
-}
-
-.bib-header:hover {
-    background: #e9ecef;
-}
-
-.bib-toggle {
-    margin-left: 15px;
-    color: var(--sv-text-2);
-    font-size: 14px;
-    transition: transform 0.2s ease;
+.bib-item:last-child {
+    border-bottom: none;
 }
 
 .bib-reference {
-    flex: 1;
     font-family: var(--sv-font-primary);
     font-size: 16px;
-    line-height: 1.5;
+    font-weight: 600;
     color: var(--sv-text);
-}
-
-.bib-content {
-    padding: 20px;
-    background: white;
-}
-
-.bib-description {
-    margin-bottom: 15px;
-    line-height: 1.6;
-    color: var(--sv-text-2);
+    margin-bottom: 8px;
+    text-align: right;
 }
 
 .bib-original-link {
-    margin: 0;
-    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: right;
 }
 
 .bib-original-link a {
-    color: var(--sv-blue);
+    color: #0066cc;
     text-decoration: none;
-    word-break: break-all;
+    font-size: 14px;
 }
 
 .bib-original-link a:hover {
     text-decoration: underline;
 }
+
+.bib-content {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.bib-description {
+    font-family: var(--sv-font-primary);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--sv-text-2);
+    text-align: right;
+}
+
+.bib-toggle-container {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.bib-toggle {
+    color: var(--sv-blue);
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.bib-toggle:hover {
+    opacity: 0.8;
+}
+
+.bib-toggle.fa-chevron-up {
+    transform: rotate(180deg);
+}
+
+
 
 .no-items {
     text-align: center;

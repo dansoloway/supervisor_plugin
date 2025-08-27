@@ -374,7 +374,7 @@
   grid-template-columns: 1fr minmax(420px, 560px) 1fr; /* L | CENTER | R */
   grid-template-areas: "left center right";
   gap: var(--gap);
-  align-items: center;     /* vertically center content in each cell */
+  align-items: stretch;     /* Make the grid rows stretch so side columns can match center height */
   max-width: 1200px;
   margin: 0 auto;
   padding-inline: clamp(12px, 3vw, 24px);
@@ -402,8 +402,13 @@
 }
 
 /* 4) lists: RTL, right-aligned, custom arrows */
-.col-left, .col-right{
-  align-self: center;
+/* Side columns: top group sticks up, bottom group sticks down */
+.col-left,
+.col-right{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;   /* key line - pushes first list to top and second list to bottom */
+  gap: 24px;                        /* space between green/pink blocks */
 }
 
 .col-left .arrow-list,
@@ -471,6 +476,11 @@
       "right"
       "left";
     gap: 24px;
+  }
+  /* Mobile: stack normally (no top/bottom pinning) */
+  .col-left, .col-right{
+    justify-content: flex-start;
+    gap: 12px;
   }
   .col-left .arrow-list,
   .col-right .arrow-list{ max-width: none; }

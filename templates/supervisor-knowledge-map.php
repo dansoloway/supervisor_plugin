@@ -18,11 +18,14 @@ get_header('supervisor');
         
         <!-- Knowledge Map Diagram -->
         <section class="knowledge-layout" dir="rtl">
-            <!-- LEFT column -->
+            <!-- RIGHT column -->
             <aside class="col-right">
-                <ul class="arrow-list">
+                <ul class="arrow-list group-top">
                     <li>מדריכים ופרקטיקות מיטביות</li>
                     <li>מחקרים</li>
+                </ul>
+
+                <ul class="arrow-list group-bottom">
                     <li>אכיפה מתקנת</li>
                     <li>אכיפה עונשית</li>
                 </ul>
@@ -35,9 +38,9 @@ get_header('supervisor');
                 </div>
             </div>
 
-            <!-- RIGHT column -->
+            <!-- LEFT column -->
             <aside class="col-left">
-                <ul class="arrow-list big">
+                <ul class="arrow-list group-top">
                     <li>סטנדרטים לאיכות השירות</li>
                     <li>סטנדרטים לעבודת הפיקוח</li>
                     <li>
@@ -46,6 +49,9 @@ get_header('supervisor');
                             שקיפות, ניהול סיכונים, שיתוף מקבלי שירות, רספונסיביות, פיקוח משולב
                         </div>
                     </li>
+                </ul>
+
+                <ul class="arrow-list group-bottom">
                     <li>בקרה עצמית</li>
                     <li>בקרה חיצונית</li>
                 </ul>

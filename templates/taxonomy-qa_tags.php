@@ -19,14 +19,14 @@ error_log('Loading taxonomy-qa_tags.php template');
 
     <!-- Main Content -->
     <div class="taxonomy-content">
-        <h1 class="page-title" style="text-align: right;">
+        <h1 class="page-title">
             <?php 
             // Get and display the icon for this term
             $icon = get_term_fa_icon($term->term_id, 'fas fa-folder');
             if ($icon) {
-                echo '<i class="' . esc_attr($icon) . '" style="margin-left: 8px; color: #0073aa;"></i>';
+                echo '<i class="' . esc_attr($icon) . '"></i>';
             }
-            echo esc_html($term->name); 
+            echo '<span>' . esc_html($term->name) . '</span>'; 
             ?>
         </h1>
         

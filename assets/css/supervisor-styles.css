@@ -221,18 +221,26 @@
 /* ===== TAXONOMY ARCHIVE PAGE STYLING ===== */
 .taxonomy-content .page-title {
     font-family: var(--sv-font-primary);
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--sv-text);
-    text-align: right;
+    text-align: center;
     margin: 0 0 20px 0;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 }
 
 .taxonomy-content .page-title i {
-    font-size: 24px;
-    margin-left: 12px;
+    font-size: 20px;
     color: var(--sv-blue);
+    order: 2;
+}
+
+.taxonomy-content .page-title span {
+    order: 1;
 }
 
 .taxonomy-content .intro-text {
@@ -241,7 +249,10 @@
     line-height: 1.6;
     color: var(--sv-text-2);
     margin-bottom: 30px;
-    text-align: right;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .bib-items-list {

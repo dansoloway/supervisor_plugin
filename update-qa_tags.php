@@ -45,19 +45,52 @@ echo '<style>
     .step { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
 </style>';
 
-// Define the exact categories we want to keep
+// Define the exact categories we want to keep with their icons
 $desired_categories = [
-    'בקרה עצמית' => 'Self-control / Self-monitoring',
-    'בקרה אחר עמידה בסטנדרטים' => 'Control after compliance with standards',
-    'אספקת שירותים חברתיים ומיקור חוץ' => 'Provision of social services and outsourcing',
-    'אכיפה' => 'Enforcement',
-    'ניהול סיכונים' => 'Risk management',
-    'מדינת רווחה רגולטורית' => 'Regulatory welfare state',
-    'מדיניות פיקוח על שירותים חברתיים' => 'Supervision policy on social services',
-    'הפצת מידע וידע' => 'Dissemination of information and knowledge',
-    'שיתוף מקבלי השירות בפיקוח' => 'Involving service recipients in supervision',
-    'פיקוח משולב' => 'Integrated supervision',
-    'סטנדרטים לאיכות השירותים' => 'Service quality standards'
+    'בקרה עצמית' => [
+        'description' => 'Self-control / Self-monitoring',
+        'icon' => 'fa-solid fa-compass'
+    ],
+    'בקרה אחר עמידה בסטנדרטים' => [
+        'description' => 'Control after compliance with standards',
+        'icon' => 'fa-solid fa-ruler'
+    ],
+    'אספקת שירותים חברתיים ומיקור חוץ' => [
+        'description' => 'Provision of social services and outsourcing',
+        'icon' => 'fa-solid fa-square-arrow-up-right'
+    ],
+    'אכיפה' => [
+        'description' => 'Enforcement',
+        'icon' => 'fa-solid fa-shield-halved'
+    ],
+    'ניהול סיכונים' => [
+        'description' => 'Risk management',
+        'icon' => 'fa-solid fa-traffic-light'
+    ],
+    'מדינת רווחה רגולטורית' => [
+        'description' => 'Regulatory welfare state',
+        'icon' => 'fa-solid fa-building-columns'
+    ],
+    'מדיניות פיקוח על שירותים חברתיים' => [
+        'description' => 'Supervision policy on social services',
+        'icon' => 'fa-solid fa-glasses'
+    ],
+    'הפצת מידע וידע' => [
+        'description' => 'Dissemination of information and knowledge',
+        'icon' => 'fa-solid fa-paper-plane'
+    ],
+    'שיתוף מקבלי השירות בפיקוח' => [
+        'description' => 'Involving service recipients in supervision',
+        'icon' => 'fa-solid fa-handshake-angle'
+    ],
+    'פיקוח משולב' => [
+        'description' => 'Integrated supervision',
+        'icon' => 'fa-solid fa-link'
+    ],
+    'סטנדרטים לאיכות השירותים' => [
+        'description' => 'Service quality standards',
+        'icon' => 'fa-solid fa-medal'
+    ]
 ];
 
 echo '<div class="step">';
@@ -78,37 +111,45 @@ echo '</ul>';
 echo '</div>';
 
 echo '<div class="step">';
-echo '<h2>Step 2: Creating/updating desired terms</h2>';
+echo '<h2>Step 2: Creating/updating desired terms with icons</h2>';
 
 $created_terms = [];
 $updated_terms = [];
 
-foreach ($desired_categories as $hebrew_name => $english_description) {
+foreach ($desired_categories as $hebrew_name => $data) {
     // Check if term already exists
     $existing_term = get_term_by('name', $hebrew_name, 'qa_tags');
     
     if ($existing_term) {
-        // Term exists, update description if needed
+        // Term exists, update description and icon if needed
         $updated = wp_update_term($existing_term->term_id, 'qa_tags', [
             'name' => $hebrew_name,
-            'description' => $english_description
+            'description' => $data['description']
         ]);
         
         if (!is_wp_error($updated)) {
             $updated_terms[] = $hebrew_name;
             echo '<p class="success">✓ Updated: ' . esc_html($hebrew_name) . '</p>';
+            
+            // Set the icon meta
+            update_term_meta($existing_term->term_id, 'fa_icon', $data['icon']);
+            echo '<p class="info">  → Set icon: ' . esc_html($data['icon']) . '</p>';
         } else {
             echo '<p class="error">✗ Failed to update: ' . esc_html($hebrew_name) . '</p>';
         }
     } else {
         // Term doesn't exist, create it
         $new_term = wp_insert_term($hebrew_name, 'qa_tags', [
-            'description' => $english_description
+            'description' => $data['description']
         ]);
         
         if (!is_wp_error($new_term)) {
             $created_terms[] = $hebrew_name;
             echo '<p class="success">✓ Created: ' . esc_html($hebrew_name) . '</p>';
+            
+            // Set the icon meta
+            update_term_meta($new_term['term_id'], 'fa_icon', $data['icon']);
+            echo '<p class="info">  → Set icon: ' . esc_html($data['icon']) . '</p>';
         } else {
             echo '<p class="error">✗ Failed to create: ' . esc_html($hebrew_name) . '</p>';
         }
@@ -181,7 +222,8 @@ $final_terms = get_terms([
 echo '<p>Final count: ' . count($final_terms) . ' terms</p>';
 echo '<ul>';
 foreach ($final_terms as $term) {
-    echo '<li>' . esc_html($term->name) . '</li>';
+    $icon = get_term_meta($term->term_id, 'fa_icon', true);
+    echo '<li>' . esc_html($term->name) . ' - Icon: ' . esc_html($icon) . '</li>';
 }
 echo '</ul>';
 

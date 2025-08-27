@@ -79,25 +79,31 @@ class SupervisorMigration {
         
         $migrated_count = 0;
         foreach ($old_terms as $old_term) {
+            // Handle both object and array formats
+            $term_name = is_object($old_term) ? $old_term->name : $old_term['name'];
+            $term_description = is_object($old_term) ? $old_term->description : $old_term['description'];
+            $term_slug = is_object($old_term) ? $old_term->slug : $old_term['slug'];
+            $term_id = is_object($old_term) ? $old_term->term_id : $old_term['term_id'];
+            
             // Check if term already exists in qa_tags
-            $existing_term = get_term_by('name', $old_term->name, 'qa_tags');
+            $existing_term = get_term_by('name', $term_name, 'qa_tags');
             
             if ($existing_term) {
-                echo "<p>Term '{$old_term->name}' already exists in qa_tags (ID: {$existing_term->term_id})</p>\n";
-                $this->log("Term '{$old_term->name}' already exists in qa_tags");
+                echo "<p>Term '{$term_name}' already exists in qa_tags (ID: {$existing_term->term_id})</p>\n";
+                $this->log("Term '{$term_name}' already exists in qa_tags");
             } else {
                 // Create new term in qa_tags
-                $result = wp_insert_term($old_term->name, 'qa_tags', [
-                    'description' => $old_term->description,
-                    'slug' => $old_term->slug,
+                $result = wp_insert_term($term_name, 'qa_tags', [
+                    'description' => $term_description,
+                    'slug' => $term_slug,
                 ]);
                 
                 if (is_wp_error($result)) {
-                    echo "<p class='error'>Failed to migrate term '{$old_term->name}': " . $result->get_error_message() . "</p>\n";
-                    $this->log("ERROR: Failed to migrate term '{$old_term->name}'");
+                    echo "<p class='error'>Failed to migrate term '{$term_name}': " . $result->get_error_message() . "</p>\n";
+                    $this->log("ERROR: Failed to migrate term '{$term_name}'");
                 } else {
-                    echo "<p class='success'>Migrated term '{$old_term->name}' (ID: {$old_term->term_id} → {$result['term_id']})</p>\n";
-                    $this->log("Migrated term '{$old_term->name}' (ID: {$old_term->term_id} → {$result['term_id']})");
+                    echo "<p class='success'>Migrated term '{$term_name}' (ID: {$term_id} → {$result['term_id']})</p>\n";
+                    $this->log("Migrated term '{$term_name}' (ID: {$term_id} → {$result['term_id']})");
                     $migrated_count++;
                 }
             }
@@ -116,36 +122,45 @@ class SupervisorMigration {
             'hide_empty' => false,
         ]);
         
+        if (empty($old_terms) || is_wp_error($old_terms)) {
+            echo "<p class='warning'>No qa_bib_cats terms found for meta migration.</p>\n";
+            return;
+        }
+        
         $migrated_meta = 0;
         foreach ($old_terms as $old_term) {
+            // Handle both object and array formats
+            $term_name = is_object($old_term) ? $old_term->name : $old_term['name'];
+            $term_id = is_object($old_term) ? $old_term->term_id : $old_term['term_id'];
+            
             // Find corresponding term in qa_tags
-            $new_term = get_term_by('name', $old_term->name, 'qa_tags');
+            $new_term = get_term_by('name', $term_name, 'qa_tags');
             
             if (!$new_term) {
-                echo "<p class='warning'>No corresponding term found in qa_tags for '{$old_term->name}'</p>\n";
+                echo "<p class='warning'>No corresponding term found in qa_tags for '{$term_name}'</p>\n";
                 continue;
             }
             
             // Migrate custom fields
-            $icon = get_term_meta($old_term->term_id, 'qa_bib_icon', true);
-            $description = get_term_meta($old_term->term_id, 'qa_bib_description', true);
-            $fa_icon = get_term_meta($old_term->term_id, 'fa_icon', true);
+            $icon = get_term_meta($term_id, 'qa_bib_icon', true);
+            $description = get_term_meta($term_id, 'qa_bib_description', true);
+            $fa_icon = get_term_meta($term_id, 'fa_icon', true);
             
             if (!empty($icon)) {
                 update_term_meta($new_term->term_id, 'qa_bib_icon', $icon);
-                echo "<p>Migrated icon for '{$old_term->name}': {$icon}</p>\n";
+                echo "<p>Migrated icon for '{$term_name}': {$icon}</p>\n";
                 $migrated_meta++;
             }
             
             if (!empty($description)) {
                 update_term_meta($new_term->term_id, 'qa_bib_description', $description);
-                echo "<p>Migrated description for '{$old_term->name}'</p>\n";
+                echo "<p>Migrated description for '{$term_name}'</p>\n";
                 $migrated_meta++;
             }
             
             if (!empty($fa_icon)) {
                 update_term_meta($new_term->term_id, 'fa_icon', $fa_icon);
-                echo "<p>Migrated Font Awesome icon for '{$old_term->name}': {$fa_icon}</p>\n";
+                echo "<p>Migrated Font Awesome icon for '{$term_name}': {$fa_icon}</p>\n";
                 $migrated_meta++;
             }
         }

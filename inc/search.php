@@ -65,7 +65,7 @@
         </div>
 
         <!-- Filter Button -->
-        <button type="button" id="search-submit" class="filter-button">סנן (אופציונלי)</button>
+        <!-- <button type="button" id="search-submit" class="filter-button">סנן (אופציונלי)</button> -->
     </form>
     <div class="ajax-search-results"></div>
 </div>

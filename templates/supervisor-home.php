@@ -92,7 +92,7 @@ get_header('supervisor');
                     <img src="<?php echo plugins_url('assets/img/knowledge_map.png', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
                 </div>
                 <div class="knowledge-map-footer">
-                    <a href="#" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
+                    <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
                 </div>
             </div>
         </div>

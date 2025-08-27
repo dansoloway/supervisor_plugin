@@ -23,18 +23,18 @@ $supervisor_menu = [
     [
         'title' => 'מפת היעד',
         'url' => '#', // Will be handled by JavaScript
-        'is_active' => is_page(SUPERVISOR_BIB_CATS),
+        'is_active' => is_page(SUPERVISOR_BIB_CATS) || is_page_template('supervisor-knowledge-map.php'),
         'has_dropdown' => true,
         'submenu' => [
             [
                 'title' => 'מהי מפת היעד',
-                'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
-                'is_active' => is_page(SUPERVISOR_BIB_CATS)
+                'url' => home_url('/supervisor-knowledge-map/'),
+                'is_active' => is_page_template('supervisor-knowledge-map.php')
             ],
             [
                 'title' => 'נושאי מפתח',
                 'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
-                'is_active' => false
+                'is_active' => is_page(SUPERVISOR_BIB_CATS)
             ],
             [
                 'title' => 'ארגוני פיקוח',

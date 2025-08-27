@@ -68,7 +68,7 @@ get_header('supervisor');
                             echo '<div class="update-item">';
                             echo '<div class="update-content">';
                             echo '<div class="update-text">';
-                            echo '<h3 class="update-title"><a href="' . home_url('/supervisor-search/') . '">' . get_the_title() . '</a></h3>';
+                            echo '<h3 class="update-title"><a href="' . get_permalink(SUPERVISOR_UPDATES) . '">' . get_the_title() . '</a></h3>';
                             echo '<p class="update-date">' . esc_html($formatted_date) . '</p>';
                             echo '</div>';
                             echo '</div>';

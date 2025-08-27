@@ -15,9 +15,9 @@ error_log('Loading supervisor-bib_cats.php template');
 
     <!-- Main Content -->
     <div class="bib-cats-content">
-        <h1 class="page-title" style="text-align: right;">נושאימפתח</h1>
+        <h1 class="page-title" style="text-align: right;">נושאי מפתח</h1>
         
-        <p class="intro-text" style="text-align: right;">
+        <p class=" style="text-align: right;">
         כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתה כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה
 נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד
 הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתהכאן יהיה טקסט הקדמה קצר המסביר
@@ -35,12 +35,12 @@ error_log('Loading supervisor-bib_cats.php template');
             if (!empty($categories)) :
                 foreach ($categories as $index => $category) :
                     $description = get_term_meta($category->term_id, 'qa_bib_description', true);
-                    // Link to search page with category as search term
-                    $search_url = home_url('/supervisor-search/') . '?supervisor_search=' . urlencode($category->name);
+                    // Link to taxonomy archive page for this qa_tag
+                    $archive_url = get_term_link($category);
                     // Get custom Font Awesome icon for this term, or use default
                     $icon = get_term_fa_icon($category->term_id, 'fas fa-folder');
                     ?>
-                    <a href="<?php echo esc_url($search_url); ?>" class="category-card">
+                    <a href="<?php echo esc_url($archive_url); ?>" class="category-card">
                         <div class="category-icon">
                             <i class="<?php echo esc_attr($icon); ?>"></i>
                         </div>

@@ -416,7 +416,7 @@ g.update-date {
     height: 100%;
     flex: 1;
     min-width: 0;
-    border-radius: 20px;
+    border-radius: 0 !important; /* Force no border radius */
     margin: 0;
     box-sizing: border-box;
 }

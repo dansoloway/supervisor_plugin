@@ -18,12 +18,9 @@ get_header('supervisor');
         
         <!-- Knowledge Map Diagram -->
         <div class="knowledge-map-diagram">
-            <!-- Central Supervision Body -->
-            <div class="central-body">
-                <div class="central-box">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>גוף פיקוח</span>
-                </div>
+            <!-- Central Image -->
+            <div class="central-image">
+                <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/knowledge_map.png'; ?>" alt="מפת הידע" />
             </div>
             
             <!-- Top: Information & Knowledge Dissemination -->
@@ -100,18 +97,6 @@ get_header('supervisor');
                     </div>
                 </div>
             </div>
-            
-            <!-- Connection Lines -->
-            <svg class="connection-lines" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-                <!-- Top connection -->
-                <path d="M 400 300 Q 400 200 400 150" stroke="#B3CBE7" stroke-width="3" fill="none"/>
-                <!-- Right connection -->
-                <path d="M 400 300 Q 500 300 550 300" stroke="#B3CBE7" stroke-width="3" fill="none"/>
-                <!-- Bottom connection -->
-                <path d="M 400 300 Q 400 400 400 450" stroke="#B3CBE7" stroke-width="3" fill="none"/>
-                <!-- Left connection -->
-                <path d="M 400 300 Q 300 300 250 300" stroke="#B3CBE7" stroke-width="3" fill="none"/>
-            </svg>
         </div>
         
         <!-- Explanatory Text -->

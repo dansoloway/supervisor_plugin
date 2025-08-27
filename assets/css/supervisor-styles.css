@@ -232,16 +232,17 @@
     justify-content: flex-end;
     gap: 12px;
     direction: rtl;
+    width: 100%;
 }
 
 .taxonomy-content .page-title i {
     font-size: 20px;
     color: var(--sv-blue);
-    order: 2;
+    order: 1;
 }
 
 .taxonomy-content .page-title span {
-    order: 1;
+    order: 2;
 }
 
 .taxonomy-content .intro-text {
@@ -262,6 +263,8 @@
     margin-bottom: 20px;
     padding: 15px 0;
     border-bottom: 1px solid #eee;
+    direction: ltr;
+    text-align: right;
 }
 
 .bib-item:last-child {
@@ -271,7 +274,7 @@
 .bib-reference {
     font-family: var(--sv-font-primary);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: normal;
     color: var(--sv-text);
     margin-bottom: 8px;
     text-align: right;
@@ -283,13 +286,19 @@
 }
 
 .bib-original-link a {
-    color: #0066cc;
+    color: #0000EE;
     text-decoration: none;
     font-size: 14px;
+    font-weight: normal;
 }
 
 .bib-original-link a:hover {
+    color: #0000EE;
     text-decoration: underline;
+}
+
+.bib-original-link a:visited {
+    color: #0000EE;
 }
 
 .bib-content {

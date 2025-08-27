@@ -143,6 +143,7 @@ function supervisor_load_template($template) {
         SUPERVISOR_ABOUT => 'supervisor-content.php',
         SUPERVISOR_CONTACT => 'supervisor-content.php',
         SUPERVISOR_ACTIVITIES => 'supervisor-activities.php',
+        SUPERVISOR_KNOWLEDGE_MAP => 'supervisor-knowledge-map.php',
     ];
 
     if (isset($custom_templates_by_id[$page_id]) && file_exists(plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$page_id])) {

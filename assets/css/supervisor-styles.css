@@ -303,7 +303,6 @@
 .bib-content {
     margin-top: 15px;
     padding-top: 15px;
-    border-top: 1px solid #eee;
 }
 
 .bib-description {
@@ -312,6 +311,14 @@
     line-height: 1.6;
     color: var(--sv-text-2);
     text-align: right;
+}
+
+.bib-description p {
+    margin: 0 0 10px 0;
+}
+
+.bib-description p:last-child {
+    margin-bottom: 0;
 }
 
 .bib-toggle-container {

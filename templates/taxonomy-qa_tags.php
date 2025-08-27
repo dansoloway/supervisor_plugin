@@ -76,9 +76,9 @@ error_log('Loading taxonomy-qa_tags.php template');
                             </div>
                         <?php endif; ?>
                         <div class="bib-content" style="display: none;">
-                            <p class="bib-description">
+                            <div class="bib-description">
                                 <?php the_content(); ?>
-                            </p>
+                            </div>
                         </div>
                         <div class="bib-toggle-container">
                             <i class="fas fa-chevron-down bib-toggle"></i>

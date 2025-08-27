@@ -58,15 +58,18 @@ get_header('supervisor');
                             $updates_query->the_post();
 
                             $raw_date = get_field('qa_updates_date'); // ACF date field
-                            $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
+                            if ($raw_date) {
+                                $formatted_date = date_i18n('F Y', strtotime($raw_date));
+                            } else {
+                                // Fallback to post date if ACF field is empty
+                                $formatted_date = get_the_date('F Y');
+                            }
 
                             echo '<div class="update-item">';
                             echo '<div class="update-content">';
                             echo '<div class="update-text">';
                             echo '<h3 class="update-title"><a href="' . home_url('/supervisor-search/') . '">' . get_the_title() . '</a></h3>';
-                            if ($formatted_date) {
-                                echo '<p class="update-date">' . esc_html($formatted_date) . '</p>';
-                            }
+                            echo '<p class="update-date">' . esc_html($formatted_date) . '</p>';
                             echo '</div>';
                             echo '</div>';
                             echo '</div>';

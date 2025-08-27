@@ -26,7 +26,7 @@ function qa_tags_custom_fields($term) {
             <label for="fa_icon"><?php esc_html_e('אייקון Font Awesome', 'text-domain'); ?></label>
         </th>
         <td>
-            <input type="text" name="fa_icon" id="fa_icon" value="<?php echo esc_attr($icon); ?>" placeholder="fa-solid fa-compass" style="width: 100%; max-width: 400px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace;">
+            <input type="text" style="direction: ltr;" name="fa_icon" id="fa_icon" value="<?php echo esc_attr($icon); ?>" placeholder="fa-solid fa-compass" style="width: 100%; max-width: 400px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace;">
             <p class="description"><?php esc_html_e('השתמש במחלקת אייקון Font Awesome (למשל, fa-solid fa-compass).', 'text-domain'); ?></p>
         </td>
     </tr>

@@ -338,6 +338,8 @@
 
 .supervisor-taxonomy .taxonomy-content {
     margin-top: 20px;
+    width: 85%;
+    margin: 30px auto;
 }
 
 /* ===== KNOWLEDGE MAP PAGE STYLING ===== */

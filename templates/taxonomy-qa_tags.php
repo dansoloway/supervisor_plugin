@@ -21,12 +21,13 @@ error_log('Loading taxonomy-qa_tags.php template');
     <div class="taxonomy-content">
         <h1 class="page-title">
             <?php 
+            echo '<span>' . esc_html($term->name) . '</span>';
             // Get and display the icon for this term
             $icon = get_term_fa_icon($term->term_id, 'fas fa-folder');
             if ($icon) {
                 echo '<i class="' . esc_attr($icon) . '"></i>';
             }
-            echo '<span>' . esc_html($term->name) . '</span>'; 
+             
             ?>
         </h1>
         

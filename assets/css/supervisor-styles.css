@@ -421,9 +421,9 @@ g.update-date {
     box-sizing: border-box;
 }
 
-/* Simple border between menu items */
-.supervisor-home .site-nav a:not(:last-child) {
-    border-right: 2px solid var(--sv-bar-border);
+/* Simple border between menu items - RTL layout */
+.supervisor-home .site-nav a:not(:first-child) {
+    border-left: 2px solid var(--sv-bar-border);
 }
 
 /* Hover effect - full coverage */

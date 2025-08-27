@@ -19,7 +19,7 @@ get_header('supervisor');
         <!-- Knowledge Map Diagram -->
         <section class="knowledge-layout" dir="rtl">
             <!-- LEFT column -->
-            <aside class="col-left">
+            <aside class="col-right">
                 <ul class="arrow-list">
                     <li>מדריכים ופרקטיקות מיטביות</li>
                     <li>מחקרים</li>
@@ -36,7 +36,7 @@ get_header('supervisor');
             </div>
 
             <!-- RIGHT column -->
-            <aside class="col-right">
+            <aside class="col-left">
                 <ul class="arrow-list big">
                     <li>סטנדרטים לאיכות השירות</li>
                     <li>סטנדרטים לעבודת הפיקוח</li>

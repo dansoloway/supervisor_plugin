@@ -764,9 +764,19 @@
 
 .update-date {
     display: block;
-    font-size: 18px;
+    font-size: 14px;
     color: var(--sv-blue);
     margin-top: 6px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+/* Homepage specific update date styling */
+.supervisor-home .update-date {
+    font-size: 14px;
+    color: var(--sv-blue);
+    margin-top: 4px;
+    margin-bottom: 0;
     font-weight: 500;
 }
 
@@ -997,7 +1007,7 @@
     display: block;
 }
 .updates-box {
-    padding: 0 !important;
+    padding: 0;
 }
 
 /* ===== UPDATES BOX ===== */

@@ -218,6 +218,81 @@
     }
 }
 
+/* ===== TAXONOMY ARCHIVE PAGE STYLING ===== */
+.bib-items-list {
+    margin-top: 30px;
+}
+
+.bib-item {
+    border: 1px solid var(--sv-border);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+    overflow: hidden;
+}
+
+.bib-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    background: #f8f9fa;
+    border-bottom: 1px solid var(--sv-border);
+    transition: background-color 0.2s ease;
+}
+
+.bib-header:hover {
+    background: #e9ecef;
+}
+
+.bib-toggle {
+    margin-left: 15px;
+    color: var(--sv-text-2);
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.bib-reference {
+    flex: 1;
+    font-family: var(--sv-font-primary);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--sv-text);
+}
+
+.bib-content {
+    padding: 20px;
+    background: white;
+}
+
+.bib-description {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: var(--sv-text-2);
+}
+
+.bib-original-link {
+    margin: 0;
+    font-size: 14px;
+}
+
+.bib-original-link a {
+    color: var(--sv-blue);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.bib-original-link a:hover {
+    text-decoration: underline;
+}
+
+.no-items {
+    text-align: center;
+    color: var(--sv-text-2);
+    font-style: italic;
+    padding: 40px 20px;
+}
+
 /* ===== SUPERVISOR UPDATES PAGE LAYOUT ===== */
 .supervisor-home {
     max-width: 1200px;

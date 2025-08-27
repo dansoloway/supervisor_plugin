@@ -167,17 +167,20 @@ $total_results = $search_query->found_posts;
     </div>
     -->
 
-    <!-- Search Results Header -->
-    <div class="search-results-header">
+  
+
+    <!-- Search Results Content -->
+    <div class="search-results-content">
+
+      <!-- Search Results Header -->
+      <div class="search-results-header">
         <h1>תוצאות חיפוש</h1>
         <?php if (!empty($search_term)): ?>
             <p class="search-query">חיפוש עבור: <strong><?php echo esc_html($search_term); ?></strong></p>
         <?php endif; ?>
         <p class="results-count">נמצאו <?php echo $total_results; ?> תוצאות</p>
     </div>
-
-    <!-- Search Results Content -->
-    <div class="search-results-content">
+    
         <?php if ($search_query->have_posts()): ?>
             <div class="search-results-list">
                 <?php

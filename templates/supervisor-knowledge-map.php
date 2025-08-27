@@ -17,7 +17,7 @@ get_header('supervisor');
         <h1 class="page-title" style="text-align: center; margin-bottom: 40px;">מפת הידע</h1>
         
         <!-- Knowledge Map Diagram -->
-        <section class="knowledge-layout" dir="rtl" aria-label="מפת הידע">
+        <section class="knowledge-layout" dir="rtl">
             <!-- LEFT column -->
             <aside class="col-left">
                 <ul class="arrow-list">

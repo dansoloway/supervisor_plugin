@@ -362,7 +362,7 @@
 .knowledge-layout{
   --gap: clamp(16px, 3vw, 32px);
   display: grid;
-  grid-template-columns: 1fr minmax(320px, 640px) 1fr; /* L | CENTER | R */
+  grid-template-columns: 1fr minmax(420px, 560px) 1fr; /* L | CENTER | R */
   grid-template-areas: "left center right";
   gap: var(--gap);
   align-items: center;     /* vertically center content in each cell */
@@ -377,46 +377,78 @@
 .col-right { grid-area: right; }
 
 /* 3) make the center graphic keep its aspect ratio and scale */
-.svg-frame{
-  width: 100%;
-  aspect-ratio: 1 / 1;     /* square like your diagram; adjust if needed */
+.col-center{
   display: grid;
   place-items: center;
 }
-.svg-frame > img, 
-.svg-frame > svg{
+.col-center .svg-frame{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+.col-center .svg-frame > img,
+.col-center svg{
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
 /* 4) lists: RTL, right-aligned, custom arrows */
-.arrow-list{
+.col-left, .col-right{
+  align-self: center;
+}
+
+.col-left .arrow-list,
+.col-right .arrow-list{
   list-style: none;
   margin: 0; padding: 0;
   display: grid;
-  gap: .6rem;
-  font-weight: 700;
-  text-align: right;   /* important for Hebrew */
+  gap: .5rem;
+  font-weight: 800;
+  font-size: clamp(16px, 1.6vw, 20px);
+  text-align: right;
+  max-width: 28ch;       /* keeps multi-line items tidy */
 }
-.arrow-list.big{ font-size: clamp(16px, 1.8vw, 20px); }
+
 .arrow-list li{
   position: relative;
-  line-height: 1.35;
-  padding-inline-start: 0;      /* no LTR indent */
-  padding-inline-end: 1.6em;    /* space for RTL bullet */
+  line-height: 1.4;
+  padding-inline: 0;          /* reset */
 }
+
+/* base chevron, points inward with an SVG so it renders crisp */
 .arrow-list li::before{
-  content: "›";                 /* simple chevron; swap for SVG if you want */
+  content: "";
   position: absolute;
-  inset-inline-end: 0;          /* on the right in RTL */
-  top: 0;
-  opacity: .6;
+  top: .25em;
+  width: 1em;
+  height: 1em;
+  background: no-repeat center / 1em 1em
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" fill="none" stroke="%23888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  opacity: .7;
 }
+
+/* RIGHT column: chevron sits on the LEFT (toward center) */
+.col-right .arrow-list li{
+  padding-inline-start: 1.4em;   /* space for icon on the left in RTL */
+}
+.col-right .arrow-list li::before{
+  inset-inline-start: 0;
+  transform: scaleX(1);          /* → */
+}
+
+/* LEFT column: chevron sits on the RIGHT (toward center) and mirrored */
+.col-left .arrow-list li{
+  padding-inline-end: 1.4em;     /* space for icon on the right in RTL */
+}
+.col-left .arrow-list li::before{
+  inset-inline-end: 0;
+  transform: scaleX(-1);         /* ← mirror so it points inward */
+}
+
 .arrow-list .sub{
   font-weight: 400;
   color: #616161;
-  font-size: .9em;
+  font-size: .92em;
   line-height: 1.4;
   margin-top: .25rem;
 }
@@ -429,9 +461,10 @@
       "center"
       "right"
       "left";
-    align-items: start;
+    gap: 24px;
   }
-  .col-left, .col-right{ justify-self: stretch; }
+  .col-left .arrow-list,
+  .col-right .arrow-list{ max-width: none; }
 }
 
 

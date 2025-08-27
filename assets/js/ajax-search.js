@@ -18,9 +18,29 @@ jQuery(document).ready(function ($) {
         };
     }
     
+    // Function to show loading animation
+    function showLoading() {
+        const loadingHtml = `
+            <div class="search-loading">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">מחפש...</p>
+            </div>
+        `;
+        $('.initial-content').hide();
+        $('.search-results-container').html(loadingHtml).show();
+    }
+    
+    // Function to hide loading animation
+    function hideLoading() {
+        $('.search-loading').remove();
+    }
+    
     // Function to perform search
     function performSearch() {
         try {
+            // Show loading animation
+            showLoading();
+            
             // Properly collect checkbox values
             const selectedThemes = [];
             $('input[name="qa_themes[]"]:checked').each(function() {
@@ -47,6 +67,7 @@ jQuery(document).ready(function ($) {
             // Only search if there's a search term or selected filters
             if (!searchText && selectedThemes.length === 0 && selectedTags.length === 0) {
                 console.log('No search criteria provided');
+                hideLoading();
                 $('.qa-updates-list').html('<p class="no-results">אנא הכנס טקסט לחיפוש או בחר קטגוריות</p>');
                 return;
             }
@@ -70,6 +91,7 @@ jQuery(document).ready(function ($) {
                 dataType: 'json',
                 success: function (response) {
                     console.log('AJAX response:', response);
+                    hideLoading();
                     
                     if (response && response.success) {
                         const results = response.data || [];
@@ -124,12 +146,14 @@ jQuery(document).ready(function ($) {
                     console.error('AJAX error:', error);
                     console.error('Status:', status);
                     console.error('Response:', xhr.responseText);
+                    hideLoading();
                     $('.initial-content').hide();
                     $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
                 }
             });
         } catch (error) {
             console.error('Error in search function:', error);
+            hideLoading();
             $('.initial-content').hide();
             $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
         }

@@ -84,6 +84,9 @@ class SupervisorMigrationTests {
         // Test admin menu is registered
         $this->test_step("Admin menu is registered", function() {
             global $menu;
+            if (!is_array($menu)) {
+                return false;
+            }
             $menu_slugs = array_column($menu, 2);
             return in_array('qa_bib_manager', $menu_slugs);
         });

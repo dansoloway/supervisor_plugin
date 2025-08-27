@@ -17,87 +17,40 @@ get_header('supervisor');
         <h1 class="page-title" style="text-align: center; margin-bottom: 40px;">מפת הידע</h1>
         
         <!-- Knowledge Map Diagram -->
-        <div class="knowledge-map-diagram">
-            <!-- Central Image -->
-            <div class="central-image">
-                <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/knowledge_map.png'; ?>" alt="מפת הידע" />
-            </div>
-            
-            <!-- Top: Information & Knowledge Dissemination -->
-            <div class="map-section top-section">
-                <div class="section-box">
-                    <h3>הפצת מידע וידע</h3>
-                    <div class="sub-items">
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>מדריכים ופרקטיקות מיטביות</span>
-                        </div>
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>מחקרים</span>
-                        </div>
-                    </div>
+        <section class="knowledge-layout" dir="rtl" aria-label="מפת הידע">
+            <!-- LEFT column -->
+            <aside class="col-left">
+                <ul class="arrow-list">
+                    <li>מדריכים ופרקטיקות מיטביות</li>
+                    <li>מחקרים</li>
+                    <li>אכיפה מתקנת</li>
+                    <li>אכיפה עונשית</li>
+                </ul>
+            </aside>
+
+            <!-- CENTER column -->
+            <div class="col-center">
+                <div class="svg-frame">
+                    <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/knowledge_map.png'; ?>" alt="מפת הידע - תרשים מרכזי"/>
                 </div>
             </div>
-            
-            <!-- Right: Policy -->
-            <div class="map-section right-section">
-                <div class="section-box">
-                    <h3>מדיניות</h3>
-                    <div class="sub-items">
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>סטנדרטים לאיכות השירות</span>
+
+            <!-- RIGHT column -->
+            <aside class="col-right">
+                <ul class="arrow-list big">
+                    <li>סטנדרטים לאיכות השירות</li>
+                    <li>סטנדרטים לעבודת הפיקוח</li>
+                    <li>
+                        שיטות עבודה
+                        <div class="sub">
+                            שקיפות, ניהול סיכונים, שיתוף מקבלי שירות, רספונסיביות, פיקוח משולב
                         </div>
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>סטנדרטים לעבודת הפיקוח</span>
-                        </div>
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>שיטות עבודה</span>
-                        </div>
-                        <div class="work-methods-examples">
-                            [שקיפות, ניהול סיכונים, שיתוף מקבלי שירות, רספונסיביות, פיקוח משולב]
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Bottom: Control/Oversight -->
-            <div class="map-section bottom-section">
-                <div class="section-box">
-                    <h3>בקרה</h3>
-                    <div class="sub-items">
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>בקרה עצמית</span>
-                        </div>
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>בקרה חיצונית</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Left: Enforcement -->
-            <div class="map-section left-section">
-                <div class="section-box">
-                    <h3>אכיפה</h3>
-                    <div class="sub-items">
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>אכיפה מתקנת</span>
-                        </div>
-                        <div class="sub-item">
-                            <i class="fas fa-chevron-left"></i>
-                            <span>אכיפה עונשית</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </li>
+                    <li>בקרה עצמית</li>
+                    <li>בקרה חיצונית</li>
+                </ul>
+            </aside>
+        </section>
         
         <!-- Explanatory Text -->
         <div class="knowledge-map-description">

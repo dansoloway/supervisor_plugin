@@ -703,7 +703,7 @@
     display: block;
 }
 
-g.update-date {
+.update-date {
     display: block;
     font-size: 18px;
     color: var(--sv-blue);

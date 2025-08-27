@@ -4,8 +4,26 @@
  * This script updates the qa_tags taxonomy to match the exact categories needed
  */
 
-// Load WordPress
-require_once('../../../wp-load.php');
+// Load WordPress - try multiple possible paths
+$wp_load_paths = [
+    '../../../wp-load.php',
+    '../../../../wp-load.php',
+    '../../../../../wp-load.php',
+    '/www/brookdalejdcorg_480/public/wp-load.php'
+];
+
+$wp_loaded = false;
+foreach ($wp_load_paths as $path) {
+    if (file_exists($path)) {
+        require_once($path);
+        $wp_loaded = true;
+        break;
+    }
+}
+
+if (!$wp_loaded) {
+    die('Could not load WordPress. Please check the file paths.');
+}
 
 // Ensure we're in admin context
 if (!current_user_can('manage_options')) {

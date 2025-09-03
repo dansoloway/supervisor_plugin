@@ -1190,6 +1190,26 @@ img[src*=".svg"] {
     height: auto;
     display: block;
 }
+
+/* Header logo container styling */
+.supervisor_logo_cont {
+    text-align: center;
+}
+
+.supervisor_logo_cont img {
+    max-width: 200px !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+}
+
+/* Specific styling for SVG logo in header */
+.supervisor_logo_cont img[src*=".svg"] {
+    max-width: 200px !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+}
 /* ===== INTRO BLOCK SPACING ===== */
 .intro-text-block {
     max-width: 820px;

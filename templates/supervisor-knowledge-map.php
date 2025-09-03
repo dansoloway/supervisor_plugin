@@ -34,7 +34,7 @@ get_header('supervisor');
             <!-- CENTER column -->
             <div class="col-center">
                 <div class="svg-frame">
-                    <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/knowledge_map.png'; ?>" alt="מפת הידע - תרשים מרכזי"/>
+                    <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/knowledge_map.svg'; ?>" alt="מפת הידע - תרשים מרכזי"/>
                 </div>
             </div>
 

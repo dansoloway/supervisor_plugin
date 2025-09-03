@@ -699,7 +699,7 @@
 
 .qa-update-item {
     direction: rtl;
-    padding: 40px 0 20px 0;
+    padding: 20px 0 20px 0;
     border-bottom: 1px solid #CACCCD;
 }
 
@@ -1126,6 +1126,22 @@
     display: block;
 }
 
+/* SVG image optimizations */
+.knowledge-map-image[src*=".svg"] {
+    width: 100%;
+    max-width: 430px;
+    height: auto;
+    display: block;
+}
+
+/* SVG frame styling for the knowledge map page */
+.supervisor-knowledge-map .svg-frame img[src*=".svg"] {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+}
+
 .knowledge-map-footer {
     margin-top: 16px;
 }
@@ -1153,6 +1169,20 @@
 
 .supervisor_logo_cont{
     text-align: center;
+}
+
+/* Logo styling - logo.svg is available in assets/img/ */
+.supervisor-logo {
+    max-width: 200px;
+    height: auto;
+    display: block;
+}
+
+.supervisor-logo[src*=".svg"] {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
 }
 /* ===== INTRO BLOCK SPACING ===== */
 .intro-text-block {
@@ -1577,7 +1607,7 @@
 .search-results-header {
     text-align: right;
     margin-bottom: 30px;
-    padding: 20px 0;
+    padding: 20px 0 0 0;
     border-bottom: 2px solid var(--sv-border);
 }
 

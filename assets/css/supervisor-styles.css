@@ -1126,20 +1126,26 @@
     display: block;
 }
 
-/* SVG image optimizations */
+/* SVG image optimizations - with stronger constraints */
 .knowledge-map-image[src*=".svg"] {
-    width: 100%;
-    max-width: 430px;
-    height: auto;
-    display: block;
+    width: 100% !important;
+    max-width: 430px !important;
+    height: auto !important;
+    display: block !important;
 }
 
 /* SVG frame styling for the knowledge map page */
 .supervisor-knowledge-map .svg-frame img[src*=".svg"] {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    display: block;
+    width: 100% !important;
+    max-width: 600px !important;
+    height: auto !important;
+    display: block !important;
+}
+
+/* General SVG size control to prevent huge images */
+img[src*=".svg"] {
+    max-width: 100% !important;
+    height: auto !important;
 }
 
 .knowledge-map-footer {

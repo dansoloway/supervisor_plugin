@@ -863,7 +863,7 @@
     content: "";
     position: absolute;
     inset: 12px auto 12px 0;   /* top / right / bottom / left */
-    width: 1px;
+    width: 2px;
     background: #BFD3EB;
 }
 

@@ -825,7 +825,6 @@
     border: 2px solid #BFD3EB;
     background: var(--sv-blue-050, #f3f7fc);
     border-radius: 9999px;     /* the magic */
-    overflow: hidden;          /* clips inner hovers to curved ends */
     padding: 0;                /* no inner gaps so end items touch the curve */
     direction: rtl;
     justify-content: center;
@@ -850,12 +849,21 @@
     font-size: 19px;
     line-height: 1;
     text-decoration: none;
-    border-radius: 0 !important;    /* let the container own the curves */
+    border-radius: 0;    /* default no border radius */
     position: relative;
     transition: background .2s, color .2s;
     height: 100%;
     min-width: 0;
     box-sizing: border-box;
+}
+
+/* Add rounded corners to first and last items for pill effect */
+.supervisor-home .site-nav a:first-child {
+    border-radius: 0 9999px 9999px 0; /* Rounded right side for first item (RTL) */
+}
+
+.supervisor-home .site-nav a:last-child {
+    border-radius: 9999px 0 0 9999px; /* Rounded left side for last item (RTL) */
 }
 
 /* 3) Vertical separators (RTL-friendly: put them on the left of each item) */

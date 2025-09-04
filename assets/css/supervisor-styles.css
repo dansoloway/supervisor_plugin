@@ -817,79 +817,73 @@
 }
 
 /* ===== HORIZONTAL MENU BAR (PILLS) ===== */
-.supervisor-home .site-nav {
-    direction: rtl;
+/* 1) Turn the whole bar into a pill */
+.supervisor-home nav.site-nav.supervisor_header_links {
     display: flex;
-    justify-content: center;
+    align-items: stretch;
     gap: 0;
+    border: 2px solid #BFD3EB;
+    background: var(--sv-blue-050, #f3f7fc);
+    border-radius: 9999px;     /* the magic */
+    overflow: hidden;          /* clips inner hovers to curved ends */
+    padding: 0;                /* no inner gaps so end items touch the curve */
+    direction: rtl;
+    justify-content: center;
     flex-wrap: wrap;
-    background: var(--sv-bar);
-    border: 2px solid var(--sv-bar-border);
-    padding: 6px 0px;
     margin: 8px auto 14px;
     max-width: 980px;
     height: 59px;
-    align-items: center;
     font-family: var(--sv-font-primary);
     position: relative;
 }
 
+/* 2) Links behave like equal-width tabs */
 .supervisor-home .site-nav a {
+    flex: 1 1 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 18px;
+    padding: 16px 28px;
     color: var(--sv-text) !important;
-    text-decoration: none;
     font-family: var(--sv-font-primary);
     font-weight: 700;
     font-size: 19px;
-    line-height: 25px;
-    transition: background .2s, color .2s;
+    line-height: 1;
+    text-decoration: none;
+    border-radius: 0 !important;    /* let the container own the curves */
     position: relative;
+    transition: background .2s, color .2s;
     height: 100%;
-    flex: 1;
     min-width: 0;
-    border-radius: 0 !important; /* Force no border radius */
-    margin: 0;
     box-sizing: border-box;
 }
 
-/* Simple border between menu items - RTL layout */
-.supervisor-home .site-nav a:nth-child(2),
-.supervisor-home .site-nav a:nth-child(3),
-.supervisor-home .site-nav a:nth-child(4),
-.supervisor-home .site-nav a:nth-child(5) {
-    border-right: 2px solid var(--sv-bar-border);
+/* 3) Vertical separators (RTL-friendly: put them on the left of each item) */
+.supervisor-home .site-nav a:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    inset: 12px auto 12px 0;   /* top / right / bottom / left */
+    width: 1px;
+    background: #BFD3EB;
 }
 
-/* Hover effect - full coverage */
+/* 4) Hover/Focus — no layout shift, color only */
 .supervisor-home .site-nav a:hover,
 .supervisor-home .site-nav a:focus-visible {
-    background: var(--sv-blue);
-    color: #FFFFFF !important;
+    background: var(--sv-blue, #a9c4e6);
+    color: #fff !important;
     outline: 0;
-    border-radius: 0;
-    margin: -6px 0; /* Negative margin to extend beyond parent padding */
-    padding: 16px 18px; /* Increase padding to compensate */
-    height: calc(100% + 12px); /* Extend beyond parent padding */
-    align-self: stretch;
 }
 
 /* Active state */
 .supervisor-home .site-nav a.active {
-    background: var(--sv-blue);
-    color: #FFFFFF !important;
-    border-radius: 0;
-    margin: -6px 0; /* Negative margin to extend beyond parent padding */
-    padding: 16px 18px; /* Increase padding to compensate */
-    height: calc(100% + 12px); /* Extend beyond parent padding */
-    align-self: stretch;
+    background: var(--sv-blue, #a9c4e6);
+    color: #fff !important;
 }
 
-/* Dropdown icon styling */
+/* 5) Dropdown caret spacing stays tidy */
 .supervisor-home .site-nav .dropdown-icon {
-    margin-right: 8px;
+    margin-inline-start: 8px; /* RTL-friendly */
     transition: transform 0.2s ease;
 }
 

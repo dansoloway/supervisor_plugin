@@ -87,11 +87,11 @@ get_header('supervisor');
 /* Activities Page Specific Styles - moved to main CSS file */
 
 .activity-card {
-    background: var(--sv-blue-050, #f3f7fc);
+    background: #ffffff;
     border: 1px solid #BFD3EB;
-    border-radius: 12px;
-    padding: 32px 24px;
-    text-align: right;
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
     transition: transform 0.3s ease;
 }
 
@@ -103,12 +103,12 @@ get_header('supervisor');
     width: 80px;
     height: 80px;
     background: #ffffff;
-    border: 2px solid #BFD3EB;
+    border: 1px solid #BFD3EB;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0 20px auto;
+    margin: 0 auto 16px;
 }
 
 .activity-icon i {
@@ -117,21 +117,22 @@ get_header('supervisor');
 }
 
 .activity-title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--sv-text);
-    margin-bottom: 16px;
+    color: #000000;
+    margin-bottom: 12px;
     font-family: var(--sv-font-primary);
-    text-align: right;
+    text-align: center;
 }
 
 .activity-content p {
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--sv-text-2);
+    font-size: 16px;
+    line-height: 1.6;
+    color: #000000;
     margin: 0;
     font-family: var(--sv-font-body);
     text-align: right;
+    direction: rtl;
 }
 
 /* Override main content layout for activities page */

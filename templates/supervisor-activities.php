@@ -95,10 +95,10 @@ get_header('supervisor');
     margin-right: auto;
 }
 
-/* 5th card spans both columns and centers */
+/* 5th card spans both columns and aligns to the right */
 .activity-card:nth-child(5) {
     grid-column: 1 / -1;
-    justify-self: center;
+    justify-self: end;
     max-width: 50%;
 }
 

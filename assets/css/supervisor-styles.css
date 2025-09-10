@@ -105,7 +105,7 @@
     color: white;
     background: var(--sv-blue);
     border: 1px solid var(--sv-blue);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* ===== FOUNDATION CSS OVERRIDES ===== */
@@ -221,7 +221,7 @@
 /* ===== TAXONOMY ARCHIVE PAGE STYLING ===== */
 .taxonomy-content .page-title {
     font-family: var(--sv-font-secondary);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--sv-text);
     text-align: right;
@@ -235,7 +235,7 @@
 }
 
 .taxonomy-content .page-title i {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--sv-blue);
     order: 1;
 }
@@ -377,7 +377,7 @@
 
 .knowledge-map-content .page-title {
     font-family: var(--sv-font-primary);
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--sv-text);
     margin-bottom: 40px;
@@ -588,7 +588,7 @@
     border-radius: 8px;
     transition: all 0.3s ease;
     font-family: var(--sv-font-primary);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .map-link:hover {
@@ -632,7 +632,7 @@
     }
     
     .sub-item {
-        font-size: 12px;
+        font-size: 14px;
     }
     
     .knowledge-map-links {
@@ -684,9 +684,9 @@
 }
 
 .search-input label {
-    font-weight: 600;
+    font-weight: 500;
     color: var(--sv-text);
-    font-size: 15px;
+    font-size: 16px;
     margin-bottom: 4px;
 }
 
@@ -738,7 +738,7 @@
     color: #fff;
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     margin-right: 10px;
 }
@@ -845,8 +845,8 @@
     padding: 16px 28px;
     color: var(--sv-text) !important;
     font-family: var(--sv-font-primary);
-    font-weight: 700;
-    font-size: 19px;
+    font-weight: 500;
+    font-size: 18px;
     line-height: 1;
     text-decoration: none;
     border-radius: 0;    /* default no border radius */
@@ -928,7 +928,7 @@
     text-decoration: none;
     font-family: var(--sv-font-primary);
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.4;
     background: var(--sv-blue-050, #f3f7fc);
     border-bottom: 1px solid #BFD3EB;
@@ -1026,8 +1026,8 @@
     background: var(--sv-blue-strip);
     color: #000000;
     font-family: var(--sv-font-primary);
-    font-weight: 800;
-    font-size: 22px;
+    font-weight: 700;
+    font-size: 18px;
     padding: 12px 16px;
     border-radius: 0;
     text-align: center;
@@ -1067,7 +1067,7 @@
 .update-title {
     margin: 0;
     font-family: var(--sv-font-primary);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1.4;
 }
@@ -1100,6 +1100,7 @@
     color: #000000;
     font-family: var(--sv-font-secondary);
     font-weight: 700;
+    font-size: 18px;
     text-decoration: none;
     text-align: center;
     width: 100%;
@@ -1170,7 +1171,7 @@ img[src*=".svg"] {
     text-decoration: none;
     transition: background .2s;
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 .knowledge-map-button:hover {
@@ -1226,7 +1227,7 @@ img[src*=".svg"] {
 .intro-title {
     font-family: var(--sv-font-secondary);
     font-size: 22px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--sv-blue);
     margin: 0 0 8px;
 }
@@ -1236,7 +1237,7 @@ img[src*=".svg"] {
     color: var(--sv-text);
     font-family: var(--sv-font-primary);
     font-style: italic;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* ===== CONTENT PAGE STYLING ===== */
@@ -1269,7 +1270,7 @@ img[src*=".svg"] {
 }
 
 .supervisor-single-column-content p {
-    font-family: 'Assistant', sans-serif;
+    font-family: var(--sv-font-primary);
     line-height: 1.6;
     margin-bottom: 16px;
     text-align: justify;
@@ -1316,7 +1317,7 @@ img[src*=".svg"] {
 }
 
 .supervisor-home .search-title {
-    font-size: 24px !important;
+    font-size: 22px !important;
     font-weight: 700 !important;
     color: #1F2937 !important;
     margin: 0 !important;
@@ -1411,7 +1412,7 @@ img[src*=".svg"] {
 }
 
 .supervisor-home .filter-group-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: #1F2937;
     background: #F3F4F6;
@@ -1520,7 +1521,7 @@ img[src*=".svg"] {
     }
     
     .supervisor-home .search-title {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .supervisor-home .filter-listbox {
@@ -1576,7 +1577,7 @@ img[src*=".svg"] {
 
 .new-search-container h2 {
     font-family: var(--sv-font-primary);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--sv-text);
     margin: 0 0 8px 0;
@@ -1708,7 +1709,7 @@ img[src*=".svg"] {
 
 .supervisor-qa_orgs .page-title {
     font-family: var(--sv-font-primary);
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--sv-text);
     text-align: center;
@@ -1761,7 +1762,7 @@ img[src*=".svg"] {
 
 .org-title {
     font-family: var(--sv-font-primary);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--sv-text);
     margin: 0 0 15px 0;
@@ -1827,11 +1828,11 @@ img[src*=".svg"] {
     }
     
     .org-title {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .org-description {
-        font-size: 15px;
+        font-size: 16px;
     }
 }
 
@@ -1942,7 +1943,7 @@ img[src*=".svg"] {
 
 .supervisor-single-org .content-title {
     font-family: var(--sv-font-primary);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--sv-text);
     margin: 0 0 20px 0;
@@ -1976,7 +1977,7 @@ img[src*=".svg"] {
     }
     
     .supervisor-single-org .org-main-title {
-        font-size: 24px;
+        font-size: 18px;
     }
     
     .supervisor-single-org .org-info-boxes {
@@ -2006,7 +2007,7 @@ img[src*=".svg"] {
 
 @media (max-width: 480px) {
     .supervisor-single-org .org-main-title {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .supervisor-single-org .info-box {
@@ -2018,7 +2019,7 @@ img[src*=".svg"] {
     }
     
     .supervisor-single-org .content-text {
-        font-size: 15px;
+        font-size: 16px;
     }
 }
 
@@ -2032,7 +2033,7 @@ img[src*=".svg"] {
 /* Page Header */
 .supervisor-bib-cats .page-title {
     font-family: var(--sv-font-primary);
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--sv-text);
     text-align: center;
@@ -2113,7 +2114,7 @@ body .supervisor-bib-cats .categories-grid {
 /* Category Title */
 .supervisor-bib-cats .category-title {
     font-family: var(--sv-font-primary);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--sv-text);
     margin: 0 0 15px 0;
@@ -2149,7 +2150,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-arrow i {
-    font-size: 20px;
+    font-size: 18px;
     color: #000000;
     transition: color 0.3s ease;
 }
@@ -2172,7 +2173,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .taxonomy-term i {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--sv-blue);
 }
 
@@ -2235,17 +2236,17 @@ body .supervisor-bib-cats .categories-grid {
     }
     
     .supervisor-bib-cats .category-title {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .supervisor-bib-cats .category-description {
-        font-size: 15px;
+        font-size: 16px;
     }
 }
 
 @media (max-width: 480px) {
     .supervisor-bib-cats .page-title {
-        font-size: 24px;
+        font-size: 18px;
     }
     
     .supervisor-bib-cats .category-card {

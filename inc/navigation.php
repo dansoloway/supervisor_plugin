@@ -23,7 +23,7 @@ $supervisor_menu = [
     [
         'title' => 'מפת הידע',
         'url' => '#', // Will be handled by JavaScript
-        'is_active' => is_page(SUPERVISOR_BIB_CATS) || is_page(SUPERVISOR_KNOWLEDGE_MAP),
+        'is_active' => is_page(SUPERVISOR_BIB_CATS) || is_page(SUPERVISOR_KNOWLEDGE_MAP) || is_tax('qa_tags'),
         'has_dropdown' => true,
         'submenu' => [
             [

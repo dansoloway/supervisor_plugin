@@ -867,7 +867,7 @@
 }
 
 /* 3) Vertical separators (RTL-friendly: put them on the left of each item) */
-.supervisor-home .site-nav a:not(:first-child):not(:last-child)::before {
+.supervisor-home .site-nav a:not(:last-child)::before {
     content: "";
     position: absolute;
     inset: 12px auto 12px 0;   /* top / right / bottom / left */

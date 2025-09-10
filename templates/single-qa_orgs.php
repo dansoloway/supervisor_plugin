@@ -17,12 +17,12 @@ get_header('supervisor');
         while (have_posts()) : the_post();
             $acf_fields = get_fields();
             $org_title = get_the_title();
-            $org_subtitle = $acf_fields['qa_subtitle'] ?? '';
             $org_country = $acf_fields['qa_country'] ?? '';
             $org_year = $acf_fields['qa_yearoffounding'] ?? '';
             $org_services = $acf_fields['qa_services_supervised'] ?? '';
             $org_link = $acf_fields['qa_link'] ?? '';
             $org_report = $acf_fields['qa_yearly_report'] ?? '';
+            $org_ministry = $acf_fields['qa_government_ministry'] ?? '';
             
             // Get taxonomy terms
             $terms = get_the_terms(get_the_ID(), 'qa_themes');
@@ -33,38 +33,50 @@ get_header('supervisor');
         
         <!-- Organization Title -->
         <div class="org-header">
-            <h1 class="org-main-title"><?php echo esc_html($org_title); ?> - <?php echo esc_html($org_subtitle); ?></h1>
+            <h1 class="org-main-title"><?php echo esc_html($org_title); ?></h1>
         </div>
 
         <!-- Information Boxes -->
         <div class="org-info-boxes">
             <div class="info-box left-box">
                 <div class="info-item">
-                    <span class="info-label">סטטוס:</span>
-                    <span class="info-value">ארגון פעיל</span>
+                    <span class="info-label">שנת הקמה:</span>
+                    <span class="info-value"><?php echo esc_html($org_year); ?></span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">אוכלוסיית יעד:</span>
+                    <span class="info-label">שירותים מפוקחים:</span>
                     <span class="info-value"><?php echo esc_html($org_services); ?></span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">מספר קטלוג:</span>
-                    <span class="info-value"><?php echo esc_html($org_year); ?></span>
+                    <span class="info-label">משרד ממשלתי אחראי:</span>
+                    <span class="info-value"><?php echo esc_html($org_ministry); ?></span>
                 </div>
             </div>
             
             <div class="info-box right-box">
                 <div class="info-item">
-                    <span class="info-label">חוקרים:</span>
-                    <span class="info-value"><?php echo esc_html($org_themes); ?></span>
+                    <span class="info-label">דוח שנתי:</span>
+                    <span class="info-value">
+                        <?php if ($org_report): ?>
+                            <a href="<?php echo esc_url($org_report); ?>" target="_blank" rel="noopener noreferrer">
+                                <?php echo esc_html($org_report); ?>
+                            </a>
+                        <?php endif; ?>
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">אתר הארגון:</span>
+                    <span class="info-value">
+                        <?php if ($org_link): ?>
+                            <a href="<?php echo esc_url($org_link); ?>" target="_blank" rel="noopener noreferrer">
+                                <?php echo esc_html($org_link); ?>
+                            </a>
+                        <?php endif; ?>
+                    </span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">תחומים:</span>
-                    <span class="info-value"><?php echo esc_html($org_services); ?></span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">שנת פרסום:</span>
-                    <span class="info-value"><?php echo esc_html($org_year); ?></span>
+                    <span class="info-value"><?php echo esc_html($org_themes); ?></span>
                 </div>
             </div>
         </div>

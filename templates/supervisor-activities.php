@@ -84,23 +84,7 @@ get_header('supervisor');
 </div>
 
 <style>
-/* Activities Page Specific Styles */
-.activities-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin-bottom: 24px;
-    max-width: 1140px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* 5th card spans both columns and aligns to the right */
-.activity-card:nth-child(5) {
-    grid-column: 1 / -1;
-    justify-self: end;
-    max-width: 50%;
-}
+/* Activities Page Specific Styles - moved to main CSS file */
 
 .activity-card {
     background: #ffffff;

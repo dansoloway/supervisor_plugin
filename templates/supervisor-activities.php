@@ -112,7 +112,7 @@ get_header('supervisor');
 }
 
 .activity-icon i {
-    font-size: 36px;
+    font-size: 48px;
     color: var(--sv-blue);
 }
 

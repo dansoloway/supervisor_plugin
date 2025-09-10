@@ -887,17 +887,17 @@
 .supervisor-home .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 0; /* Align to left edge of parent */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center the dropdown under its parent */
     background: var(--sv-blue-050, #f3f7fc);
     border: 1px solid #BFD3EB;
-    border-radius: 8px; /* Add border radius */
+    border-radius: 0; /* No border radius */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;
-    width: 100%; /* Same width as parent navigation item */
+    width: 200px; /* Fixed small width */
     margin-top: 4px;
     padding: 0;
-    min-width: 0; /* Remove min-width constraint */
 }
 
 .supervisor-home .dropdown-menu.show {

@@ -887,17 +887,17 @@
 .supervisor-home .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center the dropdown under its parent */
+    left: 0; /* Align to left edge of parent */
     background: var(--sv-blue-050, #f3f7fc);
     border: 1px solid #BFD3EB;
-    border-radius: 0; /* Remove border radius */
+    border-radius: 8px; /* Add border radius */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;
-    width: 200px; /* Fixed width instead of min-width */
-    margin-top: 0;
+    width: 100%; /* Same width as parent navigation item */
+    margin-top: 4px;
     padding: 0;
+    min-width: 0; /* Remove min-width constraint */
 }
 
 .supervisor-home .dropdown-menu.show {
@@ -906,7 +906,7 @@
 
 .supervisor-home .dropdown-menu .submenu-item {
     display: block;
-    padding: 12px 16px;
+    padding: 14px 20px;
     color: var(--sv-text) !important;
     text-decoration: none;
     font-family: var(--sv-font-primary);
@@ -918,6 +918,7 @@
     transition: background-color 0.2s ease;
     cursor: pointer;
     margin: 0;
+    text-align: right; /* RTL alignment */
 }
 
 .supervisor-home .dropdown-menu .submenu-item:last-child {
@@ -925,8 +926,8 @@
 }
 
 .supervisor-home .dropdown-menu .submenu-item:hover {
-    background-color: #CEDDEF;
-    color: #000000 !important;
+    background-color: var(--sv-blue, #a9c4e6);
+    color: var(--sv-text) !important;
 }
 
 

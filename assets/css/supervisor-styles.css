@@ -192,7 +192,7 @@
 .supervisor-main-content {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 0 16px 48px;
+    padding: 0 0 48px;
     display: grid;
     grid-template-columns: 1.1fr 1.2fr;
     gap: 24px;
@@ -825,7 +825,7 @@
     border: 2px solid #BFD3EB;
     background: var(--sv-blue-050, #f3f7fc);
     border-radius: 9999px;     /* the magic */
-    padding: 0 16px;           /* match content container horizontal padding */
+    padding: 0;                /* no padding so hover reaches curved ends */
     direction: rtl;
     justify-content: center;
     flex-wrap: wrap;
@@ -1241,17 +1241,17 @@ img[src*=".svg"] {
 .supervisor-content {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 20px 16px 48px;
+    padding: 20px 0 48px;
 }
 
 .supervisor-single-column-content {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 0 16px !important;
+    padding: 0 0;
 }
 
 .content-main {
-    padding: 0;
+    padding: 0 16px;
     margin: 0;
 }
 

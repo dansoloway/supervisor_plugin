@@ -87,29 +87,28 @@ get_header('supervisor');
 /* Activities Page Specific Styles - moved to main CSS file */
 
 .activity-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 40px 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--sv-blue-050, #f3f7fc);
+    border: 1px solid #BFD3EB;
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: right;
+    transition: transform 0.3s ease;
 }
 
 .activity-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
 }
 
 .activity-icon {
-    width: 100px;
-    height: 100px;
-    background: var(--sv-blue-050);
+    width: 80px;
+    height: 80px;
+    background: #ffffff;
+    border: 2px solid #BFD3EB;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 0 20px auto;
 }
 
 .activity-icon i {
@@ -118,16 +117,17 @@ get_header('supervisor');
 }
 
 .activity-title {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--sv-text);
     margin-bottom: 16px;
     font-family: var(--sv-font-primary);
+    text-align: right;
 }
 
 .activity-content p {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.5;
     color: var(--sv-text-2);
     margin: 0;
     font-family: var(--sv-font-body);

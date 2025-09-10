@@ -830,7 +830,7 @@
     justify-content: center;
     flex-wrap: wrap;
     margin: 8px auto 14px;
-    max-width: 980px;
+    max-width: 1140px;
     height: 59px;
     font-family: var(--sv-font-primary);
     position: relative;
@@ -879,7 +879,7 @@
 .supervisor-home .site-nav a:hover,
 .supervisor-home .site-nav a:focus-visible {
     background: var(--sv-blue, #a9c4e6);
-    color: #fff !important;
+    color: var(--sv-text) !important;
     outline: 0;
 }
 
@@ -1244,7 +1244,7 @@ img[src*=".svg"] {
 }
 
 .supervisor-single-column-content {
-    max-width: 820px;
+    max-width: 1140px;
     margin: 0 auto;
 }
 

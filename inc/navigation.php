@@ -21,13 +21,13 @@ $supervisor_menu = [
         'submenu' => []
     ],
     [
-        'title' => 'מפת היעד',
+        'title' => 'מפת הידע',
         'url' => '#', // Will be handled by JavaScript
         'is_active' => is_page(SUPERVISOR_BIB_CATS) || is_page(SUPERVISOR_KNOWLEDGE_MAP),
         'has_dropdown' => true,
         'submenu' => [
             [
-                'title' => 'מהי מפת היעד',
+                'title' => 'מהי מפת הידע',
                 'url' => get_the_permalink(SUPERVISOR_KNOWLEDGE_MAP),
                 'is_active' => is_page(SUPERVISOR_KNOWLEDGE_MAP)
             ],

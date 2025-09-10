@@ -89,7 +89,7 @@ get_header('supervisor');
      <!-- Left Column: Knowledge Map Diagram -->
      <div class="knowledge-map-section">
             <div class="knowledge-map-card card">
-                <div class="knowledge-map-header">מפת ידע</div>
+                <div class="knowledge-map-header">מפת הידע</div>
                 <div class="knowledge-map-diagram">
                     <img src="<?php echo plugins_url('assets/img/knowledge_map.svg', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
                 </div>

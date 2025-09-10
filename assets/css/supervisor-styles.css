@@ -825,7 +825,7 @@
     border: 2px solid #BFD3EB;
     background: var(--sv-blue-050, #f3f7fc);
     border-radius: 9999px;     /* the magic */
-    padding: 0;                /* no inner gaps so end items touch the curve */
+    padding: 0 16px;           /* match content container horizontal padding */
     direction: rtl;
     justify-content: center;
     flex-wrap: wrap;
@@ -886,7 +886,7 @@
 /* Active state */
 .supervisor-home .site-nav a.active {
     background: var(--sv-blue, #a9c4e6);
-    color: #fff !important;
+    color: var(--sv-text) !important;
 }
 
 /* 5) Dropdown caret spacing stays tidy */
@@ -905,8 +905,8 @@
     top: 100%;
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Center the dropdown under its parent */
-    background: var(--sv-blue);
-    border: 1px solid var(--sv-bar-border);
+    background: var(--sv-blue-050, #f3f7fc);
+    border: 1px solid #BFD3EB;
     border-radius: 0; /* Remove border radius */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
@@ -929,8 +929,8 @@
     font-size: 16px;
     font-weight: 700;
     line-height: 1.4;
-    background: var(--sv-blue);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--sv-blue-050, #f3f7fc);
+    border-bottom: 1px solid #BFD3EB;
     transition: background-color 0.2s ease;
     cursor: pointer;
     margin: 0;
@@ -1246,6 +1246,7 @@ img[src*=".svg"] {
 .supervisor-single-column-content {
     max-width: 1140px;
     margin: 0 auto;
+    padding: 0 16px;
 }
 
 .content-main {

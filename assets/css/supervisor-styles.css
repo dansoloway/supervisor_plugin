@@ -844,9 +844,9 @@
     justify-content: center;
     padding: 16px 28px;
     color: var(--sv-text) !important;
-    font-family: var(--sv-font-primary);
+    font-family: var(--sv-font-secondary);
     font-weight: 500;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1;
     text-decoration: none;
     border-radius: 0;    /* default no border radius */
@@ -1023,9 +1023,9 @@
 
 /* Header strip full-bleed - NO border radius */
 .updates-header {
-    background: var(--sv-blue-strip);
+    background: var(--sv-blue);
     color: #000000;
-    font-family: var(--sv-font-primary);
+    font-family: var(--sv-font-secondary);
     font-weight: 700;
     font-size: 18px;
     padding: 12px 16px;

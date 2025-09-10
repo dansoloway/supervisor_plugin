@@ -639,7 +639,7 @@
 /* 5th card spans both columns and aligns to the right */
 .supervisor-home .activity-card:nth-child(5) {
     grid-column: 1 / -1;
-    justify-self: end;
+    justify-self: start;
     max-width: 50%;
 }
 

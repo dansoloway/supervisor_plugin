@@ -67,8 +67,8 @@ get_header('supervisor');
                 </div>
             </div>
 
-            <!-- Card 5: Distribution (Duplicate) - Aligned Right -->
-            <div class="activity-card activity-card-right">
+            <!-- Card 5: Distribution (Duplicate) -->
+            <div class="activity-card">
                 <div class="activity-icon">
                     <i class="fas fa-paper-plane"></i>
                 </div>
@@ -95,41 +95,41 @@ get_header('supervisor');
     margin-right: auto;
 }
 
-.activity-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.activity-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* 5th card half-width and aligned to the right */
-.activity-card-right {
-    grid-column: 2;
-    justify-self: end;
+/* 5th card spans both columns and centers */
+.activity-card:nth-child(5) {
+    grid-column: 1 / -1;
+    justify-self: center;
     max-width: 50%;
 }
 
-.activity-icon {
-    width: 80px;
-    height: 80px;
+.activity-card {
     background: #ffffff;
+    border-radius: 20px;
+    padding: 40px 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activity-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.activity-icon {
+    width: 100px;
+    height: 100px;
+    background: var(--sv-blue-050);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .activity-icon i {
-    font-size: 32px;
+    font-size: 36px;
     color: var(--sv-blue);
 }
 
@@ -162,35 +162,35 @@ get_header('supervisor');
 @media (max-width: 768px) {
     .activities-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 20px;
     }
     
-    .activity-card-right {
+    .activity-card:nth-child(5) {
         grid-column: 1;
         justify-self: stretch;
         max-width: 100%;
     }
     
     .activity-card {
-        padding: 24px;
+        padding: 32px 24px;
     }
     
     .activity-icon {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 16px;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
     }
     
     .activity-icon i {
-        font-size: 24px;
+        font-size: 28px;
     }
     
     .activity-title {
-        font-size: 20px;
+        font-size: 22px;
     }
     
     .activity-content p {
-        font-size: 14px;
+        font-size: 15px;
     }
 }
 </style>

@@ -884,7 +884,8 @@
 }
 
 /* Active state */
-.supervisor-home .site-nav a.active {
+.supervisor-home .site-nav a.active,
+.supervisor-home nav.site-nav.supervisor_header_links a.active {
     background: var(--sv-blue, #a9c4e6);
     color: var(--sv-text) !important;
 }
@@ -1246,7 +1247,7 @@ img[src*=".svg"] {
 .supervisor-single-column-content {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 0 16px;
+    padding: 0 16px !important;
 }
 
 .content-main {

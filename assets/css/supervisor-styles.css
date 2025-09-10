@@ -575,13 +575,12 @@
 
 .knowledge-map-links {
     display: flex;
-    justify-content: center;
     gap: 30px;
     margin-top: 40px;
 }
 
 .knowledge-map-links a {
-    color: var(--sv-blue);
+    color: blue !important;
     text-decoration: underline;
     font-size: 16px;
     font-family: var(--sv-font-primary);

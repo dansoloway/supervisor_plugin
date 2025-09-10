@@ -78,14 +78,8 @@ get_header('supervisor');
         
         <!-- Navigation Links -->
         <div class="knowledge-map-links">
-            <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>" class="map-link">
-                <i class="fas fa-tags"></i>
-                <span>נושאי מפתח</span>
-            </a>
-            <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>" class="map-link">
-                <i class="fas fa-building"></i>
-                <span>ארגוני פיקוח</span>
-            </a>
+            <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>">נושאי מפתח</a>
+            <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>">ארגוני פיקוח</a>
         </div>
     </div>
 </div>

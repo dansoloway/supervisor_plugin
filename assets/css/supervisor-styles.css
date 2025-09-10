@@ -407,8 +407,10 @@
   place-items: center;
 }
 .supervisor-knowledge-map .col-center .svg-frame{
-  width: 100%;
+  width: 60%;
+  max-width: 400px;
   aspect-ratio: 1 / 1;
+  margin: 0 auto;
 }
 .supervisor-knowledge-map .col-center .svg-frame > img,
 .supervisor-knowledge-map .col-center svg{
@@ -578,33 +580,15 @@
     margin-top: 40px;
 }
 
-.map-link {
-    display: flex;
-    align-items: center;
-    padding: 15px 25px;
-    background: var(--sv-blue);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    font-family: var(--sv-font-primary);
-    font-weight: 500;
-}
-
-.map-link:hover {
-    background: #8BA8C7;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.map-link i {
-    margin-left: 10px;
-    margin-right: 0;
-    font-size: 18px;
-}
-
-.map-link span {
+.knowledge-map-links a {
+    color: var(--sv-blue);
+    text-decoration: underline;
     font-size: 16px;
+    font-family: var(--sv-font-primary);
+}
+
+.knowledge-map-links a:hover {
+    color: var(--sv-blue-600);
 }
 
 /* Responsive Design */
@@ -1147,7 +1131,7 @@
 /* SVG frame styling for the knowledge map page */
 .supervisor-knowledge-map .svg-frame img[src*=".svg"] {
     width: 100% !important;
-    max-width: 600px !important;
+    max-width: 400px !important;
     height: auto !important;
     display: block !important;
 }

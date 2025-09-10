@@ -20,10 +20,10 @@ get_header('supervisor');
     <!-- Main Content Area -->
     <div class="supervisor-main-content">
         
-        <!-- Top Row: Conferences and Distribution Cards -->
+        <!-- Activities Grid: 5 Cards -->
         <div class="activities-grid">
             
-            <!-- Conferences Card -->
+            <!-- Card 1: Conferences -->
             <div class="activity-card">
                 <div class="activity-icon">
                     <i class="fas fa-users"></i>
@@ -34,8 +34,41 @@ get_header('supervisor');
                 </div>
             </div>
 
-            <!-- Distribution Card -->
+            <!-- Card 2: Distribution -->
             <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <h2 class="activity-title">הפצה</h2>
+                <div class="activity-content">
+                    <p>פיקוח על שירותים חברתיים הוא מערך פעולות שמבצע גוף פיקוח מטעם המדינה, במטרה להבטיח את איכות השירותים המסופקים, בטיחותם ונגישותם. זאת, כדי להגן על שלומם ועל רווחתם של מקבלי השירות ולעודד חתירה לשיפור מתמיד של איכות השירות. המונח "פיקוח" רווח בעברית בהקשר של שירותים חברתיים, ומשמש לרוב כמקבילה למונח הלועזי "רגולציה".</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Workshops -->
+            <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h2 class="activity-title">סדנאות</h2>
+                <div class="activity-content">
+                    <p>הפיקוח על שירותים חברתיים היה מאז ומתמיד חלק בלתי נפרד ממדינת הרווחה, אך בעשורים האחרונים קיבל משמעות חדשה בעקבות השינויים שחלו באופן אספקת השירותים החברתיים. משנות השמונים ועד היום בישראל, כמו במדינות רבות בעולם, חל תהליך אינטנסיבי של מעבר מאספקה ישירה של שירותים חברתיים על ידי המדינה לאספקה על ידי מפעילים חיצוניים במיקור חוץ.</p>
+                </div>
+            </div>
+
+            <!-- Card 4: Conferences (Duplicate) -->
+            <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2 class="activity-title">כנסים</h2>
+                <div class="activity-content">
+                    <p>פיקוח חוץ הוא תהליך שבו מועבר ביצוע של פעילות פנימית של ארגון ציבורי או ממשלתי לגורם חוץ-ממשלתי על בסיס הסכם המעוגן על פי רוב בחוזה ומשקף את המשך אחריות המדינה לאספקת השירות. בעקבות תהליך מיקור החוץ התפתחו מגוון דרכים לאספקת שירותים חברתיים לאזרחים. יש שירותים שמסופקים על ידי גופים פרטיים – כאלה שפועלים למטרות רווח, ויש כאלה שמסופקים על ידי ארגונים ללא מטרות רווח.</p>
+                </div>
+            </div>
+
+            <!-- Card 5: Distribution (Duplicate) - Aligned Right -->
+            <div class="activity-card activity-card-right">
                 <div class="activity-icon">
                     <i class="fas fa-paper-plane"></i>
                 </div>
@@ -47,17 +80,6 @@ get_header('supervisor');
 
         </div>
 
-        <!-- Bottom Row: Workshops Card (Full Width) -->
-        <div class="activity-card-full">
-            <div class="activity-icon">
-                <i class="fas fa-cogs"></i>
-            </div>
-            <h2 class="activity-title">סדנאות</h2>
-            <div class="activity-content">
-                <p>הפיקוח על שירותים חברתיים היה מאז ומתמיד חלק בלתי נפרד ממדינת הרווחה, אך בעשורים האחרונים קיבל משמעות חדשה בעקבות השינויים שחלו באופן אספקת השירותים החברתיים. משנות השמונים ועד היום בישראל, כמו במדינות רבות בעולם, חל תהליך אינטנסיבי של מעבר מאספקה ישירה של שירותים חברתיים על ידי המדינה לאספקה על ידי מפעילים חיצוניים במיקור חוץ.</p>
-            </div>
-        </div>
-
     </div>
 </div>
 
@@ -65,7 +87,7 @@ get_header('supervisor');
 /* Activities Page Specific Styles */
 .activities-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     margin-bottom: 24px;
     max-width: 1140px;
@@ -73,8 +95,7 @@ get_header('supervisor');
     margin-right: auto;
 }
 
-.activity-card,
-.activity-card-full {
+.activity-card {
     background: #ffffff;
     border-radius: 12px;
     padding: 32px;
@@ -83,15 +104,15 @@ get_header('supervisor');
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.activity-card:hover,
-.activity-card-full:hover {
+.activity-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-.activity-card-full {
-    grid-column: 1 / -1;
-    max-width: 100%;
+/* 5th card aligned to the right */
+.activity-card-right {
+    grid-column: 4;
+    justify-self: end;
 }
 
 .activity-icon {
@@ -137,14 +158,38 @@ get_header('supervisor');
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .activities-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .activity-card-right {
+        grid-column: 3;
+    }
+}
+
+@media (max-width: 900px) {
+    .activities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .activity-card-right {
+        grid-column: 2;
+    }
+}
+
 @media (max-width: 768px) {
     .activities-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
     
-    .activity-card,
-    .activity-card-full {
+    .activity-card-right {
+        grid-column: 1;
+        justify-self: stretch;
+    }
+    
+    .activity-card {
         padding: 24px;
     }
     

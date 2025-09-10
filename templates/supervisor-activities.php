@@ -87,7 +87,7 @@ get_header('supervisor');
 /* Activities Page Specific Styles */
 .activities-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin-bottom: 24px;
     max-width: 1140px;
@@ -109,10 +109,11 @@ get_header('supervisor');
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* 5th card aligned to the right */
+/* 5th card half-width and aligned to the right */
 .activity-card-right {
-    grid-column: 4;
+    grid-column: 2;
     justify-self: end;
+    max-width: 50%;
 }
 
 .activity-icon {
@@ -158,26 +159,6 @@ get_header('supervisor');
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-    .activities-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .activity-card-right {
-        grid-column: 3;
-    }
-}
-
-@media (max-width: 900px) {
-    .activities-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .activity-card-right {
-        grid-column: 2;
-    }
-}
-
 @media (max-width: 768px) {
     .activities-grid {
         grid-template-columns: 1fr;
@@ -187,6 +168,7 @@ get_header('supervisor');
     .activity-card-right {
         grid-column: 1;
         justify-self: stretch;
+        max-width: 100%;
     }
     
     .activity-card {

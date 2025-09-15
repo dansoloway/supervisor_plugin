@@ -13,8 +13,11 @@ error_log('Loading supervisor-bib_cats.php template');
         }
     ?>
 
-    <!-- Main Content -->
-    <div class="bib-cats-content">
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Main Content -->
+        <div class="supervisor-content-wrapper supervisor-single-column">
         <h1 class="page-title" style="text-align: right;">נושאי מפתח</h1>
         
         <p class="intro-text" style="text-align: right;">
@@ -60,7 +63,10 @@ error_log('Loading supervisor-bib_cats.php template');
                 <p class="no-categories"><?php esc_html_e('No categories found.', 'text-domain'); ?></p>
             <?php endif; ?>
         </div>
-    </div>
+        
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 
 <?php get_footer(); ?>

@@ -13,16 +13,19 @@ get_header('supervisor');
         }
     ?>
 
-    <!-- Introductory Text Block -->
-    <div class="intro-text-block">
-        <div class="intro-content">
-            <p>מערכת בקרת האיכות בשירותים חברתיים נועדה להבטיח שהשירותים הניתנים לאזרחים עומדים בסטנדרטים הגבוהים ביותר של איכות, מקצועיות ואפקטיביות.</p>
-            <p>המערכת כוללת כלים מתקדמים לניטור, הערכה ושיפור מתמיד של השירותים החברתיים בישראל.</p>
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Introductory Text Block -->
+        <div class="intro-text-block">
+            <div class="intro-content">
+                <p>מערכת בקרת האיכות בשירותים חברתיים נועדה להבטיח שהשירותים הניתנים לאזרחים עומדים בסטנדרטים הגבוהים ביותר של איכות, מקצועיות ואפקטיביות.</p>
+                <p>המערכת כוללת כלים מתקדמים לניטור, הערכה ושיפור מתמיד של השירותים החברתיים בישראל.</p>
+            </div>
         </div>
-    </div>
 
-    <!-- Main Content Area - 2 Column Layout -->
-    <div class="supervisor-main-content">
+        <!-- Main Content Area - 2 Column Layout -->
+        <div class="supervisor-content-wrapper supervisor-two-column">
 
       
          <!-- Right Column: Search and Updates -->
@@ -99,11 +102,9 @@ get_header('supervisor');
             </div>
         </div>
 
- 
+        </div> <!-- End supervisor-content-wrapper -->
 
-       
-
-    </div>
+    </div> <!-- End supervisor-page-container -->
 
 </div>
 

@@ -12,8 +12,11 @@ get_header('supervisor');
         }
     ?>
 
-    <!-- Main Content -->
-    <div class="knowledge-map-content">
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Main Content -->
+        <div class="supervisor-content-wrapper supervisor-single-column">
         <h1 class="page-title" style="text-align: center; margin-bottom: 40px;">מפת הידע</h1>
         
         <!-- Knowledge Map Diagram -->
@@ -81,7 +84,10 @@ get_header('supervisor');
             <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>">נושאי מפתח</a>
             <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>">ארגוני פיקוח</a>
         </div>
-    </div>
+        
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 
 <?php get_footer(); ?>

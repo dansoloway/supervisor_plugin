@@ -13,8 +13,11 @@ error_log('Loading supervisor-qa_orgs.php template');
         }
     ?>
 
-    <!-- Main Content -->
-    <div class="supervisor-main supervisor-two-column">
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Main Content -->
+        <div class="supervisor-content-wrapper supervisor-three-column">
 
         <!-- Column 1: Organizations Grid -->
         <div class="categories-container"> 
@@ -72,6 +75,8 @@ error_log('Loading supervisor-qa_orgs.php template');
 </div>
         </div> 
 
-    </div>
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 <?php get_footer(); ?>

@@ -30,8 +30,11 @@ $updates_query = new WP_Query($args);
         }
     ?>
 
-    <!-- Main Content Area with Two Columns -->
-    <div class="supervisor-content-area">
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Main Content Area with Two Columns -->
+        <div class="supervisor-content-wrapper supervisor-two-column">
         <!-- Left: QA Updates List -->
         <div class="qa-updates-list">
            
@@ -125,7 +128,10 @@ $updates_query = new WP_Query($args);
         <?php 
         require_once(WP_PLUGIN_DIR . '/supervisor-plugin/inc/search.php');
         ?>
-    </div>
+        
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 
 </div>
 

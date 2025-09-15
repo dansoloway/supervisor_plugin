@@ -17,7 +17,11 @@ error_log('Loading taxonomy-qa_bib_cats.php template');
         }
     ?>
 
-    <h1><?php echo esc_html($term->name); ?></h1>
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <div class="supervisor-content-wrapper supervisor-single-column">
+            <h1><?php echo esc_html($term->name); ?></h1>
     <p><?php echo esc_html(term_description($term->term_id, 'qa_bib_cats')); ?></p>
 
     <div class="bib-items-grid">
@@ -62,7 +66,11 @@ error_log('Loading taxonomy-qa_bib_cats.php template');
             ?>
             <p><?php esc_html_e('אין פריטים', 'text-domain'); ?></p>
         <?php endif; ?>
-    </div>
+        </div>
+        
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 
 <?php get_footer(); ?>

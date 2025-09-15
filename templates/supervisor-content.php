@@ -11,11 +11,16 @@ get_header('supervisor'); ?>
         }
     ?>
 
-    <div class="supervisor-content supervisor-single-column-content">
-        <div class="content-main">
-            <?php echo the_content();  ?>
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <div class="supervisor-content-wrapper supervisor-single-column">
+            <div class="content-main">
+                <?php echo the_content();  ?>
+            </div>
         </div>
-    </div>
+
+    </div> <!-- End supervisor-page-container -->
 
 </div>
 

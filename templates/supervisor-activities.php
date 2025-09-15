@@ -17,8 +17,11 @@ get_header('supervisor');
         }
     ?>
 
-    <!-- Main Content Area -->
-    <div class="supervisor-main-content">
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Main Content Area -->
+        <div class="supervisor-content-wrapper supervisor-single-column">
         
         <!-- Activities Grid: 5 Cards -->
         <div class="activities-grid">
@@ -80,7 +83,9 @@ get_header('supervisor');
 
         </div>
 
-    </div>
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 
 <style>

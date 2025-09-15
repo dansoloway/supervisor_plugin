@@ -149,6 +149,9 @@ $total_results = $search_query->found_posts;
         }
     ?>
 
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+
     <!-- New Search Section 
     <div class="new-search-section">
         <div class="new-search-container">
@@ -169,8 +172,9 @@ $total_results = $search_query->found_posts;
 
   
 
-    <!-- Search Results Content -->
-    <div class="search-results-content">
+        <!-- Search Results Content -->
+        <div class="supervisor-content-wrapper supervisor-single-column">
+            <div class="search-results-content">
 
       <!-- Search Results Header -->
       <div class="search-results-header">
@@ -339,7 +343,11 @@ $total_results = $search_query->found_posts;
                 <p>נסה לשנות את מילות החיפוש או לחזור לדף החיפוש.</p>
             </div>
         <?php endif; ?>
-    </div>
+            </div> <!-- End search-results-content -->
+        
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 
 <script>

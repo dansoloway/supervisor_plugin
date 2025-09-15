@@ -11,8 +11,11 @@ get_header('supervisor');
         }
     ?>
 
-    <!-- Main Content -->
-    <div class="single-org-content">
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Main Content -->
+        <div class="supervisor-content-wrapper supervisor-single-column">
         <?php 
         while (have_posts()) : the_post();
             $acf_fields = get_fields();
@@ -90,7 +93,10 @@ get_header('supervisor');
         </div>
 
         <?php endwhile; ?>
-    </div>
+        
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 
 <?php get_footer(); ?>

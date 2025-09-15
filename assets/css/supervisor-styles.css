@@ -153,7 +153,7 @@
 .supervisor-page-container {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 0 20px 48px 20px;
+    padding: 0 30px 48px 30px;
     direction: rtl;
 }
 
@@ -286,7 +286,7 @@
     border: none;
 }
 .center-content-section, .knowledge-map-section{
-    width: 80%;
+    width: 100%;
     margin: 0px auto;
 }
 

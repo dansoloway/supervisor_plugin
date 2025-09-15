@@ -17,7 +17,11 @@ error_log('Loading taxonomy-qa_tags.php template');
         }
     ?>
 
-    <!-- Main Content -->
+    <!-- Standardized Page Container -->
+    <div class="supervisor-page-container">
+        
+        <!-- Main Content -->
+        <div class="supervisor-content-wrapper supervisor-single-column">
     <div class="taxonomy-content">
         <h1 class="page-title">
             <?php 
@@ -91,7 +95,10 @@ error_log('Loading taxonomy-qa_tags.php template');
                 <p class="no-items"><?php esc_html_e('אין פריטים', 'text-domain'); ?></p>
             <?php endif; ?>
         </div>
-    </div>
+        
+        </div> <!-- End supervisor-content-wrapper -->
+
+    </div> <!-- End supervisor-page-container -->
 </div>
 
 <script>

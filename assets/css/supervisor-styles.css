@@ -1816,8 +1816,8 @@ img[src*=".svg"] {
     line-height: 1.6;
     color: var(--sv-text);
     margin-bottom: 40px;
-    text-align: center;
-    max-width: 800px;
+    text-align: right;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -1881,6 +1881,10 @@ img[src*=".svg"] {
     direction: rtl;
 }
 
+.dir_left{
+    text-align: left;
+    direction: ltr;
+}
 .org-info:last-child {
     margin-bottom: 0;
 }

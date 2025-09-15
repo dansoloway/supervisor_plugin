@@ -1376,8 +1376,8 @@ img[src*=".svg"] {
 .supervisor-home h4,
 .supervisor-home h5,
 .supervisor-home h6 {
-    font-family: var(--sv-font-primary);
-    font-weight: 700;
+    font-family: var(--sv-font-primary) !important;
+    font-weight: 700 !important;
 }
 
 /* ===== FOCUS STATES ===== */

@@ -91,15 +91,14 @@ get_header('supervisor');
 <style>
 /* Activities Page Specific Styles - moved to main CSS file */
 
+/* Card layout */
 .activity-card {
     border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 24px;
     background: #fff;
-    margin-bottom: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* keeps icon on the right in RTL */
+    flex-direction: column;   /* vertical stack */
     transition: transform 0.3s ease;
 }
 
@@ -107,37 +106,38 @@ get_header('supervisor');
     transform: translateY(-2px);
 }
 
+/* Icon box = rounded square, top-right */
 .activity-icon {
-    background: #f5f7fa;
-    border-radius: 10px; /* rounded square */
-    padding: 10px;
-    margin-bottom: 15px;
+    align-self: flex-end;     /* ⟵ puts it at the right edge (no absolute) */
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    align-self: flex-end; /* positions icon to the right in RTL */
+    width: 56px;              /* fixed box like the mock */
+    height: 56px;
+    border-radius: 12px;
+    background: #f5f7fa;
+    margin-bottom: 16px;
 }
 
 .activity-icon i {
-    font-size: 20px;
+    font-size: 22px;
     color: #5a7db8;
 }
 
+/* Title & text centered below */
 .activity-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 10px;
     text-align: center;
-    width: 100%; /* center across the card */
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px;
     font-family: var(--sv-font-primary);
     color: #000000;
 }
 
 .activity-content p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
     text-align: center;
+    color: #333;
+    line-height: 1.7;
     margin: 0;
     font-family: var(--sv-font-primary);
 }

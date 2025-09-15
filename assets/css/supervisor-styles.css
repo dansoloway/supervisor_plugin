@@ -1985,12 +1985,14 @@ img[src*=".svg"] {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0;
-    margin: 40px -20px;
     background: #f5f5f5;
     border: 1px solid #e0e0e0;
     border-radius: 0;
     overflow: hidden;
-    width: calc(100% + 40px);
+}
+
+.info-item a{
+    color: black !important
 }
 
 .supervisor-single-org .info-box {
@@ -2000,11 +2002,11 @@ img[src*=".svg"] {
 }
 
 .supervisor-single-org .info-box.left-box {
-    border-right: 1px solid #e0e0e0;
+    /* border-right: 1px solid #e0e0e0; */
 }
 
 .supervisor-single-org .info-box.right-box {
-    border-left: 1px solid #e0e0e0;
+    /* border-left: 1px solid #e0e0e0; */
 }
 
 .supervisor-single-org .info-item {

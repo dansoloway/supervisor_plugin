@@ -92,11 +92,14 @@ get_header('supervisor');
 /* Activities Page Specific Styles - moved to main CSS file */
 
 .activity-card {
-    background: #ffffff;
-    border: 1px solid #BFD3EB;
-    border-radius: 8px;
-    padding: 24px;
-    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background: #fff;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* keeps icon on the right in RTL */
     transition: transform 0.3s ease;
 }
 
@@ -105,39 +108,38 @@ get_header('supervisor');
 }
 
 .activity-icon {
-    width: 80px;
-    height: 80px;
-    background: #ffffff;
-    border: 1px solid #BFD3EB;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
+    background: #f5f7fa;
+    border-radius: 10px; /* rounded square */
+    padding: 10px;
+    margin-bottom: 15px;
+    display: inline-flex;
     justify-content: center;
-    margin: 0 auto 16px;
+    align-items: center;
+    align-self: flex-end; /* positions icon to the right in RTL */
 }
 
 .activity-icon i {
-    font-size: 48px;
-    color: var(--sv-blue);
+    font-size: 20px;
+    color: #5a7db8;
 }
 
 .activity-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #000000;
-    margin-bottom: 12px;
-    font-family: var(--sv-font-primary);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 10px;
     text-align: center;
+    width: 100%; /* center across the card */
+    font-family: var(--sv-font-primary);
+    color: #000000;
 }
 
 .activity-content p {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.6;
-    color: #000000;
+    color: #333;
+    text-align: center;
     margin: 0;
-    font-family: var(--sv-font-body);
-    text-align: right;
-    direction: rtl;
+    font-family: var(--sv-font-primary);
 }
 
 /* Override main content layout for activities page */
@@ -162,25 +164,24 @@ get_header('supervisor');
     }
     
     .activity-card {
-        padding: 32px 24px;
+        padding: 20px;
     }
     
     .activity-icon {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 20px;
+        padding: 8px;
+        margin-bottom: 12px;
     }
     
     .activity-icon i {
-        font-size: 28px;
+        font-size: 18px;
     }
     
     .activity-title {
-        font-size: 22px;
+        font-size: 18px;
     }
     
     .activity-content p {
-        font-size: 15px;
+        font-size: 13px;
     }
 }
 </style>

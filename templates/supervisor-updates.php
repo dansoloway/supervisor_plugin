@@ -35,6 +35,12 @@ $updates_query = new WP_Query($args);
         
         <!-- Main Content Area with Two Columns -->
         <div class="supervisor-content-wrapper supervisor-two-column">
+
+          <!-- Right: AJAX Search Component -->
+          <?php 
+        require_once(WP_PLUGIN_DIR . '/supervisor-plugin/inc/search.php');
+        ?>
+        
         <!-- Left: QA Updates List -->
         <div class="qa-updates-list">
            
@@ -124,10 +130,7 @@ $updates_query = new WP_Query($args);
             </div>
         </div>
 
-        <!-- Right: AJAX Search Component -->
-        <?php 
-        require_once(WP_PLUGIN_DIR . '/supervisor-plugin/inc/search.php');
-        ?>
+      
         
         </div> <!-- End supervisor-content-wrapper -->
 

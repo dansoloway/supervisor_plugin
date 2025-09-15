@@ -15,7 +15,7 @@ get_header('supervisor');
     <div class="supervisor-page-container">
         
         <!-- Main Content -->
-        <div class="supervisor-content-wrapper supervisor-single-column">
+        <div class="">
         <?php 
         while (have_posts()) : the_post();
             $acf_fields = get_fields();

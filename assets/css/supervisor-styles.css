@@ -1040,6 +1040,10 @@
     background: var(--sv-blue-600);
 }
 
+.updates-header:hover .more-updates-button {
+    background: #7A9BC4;
+}
+
 /* List items */
 .updates-list {
     margin: 0;
@@ -1114,7 +1118,7 @@
 }
 
 .more-updates-button:hover {
-    background: transparent;
+    background: #7A9BC4;
 }
 
 /* ===== KNOWLEDGE MAP CARD ===== */

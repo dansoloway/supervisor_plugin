@@ -17,7 +17,7 @@ error_log('Loading supervisor-qa_orgs.php template');
     <div class="supervisor-page-container">
         
         <!-- Main Content -->
-        <div class="supervisor-content-wrapper supervisor-three-column">
+        <div>
 
         <!-- Column 1: Organizations Grid -->
         <div class="categories-container"> 

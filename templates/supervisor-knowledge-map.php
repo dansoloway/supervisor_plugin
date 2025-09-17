@@ -81,8 +81,8 @@ get_header('supervisor');
         
         <!-- Navigation Links -->
         <div class="knowledge-map-links">
-            <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>">נושאי מפתח</a>
-            <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>">ארגוני פיקוח</a>
+            <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>" style="color: #0000EE !important; text-decoration: none !important;" onmouseover="this.style.color='#0000EE'" onmouseout="this.style.color='#0000EE'" onfocus="this.style.color='#0000EE'" onblur="this.style.color='#0000EE'">נושאי מפתח</a>
+            <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>" style="color: #0000EE !important; text-decoration: none !important;" onmouseover="this.style.color='#0000EE'" onmouseout="this.style.color='#0000EE'" onfocus="this.style.color='#0000EE'" onblur="this.style.color='#0000EE'">ארגוני פיקוח</a>
         </div>
         
         </div> <!-- End supervisor-content-wrapper -->

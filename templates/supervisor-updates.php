@@ -11,14 +11,27 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 // Check if we need to highlight a specific update
 $highlight_id = isset($_GET['highlight']) ? intval($_GET['highlight']) : null;
 
-$args = [
-    'post_type'      => 'qa_updates',
-    'posts_per_page' => $posts_per_page,
-    'paged'          => $paged,
-    'meta_key'       => 'qa_updates_date', // Custom field for sorting
-    'orderby'        => 'meta_value',      // Sort by custom field value
-    'order'          => 'DESC',            // Latest dates first
-];
+// If coming from home page (has highlight parameter), show only latest 5 updates
+if ($highlight_id) {
+    $args = [
+        'post_type'      => 'qa_updates',
+        'posts_per_page' => 5,  // Show only 5 updates like home page
+        'paged'          => 1,  // Always show first page
+        'meta_key'       => 'qa_updates_date', // Custom field for sorting
+        'orderby'        => 'meta_value',      // Sort by custom field value
+        'order'          => 'DESC',            // Latest dates first
+    ];
+} else {
+    // Normal search page behavior
+    $args = [
+        'post_type'      => 'qa_updates',
+        'posts_per_page' => $posts_per_page,
+        'paged'          => $paged,
+        'meta_key'       => 'qa_updates_date', // Custom field for sorting
+        'orderby'        => 'meta_value',      // Sort by custom field value
+        'order'          => 'DESC',            // Latest dates first
+    ];
+}
 
 $updates_query = new WP_Query($args);
 ?>
@@ -108,10 +121,11 @@ $updates_query = new WP_Query($args);
                         echo '</div>'; // qa-update-item
                     endwhile;
 
-                   // Pagination (Numbers only, no "Next" or "Prev")
-                   $total_pages = $updates_query->max_num_pages;
+                   // Pagination (Numbers only, no "Next" or "Prev") - only show if not from home page
+                   if (!$highlight_id) {
+                       $total_pages = $updates_query->max_num_pages;
 
-                   if ($total_pages > 1) {
+                       if ($total_pages > 1) {
                        $pagination_links = paginate_links([
                            'total'     => $total_pages,
                            'current'   => $paged,
@@ -127,6 +141,7 @@ $updates_query = new WP_Query($args);
                            echo '</div>';
                        }
                    }
+                   } // End pagination conditional
 
                     wp_reset_postdata();
                 else:

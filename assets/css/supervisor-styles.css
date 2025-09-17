@@ -780,14 +780,19 @@
 /* Icon box = rounded square, top-right */
 .supervisor-home .activity-icon {
     align-self: flex-start;     /* ⟵ puts it at the right edge (no absolute) */
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 56px;              /* fixed box like the mock */
-    height: 56px;
+    width: auto;              /* allow width to expand for title */
+    min-width: 56px;
+    height: auto;
+    min-height: 56px;
     border-radius: 12px;
     background: #F4F5F5;
     margin-bottom: 16px;
+    padding: 12px;
+    gap: 8px;
 }
 
 .supervisor-home .activity-icon i {

@@ -950,8 +950,16 @@
     border-radius: 9999px 0 0 9999px !important; /* Rounded left side for last item (RTL) */
 }
 
-/* Ensure dropdown items have no border radius */
+/* Ensure dropdown items have no border radius - more specific selectors */
 .supervisor-home .site-nav a.dropdown {
+    border-radius: 0 !important;
+}
+
+.supervisor-home .site-nav a.dropdown:first-child {
+    border-radius: 0 !important;
+}
+
+.supervisor-home .site-nav a.dropdown:last-child {
     border-radius: 0 !important;
 }
 

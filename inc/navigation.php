@@ -96,7 +96,7 @@ function render_nav_item($item) {
                 $submenu_classes[] = 'active';
             }
             
-            echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
+            echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '" style="border-radius: 0 !important;">';
             echo esc_html($submenu_item['title']);
             echo '</a>';
         }

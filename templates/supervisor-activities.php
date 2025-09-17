@@ -93,8 +93,6 @@ get_header('supervisor');
 
 /* Card layout */
 .activity-card {
-    border: 1px solid #ddd;
-    border-radius: 12px;
     padding: 24px;
     background: #fff;
     display: flex;
@@ -108,7 +106,7 @@ get_header('supervisor');
 
 /* Icon box = rounded square, top-right */
 .activity-icon {
-    align-self: flex-end;     /* ⟵ puts it at the right edge (no absolute) */
+    align-self: flex-start;     /* ⟵ puts it at the right edge (no absolute) */
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -135,7 +133,7 @@ get_header('supervisor');
 }
 
 .activity-content p {
-    text-align: center;
+    text-align: right;
     color: #333;
     line-height: 1.7;
     margin: 0;

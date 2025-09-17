@@ -1007,7 +1007,7 @@
     border-top: 1px solid #BFD3EB;
     border-right: 1px solid #BFD3EB;
     border-bottom: 1px solid #BFD3EB;
-    border-left: none; /* Remove left border */
+    border-left: none !important; /* Remove left border with !important */
     border-radius: 0; /* No border radius */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;

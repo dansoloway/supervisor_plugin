@@ -988,15 +988,13 @@
 }
 
 /* Ensure dropdown items have no border radius - more specific selectors */
-.supervisor-home .site-nav a.dropdown {
-    border-radius: 0 !important;
-}
-
-.supervisor-home .site-nav a.dropdown:first-child {
-    border-radius: 0 !important;
-}
-
-.supervisor-home .site-nav a.dropdown:last-child {
+.supervisor-home .site-nav a.dropdown,
+.supervisor-home .site-nav a.dropdown:first-child,
+.supervisor-home .site-nav a.dropdown:last-child,
+.supervisor-home .site-nav a.dropdown:hover,
+.supervisor-home .site-nav a.dropdown:focus,
+.supervisor-home .site-nav a.dropdown:active,
+.supervisor-home .site-nav a.dropdown.active {
     border-radius: 0 !important;
 }
 
@@ -1058,7 +1056,12 @@
     display: block;
 }
 
-.supervisor-home .dropdown-menu .submenu-item {
+.supervisor-home .dropdown-menu .submenu-item,
+.supervisor-home .dropdown-menu .submenu-item:first-child,
+.supervisor-home .dropdown-menu .submenu-item:last-child,
+.supervisor-home .dropdown-menu .submenu-item:hover,
+.supervisor-home .dropdown-menu .submenu-item:focus,
+.supervisor-home .dropdown-menu .submenu-item:active {
     display: block;
     padding: 14px 20px;
     color: var(--sv-text) !important;

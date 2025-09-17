@@ -767,11 +767,10 @@
 /* Activity Card Styles */
 .supervisor-home .activity-card {
     padding: 24px;
-    background: #F4F5F5;
+    background: #fff;
     display: flex;
     flex-direction: column;   /* vertical stack */
     transition: transform 0.3s ease;
-    border-radius: 12px;
 }
 
 .supervisor-home .activity-card:hover {
@@ -790,15 +789,24 @@
     height: auto;
     min-height: 80px;
     border-radius: 12px;
-    background: #E0EAF5;
+    background: #F4F5F5;      /* light gray background for the whole container */
     margin-bottom: 16px;
     padding: 16px;
     gap: 8px;
+    position: relative;
 }
 
 .supervisor-home .activity-icon i {
     font-size: 22px;
     color: #5a7db8;
+    background: #E0EAF5;      /* darker background just for the icon */
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
 }
 
 /* Title & text centered below */

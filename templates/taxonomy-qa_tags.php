@@ -23,7 +23,7 @@ error_log('Loading taxonomy-qa_tags.php template');
         <!-- Main Content -->
         <div class="supervisor-content-wrapper supervisor-single-column">
     <div class="taxonomy-content">
-        <h1 class="page-title">
+        <h1 class="page-title taxonomy-page-title">
             <?php 
             // Get and display the icon for this term
             $icon = get_term_fa_icon($term->term_id, 'fas fa-folder');
@@ -67,25 +67,29 @@ error_log('Loading taxonomy-qa_tags.php template');
                 while ($query->have_posts()) : $query->the_post();
                     ?>
                     <div class="bib-item" data-post-id="<?php echo get_the_ID(); ?>">
-                        <div class="bib-reference"><?php the_title(); ?></div>
-                        <?php
-                        // Get the ACF field "original_link"
-                        $original_link = get_field('orignial_link');
-                        if ($original_link) :
-                        ?>
-                            <div class="bib-original-link">
-                                <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer">
-                                    <?php echo esc_html($original_link); ?>
-                                </a>
+                        <div class="bib-item-header">
+                            <div class="bib-toggle-container">
+                                <i class="fas fa-chevron-down bib-toggle"></i>
                             </div>
-                        <?php endif; ?>
+                            <div class="bib-item-content">
+                                <div class="bib-reference"><?php the_title(); ?></div>
+                                <?php
+                                // Get the ACF field "original_link"
+                                $original_link = get_field('orignial_link');
+                                if ($original_link) :
+                                ?>
+                                    <div class="bib-original-link">
+                                        <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer">
+                                            <?php echo esc_html($original_link); ?>
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                         <div class="bib-content" style="display: none;">
                             <div class="bib-description">
                                 <?php the_content(); ?>
                             </div>
-                        </div>
-                        <div class="bib-toggle-container">
-                            <i class="fas fa-chevron-down bib-toggle"></i>
                         </div>
                     </div>
                 <?php endwhile;

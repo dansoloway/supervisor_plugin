@@ -317,6 +317,12 @@
     width: 100%;
 }
 
+/* Bigger page title for taxonomy pages */
+.taxonomy-content .taxonomy-page-title {
+    font-size: 32px !important;
+    margin-bottom: 30px !important;
+}
+
 .taxonomy-content .page-title i {
     font-size: 18px;
     color: var(--sv-blue);
@@ -344,7 +350,7 @@
 .bib-item {
     margin-bottom: 20px;
     padding: 15px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #000000;
     direction: ltr;
     text-align: right;
 }
@@ -383,6 +389,22 @@
     color: #0000EE !important;
 }
 
+/* Specific styling for bibliography links in taxonomy pages - bigger and standard web colors */
+.supervisor-taxonomy .bib-original-link a,
+.supervisor-taxonomy .bib-original-link a:link,
+.supervisor-taxonomy .bib-original-link a:visited {
+    color: #0000EE !important;
+    text-decoration: none;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+}
+
+.supervisor-taxonomy .bib-original-link a:hover,
+.supervisor-taxonomy .bib-original-link a:focus {
+    color: #0000EE !important;
+    text-decoration: underline !important;
+}
+
 .bib-content {
     margin-top: 15px;
     padding-top: 15px;
@@ -405,20 +427,32 @@
     margin-bottom: 0;
 }
 
+/* New layout for bibliography items */
+.bib-item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    direction: rtl;
+}
+
+.bib-item-content {
+    flex: 1;
+}
+
 .bib-toggle-container {
-    text-align: left;
-    margin-top: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .bib-toggle {
-    color: var(--sv-blue);
+    color: #000000 !important;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     transition: transform 0.2s ease;
 }
 
 .bib-toggle:hover {
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .bib-toggle.fa-chevron-up {
@@ -2204,8 +2238,7 @@ body .supervisor-bib-cats .categories-grid {
 .supervisor-bib-cats .category-card:hover {
     background: var(--sv-blue);
     color: white;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Category Icon */

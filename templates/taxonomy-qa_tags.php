@@ -79,7 +79,7 @@ error_log('Loading taxonomy-qa_tags.php template');
                                 if ($original_link) :
                                 ?>
                                     <div class="bib-original-link">
-                                        <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer">
+                                        <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer" style="color: #0000EE !important; font-size: 18px !important; font-weight: 500 !important; text-decoration: none !important;">
                                             <?php echo esc_html($original_link); ?>
                                         </a>
                                     </div>

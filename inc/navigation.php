@@ -74,7 +74,8 @@ function render_nav_item($item) {
     $class_string = implode(' ', $classes);
     
     // All items are now anchor tags for consistency
-    echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '">';
+    $style = $item['has_dropdown'] ? ' style="border-radius: 0 !important;"' : '';
+    echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '"' . $style . '>';
     echo '<span class="nav-text">' . esc_html($item['title']) . '</span>';
     
     // Add dropdown icon if needed

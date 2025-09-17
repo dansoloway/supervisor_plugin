@@ -827,12 +827,29 @@
     font-family: var(--sv-font-primary);
 }
 
-/* Prevent underlines on activity page links */
-.supervisor-home .activity-card a,
-.supervisor-home .activity-card a:hover,
-.supervisor-home .activity-card a:focus,
-.supervisor-home .activity-card a:active,
-.supervisor-home .activity-card a:visited {
+/* Prevent underlines on ALL links in the plugin */
+.supervisor-home a,
+.supervisor-home a:hover,
+.supervisor-home a:focus,
+.supervisor-home a:active,
+.supervisor-home a:visited,
+.supervisor-home a:link {
+    text-decoration: none !important;
+}
+
+/* Specific rules for navigation and dropdown */
+.supervisor-home .site-nav a,
+.supervisor-home .site-nav a:hover,
+.supervisor-home .site-nav a:focus,
+.supervisor-home .site-nav a:active,
+.supervisor-home .site-nav a:visited,
+.supervisor-home .site-nav a:link,
+.supervisor-home .dropdown-menu a,
+.supervisor-home .dropdown-menu a:hover,
+.supervisor-home .dropdown-menu a:focus,
+.supervisor-home .dropdown-menu a:active,
+.supervisor-home .dropdown-menu a:visited,
+.supervisor-home .dropdown-menu a:link {
     text-decoration: none !important;
 }
 

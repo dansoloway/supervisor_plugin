@@ -827,6 +827,15 @@
     font-family: var(--sv-font-primary);
 }
 
+/* Prevent underlines on activity page links */
+.supervisor-home .activity-card a,
+.supervisor-home .activity-card a:hover,
+.supervisor-home .activity-card a:focus,
+.supervisor-home .activity-card a:active,
+.supervisor-home .activity-card a:visited {
+    text-decoration: none !important;
+}
+
 /* Override main content layout for activities page */
 .supervisor-home .supervisor-main-content {
     grid-template-columns: 1fr;

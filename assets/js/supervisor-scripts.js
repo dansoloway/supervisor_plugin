@@ -50,10 +50,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const dropdownMenu = dropdown.nextElementSibling;
         
         if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+            let isClickMode = false;
+            let hoverTimeout = null;
+            
             // Toggle dropdown on click
             dropdown.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                
+                isClickMode = true;
                 
                 // Close any other open dropdowns
                 document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
@@ -66,10 +71,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Toggle current dropdown
                 dropdownMenu.classList.toggle('show');
                 dropdown.classList.toggle('active');
+                
+                // Reset click mode after a delay
+                setTimeout(() => {
+                    isClickMode = false;
+                }, 100);
             });
             
-            // Show dropdown on hover
+            // Show dropdown on hover (only if not in click mode)
             dropdown.addEventListener('mouseenter', function() {
+                if (isClickMode) return;
+                
+                // Clear any pending hide timeout
+                if (hoverTimeout) {
+                    clearTimeout(hoverTimeout);
+                    hoverTimeout = null;
+                }
+                
                 // Close any other open dropdowns
                 document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
                     if (menu !== dropdownMenu) {
@@ -82,21 +100,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.add('active');
             });
             
-            // Hide dropdown when mouse leaves
+            // Hide dropdown when mouse leaves (with delay to prevent flickering)
             dropdown.addEventListener('mouseleave', function() {
-                dropdownMenu.classList.remove('show');
-                dropdown.classList.remove('active');
+                if (isClickMode) return;
+                
+                hoverTimeout = setTimeout(() => {
+                    if (!dropdownMenu.matches(':hover') && !dropdown.matches(':hover')) {
+                        dropdownMenu.classList.remove('show');
+                        dropdown.classList.remove('active');
+                    }
+                }, 150);
             });
             
             // Keep dropdown open when hovering over the menu
             dropdownMenu.addEventListener('mouseenter', function() {
+                if (hoverTimeout) {
+                    clearTimeout(hoverTimeout);
+                    hoverTimeout = null;
+                }
                 dropdownMenu.classList.add('show');
                 dropdown.classList.add('active');
             });
             
             dropdownMenu.addEventListener('mouseleave', function() {
-                dropdownMenu.classList.remove('show');
-                dropdown.classList.remove('active');
+                if (isClickMode) return;
+                
+                hoverTimeout = setTimeout(() => {
+                    if (!dropdownMenu.matches(':hover') && !dropdown.matches(':hover')) {
+                        dropdownMenu.classList.remove('show');
+                        dropdown.classList.remove('active');
+                    }
+                }, 150);
             });
         }
     });

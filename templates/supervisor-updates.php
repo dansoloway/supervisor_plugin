@@ -61,7 +61,7 @@ $updates_query = new WP_Query($args);
         <div class="qa-updates-list">
            
             <div class="search-results-container" style="display: none;"></div>
-            <div class="initial-content">
+            <div class="initial-content"<?php echo $highlight_id ? ' style="display: block !important;"' : ''; ?>>
                 <?php
                 if ($updates_query->have_posts()):
                     while ($updates_query->have_posts()):
@@ -210,6 +210,14 @@ $updates_query = new WP_Query($args);
         initializeAccordions();
         
         <?php if ($highlight_id): ?>
+        // Ensure initial content is visible when coming from home page
+        const initialContent = document.querySelector('.initial-content');
+        const searchResults = document.querySelector('.search-results-container');
+        if (initialContent && searchResults) {
+            initialContent.style.display = 'block';
+            searchResults.style.display = 'none';
+        }
+        
         // Open the highlighted accordion
         const highlightedContent = document.getElementById('accordion-<?php echo esc_js($highlight_id); ?>');
         const highlightedIcon = document.getElementById('icon-<?php echo esc_js($highlight_id); ?>');

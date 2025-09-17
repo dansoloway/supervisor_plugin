@@ -8,6 +8,9 @@ $posts_per_page = 5;
 // Get the current pagination page
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
+// Check if we need to highlight a specific update
+$highlight_id = isset($_GET['highlight']) ? intval($_GET['highlight']) : null;
+
 $args = [
     'post_type'      => 'qa_updates',
     'posts_per_page' => $posts_per_page,
@@ -69,12 +72,15 @@ $updates_query = new WP_Query($args);
                                     echo '<h3>' . get_the_title() . '</h3>';
                                     echo '<span class="update-date">' . esc_html($formatted_date) . '</span>';
                                 echo '</div>'; // title-date-container
-                                echo '<span class="accordion-icon" id="icon-' . esc_attr($post_id) . '">⌄</span>';
+                                $icon_text = $is_highlighted ? '⌃' : '⌄';
+                                echo '<span class="accordion-icon" id="icon-' . esc_attr($post_id) . '">' . $icon_text . '</span>';
                             echo '</div>'; // qa-update-title
                         echo '</div>'; // accordion-header
 
-                        // Accordion Content (Hidden by Default)
-                        echo '<div class="accordion-content" id="accordion-' . esc_attr($post_id) . '" style="display: none;">';
+                        // Accordion Content (Hidden by Default, unless highlighted)
+                        $is_highlighted = ($highlight_id && $post_id == $highlight_id);
+                        $display_style = $is_highlighted ? 'display: block;' : 'display: none;';
+                        echo '<div class="accordion-content" id="accordion-' . esc_attr($post_id) . '" style="' . $display_style . '">';
                             echo '<p>' . get_the_content() . '</p>';
 
                             echo '<div class="taxonomy-boxes">';
@@ -187,6 +193,16 @@ $updates_query = new WP_Query($args);
 
         // Initialize accordions on page load
         initializeAccordions();
+        
+        <?php if ($highlight_id): ?>
+        // Open the highlighted accordion
+        const highlightedContent = document.getElementById('accordion-<?php echo esc_js($highlight_id); ?>');
+        const highlightedIcon = document.getElementById('icon-<?php echo esc_js($highlight_id); ?>');
+        if (highlightedContent && highlightedIcon) {
+            highlightedContent.style.display = 'block';
+            highlightedIcon.textContent = '⌃';
+        }
+        <?php endif; ?>
         
         // Re-initialize when search results are loaded
         if (typeof window !== 'undefined') {

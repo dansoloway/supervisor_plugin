@@ -1024,6 +1024,7 @@
     line-height: 1.4;
     background: var(--sv-blue-050, #f3f7fc);
     border-bottom: 1px solid #BFD3EB;
+    border-radius: 0 !important; /* Ensure no border radius on dropdown items */
     transition: background-color 0.2s ease;
     cursor: pointer;
     margin: 0;

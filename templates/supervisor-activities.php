@@ -113,7 +113,7 @@ get_header('supervisor');
     width: 56px;              /* fixed box like the mock */
     height: 56px;
     border-radius: 12px;
-    background: #f5f7fa;
+    background: #F4F5F5;
     margin-bottom: 16px;
 }
 

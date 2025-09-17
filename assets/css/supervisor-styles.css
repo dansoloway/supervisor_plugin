@@ -779,7 +779,7 @@
 
 /* Icon box = rounded square, top-right */
 .supervisor-home .activity-icon {
-    align-self: flex-end;     /* ⟵ puts it at the right edge */
+    align-self: flex-start;     /* ⟵ puts it at the right edge */
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -785,7 +785,7 @@
     justify-content: center;
     align-items: center;
     width: auto;              /* allow width to expand for title */
-    min-width: 1100px;
+    min-width: 110px;
     height: auto;
     min-height: 80px;
     border-radius: 12px;

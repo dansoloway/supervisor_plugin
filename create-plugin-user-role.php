@@ -173,12 +173,54 @@ add_action('current_screen', 'redirect_supervisor_editor_from_restricted_areas')
 function hide_admin_bar_items() {
     if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
         global $wp_admin_bar;
-        $wp_admin_bar->remove_menu('wp-logo');
-        $wp_admin_bar->remove_menu('site-name');
-        $wp_admin_bar->remove_menu('updates');
-        $wp_admin_bar->remove_menu('comments');
-        $wp_admin_bar->remove_menu('new-content');
-        $wp_admin_bar->remove_menu('my-account');
+        
+        // Remove WordPress.org related items
+        $wp_admin_bar->remove_node('wp-logo');
+        $wp_admin_bar->remove_node('about');
+        $wp_admin_bar->remove_node('wporg');
+        $wp_admin_bar->remove_node('documentation');
+        $wp_admin_bar->remove_node('support-forums');
+        $wp_admin_bar->remove_node('feedback');
+        
+        // Remove site management items
+        $wp_admin_bar->remove_node('customize');
+        $wp_admin_bar->remove_node('updates');
+        $wp_admin_bar->remove_node('comments');
+        
+        // Remove "New Content" but add back plugin-specific items
+        $wp_admin_bar->remove_node('new-content');
+        
+        // Add back "New Content" but only for plugin post types
+        $wp_admin_bar->add_menu(array(
+            'id' => 'new-content',
+            'title' => __('הוסף תוכן חדש'),
+            'href' => '#',
+        ));
+        
+        // Add plugin-specific new content items
+        $wp_admin_bar->add_menu(array(
+            'parent' => 'new-content',
+            'id' => 'new-qa-updates',
+            'title' => __('עדכון חדש'),
+            'href' => admin_url('post-new.php?post_type=qa_updates'),
+        ));
+        
+        $wp_admin_bar->add_menu(array(
+            'parent' => 'new-content',
+            'id' => 'new-qa-orgs',
+            'title' => __('ארגון חדש'),
+            'href' => admin_url('post-new.php?post_type=qa_orgs'),
+        ));
+        
+        $wp_admin_bar->add_menu(array(
+            'parent' => 'new-content',
+            'id' => 'new-qa-bib-items',
+            'title' => __('פריט ביבליוגרפיה חדש'),
+            'href' => admin_url('post-new.php?post_type=qa_bib_items'),
+        ));
+        
+        // Keep logout and user account items - don't remove 'my-account'
+        // Keep 'site-name' and 'view-site' for navigation
     }
 }
 add_action('wp_before_admin_bar_render', 'hide_admin_bar_items');

@@ -546,8 +546,10 @@
 .supervisor-knowledge-map .col-right{
   display: flex;
   flex-direction: column;
-  justify-content: space-around;    /* changed from space-between to space-around for closer spacing */
-  gap: 24px;                        /* space between green/pink blocks */
+  justify-content: space-between;
+  gap: 16px;                        /* reduced gap to bring top groups closer */
+  padding-top: 40px;                /* move top groups closer to image */
+  padding-bottom: 60px;             /* move bottom groups lower */
 }
 
 .supervisor-knowledge-map .col-left .arrow-list,
@@ -681,9 +683,18 @@
 
 
 .knowledge-map-description {
-    margin: 0 auto 40px;
+    margin: 60px auto 40px;
     text-align: right;
     direction: rtl;
+}
+
+.knowledge-map-description-title {
+    font-family: var(--sv-font-secondary);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--sv-text);
+    margin-bottom: 20px;
+    text-align: right;
 }
 
 .knowledge-map-description p {

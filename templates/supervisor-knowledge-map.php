@@ -63,6 +63,7 @@ get_header('supervisor');
         
         <!-- Explanatory Text -->
         <div class="knowledge-map-description">
+            <h2 class="knowledge-map-description-title">מפת הידע:</h2>
             <p>
                 מפת הידע מתארת את המערכת המקיפה לפיקוח ובקרה על שירותים חברתיים. 
                 המעבר במדינות רבות מניהול ישיר של שירותים חברתיים על ידי המדינה לרכישה חברתית (social procurement) 

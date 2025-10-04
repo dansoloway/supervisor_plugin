@@ -514,7 +514,7 @@
   align-items: center;     /* Changed back to center to prevent stretching */
   max-width: 1200px;
   margin: 0 auto;
-  padding-inline: clamp(12px, 3vw, 24px);
+  padding-inline: none !important
 }
 
 /* 2) assign areas */
@@ -1582,7 +1582,7 @@ img[src*=".svg"] {
 /* ===== AJAX SEARCH COMPONENT - NEW DESIGN ===== */
 .supervisor-home .ajax-search-component {
     background: #E9F1F7;
-    border-radius: 12px;
+    border-radius: 0;
     padding: 16px 16px 16px 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
@@ -1987,7 +1987,7 @@ img[src*=".svg"] {
 
 .supervisor-qa_orgs .categories-container {
     flex: 1;
-    padding: 0 40px;
+    padding: 0;
 }
 
 .supervisor-qa_orgs .page-title {

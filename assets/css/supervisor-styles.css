@@ -504,34 +504,29 @@
     margin-bottom: 40px;
 }
 
-/* 1) grid container: 3 columns on desktop, 1 column on mobile */
+/* 1) container with relative positioning for absolute child positioning */
 .supervisor-knowledge-map .knowledge-layout{
-  --gap: clamp(16px, 3vw, 32px);
-  display: grid;
-  grid-template-columns: 1fr 400px 1fr; /* L | CENTER | R - center matches image width */
-  grid-template-areas: "left center right";
-  gap: var(--gap);
-  align-items: center;     /* Changed back to center to prevent stretching */
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
-  padding-inline: none !important
+  padding: 60px 20px;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* 2) assign areas */
-.supervisor-knowledge-map .col-left  { grid-area: left;  }
-.supervisor-knowledge-map .col-center{ grid-area: center;}
-.supervisor-knowledge-map .col-right { grid-area: right; }
-
-/* 3) make the center graphic keep its aspect ratio and scale */
+/* 2) center column positioning */
 .supervisor-knowledge-map .col-center{
-  display: grid;
-  place-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 }
 .supervisor-knowledge-map .col-center .svg-frame{
-  width: 100%;
-  max-width: 400px;
-  aspect-ratio: 1 / 1;
-  margin: 0 auto;
+  width: 400px;
+  height: 400px;
 }
 .supervisor-knowledge-map .col-center .svg-frame > img,
 .supervisor-knowledge-map .col-center svg{
@@ -540,24 +535,35 @@
   object-fit: contain;
 }
 
-/* 4) lists: RTL, right-aligned, custom arrows */
-/* Side columns: top group sticks up, bottom group sticks down */
+/* 3) Position side columns in quadrants */
 .supervisor-knowledge-map .col-left,
 .supervisor-knowledge-map .col-right{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;                        /* reduced gap to bring top groups closer */
-  padding-top: 40px;                /* move top groups closer to image */
-  padding-bottom: 60px;             /* move bottom groups lower */
+  position: absolute;
+  width: 300px;
+  z-index: 1;
+}
+
+/* Left column positioning */
+.supervisor-knowledge-map .col-left{
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Right column positioning */
+.supervisor-knowledge-map .col-right{
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .supervisor-knowledge-map .col-left .arrow-list,
 .supervisor-knowledge-map .col-right .arrow-list{
   list-style: none;
   margin: 0; padding: 0;
-  display: grid;
-  gap: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   font-weight: 800;
   font-size: clamp(16px, 1.6vw, 20px);
   text-align: right;
@@ -663,21 +669,37 @@
 /* 5) responsive: stack columns on small screens */
 @media (max-width: 900px){
   .supervisor-knowledge-map .knowledge-layout{
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "center"
-      "right"
-      "left";
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
   }
-  /* Mobile: stack normally (no top/bottom pinning) */
+  
+  .supervisor-knowledge-map .col-center{
+    position: static;
+    transform: none;
+    margin-bottom: 40px;
+  }
+  
+  .supervisor-knowledge-map .col-center .svg-frame{
+    width: 300px;
+    height: 300px;
+  }
+  
+  /* Mobile: stack normally */
   .supervisor-knowledge-map .col-left, 
   .supervisor-knowledge-map .col-right{
-    justify-content: flex-start;
-    gap: 12px;
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px;
   }
+  
   .supervisor-knowledge-map .col-left .arrow-list,
-  .supervisor-knowledge-map .col-right .arrow-list{ max-width: none; }
+  .supervisor-knowledge-map .col-right .arrow-list{ 
+    max-width: none; 
+  }
 }
 
 

@@ -105,7 +105,6 @@ function supervisor_display_contact_form() {
     
     ?>
     <div class="supervisor-contact-form">
-        <h2>יצירת קשר</h2>
         <p>נשמח לשמוע מכם. השאירו הודעה ונחזור אליכם בהקדם.</p>
         
         <form method="post" action="" class="supervisor-form" dir="rtl">
@@ -200,7 +199,6 @@ function supervisor_contact_form_styles() {
     ?>
     <style>
     .supervisor-contact-form {
-        max-width: 600px;
         margin: 20px auto;
         padding: 20px;
         background: #f9f9f9;

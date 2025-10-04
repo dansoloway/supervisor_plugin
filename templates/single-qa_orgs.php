@@ -60,7 +60,7 @@ get_header('supervisor');
                 <div class="info-item">
                     <span class="info-label">אתר הארגון:</span>
                     <span class="info-value">
-                        <a href="<?php echo esc_url($org_link); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important;">
+                        <a href="<?php echo esc_url($org_link); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
                             <?php echo esc_html($org_link); ?>
                         </a>
                     </span>
@@ -80,7 +80,7 @@ get_header('supervisor');
                 <div class="info-item">
                     <span class="info-label">דוח שנתי:</span>
                     <span class="info-value">
-                        <a href="<?php echo esc_url($org_report); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important;">
+                        <a href="<?php echo esc_url($org_report); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
                             <?php echo esc_html($org_report); ?>
                         </a>
                     </span>

@@ -2255,8 +2255,14 @@ img[src*=".svg"] {
     overflow: hidden;
 }
 
-.info-value a{
-    color: black !important
+.info-value a {
+    color: var(--sv-blue) !important;
+    text-decoration: underline;
+}
+
+.info-value a:hover,
+.info-value a:focus {
+    color: var(--sv-blue-600) !important;
 }
 
 .supervisor-single-org .info-box {

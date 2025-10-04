@@ -40,6 +40,7 @@ function add_supervisor_editor_role() {
             'read_private_qa_updates' => true,
             'edit_private_qa_updates' => true,
             'delete_private_qa_updates' => true,
+            'read_qa_updates' => true,
             
             'edit_qa_orgs' => true,
             'edit_others_qa_orgs' => true,
@@ -51,6 +52,7 @@ function add_supervisor_editor_role() {
             'read_private_qa_orgs' => true,
             'edit_private_qa_orgs' => true,
             'delete_private_qa_orgs' => true,
+            'read_qa_orgs' => true,
             
             'edit_qa_bib_items' => true,
             'edit_others_qa_bib_items' => true,
@@ -62,6 +64,7 @@ function add_supervisor_editor_role() {
             'read_private_qa_bib_items' => true,
             'edit_private_qa_bib_items' => true,
             'delete_private_qa_bib_items' => true,
+            'read_qa_bib_items' => true,
             
             // Taxonomy capabilities - ALLOW
             'manage_qa_tags' => true,
@@ -187,3 +190,123 @@ function supervisor_editor_admin_notice() {
     }
 }
 add_action('admin_notices', 'supervisor_editor_admin_notice');
+
+// Add RTL styling for Supervisor Editor admin area
+function supervisor_editor_admin_styles() {
+    if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
+        ?>
+        <style>
+        /* RTL styling for Supervisor Editor admin area */
+        body.wp-admin {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        
+        /* Admin menu RTL */
+        #adminmenu,
+        #adminmenu .wp-submenu,
+        #adminmenu .wp-has-submenu .wp-submenu {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        
+        /* Admin menu items */
+        #adminmenu .wp-menu-name,
+        #adminmenu .wp-submenu .wp-submenu-head {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+        
+        /* Admin bar RTL */
+        #wpadminbar {
+            direction: rtl !important;
+        }
+        
+        #wpadminbar .ab-item,
+        #wpadminbar .ab-top-menu > li > .ab-item {
+            text-align: right !important;
+        }
+        
+        /* Admin content area */
+        #wpbody-content .wrap,
+        .wp-admin .wrap h1,
+        .wp-admin .wrap h2,
+        .wp-admin .wrap h3 {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+        
+        /* Form elements RTL */
+        .wp-admin form,
+        .wp-admin input,
+        .wp-admin textarea,
+        .wp-admin select {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+        
+        /* Tables RTL */
+        .wp-admin table,
+        .wp-admin .wp-list-table {
+            direction: rtl !important;
+        }
+        
+        .wp-admin table th,
+        .wp-admin table td {
+            text-align: right !important;
+        }
+        
+        /* Meta boxes RTL */
+        .wp-admin .postbox,
+        .wp-admin .postbox h2,
+        .wp-admin .postbox h3 {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+        
+        /* Buttons RTL */
+        .wp-admin .button,
+        .wp-admin .button-primary,
+        .wp-admin .button-secondary {
+            text-align: center !important;
+        }
+        
+        /* Admin notices RTL */
+        .wp-admin .notice,
+        .wp-admin .notice p {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+        
+        /* Media library RTL */
+        .wp-admin .media-frame,
+        .wp-admin .media-frame-title {
+            direction: rtl !important;
+        }
+        
+        /* ACF fields RTL */
+        .wp-admin .acf-field,
+        .wp-admin .acf-field label {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+        
+        /* WordPress editor RTL */
+        .wp-admin .wp-editor-wrap,
+        .wp-admin .mce-toolbar {
+            direction: rtl !important;
+        }
+        
+        /* Override specific elements that should remain LTR */
+        .wp-admin code,
+        .wp-admin .code,
+        .wp-admin input[type="url"],
+        .wp-admin input[type="email"] {
+            direction: ltr !important;
+            text-align: left !important;
+        }
+        </style>
+        <?php
+    }
+}
+add_action('admin_head', 'supervisor_editor_admin_styles');

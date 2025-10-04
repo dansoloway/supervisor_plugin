@@ -17,9 +17,9 @@ if ($highlight_id) {
         'post_type'      => 'qa_updates',
         'posts_per_page' => 5,  // Show only 5 updates like home page
         'paged'          => 1,  // Always show first page
-        'meta_key'       => 'qa_updates_date', // Use same sorting as home page
-        'orderby'        => 'meta_value',      // Sort by custom field value
-        'order'          => 'DESC',            // Latest dates first
+        'orderby'        => 'date',  // Use same sorting as home page
+        'order'          => 'DESC',  // Latest dates first
+        'post_status'    => 'publish',
     ];
 } else {
     // Normal search page behavior
@@ -27,9 +27,9 @@ if ($highlight_id) {
         'post_type'      => 'qa_updates',
         'posts_per_page' => $posts_per_page,
         'paged'          => $paged,
-        'meta_key'       => 'qa_updates_date', // Custom field for sorting
-        'orderby'        => 'meta_value',      // Sort by custom field value
-        'order'          => 'DESC',            // Latest dates first
+        'orderby'        => 'date',  // Sort by post date
+        'order'          => 'DESC',  // Latest dates first
+        'post_status'    => 'publish',
     ];
 }
 

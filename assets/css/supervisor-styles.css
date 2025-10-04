@@ -1318,6 +1318,10 @@
     background: var(--sv-blue-600);
 }
 
+.updates-header:hover .more-updates-button {
+    background: var(--sv-blue-600);
+}
+
 /* List items */
 .updates-list {
     margin: 0;
@@ -1389,6 +1393,7 @@
     text-decoration: none;
     text-align: center;
     width: 100%;
+    transition: background .2s;
 }
 
 .more-updates-button:hover {

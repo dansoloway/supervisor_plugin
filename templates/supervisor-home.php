@@ -52,7 +52,8 @@ get_header('supervisor');
                     $updates_query = new WP_Query([
                         'post_type' => 'qa_updates',
                         'posts_per_page' => 5,
-                        'orderby' => 'date',
+                        'meta_key' => 'qa_updates_date',
+                        'orderby' => 'meta_value',
                         'order' => 'DESC',
                     ]);
 

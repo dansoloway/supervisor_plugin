@@ -3,7 +3,7 @@
 get_header('supervisor');
 
 // Set number of posts per page (change this value as needed)
-$posts_per_page = 5; 
+$posts_per_page = -1; // Show all updates 
 
 // Get the current pagination page
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -17,8 +17,9 @@ if ($highlight_id) {
         'post_type'      => 'qa_updates',
         'posts_per_page' => 5,  // Show only 5 updates like home page
         'paged'          => 1,  // Always show first page
-        'orderby'        => 'date',  // Use same sorting as home page
-        'order'          => 'DESC',  // Latest dates first
+        'meta_key'       => 'qa_updates_date', // Use same sorting as home page
+        'orderby'        => 'meta_value',      // Sort by custom field value
+        'order'          => 'DESC',            // Latest dates first
     ];
 } else {
     // Normal search page behavior

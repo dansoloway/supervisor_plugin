@@ -540,6 +540,7 @@
 .supervisor-knowledge-map .col-right{
   position: absolute;
   width: 300px;
+  height: 100%;
   z-index: 1;
 }
 
@@ -556,15 +557,17 @@
 /* Top quadrants positioning */
 .supervisor-knowledge-map .group-top{
   position: absolute;
-  top: 20%;
-  transform: translateY(-50%);
+  top: 60px;
+  left: 0;
+  right: 0;
 }
 
 /* Bottom quadrants positioning */
 .supervisor-knowledge-map .group-bottom{
   position: absolute;
-  bottom: 20%;
-  transform: translateY(50%);
+  bottom: 60px;
+  left: 0;
+  right: 0;
 }
 
 .supervisor-knowledge-map .col-left .arrow-list,

@@ -508,7 +508,7 @@
 .supervisor-knowledge-map .knowledge-layout{
   --gap: clamp(16px, 3vw, 32px);
   display: grid;
-  grid-template-columns: 1fr minmax(420px, 560px) 1fr; /* L | CENTER | R */
+  grid-template-columns: 1fr 400px 1fr; /* L | CENTER | R - center matches image width */
   grid-template-areas: "left center right";
   gap: var(--gap);
   align-items: center;     /* Changed back to center to prevent stretching */
@@ -528,7 +528,7 @@
   place-items: center;
 }
 .supervisor-knowledge-map .col-center .svg-frame{
-  width: 60%;
+  width: 100%;
   max-width: 400px;
   aspect-ratio: 1 / 1;
   margin: 0 auto;

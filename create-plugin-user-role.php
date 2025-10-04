@@ -100,11 +100,9 @@ add_action('init', 'add_supervisor_editor_role');
 // Remove unwanted admin menu items for supervisor_editor role
 function restrict_supervisor_editor_menu() {
     if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
-        // Remove most admin menu items
-        remove_menu_page('index.php'); // Dashboard
+        // Remove restricted admin menu items only
         remove_menu_page('edit.php'); // Posts
         remove_menu_page('edit.php?post_type=page'); // Pages
-        remove_menu_page('upload.php'); // Media (we'll add it back selectively)
         remove_menu_page('edit-comments.php'); // Comments
         remove_menu_page('themes.php'); // Appearance
         remove_menu_page('plugins.php'); // Plugins
@@ -112,16 +110,13 @@ function restrict_supervisor_editor_menu() {
         remove_menu_page('tools.php'); // Tools
         remove_menu_page('options-general.php'); // Settings
         
-        // Keep only what they need
-        add_menu_page(
-            'Media',
-            'Media',
-            'upload_files',
-            'upload.php',
-            '',
-            'dashicons-admin-media',
-            20
-        );
+        // Remove auto-generated custom post type menus (they'll be in our custom admin)
+        remove_menu_page('edit.php?post_type=qa_updates');
+        remove_menu_page('edit.php?post_type=qa_orgs');
+        remove_menu_page('edit.php?post_type=qa_bib_items');
+        
+        // Keep Dashboard (index.php), Media (upload.php), and Profile accessible
+        // The supervisor admin menu will be added by the main admin-menu.php file
     }
 }
 add_action('admin_menu', 'restrict_supervisor_editor_menu', 999);
@@ -155,9 +150,18 @@ function redirect_supervisor_editor_from_restricted_areas() {
             return;
         }
         
-        // Redirect everything else to supervisor admin
-        wp_redirect(admin_url('admin.php?page=supervisor-admin'));
-        exit;
+        // Allow access to dashboard, media library, and profile page
+        $allowed_pages = ['dashboard', 'upload', 'profile'];
+        if (in_array($current_screen->id ?? '', $allowed_pages)) {
+            return;
+        }
+        
+        // Only redirect if they're trying to access something they really shouldn't
+        $restricted_pages = ['posts', 'pages', 'themes', 'plugins', 'users', 'tools', 'options-general'];
+        if (in_array($current_screen->id ?? '', $restricted_pages)) {
+            wp_redirect(admin_url('admin.php?page=supervisor-admin'));
+            exit;
+        }
     }
 }
 add_action('current_screen', 'redirect_supervisor_editor_from_restricted_areas');

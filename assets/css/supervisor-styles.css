@@ -1263,7 +1263,7 @@
 }
 
 .supervisor-home .dropdown-menu .submenu-item:hover {
-    background-color: #CEDEEF;
+    background-color: var(--sv-blue, #a9c4e6) !important;
     color: var(--sv-text) !important;
 }
 

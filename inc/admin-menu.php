@@ -10,7 +10,7 @@ function supervisor_admin_menu() {
     add_menu_page(
         __('המקפחת - ניהול מערכת', 'text-domain'), // Page title
         __('המקפחת', 'text-domain'), // Menu title
-        'manage_options', // Capability
+        'edit_qa_updates', // Capability - allow supervisor editors
         'supervisor-admin', // Menu slug
         'supervisor_admin_dashboard', // Callback function
         'dashicons-admin-generic', // Icon
@@ -22,7 +22,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('דשבורד', 'text-domain'), // Page title
         __('דשבורד', 'text-domain'), // Menu title
-        'manage_options', // Capability
+        'edit_qa_updates', // Capability - allow supervisor editors
         'supervisor-admin', // Menu slug (same as parent for first submenu)
         'supervisor_admin_dashboard' // Callback function
     );
@@ -31,7 +31,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול ביבליוגרפיה', 'text-domain'), // Page title
         __('ניהול ביבליוגרפיה', 'text-domain'), // Menu title
-        'manage_options', // Capability
+        'edit_qa_updates', // Capability - allow supervisor editors
         'supervisor-bibliography', // Menu slug
         'supervisor_bibliography_page' // Callback function
     );
@@ -40,7 +40,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול עדכונים', 'text-domain'), // Page title
         __('ניהול עדכונים', 'text-domain'), // Menu title
-        'manage_options', // Capability
+        'edit_qa_updates', // Capability - allow supervisor editors
         'supervisor-updates', // Menu slug
         'supervisor_updates_page' // Callback function
     );
@@ -49,7 +49,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול ארגונים', 'text-domain'), // Page title
         __('ניהול ארגונים', 'text-domain'), // Menu title
-        'manage_options', // Capability
+        'edit_qa_updates', // Capability - allow supervisor editors
         'supervisor-organizations', // Menu slug
         'supervisor_organizations_page' // Callback function
     );
@@ -58,7 +58,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול קטגוריות', 'text-domain'), // Page title
         __('ניהול קטגוריות', 'text-domain'), // Menu title
-        'manage_options', // Capability
+        'edit_qa_updates', // Capability - allow supervisor editors
         'supervisor-categories', // Menu slug
         'supervisor_categories_page' // Callback function
     );
@@ -67,7 +67,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('הגדרות', 'text-domain'), // Page title
         __('הגדרות', 'text-domain'), // Menu title
-        'manage_options', // Capability
+        'edit_qa_updates', // Capability - allow supervisor editors
         'supervisor-settings', // Menu slug
         'supervisor_settings_page' // Callback function
     );

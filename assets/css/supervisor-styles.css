@@ -1180,8 +1180,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;
-    width: 200px; /* Fixed small width */
-    margin-top: 4px;
+    width: 225px; /* Fixed small width */
     padding: 0;
 }
 
@@ -1316,10 +1315,6 @@
 }
 
 .updates-header:hover {
-    background: var(--sv-blue-600);
-}
-
-.updates-header:hover .more-updates-button {
     background: var(--sv-blue-600);
 }
 

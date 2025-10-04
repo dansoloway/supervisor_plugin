@@ -42,43 +42,50 @@ get_header('supervisor');
         <!-- Information Boxes -->
         <div class="org-info-boxes">
             <div class="info-box left-box">
+                <?php if ($org_year): ?>
                 <div class="info-item">
                     <span class="info-label">שנת הקמה:</span>
                     <span class="info-value"><?php echo esc_html($org_year); ?></span>
                 </div>
+                <?php endif; ?>
+                
+                <?php if ($org_ministry): ?>
                 <div class="info-item">
                     <span class="info-label">משרד ממשלתי אחראי:</span>
                     <span class="info-value"><?php echo esc_html($org_ministry); ?></span>
                 </div>
+                <?php endif; ?>
+                
+                <?php if ($org_link): ?>
                 <div class="info-item">
                     <span class="info-label">אתר הארגון:</span>
                     <span class="info-value">
-                        <?php if ($org_link): ?>
-                            <a href="<?php echo esc_url($org_link); ?>" target="_blank" rel="noopener noreferrer">
-                                <?php echo esc_html($org_link); ?>
-                            </a>
-                        <?php endif; ?>
+                        <a href="<?php echo esc_url($org_link); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important;">
+                            <?php echo esc_html($org_link); ?>
+                        </a>
                     </span>
                 </div>
-           
-             
+                <?php endif; ?>
             </div>
             
             <div class="info-box right-box">
+                <?php if ($org_services): ?>
                 <div class="info-item">
                     <span class="info-label">שירותים מפוקחים:</span>
                     <span class="info-value"><?php echo esc_html($org_services); ?></span>
                 </div>
+                <?php endif; ?>
+                
+                <?php if ($org_report): ?>
                 <div class="info-item">
                     <span class="info-label">דוח שנתי:</span>
                     <span class="info-value">
-                        <?php if ($org_report): ?>
-                            <a href="<?php echo esc_url($org_report); ?>" target="_blank" rel="noopener noreferrer">
-                                <?php echo esc_html($org_report); ?>
-                            </a>
-                        <?php endif; ?>
+                        <a href="<?php echo esc_url($org_report); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important;">
+                            <?php echo esc_html($org_report); ?>
+                        </a>
                     </span>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
 

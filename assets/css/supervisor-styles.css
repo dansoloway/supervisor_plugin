@@ -2255,14 +2255,8 @@ img[src*=".svg"] {
     overflow: hidden;
 }
 
-.info-value a {
-    color: var(--sv-blue) !important;
-    text-decoration: underline;
-}
-
-.info-value a:hover,
-.info-value a:focus {
-    color: var(--sv-blue-600) !important;
+.info-value a{
+    color: black !important
 }
 
 .supervisor-single-org .info-box {
@@ -2294,7 +2288,7 @@ img[src*=".svg"] {
 
 .supervisor-single-org .info-label {
     font-family: var(--sv-font-primary);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--sv-text);
     min-width: 120px;
@@ -2303,7 +2297,7 @@ img[src*=".svg"] {
 
 .supervisor-single-org .info-value {
     font-family: var(--sv-font-primary);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--sv-text);
     flex: 1;

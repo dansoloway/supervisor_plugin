@@ -545,14 +545,14 @@
 
 /* Left column positioning */
 .supervisor-knowledge-map .col-left{
-  left: 20px;
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 /* Right column positioning */
 .supervisor-knowledge-map .col-right{
-  right: 20px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
 }

@@ -21,6 +21,12 @@ require_once plugin_dir_path(__FILE__) . 'inc/admin-menu.php';
 // Include ACF custom location rules
 require_once plugin_dir_path(__FILE__) . 'acf-location-rules.php';
 
+// Include custom user role for supervisor editor
+require_once plugin_dir_path(__FILE__) . 'create-plugin-user-role.php';
+
+// Include contact form functionality
+require_once plugin_dir_path(__FILE__) . 'contact-form.php';
+
 // Enqueue Google Fonts
 function enqueue_supervisor_google_fonts() {
     // Add preconnect links for better performance
@@ -147,7 +153,7 @@ function supervisor_load_template($template) {
         SUPERVISOR_UPDATES => 'supervisor-updates.php',
         SUPERVISOR_INTRO_TEXT => 'supervisor-content.php',
         SUPERVISOR_ABOUT => 'supervisor-content.php',
-        SUPERVISOR_CONTACT => 'supervisor-content.php',
+        SUPERVISOR_CONTACT => 'supervisor-contact.php',
         SUPERVISOR_ACTIVITIES => 'supervisor-activities.php',
         SUPERVISOR_KNOWLEDGE_MAP => 'supervisor-knowledge-map.php',
     ];

@@ -1459,6 +1459,70 @@
     margin: 20px 0;
 }
 
+/* ===== CONTACT PAGE ===== */
+.supervisor-contact-page .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.supervisor-contact-page .page-title {
+    font-family: var(--sv-font-primary);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--sv-blue);
+    margin: 0;
+}
+
+.contact-form-container {
+    margin-bottom: 40px;
+}
+
+.contact-info {
+    background: var(--sv-card);
+    border: 1px solid var(--sv-border);
+    border-radius: 8px;
+    padding: 30px;
+    direction: rtl;
+    text-align: right;
+}
+
+.contact-info h2 {
+    font-family: var(--sv-font-primary);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--sv-blue);
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.contact-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.contact-item {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    border-right: 4px solid var(--sv-blue);
+}
+
+.contact-item h3 {
+    font-family: var(--sv-font-secondary);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--sv-text);
+    margin-bottom: 8px;
+}
+
+.contact-item p {
+    font-family: var(--sv-font-primary);
+    font-size: 16px;
+    color: var(--sv-text);
+    margin: 0;
+}
+
 /* ===== KNOWLEDGE MAP CARD ===== */
 .knowledge-map-card .knowledge-map-header {
     display: none;

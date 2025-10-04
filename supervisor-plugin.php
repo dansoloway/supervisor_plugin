@@ -18,6 +18,9 @@ require_once plugin_dir_path(__FILE__) . 'inc/bib_admin_page.php';
 // Include consolidated admin menu
 require_once plugin_dir_path(__FILE__) . 'inc/admin-menu.php';
 
+// Include ACF custom location rules
+require_once plugin_dir_path(__FILE__) . 'acf-location-rules.php';
+
 // Enqueue Google Fonts
 function enqueue_supervisor_google_fonts() {
     // Add preconnect links for better performance

@@ -1400,6 +1400,18 @@
     background: var(--sv-blue-600);
 }
 
+/* ===== ACTIVITIES PAGE ===== */
+.no-activities {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--sv-text);
+    font-size: 18px;
+    background: var(--sv-card);
+    border: 1px solid var(--sv-border);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
 /* ===== KNOWLEDGE MAP CARD ===== */
 .knowledge-map-card .knowledge-map-header {
     display: none;

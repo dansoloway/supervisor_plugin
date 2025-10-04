@@ -26,48 +26,35 @@ get_header('supervisor');
         <!-- Activities Grid -->
         <div class="activities-grid">
             <?php
-            // Define activities data
-            $activities = array(
-                array(
-                    'icon' => 'fas fa-users',
-                    'title' => 'כנסים',
-                    'content' => 'פיקוח חוץ הוא תהליך שבו מועבר ביצוע של פעילות פנימית של ארגון ציבורי או ממשלתי לגורם חוץ-ממשלתי על בסיס הסכם המעוגן על פי רוב בחוזה ומשקף את המשך אחריות המדינה לאספקת השירות. בעקבות תהליך מיקור החוץ התפתחו מגוון דרכים לאספקת שירותים חברתיים לאזרחים. יש שירותים שמסופקים על ידי גופים פרטיים – כאלה שפועלים למטרות רווח, ויש כאלה שמסופקים על ידי ארגונים ללא מטרות רווח.'
-                ),
-                array(
-                    'icon' => 'fas fa-paper-plane',
-                    'title' => 'הפצה',
-                    'content' => 'פיקוח על שירותים חברתיים הוא מערך פעולות שמבצע גוף פיקוח מטעם המדינה, במטרה להבטיח את איכות השירותים המסופקים, בטיחותם ונגישותם. זאת, כדי להגן על שלומם ועל רווחתם של מקבלי השירות ולעודד חתירה לשיפור מתמיד של איכות השירות. המונח "פיקוח" רווח בעברית בהקשר של שירותים חברתיים, ומשמש לרוב כמקבילה למונח הלועזי "רגולציה".'
-                ),
-                array(
-                    'icon' => 'fas fa-cogs',
-                    'title' => 'סדנאות',
-                    'content' => 'הפיקוח על שירותים חברתיים היה מאז ומתמיד חלק בלתי נפרד ממדינת הרווחה, אך בעשורים האחרונים קיבל משמעות חדשה בעקבות השינויים שחלו באופן אספקת השירותים החברתיים. משנות השמונים ועד היום בישראל, כמו במדינות רבות בעולם, חל תהליך אינטנסיבי של מעבר מאספקה ישירה של שירותים חברתיים על ידי המדינה לאספקה על ידי מפעילים חיצוניים במיקור חוץ.'
-                ),
-                array(
-                    'icon' => 'fas fa-users',
-                    'title' => 'כנסים',
-                    'content' => 'פיקוח חוץ הוא תהליך שבו מועבר ביצוע של פעילות פנימית של ארגון ציבורי או ממשלתי לגורם חוץ-ממשלתי על בסיס הסכם המעוגן על פי רוב בחוזה ומשקף את המשך אחריות המדינה לאספקת השירות. בעקבות תהליך מיקור החוץ התפתחו מגוון דרכים לאספקת שירותים חברתיים לאזרחים. יש שירותים שמסופקים על ידי גופים פרטיים – כאלה שפועלים למטרות רווח, ויש כאלה שמסופקים על ידי ארגונים ללא מטרות רווח.'
-                ),
-                array(
-                    'icon' => 'fas fa-paper-plane',
-                    'title' => 'הפצה',
-                    'content' => 'פיקוח על שירותים חברתיים הוא מערך פעולות שמבצע גוף פיקוח מטעם המדינה, במטרה להבטיח את איכות השירותים המסופקים, בטיחותם ונגישותם. זאת, כדי להגן על שלומם ועל רווחתם של מקבלי השירות ולעודד חתירה לשיפור מתמיד של איכות השירות. המונח "פיקוח" רווח בעברית בהקשר של שירותים חברתיים, ומשמש לרוב כמקבילה למונח הלועזי "רגולציה".'
-                )
-            );
-
-            // Loop through activities and display cards
-            foreach ($activities as $index => $activity) :
+            // Get ACF repeater field data
+            if (have_rows('qa_areas_of_activity')):
+                while (have_rows('qa_areas_of_activity')): the_row();
+                    $title = get_sub_field('qa_areas_of_activity_title');
+                    $icon = get_sub_field('qa_areas_of_activity_icon');
+                    $content = get_sub_field('qa_areas_of_activity_content');
+                    
+                    // Ensure we have content to display
+                    if ($title && $content):
             ?>
                 <div class="activity-card">
                     <div class="activity-icon">
-                        <i class="<?php echo esc_attr($activity['icon']); ?>"></i>
-                        <h2 class="activity-title"><?php echo esc_html($activity['title']); ?></h2>
+                        <?php if ($icon): ?>
+                            <i class="<?php echo esc_attr($icon); ?>"></i>
+                        <?php endif; ?>
+                        <h2 class="activity-title"><?php echo esc_html($title); ?></h2>
                     </div>
                     <div class="activity-content">
-                        <p><?php echo esc_html($activity['content']); ?></p>
+                        <p><?php echo esc_html($content); ?></p>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php 
+                    endif;
+                endwhile;
+            else:
+                // Fallback content if no ACF data is available
+                echo '<p class="no-activities">אין פעילויות להצגה. אנא הוסף פעילויות באמצעות שדות ACF.</p>';
+            endif;
+            ?>
         </div>
 
         </div> <!-- End supervisor-content-wrapper -->

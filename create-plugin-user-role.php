@@ -127,16 +127,40 @@ function restrict_supervisor_editor_menu() {
 add_action('admin_menu', 'restrict_supervisor_editor_menu', 999);
 
 // Redirect supervisor_editor to plugin admin page on login
-function redirect_supervisor_editor() {
+function supervisor_editor_login_redirect($redirect_to, $request, $user) {
+    if (isset($user->roles) && is_array($user->roles) && in_array('supervisor_editor', $user->roles)) {
+        return admin_url('admin.php?page=supervisor-admin');
+    }
+    return $redirect_to;
+}
+add_filter('login_redirect', 'supervisor_editor_login_redirect', 10, 3);
+
+// Redirect supervisor_editor if they try to access restricted areas
+function redirect_supervisor_editor_from_restricted_areas() {
     if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
+        $current_screen = get_current_screen();
+        
+        // Allow access to supervisor plugin pages
         if (isset($_GET['page']) && strpos($_GET['page'], 'supervisor') !== false) {
-            return; // Already on a supervisor page
+            return;
         }
+        
+        // Allow access to edit pages for plugin post types
+        if (in_array($current_screen->post_type ?? '', ['qa_updates', 'qa_orgs', 'qa_bib_items'])) {
+            return;
+        }
+        
+        // Allow access to taxonomy pages for plugin taxonomies
+        if (in_array($current_screen->taxonomy ?? '', ['qa_tags', 'qa_themes'])) {
+            return;
+        }
+        
+        // Redirect everything else to supervisor admin
         wp_redirect(admin_url('admin.php?page=supervisor-admin'));
         exit;
     }
 }
-add_action('admin_init', 'redirect_supervisor_editor');
+add_action('current_screen', 'redirect_supervisor_editor_from_restricted_areas');
 
 // Hide admin bar items for supervisor_editor
 function hide_admin_bar_items() {

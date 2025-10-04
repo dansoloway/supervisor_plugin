@@ -37,26 +37,6 @@ get_header('supervisor');
             ?>
         </div>
         
-        <!-- Contact Information -->
-        <div class="contact-info">
-            <h2>פרטי יצירת קשר</h2>
-            <div class="contact-details">
-                <div class="contact-item">
-                    <h3>כתובת אימייל</h3>
-                    <p>TalLen@jdc.org</p>
-                </div>
-                
-                <div class="contact-item">
-                    <h3>שעות פעילות</h3>
-                    <p>ימים א'-ה' | 8:00-17:00</p>
-                </div>
-                
-                <div class="contact-item">
-                    <h3>זמן תגובה</h3>
-                    <p>נחזור אליכם תוך 24 שעות</p>
-                </div>
-            </div>
-        </div>
 
         </div> <!-- End supervisor-content-wrapper -->
 

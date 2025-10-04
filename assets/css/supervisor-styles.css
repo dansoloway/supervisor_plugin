@@ -1221,6 +1221,12 @@
     color: var(--sv-text) !important;
 }
 
+/* Prevent any ::before pseudo-elements on dropdown items (remove left border) */
+.supervisor-home .dropdown-menu .submenu-item::before {
+    display: none !important;
+    content: none !important;
+}
+
 
 
 /* ===== SEARCH BAR ===== */

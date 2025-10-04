@@ -94,7 +94,9 @@ get_header('supervisor');
             <div class="knowledge-map-card card">
                 <div class="knowledge-map-header">מפת הידע</div>
                 <div class="knowledge-map-diagram">
-                    <img src="<?php echo plugins_url('assets/img/knowledge_map.svg', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
+                    <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-image-link">
+                        <img src="<?php echo plugins_url('assets/img/knowledge_map.svg', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
+                    </a>
                 </div>
                 <div class="knowledge-map-footer">
                     <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-button">למידע נוסף על מפת הידע</a>

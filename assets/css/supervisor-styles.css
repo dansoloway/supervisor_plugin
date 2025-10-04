@@ -1415,6 +1415,16 @@
     justify-content: center;
 }
 
+.knowledge-map-image-link {
+    display: block;
+    transition: opacity 0.2s ease;
+    text-decoration: none;
+}
+
+.knowledge-map-image-link:hover {
+    opacity: 0.8;
+}
+
 .knowledge-map-image {
     max-width: 430px;
     height: auto;

@@ -327,7 +327,13 @@ function supervisor_settings_page() {
 
 // Remove the old standalone bibliography admin menu and any other unwanted menus
 function remove_old_bibliography_menu() {
+    // Remove old bibliography menu
     remove_menu_page('qa_bib_manager');
+    
+    // Remove WordPress auto-generated menus for custom post types (duplicates)
+    remove_menu_page('edit.php?post_type=qa_updates'); // Remove auto-generated "עדכונים" menu
+    remove_menu_page('edit.php?post_type=qa_orgs'); // Remove auto-generated "ארגונים" menu  
+    remove_menu_page('edit.php?post_type=qa_bib_items'); // Remove auto-generated "פריטים ביבליוגרפיים" menu
     
     // Also remove any other potential unwanted menu items
     remove_menu_page('supervisor-category-icons'); // Remove if exists

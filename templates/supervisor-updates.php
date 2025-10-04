@@ -11,11 +11,11 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 // Check if we need to highlight a specific update
 $highlight_id = isset($_GET['highlight']) ? intval($_GET['highlight']) : null;
 
-// If coming from home page (has highlight parameter), show only latest 5 updates
+// If coming from home page (has highlight parameter), show all updates but highlight one
 if ($highlight_id) {
     $args = [
         'post_type'      => 'qa_updates',
-        'posts_per_page' => 5,  // Show only 5 updates like home page
+        'posts_per_page' => -1,  // Show all updates
         'paged'          => 1,  // Always show first page
         'orderby'        => 'date',  // Use same sorting as home page
         'order'          => 'DESC',  // Latest dates first

@@ -100,6 +100,40 @@ function add_supervisor_editor_role() {
 }
 add_action('init', 'add_supervisor_editor_role');
 
+// Update existing supervisor_editor users with new capabilities
+function update_supervisor_editor_capabilities() {
+    $role = get_role('supervisor_editor');
+    if ($role) {
+        // Add the missing capabilities
+        $role->add_cap('read_qa_updates');
+        $role->add_cap('read_qa_orgs');
+        $role->add_cap('read_qa_bib_items');
+    }
+}
+add_action('init', 'update_supervisor_editor_capabilities');
+
+// One-time fix for existing supervisor_editor users
+function fix_supervisor_editor_permissions() {
+    // Check if we've already run this fix
+    if (get_option('supervisor_editor_permissions_fixed')) {
+        return;
+    }
+    
+    // Get all users with supervisor_editor role
+    $users = get_users(array('role' => 'supervisor_editor'));
+    
+    foreach ($users as $user) {
+        // Add the missing capabilities directly to the user
+        $user->add_cap('read_qa_updates');
+        $user->add_cap('read_qa_orgs');
+        $user->add_cap('read_qa_bib_items');
+    }
+    
+    // Mark as completed
+    update_option('supervisor_editor_permissions_fixed', true);
+}
+add_action('admin_init', 'fix_supervisor_editor_permissions');
+
 // Remove unwanted admin menu items for supervisor_editor role
 function restrict_supervisor_editor_menu() {
     if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {

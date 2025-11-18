@@ -247,7 +247,7 @@
     
     /* Typography Variables */
     --sv-font-primary: 'Assistant', sans-serif;
-    --sv-font-secondary: 'Secular One', sans-serif;
+    --sv-font-secondary: 'Assistant', sans-serif;
     
     /* Spacing Variables */
     --sv-spacing-xs: 4px;
@@ -277,7 +277,7 @@
     margin: 0 auto;
     padding: 0 0 48px;
     display: grid;
-    grid-template-columns: 1.1fr 1.2fr;
+    grid-template-columns: 1.4fr 1fr;
     gap: 24px;
     align-items: start;
 }
@@ -1658,7 +1658,6 @@ img[src*=".svg"] {
     margin: 0 0 8px;
     color: var(--sv-text);
     font-family: var(--sv-font-primary);
-    font-style: italic;
     font-weight: 600;
 }
 

@@ -171,7 +171,7 @@
 /* Two column layout */
 .supervisor-two-column {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 7fr 3fr;
     gap: 40px;
     align-items: start;
 }
@@ -1146,7 +1146,7 @@
     padding: 16px 28px;
     color: var(--sv-text) !important;
     font-family: var(--sv-font-secondary);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 20px;
     line-height: 1;
     text-decoration: none;
@@ -1549,7 +1549,7 @@
 }
 
 .knowledge-map-image {
-    max-width: 430px;
+    max-width: 600px;
     height: auto;
     display: block;
 }
@@ -1557,7 +1557,7 @@
 /* SVG image optimizations - with stronger constraints */
 .knowledge-map-image[src*=".svg"] {
     width: 100% !important;
-    max-width: 430px !important;
+    max-width: 600px !important;
     height: auto !important;
     display: block !important;
 }

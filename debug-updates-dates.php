@@ -163,9 +163,3 @@ function supervisor_add_debug_menu() {
 }
 add_action('admin_menu', 'supervisor_add_debug_menu', 99);
 
-// If accessed directly and WordPress is loaded, show output
-if (defined('ABSPATH') && !is_admin()) {
-    // Direct access - show output
-    supervisor_debug_updates_dates();
-}
-

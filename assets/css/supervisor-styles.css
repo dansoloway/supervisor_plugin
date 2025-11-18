@@ -171,7 +171,7 @@
 /* Two column layout */
 .supervisor-two-column {
     display: grid;
-    grid-template-columns: 3fr 7fr; /* RTL: first value = right column, second = left column */
+    grid-template-columns: 4fr 6fr; /* RTL: first value = right column, second = left column */
     gap: 40px;
     align-items: start;
 }
@@ -179,7 +179,7 @@
 /* Updates page: make search/filters narrower (RTL: first value = right column = search/filters) */
 .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
 .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
-    grid-template-columns: 2fr 8fr; /* Search/filters 20% (right), Updates list 80% (left) */
+    grid-template-columns: 3fr 7fr; /* Search/filters 20% (right), Updates list 80% (left) */
 }
 
 /* Three column layout */
@@ -1540,8 +1540,8 @@
 }
 
 .knowledge-map-diagram {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
 }
 
 .knowledge-map-image-link {
@@ -1563,9 +1563,10 @@
 /* SVG image optimizations - with stronger constraints */
 .knowledge-map-image[src*=".svg"] {
     width: 100% !important;
-    max-width: 600px !important;
+    max-width: 60% !important;
     height: auto !important;
     display: block !important;
+    margin: 0px auto;
 }
 
 /* SVG frame styling for the knowledge map page */

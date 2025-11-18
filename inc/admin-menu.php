@@ -318,40 +318,93 @@ function supervisor_categories_page() {
     <?php
 }
 
+// Save settings
+function supervisor_save_settings() {
+    if (!supervisor_can_edit() || !isset($_POST['supervisor_settings_submit'])) {
+        return;
+    }
+    
+    check_admin_referer('supervisor_settings');
+    
+    // Save contact email
+    if (isset($_POST['supervisor_contact_email'])) {
+        $email = sanitize_email($_POST['supervisor_contact_email']);
+        if (is_email($email) || empty($email)) {
+            update_option('supervisor_contact_email', $email);
+        }
+    }
+    
+    wp_redirect(add_query_arg('settings-updated', 'true', admin_url('admin.php?page=supervisor-settings')));
+    exit;
+}
+add_action('admin_post_supervisor_save_settings', 'supervisor_save_settings');
+
 // Settings page callback
 function supervisor_settings_page() {
     if (!supervisor_can_edit()) {
         wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
     }
+    
+    // Handle settings save
+    if (isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') {
+        echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('ההגדרות נשמרו בהצלחה.', 'text-domain') . '</p></div>';
+    }
+    
+    $contact_email = get_option('supervisor_contact_email', '');
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('הגדרות המקפחת', 'text-domain'); ?></h1>
         <p><?php echo esc_html__('הגדרות כלליות למערכת המקפחת.', 'text-domain'); ?></p>
         
-        <div class="supervisor-settings">
-            <h2><?php echo esc_html__('מידע על המערכת', 'text-domain'); ?></h2>
-            <table class="form-table">
-                <tr>
-                    <th scope="row"><?php echo esc_html__('גרסת המערכת', 'text-domain'); ?></th>
-                    <td>1.0</td>
-                </tr>
-                <tr>
-                    <th scope="row"><?php echo esc_html__('סוגי תוכן', 'text-domain'); ?></th>
-                    <td>qa_updates, qa_orgs, qa_bib_items</td>
-                </tr>
-                <tr>
-                    <th scope="row"><?php echo esc_html__('טקסונומיות', 'text-domain'); ?></th>
-                    <td>qa_tags, qa_themes</td>
-                </tr>
-            </table>
+        <form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
+            <?php wp_nonce_field('supervisor_settings'); ?>
+            <input type="hidden" name="action" value="supervisor_save_settings">
             
-            <h2><?php echo esc_html__('פעולות מערכת', 'text-domain'); ?></h2>
-            <p>
-                <a href="<?php echo admin_url('admin.php?page=supervisor-admin'); ?>" class="button button-primary">
-                    <?php echo esc_html__('חזור לדשבורד', 'text-domain'); ?>
-                </a>
-            </p>
-        </div>
+            <div class="supervisor-settings">
+                <h2><?php echo esc_html__('יצירת קשר', 'text-domain'); ?></h2>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">
+                            <label for="supervisor_contact_email"><?php echo esc_html__('כתובת אימייל ליצירת קשר', 'text-domain'); ?></label>
+                        </th>
+                        <td>
+                            <input type="email" 
+                                   id="supervisor_contact_email" 
+                                   name="supervisor_contact_email" 
+                                   value="<?php echo esc_attr($contact_email); ?>" 
+                                   class="regular-text"
+                                   placeholder="example@jdc.org">
+                            <p class="description"><?php echo esc_html__('כתובת האימייל שתוצג בעמוד יצירת הקשר.', 'text-domain'); ?></p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <h2><?php echo esc_html__('מידע על המערכת', 'text-domain'); ?></h2>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php echo esc_html__('גרסת המערכת', 'text-domain'); ?></th>
+                        <td>1.0</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php echo esc_html__('סוגי תוכן', 'text-domain'); ?></th>
+                        <td>qa_updates, qa_orgs, qa_bib_items</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php echo esc_html__('טקסונומיות', 'text-domain'); ?></th>
+                        <td>qa_tags, qa_themes</td>
+                    </tr>
+                </table>
+                
+                <?php submit_button(__('שמור הגדרות', 'text-domain'), 'primary', 'supervisor_settings_submit'); ?>
+            </div>
+        </form>
+        
+        <h2><?php echo esc_html__('פעולות מערכת', 'text-domain'); ?></h2>
+        <p>
+            <a href="<?php echo admin_url('admin.php?page=supervisor-admin'); ?>" class="button button-primary">
+                <?php echo esc_html__('חזור לדשבורד', 'text-domain'); ?>
+            </a>
+        </p>
     </div>
     <?php
 }

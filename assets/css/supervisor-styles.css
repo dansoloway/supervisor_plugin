@@ -330,9 +330,14 @@
 }
 
 .taxonomy-content .page-title i {
-    font-size: 18px;
+    font-size: 48px;
     color: var(--sv-blue);
     order: 1;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .taxonomy-content .page-title span {
@@ -357,7 +362,7 @@
     margin-bottom: 20px;
     padding: 15px 0;
     border-bottom: 1px solid #000000;
-    direction: ltr;
+    direction: rtl;
     text-align: right;
 }
 
@@ -371,12 +376,12 @@
     font-weight: normal;
     color: var(--sv-text);
     margin-bottom: 8px;
-    text-align: left;
+    text-align: right;
 }
 
 .bib-original-link {
     margin-bottom: 10px;
-    text-align: left;
+    text-align: right;
 }
 
 .bib-original-link a {
@@ -442,7 +447,7 @@
     display: flex;
     align-items: flex-start;
     gap: 15px;
-    direction: ltr;
+    direction: rtl;
 }
 
 .bib-item-content {
@@ -1460,7 +1465,7 @@
 
 /* ===== CONTACT PAGE ===== */
 .supervisor-contact-page .page-header {
-    text-align: center;
+    text-align: right;
     margin-bottom: 40px;
 }
 
@@ -1472,8 +1477,59 @@
     margin: 0;
 }
 
+.supervisor-contact-page .supervisor-content-wrapper.supervisor-two-column {
+    align-items: start;
+}
+
+/* Contact Info Column (Right side in RTL) */
+.contact-info-column {
+    background: var(--sv-card);
+    border: 1px solid var(--sv-border);
+    border-radius: 8px;
+    padding: 30px;
+    direction: rtl;
+    text-align: right;
+}
+
+.contact-info-title {
+    font-family: var(--sv-font-primary);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--sv-text);
+    margin: 0 0 20px 0;
+    text-align: right;
+}
+
+.contact-email {
+    font-family: var(--sv-font-primary);
+    font-size: 18px;
+    color: var(--sv-text);
+    margin: 0;
+    text-align: right;
+}
+
+.contact-email a {
+    color: var(--sv-text);
+    text-decoration: none;
+}
+
+.contact-email a:hover {
+    text-decoration: underline;
+}
+
 .contact-form-container {
     margin-bottom: 40px;
+}
+
+/* Responsive: Contact page */
+@media (max-width: 768px) {
+    .supervisor-contact-page .page-header {
+        grid-column: 1;
+    }
+    
+    .contact-info-column {
+        margin-bottom: 20px;
+    }
 }
 
 .contact-info {
@@ -2167,6 +2223,8 @@ img[src*=".svg"] {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    direction: rtl;
+    text-align: right;
 }
 
 .org-card:hover {
@@ -2212,6 +2270,12 @@ img[src*=".svg"] {
 .dir_left{
     text-align: left;
     direction: ltr;
+}
+
+/* Override dir_left on organizations page - align all text to right */
+.supervisor-qa_orgs .dir_left {
+    text-align: right;
+    direction: rtl;
 }
 .org-info:last-child {
     margin-bottom: 0;

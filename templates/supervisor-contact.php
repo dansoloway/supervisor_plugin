@@ -18,14 +18,27 @@ get_header('supervisor');
     <div class="supervisor-page-container">
         
         <!-- Main Content Area -->
-        <div class="supervisor-content-wrapper supervisor-single-column">
+        <div class="supervisor-content-wrapper supervisor-two-column">
         
         <!-- Page Title -->
-        <div class="page-header">
+        <div class="page-header" style="grid-column: 1 / -1;">
             <h1 class="page-title">יצירת קשר</h1>
         </div>
         
-        <!-- Contact Form -->
+        <!-- Right Column: Contact Info -->
+        <div class="contact-info-column">
+            <h2 class="contact-info-title">ליצירת קשר:</h2>
+            <?php 
+            $contact_email = get_option('supervisor_contact_email', '');
+            if ($contact_email) {
+                echo '<p class="contact-email"><a href="mailto:' . esc_attr($contact_email) . '">' . esc_html($contact_email) . '</a></p>';
+            } else {
+                echo '<p class="contact-email">לא הוגדרה כתובת אימייל.<br><small>נא להגדיר בהגדרות המערכת.</small></p>';
+            }
+            ?>
+        </div>
+        
+        <!-- Left Column: Contact Form -->
         <div class="contact-form-container">
             <?php 
             if (function_exists('supervisor_display_contact_form')) {

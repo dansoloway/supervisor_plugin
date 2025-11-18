@@ -27,8 +27,8 @@ require_once plugin_dir_path(__FILE__) . 'create-plugin-user-role.php';
 // Include contact form functionality
 require_once plugin_dir_path(__FILE__) . 'contact-form.php';
 
-// Include debug tools
-require_once plugin_dir_path(__FILE__) . 'debug-updates-dates.php';
+// Debug tools have been moved to development/ folder
+// To use debug-updates-dates.php, temporarily move it back or update the path
 
 // Enqueue Google Fonts
 function enqueue_supervisor_google_fonts() {

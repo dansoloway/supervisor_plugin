@@ -16,7 +16,7 @@ function supervisor_admin_menu() {
         $capability, // Capability - allow supervisor editors
         'supervisor-admin', // Menu slug
         'supervisor_admin_dashboard', // Callback function
-        'dashicons-admin-generic', // Icon
+        'dashicons-book-alt', // Icon - more interesting icon for quality control
         25 // Position
     );
 
@@ -146,13 +146,14 @@ function supervisor_updates_page() {
         <p><?php echo esc_html__('ניהול עדכונים במערכת המקפחת.', 'text-domain'); ?></p>
         
         <div class="updates-management">
-            <h2><?php echo esc_html__('עדכונים אחרונים', 'text-domain'); ?></h2>
+            <h2><?php echo esc_html__('כל העדכונים', 'text-domain'); ?></h2>
             <?php
             $updates = new WP_Query([
                 'post_type' => 'qa_updates',
-                'posts_per_page' => 10,
+                'posts_per_page' => -1, // Show all updates
                 'orderby' => 'date',
-                'order' => 'DESC'
+                'order' => 'DESC',
+                'post_status' => 'publish'
             ]);
             
             if ($updates->have_posts()) :
@@ -339,48 +340,105 @@ function supervisor_save_settings() {
 }
 add_action('admin_post_supervisor_save_settings', 'supervisor_save_settings');
 
-// Add RTL styling for supervisor settings page
-function supervisor_settings_page_styles() {
+// Add RTL styling for all supervisor admin pages
+function supervisor_admin_rtl_styles() {
     $screen = get_current_screen();
-    // Check if we're on the supervisor settings page
-    if ($screen && (strpos($screen->id, 'supervisor-settings') !== false || (isset($_GET['page']) && $_GET['page'] === 'supervisor-settings'))) {
+    $page = isset($_GET['page']) ? $_GET['page'] : '';
+    
+    // Check if we're on any supervisor admin page
+    $supervisor_pages = [
+        'supervisor-admin',
+        'supervisor-bibliography',
+        'supervisor-updates',
+        'supervisor-organizations',
+        'supervisor-categories',
+        'supervisor-settings',
+        'supervisor-contact',
+        'debug-updates-dates'
+    ];
+    
+    $is_supervisor_page = false;
+    if ($screen) {
+        foreach ($supervisor_pages as $sp) {
+            if (strpos($screen->id, $sp) !== false) {
+                $is_supervisor_page = true;
+                break;
+            }
+        }
+    }
+    if (!$is_supervisor_page && in_array($page, $supervisor_pages)) {
+        $is_supervisor_page = true;
+    }
+    
+    if ($is_supervisor_page) {
         ?>
         <style>
-        /* RTL styling for Supervisor Settings page */
-        body.wp-admin .wrap.supervisor-settings-page,
-        body.wp-admin .wrap.supervisor-settings-page h1,
-        body.wp-admin .wrap.supervisor-settings-page h2,
-        body.wp-admin .wrap.supervisor-settings-page p {
+        /* RTL styling for all Supervisor admin pages */
+        body.wp-admin .wrap h1,
+        body.wp-admin .wrap h2,
+        body.wp-admin .wrap h3,
+        body.wp-admin .wrap p,
+        body.wp-admin .wrap div {
             direction: rtl !important;
             text-align: right !important;
         }
         
         /* Form elements RTL */
-        body.wp-admin .wrap.supervisor-settings-page form,
-        body.wp-admin .wrap.supervisor-settings-page .form-table,
-        body.wp-admin .wrap.supervisor-settings-page .form-table th,
-        body.wp-admin .wrap.supervisor-settings-page .form-table td,
-        body.wp-admin .wrap.supervisor-settings-page .form-table label,
-        body.wp-admin .wrap.supervisor-settings-page .form-table .description {
+        body.wp-admin .wrap form,
+        body.wp-admin .wrap .form-table,
+        body.wp-admin .wrap .form-table th,
+        body.wp-admin .wrap .form-table td,
+        body.wp-admin .wrap .form-table label,
+        body.wp-admin .wrap .form-table .description {
             direction: rtl !important;
             text-align: right !important;
         }
         
-        /* Input fields - keep email inputs LTR */
-        body.wp-admin .wrap.supervisor-settings-page input[type="email"],
-        body.wp-admin .wrap.supervisor-settings-page input[type="url"] {
+        /* Tables RTL */
+        body.wp-admin .wrap table,
+        body.wp-admin .wrap .wp-list-table,
+        body.wp-admin .wrap .wp-list-table thead th,
+        body.wp-admin .wrap .wp-list-table tbody td {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        
+        /* Lists RTL */
+        body.wp-admin .wrap ul,
+        body.wp-admin .wrap ol,
+        body.wp-admin .wrap li {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        
+        /* Input fields - keep email/url inputs LTR */
+        body.wp-admin .wrap input[type="email"],
+        body.wp-admin .wrap input[type="url"] {
             direction: ltr !important;
             text-align: left !important;
         }
         
-        /* Buttons */
-        body.wp-admin .wrap.supervisor-settings-page .button {
+        /* Buttons - center text */
+        body.wp-admin .wrap .button,
+        body.wp-admin .wrap .button-primary,
+        body.wp-admin .wrap .button-secondary {
             text-align: center !important;
         }
         
-        /* Notices */
-        body.wp-admin .wrap.supervisor-settings-page .notice,
-        body.wp-admin .wrap.supervisor-settings-page .notice p {
+        /* Notices RTL */
+        body.wp-admin .wrap .notice,
+        body.wp-admin .wrap .notice p {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        
+        /* Stats and info boxes */
+        body.wp-admin .wrap .supervisor-dashboard-stats,
+        body.wp-admin .wrap .quick-actions,
+        body.wp-admin .wrap .updates-management,
+        body.wp-admin .wrap .organizations-management,
+        body.wp-admin .wrap .categories-management,
+        body.wp-admin .wrap .contact-form-info {
             direction: rtl !important;
             text-align: right !important;
         }
@@ -388,7 +446,7 @@ function supervisor_settings_page_styles() {
         <?php
     }
 }
-add_action('admin_head', 'supervisor_settings_page_styles');
+add_action('admin_head', 'supervisor_admin_rtl_styles');
 
 // Settings page callback
 function supervisor_settings_page() {

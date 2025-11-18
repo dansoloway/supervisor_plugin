@@ -822,11 +822,6 @@
     background: #fff;
     display: flex;
     flex-direction: column;   /* vertical stack */
-    transition: transform 0.3s ease;
-}
-
-.supervisor-home .activity-card:hover {
-    transform: translateY(-2px);
 }
 
 /* Icon box = rounded square, top-right */
@@ -2519,7 +2514,7 @@ body .supervisor-bib-cats .categories-grid {
 
 .supervisor-bib-cats .category-card:hover {
     background: var(--sv-blue);
-    color: white;
+    color: var(--sv-text);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -2559,7 +2554,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-card:hover .category-title {
-    color: white;
+    color: var(--sv-text);
 }
 
 /* Category Description */
@@ -2575,7 +2570,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-card:hover .category-description {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--sv-text-2);
 }
 
 /* Category Arrow */
@@ -2592,7 +2587,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-card:hover .category-arrow i {
-    color: white;
+    color: #000000;
 }
 
 /* ===== TAXONOMY TERMS WITH ICONS ===== */

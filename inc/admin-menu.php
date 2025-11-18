@@ -339,6 +339,57 @@ function supervisor_save_settings() {
 }
 add_action('admin_post_supervisor_save_settings', 'supervisor_save_settings');
 
+// Add RTL styling for supervisor settings page
+function supervisor_settings_page_styles() {
+    $screen = get_current_screen();
+    // Check if we're on the supervisor settings page
+    if ($screen && (strpos($screen->id, 'supervisor-settings') !== false || (isset($_GET['page']) && $_GET['page'] === 'supervisor-settings'))) {
+        ?>
+        <style>
+        /* RTL styling for Supervisor Settings page */
+        body.wp-admin .wrap.supervisor-settings-page,
+        body.wp-admin .wrap.supervisor-settings-page h1,
+        body.wp-admin .wrap.supervisor-settings-page h2,
+        body.wp-admin .wrap.supervisor-settings-page p {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        
+        /* Form elements RTL */
+        body.wp-admin .wrap.supervisor-settings-page form,
+        body.wp-admin .wrap.supervisor-settings-page .form-table,
+        body.wp-admin .wrap.supervisor-settings-page .form-table th,
+        body.wp-admin .wrap.supervisor-settings-page .form-table td,
+        body.wp-admin .wrap.supervisor-settings-page .form-table label,
+        body.wp-admin .wrap.supervisor-settings-page .form-table .description {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        
+        /* Input fields - keep email inputs LTR */
+        body.wp-admin .wrap.supervisor-settings-page input[type="email"],
+        body.wp-admin .wrap.supervisor-settings-page input[type="url"] {
+            direction: ltr !important;
+            text-align: left !important;
+        }
+        
+        /* Buttons */
+        body.wp-admin .wrap.supervisor-settings-page .button {
+            text-align: center !important;
+        }
+        
+        /* Notices */
+        body.wp-admin .wrap.supervisor-settings-page .notice,
+        body.wp-admin .wrap.supervisor-settings-page .notice p {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        </style>
+        <?php
+    }
+}
+add_action('admin_head', 'supervisor_settings_page_styles');
+
 // Settings page callback
 function supervisor_settings_page() {
     if (!supervisor_can_edit()) {
@@ -352,7 +403,7 @@ function supervisor_settings_page() {
     
     $contact_email = get_option('supervisor_contact_email', '');
     ?>
-    <div class="wrap">
+    <div class="wrap supervisor-settings-page">
         <h1><?php echo esc_html__('הגדרות המקפחת', 'text-domain'); ?></h1>
         <p><?php echo esc_html__('הגדרות כלליות למערכת המקפחת.', 'text-domain'); ?></p>
         

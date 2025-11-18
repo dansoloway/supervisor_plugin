@@ -1479,13 +1479,13 @@
 
 .supervisor-contact-page .supervisor-content-wrapper.supervisor-two-column {
     align-items: start;
+    grid-template-columns: 2fr 9fr; /* Override: narrower contact info, wider form */
 }
 
 /* Contact Info Column (Right side in RTL) */
 .contact-info-column {
     background: var(--sv-card);
     border: 1px solid var(--sv-border);
-    border-radius: 8px;
     padding: 30px;
     direction: rtl;
     text-align: right;
@@ -1521,6 +1521,105 @@
     margin-bottom: 40px;
 }
 
+/* Contact Form Styles */
+.supervisor-contact-form {
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid var(--sv-border);
+    direction: rtl;
+    text-align: right;
+}
+
+.supervisor-contact-form h2 {
+    color: var(--sv-blue);
+    margin-bottom: 15px;
+}
+
+.supervisor-form .form-group {
+    margin-bottom: 20px;
+}
+
+.supervisor-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--sv-text);
+}
+
+.supervisor-form input,
+.supervisor-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    direction: rtl;
+    text-align: right;
+}
+
+.supervisor-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.supervisor-button {
+    background: var(--sv-blue);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.supervisor-button:hover {
+    background: var(--sv-blue-600);
+}
+
+.supervisor-notice {
+    padding: 15px;
+    margin: 20px 0;
+    direction: rtl;
+    text-align: right;
+}
+
+.supervisor-notice-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.supervisor-notice-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.contact-form-info {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.contact-form-info h2,
+.contact-form-info h3 {
+    color: var(--sv-blue);
+}
+
+.contact-form-info code {
+    background: #f1f1f1;
+    padding: 2px 6px;
+    font-family: monospace;
+}
+
+.contact-form-info pre {
+    background: #f8f8f8;
+    padding: 15px;
+    overflow-x: auto;
+    direction: ltr;
+    text-align: left;
+}
+
 /* Responsive: Contact page */
 @media (max-width: 768px) {
     .supervisor-contact-page .page-header {
@@ -1535,7 +1634,6 @@
 .contact-info {
     background: var(--sv-card);
     border: 1px solid var(--sv-border);
-    border-radius: 8px;
     padding: 30px;
     direction: rtl;
     text-align: right;

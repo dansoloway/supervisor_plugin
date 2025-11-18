@@ -1,16 +1,38 @@
 <?php
 /**
  * Debug script to check update dates in database
- * Run this from WP-CLI: wp eval-file debug-updates-dates.php
- * Or access via browser if added to plugin root temporarily
+ * 
+ * Access via: /wp-admin/admin.php?page=debug-updates-dates
+ * Or run from WP-CLI: wp eval-file wp-content/plugins/supervisor_plugin/debug-updates-dates.php
  */
 
-// Make sure WordPress is loaded
+// If accessed directly, try to load WordPress
 if (!defined('ABSPATH')) {
-    require_once('../../../wp-load.php');
+    // Try multiple possible paths
+    $paths = [
+        dirname(dirname(dirname(__FILE__))) . '/wp-load.php',
+        dirname(dirname(dirname(dirname(__FILE__)))) . '/wp-load.php',
+        '../../../wp-load.php',
+    ];
+    
+    $loaded = false;
+    foreach ($paths as $path) {
+        if (file_exists($path)) {
+            require_once($path);
+            $loaded = true;
+            break;
+        }
+    }
+    
+    if (!$loaded) {
+        die('Could not load WordPress. Access via: /wp-admin/admin.php?page=debug-updates-dates');
+    }
 }
 
-echo "<h1>QA Updates Date Debug</h1>\n";
+// Function to display the debug info
+function supervisor_debug_updates_dates() {
+    echo '<div class="wrap">';
+    echo "<h1>QA Updates Date Debug</h1>\n";
 echo "<style>
     table { border-collapse: collapse; width: 100%; margin: 20px 0; }
     th, td { border: 1px solid #ddd; padding: 8px; text-align: right; }
@@ -125,5 +147,25 @@ foreach ($unique_homepage_dates as $date) {
     echo "<li>" . esc_html($date) . ": {$count} update(s)</li>\n";
 }
 echo "</ul>\n";
-?>
+    echo '</div>';
+}
+
+// Add admin menu item for debug page
+function supervisor_add_debug_menu() {
+    add_submenu_page(
+        'supervisor-admin',
+        'Debug: Update Dates',
+        'Debug Dates',
+        'manage_options', // Only admins can see this
+        'debug-updates-dates',
+        'supervisor_debug_updates_dates'
+    );
+}
+add_action('admin_menu', 'supervisor_add_debug_menu', 99);
+
+// If accessed directly and WordPress is loaded, show output
+if (defined('ABSPATH') && !is_admin()) {
+    // Direct access - show output
+    supervisor_debug_updates_dates();
+}
 

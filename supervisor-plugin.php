@@ -27,6 +27,9 @@ require_once plugin_dir_path(__FILE__) . 'create-plugin-user-role.php';
 // Include contact form functionality
 require_once plugin_dir_path(__FILE__) . 'contact-form.php';
 
+// Include debug tools
+require_once plugin_dir_path(__FILE__) . 'debug-updates-dates.php';
+
 // Enqueue Google Fonts
 function enqueue_supervisor_google_fonts() {
     // Add preconnect links for better performance

@@ -841,7 +841,7 @@
     min-height: 80px;
     border-radius: 12px;
     margin-bottom: 16px;
-    padding: 16px;
+    padding: 16px 0;
     gap: 8px;
     position: relative;
 }

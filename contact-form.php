@@ -152,7 +152,7 @@ function supervisor_add_contact_form_admin() {
         'supervisor-admin',
         'יצירת קשר',
         'יצירת קשר',
-        'manage_options',
+        'read', // Capability - visible to all, but editing restricted
         'supervisor-contact',
         'supervisor_contact_admin_page'
     );
@@ -161,6 +161,11 @@ add_action('admin_menu', 'supervisor_add_contact_form_admin');
 
 // Contact form admin page
 function supervisor_contact_admin_page() {
+    // Check permissions - only admins and supervisor editors can edit
+    if (!current_user_can('manage_options') && !current_user_can('edit_qa_updates') && !current_user_can('supervisor_editor')) {
+        wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
+    }
+    
     $config = supervisor_contact_form_config();
     ?>
     <div class="wrap">

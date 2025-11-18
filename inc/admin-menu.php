@@ -6,11 +6,14 @@
 
 // Main admin menu function
 function supervisor_admin_menu() {
+    // Use 'read' capability so menu shows for all users, then check permissions in callbacks
+    $capability = 'read';
+    
     // Add main menu page
     add_menu_page(
         __('המקפחת - ניהול מערכת', 'text-domain'), // Page title
         __('המקפחת', 'text-domain'), // Menu title
-        'edit_qa_updates', // Capability - allow supervisor editors
+        $capability, // Capability - allow supervisor editors
         'supervisor-admin', // Menu slug
         'supervisor_admin_dashboard', // Callback function
         'dashicons-admin-generic', // Icon
@@ -22,7 +25,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('דשבורד', 'text-domain'), // Page title
         __('דשבורד', 'text-domain'), // Menu title
-        'edit_qa_updates', // Capability - allow supervisor editors
+        $capability, // Capability - allow supervisor editors
         'supervisor-admin', // Menu slug (same as parent for first submenu)
         'supervisor_admin_dashboard' // Callback function
     );
@@ -31,7 +34,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול ביבליוגרפיה', 'text-domain'), // Page title
         __('ניהול ביבליוגרפיה', 'text-domain'), // Menu title
-        'edit_qa_updates', // Capability - allow supervisor editors
+        $capability, // Capability - visible to all, but editing restricted
         'supervisor-bibliography', // Menu slug
         'supervisor_bibliography_page' // Callback function
     );
@@ -40,7 +43,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול עדכונים', 'text-domain'), // Page title
         __('ניהול עדכונים', 'text-domain'), // Menu title
-        'edit_qa_updates', // Capability - allow supervisor editors
+        $capability, // Capability - visible to all, but editing restricted
         'supervisor-updates', // Menu slug
         'supervisor_updates_page' // Callback function
     );
@@ -49,7 +52,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול ארגונים', 'text-domain'), // Page title
         __('ניהול ארגונים', 'text-domain'), // Menu title
-        'edit_qa_updates', // Capability - allow supervisor editors
+        $capability, // Capability - visible to all, but editing restricted
         'supervisor-organizations', // Menu slug
         'supervisor_organizations_page' // Callback function
     );
@@ -58,7 +61,7 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('ניהול קטגוריות', 'text-domain'), // Page title
         __('ניהול קטגוריות', 'text-domain'), // Menu title
-        'edit_qa_updates', // Capability - allow supervisor editors
+        $capability, // Capability - visible to all, but editing restricted
         'supervisor-categories', // Menu slug
         'supervisor_categories_page' // Callback function
     );
@@ -67,15 +70,28 @@ function supervisor_admin_menu() {
         'supervisor-admin', // Parent slug
         __('הגדרות', 'text-domain'), // Page title
         __('הגדרות', 'text-domain'), // Menu title
-        'edit_qa_updates', // Capability - allow supervisor editors
+        $capability, // Capability - visible to all, but editing restricted
         'supervisor-settings', // Menu slug
         'supervisor_settings_page' // Callback function
     );
 }
-add_action('admin_menu', 'supervisor_admin_menu');
+add_action('admin_menu', 'supervisor_admin_menu', 20); // Higher priority to ensure capabilities are set
+
+// Helper function to check if user can edit supervisor content
+function supervisor_can_edit() {
+    return current_user_can('manage_options') || current_user_can('edit_qa_updates') || current_user_can('supervisor_editor');
+}
 
 // Dashboard page callback
 function supervisor_admin_dashboard() {
+    // Check permissions - show read-only view for non-editors
+    if (!supervisor_can_edit()) {
+        echo '<div class="wrap">';
+        echo '<h1>' . esc_html__('המקפחת - דשבורד', 'text-domain') . '</h1>';
+        echo '<div class="notice notice-info"><p>' . esc_html__('אין לך הרשאות לערוך תוכן. אתה יכול לצפות בלבד.', 'text-domain') . '</p></div>';
+        echo '</div>';
+        return;
+    }
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('המקפחת - דשבורד', 'text-domain'); ?></h1>
@@ -112,12 +128,18 @@ function supervisor_admin_dashboard() {
 
 // Bibliography management page callback
 function supervisor_bibliography_page() {
+    if (!supervisor_can_edit()) {
+        wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
+    }
     // Use the existing bibliography admin page function
     qa_bib_render_admin_page();
 }
 
 // Updates management page callback
 function supervisor_updates_page() {
+    if (!supervisor_can_edit()) {
+        wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
+    }
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('ניהול עדכונים', 'text-domain'); ?></h1>
@@ -174,6 +196,9 @@ function supervisor_updates_page() {
 
 // Organizations management page callback
 function supervisor_organizations_page() {
+    if (!supervisor_can_edit()) {
+        wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
+    }
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('ניהול ארגונים', 'text-domain'); ?></h1>
@@ -233,6 +258,9 @@ function supervisor_organizations_page() {
 
 // Categories management page callback
 function supervisor_categories_page() {
+    if (!supervisor_can_edit()) {
+        wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
+    }
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('ניהול קטגוריות', 'text-domain'); ?></h1>
@@ -292,6 +320,9 @@ function supervisor_categories_page() {
 
 // Settings page callback
 function supervisor_settings_page() {
+    if (!supervisor_can_edit()) {
+        wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
+    }
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('הגדרות המקפחת', 'text-domain'); ?></h1>

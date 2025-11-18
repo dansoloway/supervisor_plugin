@@ -112,27 +112,89 @@ function update_supervisor_editor_capabilities() {
 }
 add_action('init', 'update_supervisor_editor_capabilities');
 
-// One-time fix for existing supervisor_editor users
+// Force update existing supervisor_editor users with ALL capabilities
 function fix_supervisor_editor_permissions() {
-    // Check if we've already run this fix
-    if (get_option('supervisor_editor_permissions_fixed')) {
-        return;
-    }
-    
     // Get all users with supervisor_editor role
     $users = get_users(array('role' => 'supervisor_editor'));
     
     foreach ($users as $user) {
-        // Add the missing capabilities directly to the user
+        // Add ALL the capabilities they need
+        $user->add_cap('edit_posts');
+        $user->add_cap('edit_published_posts');
+        $user->add_cap('publish_posts');
+        $user->add_cap('delete_posts');
+        $user->add_cap('delete_published_posts');
+        $user->add_cap('upload_files');
+        $user->add_cap('unfiltered_html');
+        
+        // Plugin custom post types
+        $user->add_cap('edit_qa_updates');
+        $user->add_cap('edit_others_qa_updates');
+        $user->add_cap('edit_published_qa_updates');
+        $user->add_cap('publish_qa_updates');
+        $user->add_cap('delete_qa_updates');
+        $user->add_cap('delete_others_qa_updates');
+        $user->add_cap('delete_published_qa_updates');
+        $user->add_cap('read_private_qa_updates');
+        $user->add_cap('edit_private_qa_updates');
+        $user->add_cap('delete_private_qa_updates');
         $user->add_cap('read_qa_updates');
+        
+        $user->add_cap('edit_qa_orgs');
+        $user->add_cap('edit_others_qa_orgs');
+        $user->add_cap('edit_published_qa_orgs');
+        $user->add_cap('publish_qa_orgs');
+        $user->add_cap('delete_qa_orgs');
+        $user->add_cap('delete_others_qa_orgs');
+        $user->add_cap('delete_published_qa_orgs');
+        $user->add_cap('read_private_qa_orgs');
+        $user->add_cap('edit_private_qa_orgs');
+        $user->add_cap('delete_private_qa_orgs');
         $user->add_cap('read_qa_orgs');
+        
+        $user->add_cap('edit_qa_bib_items');
+        $user->add_cap('edit_others_qa_bib_items');
+        $user->add_cap('edit_published_qa_bib_items');
+        $user->add_cap('publish_qa_bib_items');
+        $user->add_cap('delete_qa_bib_items');
+        $user->add_cap('delete_others_qa_bib_items');
+        $user->add_cap('delete_published_qa_bib_items');
+        $user->add_cap('read_private_qa_bib_items');
+        $user->add_cap('edit_private_qa_bib_items');
+        $user->add_cap('delete_private_qa_bib_items');
         $user->add_cap('read_qa_bib_items');
+        
+        // Taxonomy capabilities
+        $user->add_cap('manage_qa_tags');
+        $user->add_cap('edit_qa_tags');
+        $user->add_cap('delete_qa_tags');
+        $user->add_cap('assign_qa_tags');
+        $user->add_cap('manage_qa_themes');
+        $user->add_cap('edit_qa_themes');
+        $user->add_cap('delete_qa_themes');
+        $user->add_cap('assign_qa_themes');
     }
-    
-    // Mark as completed
-    update_option('supervisor_editor_permissions_fixed', true);
 }
-add_action('admin_init', 'fix_supervisor_editor_permissions');
+add_action('admin_init', 'fix_supervisor_editor_permissions', 1); // Run early, before menu registration
+
+// Debug function to check user capabilities
+function debug_supervisor_editor_capabilities() {
+    if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
+        $user = wp_get_current_user();
+        $caps = $user->get_role_caps();
+        
+        echo '<div class="notice notice-info">';
+        echo '<p><strong>Debug - Supervisor Editor Capabilities:</strong></p>';
+        echo '<p>User ID: ' . $user->ID . '</p>';
+        echo '<p>User Roles: ' . implode(', ', $user->roles) . '</p>';
+        echo '<p>Can edit QA Updates: ' . (current_user_can('edit_qa_updates') ? 'YES' : 'NO') . '</p>';
+        echo '<p>Can read QA Updates: ' . (current_user_can('read_qa_updates') ? 'YES' : 'NO') . '</p>';
+        echo '<p>Can edit posts: ' . (current_user_can('edit_posts') ? 'YES' : 'NO') . '</p>';
+        echo '<p>Can publish posts: ' . (current_user_can('publish_posts') ? 'YES' : 'NO') . '</p>';
+        echo '</div>';
+    }
+}
+add_action('admin_notices', 'debug_supervisor_editor_capabilities');
 
 // Remove unwanted admin menu items for supervisor_editor role - SIMPLIFIED
 function restrict_supervisor_editor_menu() {

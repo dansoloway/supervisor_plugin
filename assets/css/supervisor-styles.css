@@ -837,11 +837,9 @@
     justify-content: center;
     align-items: center;
     width: auto;              /* allow width to expand for title */
-    min-width: 110px;
     height: auto;
     min-height: 80px;
     border-radius: 12px;
-    background: #F4F5F5;      /* light gray background for the whole container */
     margin-bottom: 16px;
     padding: 16px;
     gap: 8px;
@@ -1563,7 +1561,7 @@
 /* SVG image optimizations - with stronger constraints */
 .knowledge-map-image[src*=".svg"] {
     width: 100% !important;
-    max-width: 60% !important;
+    max-width: 70% !important;
     height: auto !important;
     display: block !important;
     margin: 0px auto;

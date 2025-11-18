@@ -74,7 +74,12 @@ $updates_query = new WP_Query($args);
                         $link = get_field('qa_updates_link');
 
                         $raw_date = get_field('qa_updates_date'); // ACF date field
-                        $formatted_date = $raw_date ? date_i18n('F Y', strtotime($raw_date)) : '';
+                        if ($raw_date) {
+                            $formatted_date = date_i18n('F Y', strtotime($raw_date));
+                        } else {
+                            // Fallback to post date if ACF field is empty (consistent with homepage)
+                            $formatted_date = get_the_date('F Y');
+                        }
 
                         echo '<div class="qa-update-item">';
 

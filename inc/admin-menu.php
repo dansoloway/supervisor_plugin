@@ -69,8 +69,8 @@ function supervisor_admin_menu() {
 
     add_submenu_page(
         'supervisor-admin', // Parent slug
-        __('ניהול קטגוריות', 'text-domain'), // Page title
-        __('ניהול קטגוריות', 'text-domain'), // Menu title
+        __('ניהול נושאי מפתח', 'text-domain'), // Page title
+        __('ניהול נושאי מפתח', 'text-domain'), // Menu title
         $capability, // Capability - visible to all, but editing restricted
         'supervisor-categories', // Menu slug
         'supervisor_categories_page' // Callback function
@@ -221,7 +221,7 @@ function supervisor_admin_dashboard() {
                     <li><strong><?php echo esc_html__('פריטי ביבליוגרפיה:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_bib_items')->publish; ?></li>
                     <li><strong><?php echo esc_html__('עדכונים:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_updates')->publish; ?></li>
                     <li><strong><?php echo esc_html__('ארגונים:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_orgs')->publish; ?></li>
-                    <li><strong><?php echo esc_html__('קטגוריות:', 'text-domain'); ?></strong> <?php echo count(get_terms(['taxonomy' => 'qa_tags', 'hide_empty' => false])); ?></li>
+                    <li><strong><?php echo esc_html__('נושאי מפתח:', 'text-domain'); ?></strong> <?php echo count(get_terms(['taxonomy' => 'qa_tags', 'hide_empty' => false])); ?></li>
                 </ul>
             </div>
             
@@ -407,17 +407,17 @@ function supervisor_categories_page() {
     }
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html__('ניהול קטגוריות', 'text-domain'); ?></h1>
-        <p><?php echo esc_html__('ניהול קטגוריות ונושאי מפתח במערכת המקפחת.', 'text-domain'); ?></p>
+        <h1><?php echo esc_html__('ניהול נושאי מפתח', 'text-domain'); ?></h1>
+        <p><?php echo esc_html__('ניהול נושאי מפתח במערכת המקפחת.', 'text-domain'); ?></p>
         
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
             <div class="notice notice-success is-dismissible">
-                <p><?php echo esc_html__('הנושא מפתח נמחק בהצלחה.', 'text-domain'); ?></p>
+                <p><?php echo esc_html__('נושא המפתח נמחק בהצלחה.', 'text-domain'); ?></p>
             </div>
         <?php endif; ?>
         
         <div class="categories-management">
-            <h2><?php echo esc_html__('נושאי מפתח (qa_tags)', 'text-domain'); ?></h2>
+            <h2><?php echo esc_html__('נושאי מפתח', 'text-domain'); ?></h2>
             <?php
             $tags = get_terms([
                 'taxonomy' => 'qa_tags',
@@ -427,7 +427,7 @@ function supervisor_categories_page() {
             if (!empty($tags) && !is_wp_error($tags)) :
                 echo '<table class="wp-list-table widefat fixed striped">';
                 echo '<thead><tr>';
-                echo '<th>' . esc_html__('שם הקטגוריה', 'text-domain') . '</th>';
+                echo '<th>' . esc_html__('שם נושא המפתח', 'text-domain') . '</th>';
                 echo '<th>' . esc_html__('איקון', 'text-domain') . '</th>';
                 echo '<th>' . esc_html__('מספר פריטים', 'text-domain') . '</th>';
                 echo '<th>' . esc_html__('פעולות', 'text-domain') . '</th>';
@@ -460,13 +460,13 @@ function supervisor_categories_page() {
                 
                 echo '</tbody></table>';
             else :
-                echo '<p>' . esc_html__('לא נמצאו קטגוריות.', 'text-domain') . '</p>';
+                echo '<p>' . esc_html__('לא נמצאו נושאי מפתח.', 'text-domain') . '</p>';
             endif;
             ?>
             
             <p>
                 <a href="<?php echo admin_url('edit-tags.php?taxonomy=qa_tags'); ?>" class="button button-primary">
-                    <?php echo esc_html__('ניהול קטגוריות', 'text-domain'); ?>
+                    <?php echo esc_html__('ניהול נושאי מפתח', 'text-domain'); ?>
                 </a>
             </p>
         </div>

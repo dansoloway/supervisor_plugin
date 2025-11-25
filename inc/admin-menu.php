@@ -21,6 +21,16 @@ function supervisor_admin_menu() {
     );
 
     // Add submenu pages
+    // First item: Visit homepage (links to frontend)
+    add_submenu_page(
+        'supervisor-admin', // Parent slug
+        __('ביקור באתר', 'text-domain'), // Page title
+        __('ביקור באתר', 'text-domain'), // Menu title
+        $capability, // Capability
+        'supervisor-visit-homepage', // Menu slug
+        'supervisor_visit_homepage_redirect' // Callback function
+    );
+    
     add_submenu_page(
         'supervisor-admin', // Parent slug
         __('דשבורד', 'text-domain'), // Page title
@@ -77,9 +87,71 @@ function supervisor_admin_menu() {
 }
 add_action('admin_menu', 'supervisor_admin_menu', 20); // Higher priority to ensure capabilities are set
 
+// Modify homepage menu item to link directly to frontend and appear first
+function supervisor_modify_homepage_menu_link() {
+    global $submenu;
+    
+    if (!isset($submenu['supervisor-admin'])) {
+        return;
+    }
+    
+    $homepage_id = defined('SUPERVISOR_HOME') ? SUPERVISOR_HOME : null;
+    if (!$homepage_id) {
+        return;
+    }
+    
+    $homepage_url = get_permalink($homepage_id);
+    if (!$homepage_url) {
+        return;
+    }
+    
+    // Find homepage menu item and modify its URL to point directly to frontend
+    foreach ($submenu['supervisor-admin'] as $key => $item) {
+        if (isset($item[2]) && $item[2] === 'supervisor-visit-homepage') {
+            // Replace callback URL with direct frontend URL
+            $submenu['supervisor-admin'][$key][2] = $homepage_url;
+            
+            // Move to beginning of array to appear first
+            $homepage_item = $submenu['supervisor-admin'][$key];
+            unset($submenu['supervisor-admin'][$key]);
+            array_unshift($submenu['supervisor-admin'], $homepage_item);
+            break;
+        }
+    }
+    
+    // Add JavaScript to make homepage link open in new tab
+    add_action('admin_footer', function() use ($homepage_url) {
+        ?>
+        <script>
+        jQuery(document).ready(function($) {
+            var homepageUrl = '<?php echo esc_js($homepage_url); ?>';
+            // Make homepage menu link open in new tab
+            $('a[href="' + homepageUrl + '"]').attr('target', '_blank');
+        });
+        </script>
+        <?php
+    });
+}
+add_action('admin_menu', 'supervisor_modify_homepage_menu_link', 25); // Run after menu is created
+
 // Helper function to check if user can edit supervisor content
 function supervisor_can_edit() {
     return current_user_can('manage_options') || current_user_can('edit_qa_updates') || current_user_can('supervisor_editor');
+}
+
+// Visit homepage redirect callback (fallback if URL modification doesn't work)
+function supervisor_visit_homepage_redirect() {
+    $homepage_id = defined('SUPERVISOR_HOME') ? SUPERVISOR_HOME : null;
+    if ($homepage_id) {
+        $homepage_url = get_permalink($homepage_id);
+        if ($homepage_url) {
+            wp_redirect($homepage_url);
+            exit;
+        }
+    }
+    // Fallback: redirect to site home
+    wp_redirect(home_url());
+    exit;
 }
 
 // Dashboard page callback

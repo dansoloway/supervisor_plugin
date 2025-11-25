@@ -94,21 +94,33 @@ function supervisor_remove_duplicate_menu_item() {
         return;
     }
     
-    // First, find and remove the auto-generated duplicate "המקפחת" item
-    // WordPress auto-creates a submenu item with the same name and slug as parent
+    // WordPress auto-creates a submenu item with the same slug and title as parent menu ("המקפחת")
+    // We need to remove this duplicate, keeping only our explicit "דשבורד" item
+    $items_to_remove = [];
+    
     foreach ($submenu['supervisor-admin'] as $key => $item) {
+        // Check if this item has the parent slug 'supervisor-admin'
         if (isset($item[2]) && $item[2] === 'supervisor-admin') {
-            // Check if this is the duplicate (has parent title) vs our dashboard item (has "דשבורד" title)
             if (isset($item[0])) {
                 $title = strip_tags($item[0]);
-                // Remove if it matches the parent menu title "המקפחת"
-                // Keep if it's "דשבורד" or contains "דשבורד"
-                if (strpos($title, 'המקפחת') !== false && strpos($title, 'דשבורד') === false) {
-                    unset($submenu['supervisor-admin'][$key]);
-                    break; // Only remove the first duplicate found
+                // Remove ALL items with parent slug that are NOT "דשבורד"
+                // This removes the auto-generated duplicate while keeping our dashboard
+                if (strpos($title, 'דשבורד') === false) {
+                    // This is a duplicate (auto-generated) - mark for removal
+                    $items_to_remove[] = $key;
                 }
             }
         }
+    }
+    
+    // Remove duplicates (remove in reverse order to maintain array keys)
+    foreach (array_reverse($items_to_remove) as $key) {
+        unset($submenu['supervisor-admin'][$key]);
+    }
+    
+    // Re-index array after removal to fix any gaps (WordPress expects numeric keys)
+    if (!empty($items_to_remove)) {
+        $submenu['supervisor-admin'] = array_values($submenu['supervisor-admin']);
     }
     
     // Now handle homepage menu item modification and reordering
@@ -636,8 +648,8 @@ function supervisor_settings_page() {
         <form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
             <?php wp_nonce_field('supervisor_settings'); ?>
             <input type="hidden" name="action" value="supervisor_save_settings">
-            
-            <div class="supervisor-settings">
+        
+        <div class="supervisor-settings">
                 <h2><?php echo esc_html__('יצירת קשר', 'text-domain'); ?></h2>
                 <table class="form-table">
                     <tr>
@@ -656,32 +668,32 @@ function supervisor_settings_page() {
                     </tr>
                 </table>
                 
-                <h2><?php echo esc_html__('מידע על המערכת', 'text-domain'); ?></h2>
-                <table class="form-table">
-                    <tr>
-                        <th scope="row"><?php echo esc_html__('גרסת המערכת', 'text-domain'); ?></th>
-                        <td>1.0</td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php echo esc_html__('סוגי תוכן', 'text-domain'); ?></th>
-                        <td>qa_updates, qa_orgs, qa_bib_items</td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php echo esc_html__('טקסונומיות', 'text-domain'); ?></th>
-                        <td>qa_tags, qa_themes</td>
-                    </tr>
-                </table>
+            <h2><?php echo esc_html__('מידע על המערכת', 'text-domain'); ?></h2>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php echo esc_html__('גרסת המערכת', 'text-domain'); ?></th>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php echo esc_html__('סוגי תוכן', 'text-domain'); ?></th>
+                    <td>qa_updates, qa_orgs, qa_bib_items</td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php echo esc_html__('טקסונומיות', 'text-domain'); ?></th>
+                    <td>qa_tags, qa_themes</td>
+                </tr>
+            </table>
                 
                 <?php submit_button(__('שמור הגדרות', 'text-domain'), 'primary', 'supervisor_settings_submit'); ?>
             </div>
         </form>
-        
-        <h2><?php echo esc_html__('פעולות מערכת', 'text-domain'); ?></h2>
-        <p>
-            <a href="<?php echo admin_url('admin.php?page=supervisor-admin'); ?>" class="button button-primary">
-                <?php echo esc_html__('חזור לדשבורד', 'text-domain'); ?>
-            </a>
-        </p>
+            
+            <h2><?php echo esc_html__('פעולות מערכת', 'text-domain'); ?></h2>
+            <p>
+                <a href="<?php echo admin_url('admin.php?page=supervisor-admin'); ?>" class="button button-primary">
+                    <?php echo esc_html__('חזור לדשבורד', 'text-domain'); ?>
+                </a>
+            </p>
     </div>
     <?php
 }
@@ -705,3 +717,4 @@ function remove_old_bibliography_menu() {
     remove_submenu_page('supervisor-admin', 'supervisor-category-manager');
 }
 add_action('admin_menu', 'remove_old_bibliography_menu', 999); // High priority to run after the old menu is added
+

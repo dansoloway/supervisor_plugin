@@ -245,15 +245,16 @@ function supervisor_unregister_old_qa_bib_cats() {
     if (isset($wp_taxonomies['qa_bib_cats'])) {
         unset($wp_taxonomies['qa_bib_cats']);
     }
-    
-    // Remove meta boxes for qa_bib_cats
-    remove_meta_box('qa_bib_catsdiv', ['qa_bib_items', 'qa_updates', 'qa_orgs'], 'side');
-    remove_meta_box('tagsdiv-qa_bib_cats', ['qa_bib_items', 'qa_updates', 'qa_orgs'], 'side');
 }
 add_action('init', 'supervisor_unregister_old_qa_bib_cats', 999); // Run late to ensure it removes after any registration
 
-// Remove qa_bib_cats meta boxes from admin
+// Remove qa_bib_cats meta boxes from admin (must be in admin area - remove_meta_box only works in admin)
 function supervisor_remove_qa_bib_cats_metaboxes() {
+    // Only run in admin area where remove_meta_box is available
+    if (!is_admin()) {
+        return;
+    }
+    
     $post_types = ['qa_bib_items', 'qa_updates', 'qa_orgs'];
     foreach ($post_types as $post_type) {
         remove_meta_box('qa_bib_catsdiv', $post_type, 'side');
@@ -262,6 +263,7 @@ function supervisor_remove_qa_bib_cats_metaboxes() {
         remove_meta_box('tagsdiv-qa_bib_cats', $post_type, 'normal');
     }
 }
+// Hook to admin-specific hooks only (remove_meta_box is not available on 'init')
 add_action('admin_menu', 'supervisor_remove_qa_bib_cats_metaboxes');
 add_action('add_meta_boxes', 'supervisor_remove_qa_bib_cats_metaboxes', 999);
 

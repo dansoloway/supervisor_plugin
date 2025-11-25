@@ -237,6 +237,33 @@ function supervisor_qa_tags_metabox_js() {
 add_action('admin_head', 'supervisor_qa_tags_metabox_js');
 
 // qa_bib_cats taxonomy removed - functionality moved to qa_tags
+// Explicitly unregister qa_bib_cats if it still exists (legacy cleanup)
+function supervisor_unregister_old_qa_bib_cats() {
+    global $wp_taxonomies;
+    
+    // Remove qa_bib_cats taxonomy if it exists
+    if (isset($wp_taxonomies['qa_bib_cats'])) {
+        unset($wp_taxonomies['qa_bib_cats']);
+    }
+    
+    // Remove meta boxes for qa_bib_cats
+    remove_meta_box('qa_bib_catsdiv', ['qa_bib_items', 'qa_updates', 'qa_orgs'], 'side');
+    remove_meta_box('tagsdiv-qa_bib_cats', ['qa_bib_items', 'qa_updates', 'qa_orgs'], 'side');
+}
+add_action('init', 'supervisor_unregister_old_qa_bib_cats', 999); // Run late to ensure it removes after any registration
+
+// Remove qa_bib_cats meta boxes from admin
+function supervisor_remove_qa_bib_cats_metaboxes() {
+    $post_types = ['qa_bib_items', 'qa_updates', 'qa_orgs'];
+    foreach ($post_types as $post_type) {
+        remove_meta_box('qa_bib_catsdiv', $post_type, 'side');
+        remove_meta_box('tagsdiv-qa_bib_cats', $post_type, 'side');
+        remove_meta_box('qa_bib_catsdiv', $post_type, 'normal');
+        remove_meta_box('tagsdiv-qa_bib_cats', $post_type, 'normal');
+    }
+}
+add_action('admin_menu', 'supervisor_remove_qa_bib_cats_metaboxes');
+add_action('add_meta_boxes', 'supervisor_remove_qa_bib_cats_metaboxes', 999);
 
 // ===== FONT AWESOME ICON SUPPORT FOR TAXONOMY TERMS =====
 

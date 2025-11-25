@@ -89,7 +89,7 @@ file_put_contents($log_file, date('Y-m-d H:i:s') . " - Raw POST Data: " . print_
 $search_text = sanitize_text_field($_POST['search_text'] ?? '');
 $qa_themes = $_POST['qa_themes'] ?? [];
 $qa_tags = $_POST['qa_tags'] ?? [];
-$post_types = $_POST['post_types'] ?? ['qa_orgs', 'qa_updates', 'qa_bibs']; // Default to all types
+$post_types = $_POST['post_types'] ?? ['qa_orgs', 'qa_updates', 'qa_bib_items']; // Default to all types
 
 // Log raw input before processing
 file_put_contents($log_file, date('Y-m-d H:i:s') . " - Raw qa_themes before processing: " . print_r($qa_themes, true) . "\n", FILE_APPEND);

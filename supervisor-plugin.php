@@ -70,7 +70,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-activities.php', // Add activities template
     ];
 
-    $singles = ['qa_bibs', 'qa_orgs', 'qa_updates', 'qa_bib_items'];
+    $singles = ['qa_orgs', 'qa_updates', 'qa_bib_items']; // Removed old 'qa_bibs' post type
     $post_type_archives = ['qa_updates', 'qa_bib_items'];
     $is_taxonomy = is_tax('qa_tags'); // Check if it's a taxonomy archive
 
@@ -226,9 +226,8 @@ function supervisor_load_templates($template) {
         return plugin_dir_path(__FILE__) . 'templates/single-qa_updates.php';
     }
 
-    if (is_singular('qa_bibs') && file_exists(plugin_dir_path(__FILE__) . 'templates/single-qa_bibs.php')) {
-        return plugin_dir_path(__FILE__) . 'templates/single-qa_bibs.php';
-    }
+    // Old qa_bibs post type removed - using qa_bib_items instead
+    // Template check removed as qa_bibs no longer exists
 
  
 

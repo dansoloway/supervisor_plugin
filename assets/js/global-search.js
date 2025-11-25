@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
                 search_text: searchText,
                 qa_themes: selectedThemes,
                 qa_tags: selectedTags,
-                post_types: ['qa_orgs', 'qa_updates', 'qa_bibs'], // Search all post types
+                post_types: ['qa_orgs', 'qa_updates', 'qa_bib_items'], // Search all post types
             };
 
             console.log('Global search data being sent:', searchData);
@@ -106,7 +106,7 @@ jQuery(document).ready(function ($) {
         const labels = {
             'qa_orgs': 'ארגונים',
             'qa_updates': 'עדכונים',
-            'qa_bibs': 'ביבליוגרפיה'
+            'qa_bib_items': 'ביבליוגרפיה'
         };
         return labels[postType] || postType;
     }

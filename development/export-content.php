@@ -372,44 +372,80 @@ function supervisor_get_attachment_data($attachment_id) {
     ];
 }
 
-// Admin page callback
+// Handle export download before any output (must run early)
+function supervisor_handle_export_download() {
+    // Check if this is the export download request
+    if (!isset($_GET['page']) || $_GET['page'] !== 'supervisor-export-content') {
+        return;
+    }
+    
+    if (!isset($_GET['download_export']) || !isset($_GET['_wpnonce'])) {
+        return;
+    }
+    
+    // Verify nonce
+    if (!wp_verify_nonce($_GET['_wpnonce'], 'supervisor_export_content')) {
+        wp_die(__('Security check failed.', 'text-domain'));
+    }
+    
+    // Check permissions
+    if (!current_user_can('manage_options')) {
+        wp_die(__('You do not have permission to access this page.', 'text-domain'));
+    }
+    
+    // Increase memory and execution time for large exports
+    @ini_set('memory_limit', '512M');
+    @set_time_limit(600);
+    
+    // Clean any output buffers
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    $export_data = supervisor_export_content();
+    
+    // Add debug info if no posts found
+    if (empty($export_data['posts'])) {
+        // Try to get post counts for debugging
+        $debug_info = [];
+        $post_types = ['qa_updates', 'qa_orgs', 'qa_bib_items'];
+        foreach ($post_types as $pt) {
+            $count = wp_count_posts($pt);
+            $debug_info[$pt] = (array) $count;
+        }
+        $export_data['debug'] = [
+            'post_counts' => $debug_info,
+            'post_types_registered' => array_map('post_type_exists', $post_types),
+            'taxonomies_registered' => array_map('taxonomy_exists', ['qa_tags', 'qa_themes'])
+        ];
+    }
+    
+    $filename = 'supervisor-export-' . date('Y-m-d-His') . '.json';
+    $json_output = json_encode($export_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    
+    // Set headers for file download
+    nocache_headers(); // Prevent caching
+    header('Content-Type: application/json; charset=utf-8');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    header('Content-Length: ' . strlen($json_output));
+    header('Pragma: no-cache');
+    header('Expires: 0');
+    
+    // Output JSON and exit
+    echo $json_output;
+    exit;
+}
+add_action('admin_init', 'supervisor_handle_export_download', 1); // Run early, before any output
+
+// Admin page callback (only renders the page, not the download)
 function supervisor_export_content_page() {
     if (!current_user_can('manage_options')) {
         wp_die(__('You do not have permission to access this page.', 'text-domain'));
     }
     
-    // Handle export download
-    if (isset($_GET['download_export']) && wp_verify_nonce($_GET['_wpnonce'], 'supervisor_export_content')) {
-        // Increase memory and execution time for large exports
-        @ini_set('memory_limit', '512M');
-        @set_time_limit(600);
-        
-        $export_data = supervisor_export_content();
-        
-        // Add debug info if no posts found
-        if (empty($export_data['posts'])) {
-            // Try to get post counts for debugging
-            $debug_info = [];
-            $post_types = ['qa_updates', 'qa_orgs', 'qa_bib_items'];
-            foreach ($post_types as $pt) {
-                $count = wp_count_posts($pt);
-                $debug_info[$pt] = (array) $count;
-            }
-            $export_data['debug'] = [
-                'post_counts' => $debug_info,
-                'post_types_registered' => array_map('post_type_exists', $post_types),
-                'taxonomies_registered' => array_map('taxonomy_exists', ['qa_tags', 'qa_themes'])
-            ];
-        }
-        
-        $filename = 'supervisor-export-' . date('Y-m-d-His') . '.json';
-        
-        header('Content-Type: application/json');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Content-Length: ' . strlen(json_encode($export_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)));
-        
-        echo json_encode($export_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        exit;
+    // Don't render if this is a download request (should be handled above)
+    if (isset($_GET['download_export'])) {
+        return;
     }
     
     ?>

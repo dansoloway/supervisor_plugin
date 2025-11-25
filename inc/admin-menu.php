@@ -87,52 +87,65 @@ function supervisor_admin_menu() {
 }
 add_action('admin_menu', 'supervisor_admin_menu', 20); // Higher priority to ensure capabilities are set
 
-// Modify homepage menu item to link directly to frontend and appear first
-function supervisor_modify_homepage_menu_link() {
+// Remove duplicate submenu item and reorder menu items
+function supervisor_remove_duplicate_menu_item() {
     global $submenu;
-    
     if (!isset($submenu['supervisor-admin'])) {
         return;
     }
     
-    $homepage_id = defined('SUPERVISOR_HOME') ? SUPERVISOR_HOME : null;
-    if (!$homepage_id) {
-        return;
-    }
-    
-    $homepage_url = get_permalink($homepage_id);
-    if (!$homepage_url) {
-        return;
-    }
-    
-    // Find homepage menu item and modify its URL to point directly to frontend
+    // First, find and remove the auto-generated duplicate "המקפחת" item
+    // WordPress auto-creates a submenu item with the same name and slug as parent
     foreach ($submenu['supervisor-admin'] as $key => $item) {
-        if (isset($item[2]) && $item[2] === 'supervisor-visit-homepage') {
-            // Replace callback URL with direct frontend URL
-            $submenu['supervisor-admin'][$key][2] = $homepage_url;
-            
-            // Move to beginning of array to appear first
-            $homepage_item = $submenu['supervisor-admin'][$key];
-            unset($submenu['supervisor-admin'][$key]);
-            array_unshift($submenu['supervisor-admin'], $homepage_item);
-            break;
+        if (isset($item[2]) && $item[2] === 'supervisor-admin') {
+            // Check if this is the duplicate (has parent title) vs our dashboard item (has "דשבורד" title)
+            if (isset($item[0])) {
+                $title = strip_tags($item[0]);
+                // Remove if it matches the parent menu title "המקפחת"
+                // Keep if it's "דשבורד" or contains "דשבורד"
+                if (strpos($title, 'המקפחת') !== false && strpos($title, 'דשבורד') === false) {
+                    unset($submenu['supervisor-admin'][$key]);
+                    break; // Only remove the first duplicate found
+                }
+            }
         }
     }
     
-    // Add JavaScript to make homepage link open in new tab
-    add_action('admin_footer', function() use ($homepage_url) {
-        ?>
-        <script>
-        jQuery(document).ready(function($) {
-            var homepageUrl = '<?php echo esc_js($homepage_url); ?>';
-            // Make homepage menu link open in new tab
-            $('a[href="' + homepageUrl + '"]').attr('target', '_blank');
-        });
-        </script>
-        <?php
-    });
+    // Now handle homepage menu item modification and reordering
+    $homepage_id = defined('SUPERVISOR_HOME') ? SUPERVISOR_HOME : null;
+    if ($homepage_id) {
+        $homepage_url = get_permalink($homepage_id);
+        if ($homepage_url) {
+            // Find homepage menu item and modify its URL
+            foreach ($submenu['supervisor-admin'] as $key => $item) {
+                if (isset($item[2]) && $item[2] === 'supervisor-visit-homepage') {
+                    // Replace callback URL with direct frontend URL
+                    $submenu['supervisor-admin'][$key][2] = $homepage_url;
+                    
+                    // Move to beginning of array to appear first
+                    $homepage_item = $submenu['supervisor-admin'][$key];
+                    unset($submenu['supervisor-admin'][$key]);
+                    array_unshift($submenu['supervisor-admin'], $homepage_item);
+                    break;
+                }
+            }
+            
+            // Add JavaScript to make homepage link open in new tab
+            add_action('admin_footer', function() use ($homepage_url) {
+                ?>
+                <script>
+                jQuery(document).ready(function($) {
+                    var homepageUrl = '<?php echo esc_js($homepage_url); ?>';
+                    // Make homepage menu link open in new tab
+                    $('a[href="' + homepageUrl + '"]').attr('target', '_blank');
+                });
+                </script>
+                <?php
+            });
+        }
+    }
 }
-add_action('admin_menu', 'supervisor_modify_homepage_menu_link', 25); // Run after menu is created
+add_action('admin_menu', 'supervisor_remove_duplicate_menu_item', 25); // Run after menu is created
 
 // Helper function to check if user can edit supervisor content
 function supervisor_can_edit() {

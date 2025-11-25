@@ -23,7 +23,9 @@ $taxonomies_to_export = ['qa_tags', 'qa_themes'];
  * Export all plugin content to JSON
  */
 function supervisor_export_content() {
-    global $post_types_to_export, $taxonomies_to_export;
+    // Define post types and taxonomies to export
+    $post_types_to_export = ['qa_updates', 'qa_orgs', 'qa_bib_items'];
+    $taxonomies_to_export = ['qa_tags', 'qa_themes'];
     
     $export_data = [
         'version' => '1.0',
@@ -36,13 +38,58 @@ function supervisor_export_content() {
     
     // Export posts for each custom post type
     foreach ($post_types_to_export as $post_type) {
+        // Check if post type exists
+        if (!post_type_exists($post_type)) {
+            error_log("Export: Post type '$post_type' does not exist");
+            continue;
+        }
+        
+        // Try multiple approaches to get posts
+        $posts = [];
+        
+        // Approach 1: Use get_posts with 'any' status
         $posts = get_posts([
             'post_type' => $post_type,
             'posts_per_page' => -1,
-            'post_status' => 'publish',
+            'post_status' => 'any',
             'orderby' => 'date',
-            'order' => 'ASC'
+            'order' => 'ASC',
+            'suppress_filters' => false // Don't suppress filters
         ]);
+        
+        // Approach 2: If empty, try with explicit statuses
+        if (empty($posts)) {
+            $all_statuses = get_post_stati();
+            $posts = get_posts([
+                'post_type' => $post_type,
+                'posts_per_page' => -1,
+                'post_status' => $all_statuses,
+                'orderby' => 'date',
+                'order' => 'ASC'
+            ]);
+        }
+        
+        // Approach 3: If still empty, use direct database query as last resort
+        if (empty($posts)) {
+            global $wpdb;
+            $post_ids = $wpdb->get_col($wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s",
+                $post_type
+            ));
+            
+            if (!empty($post_ids)) {
+                $posts = array_map('get_post', $post_ids);
+                $posts = array_filter($posts); // Remove any nulls
+            }
+        }
+        
+        // Debug: log how many posts found
+        error_log("Export: Found " . count($posts) . " posts of type '$post_type'");
+        
+        if (empty($posts)) {
+            error_log("Export: No posts found for '$post_type'. Post type exists: " . (post_type_exists($post_type) ? 'yes' : 'no'));
+            continue; // Skip to next post type if no posts found
+        }
         
         foreach ($posts as $post) {
             $post_data = [
@@ -120,6 +167,10 @@ function supervisor_export_content() {
             
             $export_data['posts'][] = $post_data;
         }
+        
+        // Clean up after processing this post type
+        wp_reset_postdata();
+        unset($posts); // Free memory
     }
     
     // Export taxonomies with all terms
@@ -329,7 +380,27 @@ function supervisor_export_content_page() {
     
     // Handle export download
     if (isset($_GET['download_export']) && wp_verify_nonce($_GET['_wpnonce'], 'supervisor_export_content')) {
+        // Increase memory and execution time for large exports
+        @ini_set('memory_limit', '512M');
+        @set_time_limit(600);
+        
         $export_data = supervisor_export_content();
+        
+        // Add debug info if no posts found
+        if (empty($export_data['posts'])) {
+            // Try to get post counts for debugging
+            $debug_info = [];
+            $post_types = ['qa_updates', 'qa_orgs', 'qa_bib_items'];
+            foreach ($post_types as $pt) {
+                $count = wp_count_posts($pt);
+                $debug_info[$pt] = (array) $count;
+            }
+            $export_data['debug'] = [
+                'post_counts' => $debug_info,
+                'post_types_registered' => array_map('post_type_exists', $post_types),
+                'taxonomies_registered' => array_map('taxonomy_exists', ['qa_tags', 'qa_themes'])
+            ];
+        }
         
         $filename = 'supervisor-export-' . date('Y-m-d-His') . '.json';
         
@@ -355,6 +426,26 @@ function supervisor_export_content_page() {
                 <li><?php echo esc_html__('כל שדות ACF (כולל תמונות וקבצים)', 'text-domain'); ?></li>
                 <li><?php echo esc_html__('כל קבצי המדיה (תמונות, קבצים מצורפים)', 'text-domain'); ?></li>
                 <li><?php echo esc_html__('מטא-דאטה של טקסונומיות (איקונים וכו\')', 'text-domain'); ?></li>
+            </ul>
+            
+            <h2><?php echo esc_html__('תצוגה מקדימה:', 'text-domain'); ?></h2>
+            <ul>
+                <?php
+                $post_types = ['qa_updates', 'qa_orgs', 'qa_bib_items'];
+                foreach ($post_types as $post_type) {
+                    $count = wp_count_posts($post_type);
+                    $total = isset($count->publish) ? intval($count->publish) : 0;
+                    $total += isset($count->private) ? intval($count->private) : 0;
+                    $total += isset($count->draft) ? intval($count->draft) : 0;
+                    $total += isset($count->pending) ? intval($count->pending) : 0;
+                    echo '<li><strong>' . esc_html($post_type) . ':</strong> ' . esc_html($total) . ' ' . esc_html__('פוסטים', 'text-domain') . '</li>';
+                }
+                
+                $tags = get_terms(['taxonomy' => 'qa_tags', 'hide_empty' => false]);
+                $themes = get_terms(['taxonomy' => 'qa_themes', 'hide_empty' => false]);
+                echo '<li><strong>qa_tags:</strong> ' . (is_array($tags) ? count($tags) : 0) . ' ' . esc_html__('מונחים', 'text-domain') . '</li>';
+                echo '<li><strong>qa_themes:</strong> ' . (is_array($themes) ? count($themes) : 0) . ' ' . esc_html__('מונחים', 'text-domain') . '</li>';
+                ?>
             </ul>
         </div>
         

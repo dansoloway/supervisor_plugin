@@ -113,9 +113,26 @@ function register_additional_taxonomies() {
         'show_ui' => true, // Shows taxonomy UI in the admin
         'show_in_rest' => true, // Enable for block editor and REST API
         'rewrite' => ['slug' => 'qa-tags'], // Rewrite slug
+        'meta_box_cb' => 'supervisor_qa_tags_meta_box', // Use custom metabox with correct title
     ]);
     }
 add_action('init', 'register_additional_taxonomies');
+
+// Custom metabox callback for qa_tags to ensure correct title "נושאי מפתח"
+function supervisor_qa_tags_meta_box($post, $box) {
+    $taxonomy = 'qa_tags';
+    $tax = get_taxonomy($taxonomy);
+    
+    // Ensure box title is set correctly
+    if (!isset($box['args'])) {
+        $box['args'] = ['taxonomy' => $taxonomy];
+    }
+    $box['args']['taxonomy'] = $taxonomy;
+    $box['title'] = __('נושאי מפתח', 'text-domain');
+    
+    // Call the default categories meta box but with our custom title
+    post_categories_meta_box($post, $box);
+}
 
 // Change taxonomy metabox title in post editor to show "נושאי מפתח" instead of "קטגוריות"
 function supervisor_change_qa_tags_metabox_title() {
@@ -145,40 +162,73 @@ function supervisor_qa_tags_metabox_js() {
         <script>
         jQuery(document).ready(function($) {
             function updateMetaboxTitle() {
-                // Find and replace "קטגוריות" or "Categories" with "נושאי מפתח"
-                $('h2, .hndle, .postbox-header h2').each(function() {
-                    var $el = $(this);
-                    var text = $el.text();
-                    // Check if this is the qa_tags metabox
-                    if ($el.closest('#qa_tagsdiv, #tagsdiv-qa_tags, [id*="qa_tags"]').length > 0) {
-                        if (text.includes('קטגוריות') || text.includes('Categories') || text.includes('Category')) {
-                            $el.text('נושאי מפתח');
+                // Classic Editor: Update metabox titles
+                $('#qa_tagsdiv, #tagsdiv-qa_tags').each(function() {
+                    var $metabox = $(this);
+                    // Update the h2/handle title
+                    $metabox.find('h2.hndle, .hndle h2, .postbox-header h2').each(function() {
+                        var $title = $(this);
+                        var text = $title.text().trim();
+                        if (text.includes('קטגוריות') || text.includes('Categories') || text.includes('Category') || text === '') {
+                            $title.text('נושאי מפתח');
                         }
+                    });
+                    
+                    // Update any span inside hndle
+                    $metabox.find('.hndle span').each(function() {
+                        var text = $(this).text().trim();
+                        if (text.includes('קטגוריות') || text.includes('Categories')) {
+                            $(this).text('נושאי מפתח');
+                        }
+                    });
+                });
+                
+                // Block Editor: Update sidebar panel titles
+                $('[data-wp-block]').each(function() {
+                    var $panel = $(this);
+                    if ($panel.find('[data-name="qa_tags"]').length > 0 || $panel.attr('data-name') === 'qa_tags') {
+                        $panel.find('.components-panel__header h2, .components-panel__body-title').each(function() {
+                            var text = $(this).text().trim();
+                            if (text.includes('קטגוריות') || text.includes('Categories')) {
+                                $(this).text('נושאי מפתח');
+                            }
+                        });
                     }
                 });
                 
-                // Also check label elements
-                $('label[for*="qa_tags"], label[for*="taxonomy-qa_tags"]').each(function() {
-                    var text = $(this).text();
+                // Also update labels
+                $('label[for*="qa_tags"], label[for*="taxonomy-qa_tags"], .components-base-control__label').each(function() {
+                    var $label = $(this);
+                    var text = $label.text().trim();
                     if (text.includes('קטגוריות') || text.includes('Categories')) {
-                        $(this).text(text.replace(/קטגוריות|Categories/g, 'נושאי מפתח'));
+                        $label.text(text.replace(/קטגוריות|Categories/g, 'נושאי מפתח'));
                     }
                 });
             }
             
-            // Run immediately
+            // Run multiple times to catch dynamically loaded content
             updateMetaboxTitle();
+            setTimeout(updateMetaboxTitle, 300);
+            setTimeout(updateMetaboxTitle, 1000);
+            setTimeout(updateMetaboxTitle, 2000);
             
-            // Also run after a delay for dynamically loaded content
-            setTimeout(updateMetaboxTitle, 500);
-            
-            // For block editor, observe DOM changes
+            // For block editor, observe DOM changes more aggressively
             if (typeof MutationObserver !== 'undefined') {
                 var observer = new MutationObserver(function() {
                     updateMetaboxTitle();
                 });
-                observer.observe(document.body, { childList: true, subtree: true });
+                observer.observe(document.body, { 
+                    childList: true, 
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
             }
+            
+            // Also listen for WordPress editor events
+            $(document).on('DOMNodeInserted', function() {
+                updateMetaboxTitle();
+            });
         });
         </script>
         <?php

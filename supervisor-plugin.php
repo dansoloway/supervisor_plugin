@@ -27,8 +27,13 @@ require_once plugin_dir_path(__FILE__) . 'create-plugin-user-role.php';
 // Include contact form functionality
 require_once plugin_dir_path(__FILE__) . 'contact-form.php';
 
-// Debug tools have been moved to development/ folder
-// To use debug-updates-dates.php, temporarily move it back or update the path
+// Include development tools (only in admin area)
+if (is_admin()) {
+    // Content management tools
+    require_once plugin_dir_path(__FILE__) . 'development/cleanup-test-content.php';
+    require_once plugin_dir_path(__FILE__) . 'development/export-content.php';
+    require_once plugin_dir_path(__FILE__) . 'development/import-content.php';
+}
 
 // Enqueue Google Fonts
 function enqueue_supervisor_google_fonts() {

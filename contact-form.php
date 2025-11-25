@@ -157,7 +157,7 @@ function supervisor_add_contact_form_admin() {
         'supervisor_contact_admin_page'
     );
 }
-add_action('admin_menu', 'supervisor_add_contact_form_admin');
+add_action('admin_menu', 'supervisor_add_contact_form_admin', 30); // Run after main menu (priority 20)
 
 // Contact form admin page
 function supervisor_contact_admin_page() {

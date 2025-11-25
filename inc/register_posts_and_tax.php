@@ -117,6 +117,75 @@ function register_additional_taxonomies() {
     }
 add_action('init', 'register_additional_taxonomies');
 
+// Change taxonomy metabox title in post editor to show "נושאי מפתח" instead of "קטגוריות"
+function supervisor_change_qa_tags_metabox_title() {
+    global $wp_taxonomies;
+    
+    // Modify the taxonomy labels after registration to ensure metabox shows correct title
+    if (isset($wp_taxonomies['qa_tags'])) {
+        // Update labels to ensure proper display in editor
+        $wp_taxonomies['qa_tags']->labels->name = __('נושאי מפתח', 'text-domain');
+        $wp_taxonomies['qa_tags']->labels->singular_name = __('נושא מפתח', 'text-domain');
+        $wp_taxonomies['qa_tags']->labels->menu_name = __('נושאי מפתח', 'text-domain');
+    }
+}
+add_action('admin_init', 'supervisor_change_qa_tags_metabox_title', 1);
+
+// Override metabox title using JavaScript for both classic and block editor
+function supervisor_qa_tags_metabox_js() {
+    $screen = get_current_screen();
+    if (!$screen) {
+        return;
+    }
+    
+    // Only on post edit screens for relevant post types
+    $relevant_types = ['qa_bib_items', 'qa_updates', 'qa_orgs'];
+    if (in_array($screen->post_type, $relevant_types) && ($screen->base === 'post' || $screen->base === 'edit')) {
+        ?>
+        <script>
+        jQuery(document).ready(function($) {
+            function updateMetaboxTitle() {
+                // Find and replace "קטגוריות" or "Categories" with "נושאי מפתח"
+                $('h2, .hndle, .postbox-header h2').each(function() {
+                    var $el = $(this);
+                    var text = $el.text();
+                    // Check if this is the qa_tags metabox
+                    if ($el.closest('#qa_tagsdiv, #tagsdiv-qa_tags, [id*="qa_tags"]').length > 0) {
+                        if (text.includes('קטגוריות') || text.includes('Categories') || text.includes('Category')) {
+                            $el.text('נושאי מפתח');
+                        }
+                    }
+                });
+                
+                // Also check label elements
+                $('label[for*="qa_tags"], label[for*="taxonomy-qa_tags"]').each(function() {
+                    var text = $(this).text();
+                    if (text.includes('קטגוריות') || text.includes('Categories')) {
+                        $(this).text(text.replace(/קטגוריות|Categories/g, 'נושאי מפתח'));
+                    }
+                });
+            }
+            
+            // Run immediately
+            updateMetaboxTitle();
+            
+            // Also run after a delay for dynamically loaded content
+            setTimeout(updateMetaboxTitle, 500);
+            
+            // For block editor, observe DOM changes
+            if (typeof MutationObserver !== 'undefined') {
+                var observer = new MutationObserver(function() {
+                    updateMetaboxTitle();
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+            }
+        });
+        </script>
+        <?php
+    }
+}
+add_action('admin_head', 'supervisor_qa_tags_metabox_js');
+
 // qa_bib_cats taxonomy removed - functionality moved to qa_tags
 
 // ===== FONT AWESOME ICON SUPPORT FOR TAXONOMY TERMS =====

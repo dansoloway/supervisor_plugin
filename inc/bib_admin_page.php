@@ -60,6 +60,15 @@ function qa_bib_render_admin_page() {
     <div class="wrap" style="direction:rtl; text-align:right">
         <h1><?php esc_html_e('מנהל ביבליוגרפיה', 'text-domain'); ?></h1>
         
+        <p>
+            <a href="<?php echo admin_url('post-new.php?post_type=qa_bib_items'); ?>" class="button button-primary">
+                <?php esc_html_e('הוסף פריט ביבליוגרפי חדש', 'text-domain'); ?>
+            </a>
+            <a href="<?php echo admin_url('edit.php?post_type=qa_bib_items'); ?>" class="button button-secondary">
+                <?php esc_html_e('צפה בכל הפריטים', 'text-domain'); ?>
+            </a>
+        </p>
+        
         <form method="post" action="">
             <?php wp_nonce_field('qa_bib_admin_save', 'qa_bib_nonce'); ?>
 

@@ -139,6 +139,52 @@ function supervisor_can_edit() {
     return current_user_can('manage_options') || current_user_can('edit_qa_updates') || current_user_can('supervisor_editor');
 }
 
+// Handle delete actions for management pages
+function supervisor_handle_delete_actions() {
+    if (!supervisor_can_edit()) {
+        return;
+    }
+    
+    // Handle post deletion (updates, organizations, bibliography items)
+    if (isset($_GET['supervisor_delete_post']) && isset($_GET['_wpnonce'])) {
+        $post_id = intval($_GET['supervisor_delete_post']);
+        
+        if (wp_verify_nonce($_GET['_wpnonce'], 'supervisor_delete_post_' . $post_id)) {
+            $post = get_post($post_id);
+            if ($post && in_array($post->post_type, ['qa_updates', 'qa_orgs', 'qa_bib_items'])) {
+                wp_delete_post($post_id, true); // Force delete
+                
+                // Redirect to appropriate page
+                $redirect_url = admin_url('admin.php?page=supervisor-updates');
+                if ($post->post_type === 'qa_orgs') {
+                    $redirect_url = admin_url('admin.php?page=supervisor-organizations');
+                } elseif ($post->post_type === 'qa_bib_items') {
+                    $redirect_url = admin_url('admin.php?page=supervisor-bibliography');
+                }
+                
+                wp_redirect(add_query_arg('deleted', '1', $redirect_url));
+                exit;
+            }
+        }
+    }
+    
+    // Handle term deletion (key topics/categories)
+    if (isset($_GET['supervisor_delete_term']) && isset($_GET['_wpnonce'])) {
+        $term_id = intval($_GET['supervisor_delete_term']);
+        
+        if (wp_verify_nonce($_GET['_wpnonce'], 'supervisor_delete_term_' . $term_id)) {
+            $term = get_term($term_id, 'qa_tags');
+            if ($term && !is_wp_error($term)) {
+                wp_delete_term($term_id, 'qa_tags');
+                
+                wp_redirect(add_query_arg('deleted', '1', admin_url('admin.php?page=supervisor-categories')));
+                exit;
+            }
+        }
+    }
+}
+add_action('admin_init', 'supervisor_handle_delete_actions');
+
 // Visit homepage redirect callback (fallback if URL modification doesn't work)
 function supervisor_visit_homepage_redirect() {
     $homepage_id = defined('SUPERVISOR_HOME') ? SUPERVISOR_HOME : null;
@@ -217,6 +263,12 @@ function supervisor_updates_page() {
         <h1><?php echo esc_html__('ניהול עדכונים', 'text-domain'); ?></h1>
         <p><?php echo esc_html__('ניהול עדכונים במערכת המקפחת.', 'text-domain'); ?></p>
         
+        <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php echo esc_html__('העדכון נמחק בהצלחה.', 'text-domain'); ?></p>
+            </div>
+        <?php endif; ?>
+        
         <div class="updates-management">
             <h2><?php echo esc_html__('כל העדכונים', 'text-domain'); ?></h2>
             <?php
@@ -242,7 +294,13 @@ function supervisor_updates_page() {
                     echo '<td>' . esc_html(get_the_date()) . '</td>';
                     echo '<td>';
                     echo '<a href="' . admin_url('post.php?post=' . get_the_ID() . '&action=edit') . '" class="button button-small">' . esc_html__('ערוך', 'text-domain') . '</a> ';
-                    echo '<a href="' . get_permalink() . '" class="button button-small" target="_blank">' . esc_html__('צפה', 'text-domain') . '</a>';
+                    echo '<a href="' . get_permalink() . '" class="button button-small" target="_blank">' . esc_html__('צפה', 'text-domain') . '</a> ';
+                    $delete_url = wp_nonce_url(
+                        add_query_arg(['supervisor_delete_post' => get_the_ID()], admin_url('admin.php?page=supervisor-updates')),
+                        'supervisor_delete_post_' . get_the_ID(),
+                        '_wpnonce'
+                    );
+                    echo '<a href="' . esc_url($delete_url) . '" class="button button-small button-link-delete" onclick="return confirm(\'' . esc_js(__('האם אתה בטוח שברצונך למחוק את העדכון הזה? פעולה זו לא הפיכה!', 'text-domain')) . '\');">' . esc_html__('מחק', 'text-domain') . '</a>';
                     echo '</td>';
                     echo '</tr>';
                 endwhile;
@@ -277,14 +335,21 @@ function supervisor_organizations_page() {
         <h1><?php echo esc_html__('ניהול ארגונים', 'text-domain'); ?></h1>
         <p><?php echo esc_html__('ניהול ארגוני פיקוח במערכת המקפחת.', 'text-domain'); ?></p>
         
+        <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php echo esc_html__('הארגון נמחק בהצלחה.', 'text-domain'); ?></p>
+            </div>
+        <?php endif; ?>
+        
         <div class="organizations-management">
-            <h2><?php echo esc_html__('ארגונים אחרונים', 'text-domain'); ?></h2>
+            <h2><?php echo esc_html__('כל הארגונים', 'text-domain'); ?></h2>
             <?php
             $organizations = new WP_Query([
                 'post_type' => 'qa_orgs',
-                'posts_per_page' => 10,
+                'posts_per_page' => -1, // Show all
                 'orderby' => 'title',
-                'order' => 'ASC'
+                'order' => 'ASC',
+                'post_status' => 'publish'
             ]);
             
             if ($organizations->have_posts()) :
@@ -304,7 +369,13 @@ function supervisor_organizations_page() {
                     echo '<td>' . esc_html(get_the_date()) . '</td>';
                     echo '<td>';
                     echo '<a href="' . admin_url('post.php?post=' . get_the_ID() . '&action=edit') . '" class="button button-small">' . esc_html__('ערוך', 'text-domain') . '</a> ';
-                    echo '<a href="' . get_permalink() . '" class="button button-small" target="_blank">' . esc_html__('צפה', 'text-domain') . '</a>';
+                    echo '<a href="' . get_permalink() . '" class="button button-small" target="_blank">' . esc_html__('צפה', 'text-domain') . '</a> ';
+                    $delete_url = wp_nonce_url(
+                        add_query_arg(['supervisor_delete_post' => get_the_ID()], admin_url('admin.php?page=supervisor-organizations')),
+                        'supervisor_delete_post_' . get_the_ID(),
+                        '_wpnonce'
+                    );
+                    echo '<a href="' . esc_url($delete_url) . '" class="button button-small button-link-delete" onclick="return confirm(\'' . esc_js(__('האם אתה בטוח שברצונך למחוק את הארגון הזה? פעולה זו לא הפיכה!', 'text-domain')) . '\');">' . esc_html__('מחק', 'text-domain') . '</a>';
                     echo '</td>';
                     echo '</tr>';
                 endwhile;
@@ -339,6 +410,12 @@ function supervisor_categories_page() {
         <h1><?php echo esc_html__('ניהול קטגוריות', 'text-domain'); ?></h1>
         <p><?php echo esc_html__('ניהול קטגוריות ונושאי מפתח במערכת המקפחת.', 'text-domain'); ?></p>
         
+        <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php echo esc_html__('הנושא מפתח נמחק בהצלחה.', 'text-domain'); ?></p>
+            </div>
+        <?php endif; ?>
+        
         <div class="categories-management">
             <h2><?php echo esc_html__('נושאי מפתח (qa_tags)', 'text-domain'); ?></h2>
             <?php
@@ -370,7 +447,13 @@ function supervisor_categories_page() {
                     echo '</td>';
                     echo '<td>' . esc_html($count) . '</td>';
                     echo '<td>';
-                    echo '<a href="' . admin_url('edit-tags.php?action=edit&taxonomy=qa_tags&tag_ID=' . $tag->term_id) . '" class="button button-small">' . esc_html__('ערוך', 'text-domain') . '</a>';
+                    echo '<a href="' . admin_url('edit-tags.php?action=edit&taxonomy=qa_tags&tag_ID=' . $tag->term_id) . '" class="button button-small">' . esc_html__('ערוך', 'text-domain') . '</a> ';
+                    $delete_url = wp_nonce_url(
+                        add_query_arg(['supervisor_delete_term' => $tag->term_id], admin_url('admin.php?page=supervisor-categories')),
+                        'supervisor_delete_term_' . $tag->term_id,
+                        '_wpnonce'
+                    );
+                    echo '<a href="' . esc_url($delete_url) . '" class="button button-small button-link-delete" onclick="return confirm(\'' . esc_js(__('האם אתה בטוח שברצונך למחוק את נושא המפתח הזה? פעולה זו לא הפיכה!', 'text-domain')) . '\');">' . esc_html__('מחק', 'text-domain') . '</a>';
                     echo '</td>';
                     echo '</tr>';
                 endforeach;

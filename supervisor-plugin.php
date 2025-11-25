@@ -27,13 +27,14 @@ require_once plugin_dir_path(__FILE__) . 'create-plugin-user-role.php';
 // Include contact form functionality
 require_once plugin_dir_path(__FILE__) . 'contact-form.php';
 
-// Include development tools (only in admin area)
-if (is_admin()) {
-    // Content management tools
+// Include development tools (after WordPress is loaded)
+function supervisor_load_development_tools() {
+    // Content management tools - safe to load, they only register admin menu hooks
     require_once plugin_dir_path(__FILE__) . 'development/cleanup-test-content.php';
     require_once plugin_dir_path(__FILE__) . 'development/export-content.php';
     require_once plugin_dir_path(__FILE__) . 'development/import-content.php';
 }
+add_action('init', 'supervisor_load_development_tools', 1); // Load early so admin_menu hooks work
 
 // Enqueue Google Fonts
 function enqueue_supervisor_google_fonts() {

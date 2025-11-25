@@ -11,14 +11,9 @@
  * WARNING: This will permanently delete posts. Make sure you have a backup!
  */
 
-// Security check
+// Security check - only load if WordPress is loaded
 if (!defined('ABSPATH')) {
     require_once('../../../wp-load.php');
-}
-
-// Only allow admins to run this
-if (!current_user_can('manage_options')) {
-    wp_die(__('You do not have permission to access this page.', 'text-domain'));
 }
 
 // Custom post types to clean

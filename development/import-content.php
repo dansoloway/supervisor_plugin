@@ -392,7 +392,7 @@ function supervisor_import_content_page() {
     
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html__('ייבוא תוכן המקפחת', 'text-domain'); ?></h1>
+        <h1><?php echo esc_html__('ייבוא תוכן המפקחת', 'text-domain'); ?></h1>
         
         <?php if ($upload_error): ?>
             <div class="notice notice-error">

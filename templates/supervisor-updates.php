@@ -99,7 +99,7 @@ $updates_query = new WP_Query($args);
                         $is_highlighted = ($highlight_id && $post_id == $highlight_id);
                         $display_style = $is_highlighted ? 'display: block;' : 'display: none;';
                         echo '<div class="accordion-content" id="accordion-' . esc_attr($post_id) . '" style="' . $display_style . '">';
-                            echo '<p>' . get_the_content() . '</p>';
+                            echo '<div class="update-content-text">' . apply_filters('the_content', get_the_content()) . '</div>';
 
                             echo '<div class="taxonomy-boxes">';
                             

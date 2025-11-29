@@ -20,12 +20,12 @@ function add_supervisor_editor_role() {
             'upload_files' => true,
             'unfiltered_html' => true,
             
-            // Restrict pages
-            'edit_pages' => false,
-            'edit_others_pages' => false,
-            'edit_published_pages' => false,
-            'publish_pages' => false,
-            'delete_pages' => false,
+            // Allow page editing (will be restricted to supervisor pages only via map_meta_cap)
+            'edit_pages' => true,
+            'edit_others_pages' => true,
+            'edit_published_pages' => true,
+            'publish_pages' => true,
+            'delete_pages' => false, // Don't allow deleting pages
             'delete_others_pages' => false,
             'delete_published_pages' => false,
             
@@ -76,6 +76,10 @@ function add_supervisor_editor_role() {
             'edit_qa_themes' => true,
             'delete_qa_themes' => true,
             'assign_qa_themes' => true,
+            
+            // WordPress sometimes requires manage_categories for taxonomy editing UI
+            // We'll map this to our custom taxonomy capabilities via map_meta_cap filter
+            'manage_categories' => true,
             
             // Media capabilities - ALLOW (for images in posts)
             'upload_files' => true,
@@ -173,46 +177,149 @@ function fix_supervisor_editor_permissions() {
         $user->add_cap('edit_qa_themes');
         $user->add_cap('delete_qa_themes');
         $user->add_cap('assign_qa_themes');
+        $user->add_cap('manage_categories'); // Needed for taxonomy edit UI
+        
+        // Add page editing capabilities (will be restricted to supervisor pages only)
+        $user->add_cap('edit_pages');
+        $user->add_cap('edit_others_pages');
+        $user->add_cap('edit_published_pages');
+        $user->add_cap('publish_pages');
     }
 }
 add_action('admin_init', 'fix_supervisor_editor_permissions', 1); // Run early, before menu registration
 
-// Debug function to check user capabilities
-function debug_supervisor_editor_capabilities() {
-    if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
-        $user = wp_get_current_user();
-        $caps = $user->get_role_caps();
-        
-        echo '<div class="notice notice-info">';
-        echo '<p><strong>Debug - Supervisor Editor Capabilities:</strong></p>';
-        echo '<p>User ID: ' . $user->ID . '</p>';
-        echo '<p>User Roles: ' . implode(', ', $user->roles) . '</p>';
-        echo '<p>Can edit QA Updates: ' . (current_user_can('edit_qa_updates') ? 'YES' : 'NO') . '</p>';
-        echo '<p>Can read QA Updates: ' . (current_user_can('read_qa_updates') ? 'YES' : 'NO') . '</p>';
-        echo '<p>Can edit posts: ' . (current_user_can('edit_posts') ? 'YES' : 'NO') . '</p>';
-        echo '<p>Can publish posts: ' . (current_user_can('publish_posts') ? 'YES' : 'NO') . '</p>';
-        echo '</div>';
+// Map manage_categories capability to our custom taxonomy capabilities
+// This ensures supervisor_editor can edit custom taxonomies but not regular WordPress categories
+function supervisor_map_taxonomy_capabilities($caps, $cap, $user_id, $args) {
+    // Only apply to supervisor_editor users
+    $user = get_userdata($user_id);
+    if (!$user || !in_array('supervisor_editor', $user->roles) || current_user_can('manage_options')) {
+        return $caps;
     }
+    
+    // If checking manage_categories for our custom taxonomies, map to taxonomy-specific capabilities
+    if ($cap === 'manage_categories' && isset($args[0])) {
+        $taxonomy = get_taxonomy($args[0]);
+        if ($taxonomy) {
+            // For our custom taxonomies, check the taxonomy-specific capability
+            if (in_array($taxonomy->name, ['qa_tags', 'qa_themes'])) {
+                $caps = [$taxonomy->cap->manage_terms];
+            } else {
+                // For regular WordPress categories, deny access
+                $caps = ['do_not_allow'];
+            }
+        }
+    }
+    
+    return $caps;
 }
-add_action('admin_notices', 'debug_supervisor_editor_capabilities');
+add_filter('map_meta_cap', 'supervisor_map_taxonomy_capabilities', 10, 4);
+
+// Get list of supervisor page IDs that supervisor_editor can access
+function supervisor_get_allowed_page_ids() {
+    $allowed_pages = [];
+    
+    // Get all supervisor page IDs from config
+    $supervisor_pages = [
+        'SUPERVISOR_HOME',
+        'SUPERVISOR_BIB_CATS',
+        'SUPERVISOR_UPDATES',
+        'SUPERVISOR_ORGS',
+        'SUPERVISOR_ABOUT',
+        'SUPERVISOR_CONTACT',
+        'SUPERVISOR_INTRO_TEXT',
+        'SUPERVISOR_ACTIVITIES',
+        'SUPERVISOR_KNOWLEDGE_MAP',
+    ];
+    
+    foreach ($supervisor_pages as $constant) {
+        if (defined($constant)) {
+            $page_id = constant($constant);
+            if ($page_id) {
+                $allowed_pages[] = intval($page_id);
+            }
+        }
+    }
+    
+    return $allowed_pages;
+}
+
+// Map page editing capabilities to only allow access to supervisor pages
+function supervisor_map_page_capabilities($caps, $cap, $user_id, $args) {
+    // Only apply to supervisor_editor users
+    $user = get_userdata($user_id);
+    if (!$user || !in_array('supervisor_editor', $user->roles) || current_user_can('manage_options')) {
+        return $caps;
+    }
+    
+    // Check if this is a page-related capability
+    $page_caps = ['edit_page', 'delete_page', 'publish_page'];
+    if (!in_array($cap, $page_caps) && !in_array($cap, ['edit_pages', 'edit_others_pages', 'edit_published_pages', 'publish_pages', 'delete_pages', 'delete_others_pages', 'delete_published_pages'])) {
+        return $caps;
+    }
+    
+    // Get the page ID from args
+    $page_id = isset($args[0]) ? intval($args[0]) : 0;
+    
+    if ($page_id > 0) {
+        $allowed_pages = supervisor_get_allowed_page_ids();
+        
+        // If this is one of the allowed supervisor pages, grant the capability
+        if (in_array($page_id, $allowed_pages)) {
+            // Remove 'do_not_allow' and allow the action
+            $caps = array_diff($caps, ['do_not_allow']);
+            // For edit_page, we need edit_posts capability
+            if ($cap === 'edit_page') {
+                $caps[] = 'edit_posts';
+            }
+        } else {
+            // Not an allowed page - deny access
+            $caps = ['do_not_allow'];
+        }
+    }
+    
+    return $caps;
+}
+add_filter('map_meta_cap', 'supervisor_map_page_capabilities', 10, 4);
 
 // Remove unwanted admin menu items for supervisor_editor role - SIMPLIFIED
 function restrict_supervisor_editor_menu() {
     if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
+        // Keep Pages menu visible (but will be restricted to supervisor pages only)
         // Remove only the most dangerous/restricted items
-        remove_menu_page('edit.php?post_type=page'); // Pages
         remove_menu_page('themes.php'); // Appearance
         remove_menu_page('plugins.php'); // Plugins
         remove_menu_page('users.php'); // Users
         remove_menu_page('tools.php'); // Tools
         remove_menu_page('options-general.php'); // Settings
         
-        // Keep Posts, Comments, Media, Dashboard accessible
+        // Keep Posts, Comments, Media, Dashboard, Pages accessible
         // Keep auto-generated custom post type menus accessible
         // The supervisor admin menu will be added by the main admin-menu.php file
     }
 }
 add_action('admin_menu', 'restrict_supervisor_editor_menu', 999);
+
+// Restrict Pages list to only show supervisor pages
+function supervisor_restrict_pages_list($query) {
+    if (!is_admin() || !$query->is_main_query()) {
+        return;
+    }
+    
+    if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
+        $screen = get_current_screen();
+        if ($screen && $screen->id === 'edit-page') {
+            $allowed_pages = supervisor_get_allowed_page_ids();
+            if (!empty($allowed_pages)) {
+                $query->set('post__in', $allowed_pages);
+            } else {
+                // If no allowed pages, show nothing
+                $query->set('post__in', [0]);
+            }
+        }
+    }
+}
+add_action('pre_get_posts', 'supervisor_restrict_pages_list');
 
 // Redirect supervisor_editor to plugin admin page on login
 function supervisor_editor_login_redirect($redirect_to, $request, $user) {
@@ -233,6 +340,17 @@ function redirect_supervisor_editor_from_restricted_areas() {
         if (in_array($current_screen->id ?? '', $restricted_pages)) {
             wp_redirect(admin_url('admin.php?page=supervisor-admin'));
             exit;
+        }
+        
+        // Check if trying to edit a page that's not in the allowed list
+        if ($current_screen && $current_screen->base === 'post' && $current_screen->post_type === 'page') {
+            $post_id = isset($_GET['post']) ? intval($_GET['post']) : 0;
+            if ($post_id > 0) {
+                $allowed_pages = supervisor_get_allowed_page_ids();
+                if (!in_array($post_id, $allowed_pages)) {
+                    wp_die(__('אין לך הרשאות לערוך את העמוד הזה.', 'text-domain'), __('גישה נדחתה', 'text-domain'), ['response' => 403]);
+                }
+            }
         }
     }
 }
@@ -293,14 +411,6 @@ function hide_admin_bar_items() {
     }
 }
 add_action('wp_before_admin_bar_render', 'hide_admin_bar_items');
-
-// Add custom admin notice for supervisor_editor
-function supervisor_editor_admin_notice() {
-    if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
-        echo '<div class="notice notice-info"><p><strong>Supervisor Editor:</strong> You have limited access to edit only supervisor plugin content.</p></div>';
-    }
-}
-add_action('admin_notices', 'supervisor_editor_admin_notice');
 
 // Add RTL styling for Supervisor Editor admin area
 function supervisor_editor_admin_styles() {

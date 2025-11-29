@@ -450,7 +450,7 @@ function supervisor_export_content_page() {
     
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html__('ייצוא תוכן המקפחת', 'text-domain'); ?></h1>
+        <h1><?php echo esc_html__('ייצוא תוכן המפקחת', 'text-domain'); ?></h1>
         
         <p><?php echo esc_html__('ייצא את כל התוכן של התוסף (פוסטים, טקסונומיות, שדות ACF, מדיה) לקובץ JSON שניתן לייבא לפרודקשן.', 'text-domain'); ?></p>
         

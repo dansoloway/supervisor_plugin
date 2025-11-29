@@ -17,7 +17,7 @@ get_header('supervisor');
         <div class="supervisor-content-wrapper supervisor-single-column">
             <?php while (have_posts()) : the_post(); ?>
                 <h1><?php echo get_the_title(); ?></h1>
-                <div><?php echo get_the_content(); ?></div>
+                <div><?php echo apply_filters('the_content', get_the_content()); ?></div>
             <?php endwhile; ?>
         
         </div> <!-- End supervisor-content-wrapper -->

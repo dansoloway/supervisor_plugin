@@ -215,6 +215,24 @@ function supervisor_plugin_deactivation() {
 }
 register_deactivation_hook(__FILE__, 'supervisor_plugin_deactivation');
 
+// Redirect single update pages to main updates page
+function supervisor_redirect_single_updates() {
+    if (is_singular('qa_updates')) {
+        $updates_page_id = defined('SUPERVISOR_UPDATES') ? SUPERVISOR_UPDATES : null;
+        if ($updates_page_id) {
+            $updates_url = get_permalink($updates_page_id);
+            if ($updates_url) {
+                wp_redirect($updates_url, 301); // 301 permanent redirect
+                exit;
+            }
+        }
+        // Fallback: redirect to home if updates page not found
+        wp_redirect(home_url(), 301);
+        exit;
+    }
+}
+add_action('template_redirect', 'supervisor_redirect_single_updates', 1); // Run early
+
 function supervisor_load_templates($template) {
     global $post;
 
@@ -222,9 +240,8 @@ function supervisor_load_templates($template) {
         return plugin_dir_path(__FILE__) . 'templates/single-qa_orgs.php';
     }
 
-    if (is_singular('qa_updates') && file_exists(plugin_dir_path(__FILE__) . 'templates/single-qa_updates.php')) {
-        return plugin_dir_path(__FILE__) . 'templates/single-qa_updates.php';
-    }
+    // Single qa_updates pages are now redirected, so we don't load the template
+    // Removed: single-qa_updates.php template loading
 
     // Old qa_bibs post type removed - using qa_bib_items instead
     // Template check removed as qa_bibs no longer exists

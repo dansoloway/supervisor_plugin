@@ -91,6 +91,12 @@ function register_additional_taxonomies() {
         'show_in_nav_menus' => false, // Disable in navigation menus
         'show_in_rest' => true, // Enable for block editor and REST API
         'rewrite' => ['slug' => 'qa-themes'], // Rewrite slug
+        'capabilities' => [
+            'manage_terms' => 'manage_qa_themes',
+            'edit_terms' => 'edit_qa_themes',
+            'delete_terms' => 'delete_qa_themes',
+            'assign_terms' => 'assign_qa_themes',
+        ],
     ]);
 
     // Register "qa_tags"
@@ -114,6 +120,12 @@ function register_additional_taxonomies() {
         'show_in_rest' => true, // Enable for block editor and REST API
         'rewrite' => ['slug' => 'qa-tags'], // Rewrite slug
         'meta_box_cb' => 'supervisor_qa_tags_meta_box', // Use custom metabox with correct title
+        'capabilities' => [
+            'manage_terms' => 'manage_qa_tags',
+            'edit_terms' => 'edit_qa_tags',
+            'delete_terms' => 'delete_qa_tags',
+            'assign_terms' => 'assign_qa_tags',
+        ],
     ]);
     }
 add_action('init', 'register_additional_taxonomies');

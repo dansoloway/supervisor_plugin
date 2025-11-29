@@ -12,9 +12,9 @@ function supervisor_contact_form_config() {
             // 'another@example.com',
             // 'third@example.com',
         ],
-        'subject_prefix' => '[המקפחת - טופס יצירת קשר]',
+        'subject_prefix' => '[המפקחת - טופס יצירת קשר]',
         'from_email' => get_option('admin_email'),
-        'from_name' => 'מערכת המקפחת',
+        'from_name' => 'מערכת המפקחת',
     ];
 }
 
@@ -52,7 +52,7 @@ function supervisor_handle_contact_form() {
 {$content}
 
 ---
-הודעה זו נשלחה מטופס יצירת הקשר באתר המקפחת.
+הודעה זו נשלחה מטופס יצירת הקשר באתר המפקחת.
 ";
     
     $headers = [

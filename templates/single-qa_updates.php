@@ -61,7 +61,7 @@ get_header('supervisor');
     }
 
     // Display the content
-    echo '<div>' . get_the_content() . '</div>';
+    echo '<div>' . apply_filters('the_content', get_the_content()) . '</div>';
 
             <?php endwhile; ?>
         

@@ -245,7 +245,7 @@ function qa_bib_save_admin_settings() {
             }
         }
 
-        wp_redirect(admin_url('admin.php?page=qa_bib_manager&updated=true'));
+        wp_redirect(admin_url('admin.php?page=supervisor-bibliography&updated=true'));
         exit;
     }
 }

@@ -39,7 +39,7 @@ git clone [your-repository-url] supervisor_plugin
 Create these pages in WordPress Admin → Pages → Add New:
 
 #### Home Page
-- **Title**: "המקפחת - דף הבית"
+- **Title**: "המפקחת - דף הבית"
 - **Slug**: `supervisor-home`
 - **Template**: "Supervisor Home" (from dropdown)
 - **Status**: Published

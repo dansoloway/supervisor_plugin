@@ -14,6 +14,13 @@ function save_item_order() {
         exit;
     }
 
+    // Check permissions - user must be able to edit bibliography items
+    if (!current_user_can('edit_qa_bib_items') && !current_user_can('manage_options')) {
+        error_log("❌ Permission denied: User cannot edit bibliography items.");
+        wp_send_json_error(['message' => 'Permission denied']);
+        exit;
+    }
+
     error_log("✅ AJAX handler called: save_item_order");
 
     // Ensure JSON response and prevent unexpected output

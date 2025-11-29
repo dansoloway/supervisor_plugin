@@ -56,6 +56,13 @@ get_header('supervisor');
                 </div>
                 <?php endif; ?>
                 
+                <?php if ($org_country): ?>
+                <div class="info-item">
+                    <span class="info-label">מדינה:</span>
+                    <span class="info-value"><?php echo esc_html($org_country); ?></span>
+                </div>
+                <?php endif; ?>
+                
                 <?php if ($org_link): ?>
                 <div class="info-item">
                     <span class="info-label">אתר הארגון:</span>

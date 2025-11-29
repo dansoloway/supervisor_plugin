@@ -11,8 +11,8 @@ function supervisor_admin_menu() {
     
     // Add main menu page
     add_menu_page(
-        __('המקפחת - ניהול מערכת', 'text-domain'), // Page title
-        __('המקפחת', 'text-domain'), // Menu title
+        __('המפקחת - ניהול מערכת', 'text-domain'), // Page title
+        __('המפקחת', 'text-domain'), // Menu title
         $capability, // Capability - allow supervisor editors
         'supervisor-admin', // Menu slug
         'supervisor_admin_dashboard', // Callback function
@@ -94,7 +94,7 @@ function supervisor_remove_duplicate_menu_item() {
         return;
     }
     
-    // WordPress auto-creates a submenu item with the same slug and title as parent menu ("המקפחת")
+    // WordPress auto-creates a submenu item with the same slug and title as parent menu ("המפקחת")
     // We need to remove this duplicate, keeping only our explicit "דשבורד" item
     $items_to_remove = [];
     
@@ -230,14 +230,14 @@ function supervisor_admin_dashboard() {
     // Check permissions - show read-only view for non-editors
     if (!supervisor_can_edit()) {
         echo '<div class="wrap">';
-        echo '<h1>' . esc_html__('המקפחת - דשבורד', 'text-domain') . '</h1>';
+        echo '<h1>' . esc_html__('המפקחת - דשבורד', 'text-domain') . '</h1>';
         echo '<div class="notice notice-info"><p>' . esc_html__('אין לך הרשאות לערוך תוכן. אתה יכול לצפות בלבד.', 'text-domain') . '</p></div>';
         echo '</div>';
         return;
     }
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html__('המקפחת - דשבורד', 'text-domain'); ?></h1>
+        <h1><?php echo esc_html__('המפקחת - דשבורד', 'text-domain'); ?></h1>
         
         <div class="supervisor-dashboard-stats">
             <div class="stat-box">
@@ -286,7 +286,7 @@ function supervisor_updates_page() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('ניהול עדכונים', 'text-domain'); ?></h1>
-        <p><?php echo esc_html__('ניהול עדכונים במערכת המקפחת.', 'text-domain'); ?></p>
+        <p><?php echo esc_html__('ניהול עדכונים במערכת המפקחת.', 'text-domain'); ?></p>
         
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
             <div class="notice notice-success is-dismissible">
@@ -358,7 +358,7 @@ function supervisor_organizations_page() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('ניהול ארגונים', 'text-domain'); ?></h1>
-        <p><?php echo esc_html__('ניהול ארגוני פיקוח במערכת המקפחת.', 'text-domain'); ?></p>
+        <p><?php echo esc_html__('ניהול ארגוני פיקוח במערכת המפקחת.', 'text-domain'); ?></p>
         
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
             <div class="notice notice-success is-dismissible">
@@ -433,7 +433,7 @@ function supervisor_categories_page() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html__('ניהול נושאי מפתח', 'text-domain'); ?></h1>
-        <p><?php echo esc_html__('ניהול נושאי מפתח במערכת המקפחת.', 'text-domain'); ?></p>
+        <p><?php echo esc_html__('ניהול נושאי מפתח במערכת המפקחת.', 'text-domain'); ?></p>
         
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
             <div class="notice notice-success is-dismissible">
@@ -642,8 +642,8 @@ function supervisor_settings_page() {
     $contact_email = get_option('supervisor_contact_email', '');
     ?>
     <div class="wrap supervisor-settings-page">
-        <h1><?php echo esc_html__('הגדרות המקפחת', 'text-domain'); ?></h1>
-        <p><?php echo esc_html__('הגדרות כלליות למערכת המקפחת.', 'text-domain'); ?></p>
+        <h1><?php echo esc_html__('הגדרות המפקחת', 'text-domain'); ?></h1>
+        <p><?php echo esc_html__('הגדרות כלליות למערכת המפקחת.', 'text-domain'); ?></p>
         
         <form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
             <?php wp_nonce_field('supervisor_settings'); ?>
@@ -697,6 +697,19 @@ function supervisor_settings_page() {
     </div>
     <?php
 }
+
+// Redirect old qa_bib_manager page to new supervisor-bibliography page
+function supervisor_redirect_old_bib_manager() {
+    if (isset($_GET['page']) && $_GET['page'] === 'qa_bib_manager') {
+        $redirect_url = admin_url('admin.php?page=supervisor-bibliography');
+        if (isset($_GET['updated'])) {
+            $redirect_url = add_query_arg('updated', $_GET['updated'], $redirect_url);
+        }
+        wp_redirect($redirect_url);
+        exit;
+    }
+}
+add_action('admin_init', 'supervisor_redirect_old_bib_manager', 1);
 
 // Remove the old standalone bibliography admin menu and any other unwanted menus
 function remove_old_bibliography_menu() {

@@ -292,19 +292,45 @@ function supervisor_map_page_capabilities($caps, $cap, $user_id, $args) {
 }
 add_filter('map_meta_cap', 'supervisor_map_page_capabilities', 10, 4);
 
-// Remove unwanted admin menu items for supervisor_editor role - SIMPLIFIED
+// Remove unwanted admin menu items for supervisor_editor role
 function restrict_supervisor_editor_menu() {
     if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
-        // Keep Pages menu visible (but will be restricted to supervisor pages only)
-        // Remove only the most dangerous/restricted items
+        // Remove all menu items except: Media, Pages, and Supervisor menu
+        
+        // Remove Dashboard
+        remove_menu_page('index.php'); // Dashboard
+        
+        // Remove Jetpack
+        remove_menu_page('jetpack'); // Jetpack
+        
+        // Remove Posts
+        remove_menu_page('edit.php'); // Posts
+        
+        // Remove custom post types (these are likely from other plugins/themes)
+        remove_menu_page('edit.php?post_type=team'); // The Team
+        remove_menu_page('edit.php?post_type=project'); // Projects
+        remove_menu_page('edit.php?post_type=partner'); // Partners
+        remove_menu_page('edit.php?post_type=publication'); // Publications
+        remove_menu_page('edit.php?post_type=disability'); // Disabilities
+        remove_menu_page('edit.php?post_type=event'); // Conferences and Events
+        remove_menu_page('edit.php?post_type=aging_data'); // Aging Data
+        remove_menu_page('edit.php?post_type=interactive_report'); // Interactive Reports
+        
+        // Remove Comments
+        remove_menu_page('edit-comments.php'); // Comments
+        
+        // Remove Contact Us (likely from a contact form plugin)
+        remove_menu_page('wpcf7'); // Contact Form 7 (if that's what it is)
+        remove_menu_page('contact'); // Generic contact menu
+        
+        // Remove dangerous/restricted items
         remove_menu_page('themes.php'); // Appearance
         remove_menu_page('plugins.php'); // Plugins
         remove_menu_page('users.php'); // Users
         remove_menu_page('tools.php'); // Tools
         remove_menu_page('options-general.php'); // Settings
         
-        // Keep Posts, Comments, Media, Dashboard, Pages accessible
-        // Keep auto-generated custom post type menus accessible
+        // Keep: Media (upload.php), Pages (edit.php?post_type=page), and Supervisor menu
         // The supervisor admin menu will be added by the main admin-menu.php file
     }
 }

@@ -88,7 +88,7 @@ error_log('Loading taxonomy-qa_tags.php template');
                         </div>
                         <div class="bib-content" style="display: none;">
                             <div class="bib-description">
-                                <?php the_content(); ?>
+                                <?php echo apply_filters('the_content', get_the_content()); ?>
                             </div>
                         </div>
                     </div>

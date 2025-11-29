@@ -16,7 +16,7 @@ get_header('supervisor'); ?>
         
         <div class="supervisor-content-wrapper supervisor-single-column">
             <div class="content-main">
-                <?php echo the_content();  ?>
+                <?php echo apply_filters('the_content', get_the_content()); ?>
             </div>
         </div>
 

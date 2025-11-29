@@ -193,7 +193,12 @@ add_action('admin_init', 'fix_supervisor_editor_permissions', 1); // Run early, 
 function supervisor_map_taxonomy_capabilities($caps, $cap, $user_id, $args) {
     // Only apply to supervisor_editor users
     $user = get_userdata($user_id);
-    if (!$user || !in_array('supervisor_editor', $user->roles) || current_user_can('manage_options')) {
+    if (!$user || !in_array('supervisor_editor', $user->roles)) {
+        return $caps;
+    }
+    
+    // Skip if user is administrator (avoid infinite loop by checking role directly, not capabilities)
+    if (in_array('administrator', $user->roles)) {
         return $caps;
     }
     
@@ -248,7 +253,12 @@ function supervisor_get_allowed_page_ids() {
 function supervisor_map_page_capabilities($caps, $cap, $user_id, $args) {
     // Only apply to supervisor_editor users
     $user = get_userdata($user_id);
-    if (!$user || !in_array('supervisor_editor', $user->roles) || current_user_can('manage_options')) {
+    if (!$user || !in_array('supervisor_editor', $user->roles)) {
+        return $caps;
+    }
+    
+    // Skip if user is administrator (avoid infinite loop by checking role directly, not capabilities)
+    if (in_array('administrator', $user->roles)) {
         return $caps;
     }
     

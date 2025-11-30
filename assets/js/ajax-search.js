@@ -251,4 +251,19 @@ jQuery(document).ready(function ($) {
             });
         });
     }
+    
+    // Filter toggle functionality - make filters collapsible
+    $('.filter-toggle').on('click', function() {
+        const $toggle = $(this);
+        const $content = $('.filter-content');
+        const isExpanded = $toggle.attr('aria-expanded') === 'true';
+        
+        if (isExpanded) {
+            $content.slideUp(300);
+            $toggle.attr('aria-expanded', 'false');
+        } else {
+            $content.slideDown(300);
+            $toggle.attr('aria-expanded', 'true');
+        }
+    });
 });

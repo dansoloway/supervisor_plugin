@@ -13,9 +13,15 @@
             </div>
         </div>
 
-        <!-- Filter Section -->
+        <!-- Filter Section - Collapsible -->
         <div class="filter-section">
-            <h3 class="filter-title">סינון לפי:</h3>
+            <div class="filter-header">
+                <h3 class="filter-title">סינון לפי:</h3>
+                <button type="button" class="filter-toggle" aria-label="הצג/הסתר סינון" aria-expanded="true">
+                    <span class="filter-toggle-icon">⌃</span>
+                </button>
+            </div>
+            <div class="filter-content" style="display: block;">
             
             <div class="taxonomy-filters">
                 <!-- Key Topics -->
@@ -60,7 +66,9 @@
                         }
                         ?>
                     </div>
+                    </div>
                 </div>
+            </div>
             </div>
         </div>
 

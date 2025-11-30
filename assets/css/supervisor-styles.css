@@ -725,6 +725,11 @@
   .supervisor-knowledge-map .col-right .arrow-list{ 
     max-width: none; 
   }
+  
+  /* Hide description text on mobile - keep only the image */
+  .supervisor-knowledge-map .knowledge-map-description {
+    display: none;
+  }
 }
 
 
@@ -1158,6 +1163,22 @@
         padding: 16px;
         order: 1;
         width: 100%;
+    }
+    
+    /* Make taxonomy boxes full width on mobile */
+    .supervisor-taxonomy .taxonomy-content {
+        width: 100%;
+        margin: 20px 0;
+        padding: 0 16px;
+    }
+    
+    .supervisor-taxonomy .bib-item {
+        width: 100%;
+    }
+    
+    /* Hide knowledge map description text on mobile */
+    .supervisor-knowledge-map .knowledge-map-description {
+        display: none;
     }
 }
 

@@ -1016,6 +1016,29 @@
     padding: 1rem 0 0 0;
 }
 
+/* Links in update content text - traditional blue color */
+.update-content-text a,
+.update-content-text a:link {
+    color: #0000EE !important;
+    text-decoration: underline !important;
+}
+
+.update-content-text a:visited {
+    color: #551A8B !important;
+    text-decoration: underline !important;
+}
+
+.update-content-text a:hover,
+.update-content-text a:focus {
+    color: #0000EE !important;
+    text-decoration: underline !important;
+}
+
+.update-content-text a:active {
+    color: #EE0000 !important;
+    text-decoration: underline !important;
+}
+
 .search-results-container .qa-update-item {
     padding: 40px 0 20px 0;
     border-bottom: 1px solid #CACCCD;

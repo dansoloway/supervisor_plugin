@@ -104,6 +104,29 @@ $updates_query = new WP_Query($args);
                             $content = get_post_field('post_content', $post_id);
                             // Apply all content filters (includes block rendering, wpautop, and link processing)
                             $content = apply_filters('the_content', $content);
+                            
+                            // Add inline styles to all links in the content to force blue color
+                            $content = preg_replace_callback(
+                                '/<a\s+([^>]*?)>/i',
+                                function($matches) {
+                                    $attrs = $matches[1];
+                                    // Check if style attribute already exists
+                                    if (preg_match('/style\s*=\s*["\']([^"\']*)["\']/i', $attrs, $style_match)) {
+                                        // Add to existing style
+                                        $existing_style = $style_match[1];
+                                        if (strpos($existing_style, 'color:') === false) {
+                                            $new_style = $existing_style . ' color: #0000EE !important; text-decoration: underline !important;';
+                                            $attrs = preg_replace('/style\s*=\s*["\']([^"\']*)["\']/i', 'style="' . esc_attr($new_style) . '"', $attrs);
+                                        }
+                                    } else {
+                                        // Add new style attribute
+                                        $attrs .= ' style="color: #0000EE !important; text-decoration: underline !important;"';
+                                    }
+                                    return '<a ' . $attrs . '>';
+                                },
+                                $content
+                            );
+                            
                             echo '<div class="update-content-text">' . $content . '</div>';
 
                             echo '<div class="taxonomy-boxes">';

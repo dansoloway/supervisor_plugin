@@ -1,18 +1,19 @@
 
 
 /* ===== GLOBAL LINK COLOR OVERRIDES ===== */
-/* Override any external CSS that sets link colors - but exclude important home page links and update content text */
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a),
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):link,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):visited,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):hover,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):focus,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):active {
+/* Override any external CSS that sets link colors - but exclude important home page links */
+/* Note: .update-content-text links are handled separately below with higher specificity */
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button),
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):link,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):visited,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):focus,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):active {
     color: var(--sv-blue) !important;
 }
 
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):hover,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):focus {
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):focus {
     color: var(--sv-blue-600) !important;
 }
 
@@ -1017,25 +1018,31 @@
 }
 
 /* Links in update content text - traditional blue color */
-/* High specificity to override global link color rules */
-.supervisor-home .update-content-text a,
-.supervisor-home .update-content-text a:link {
+/* Ultra-high specificity to override global link color rules - placed after global rules */
+.supervisor-home .supervisor-content-wrapper .update-content-text a,
+.supervisor-home .supervisor-content-wrapper .update-content-text a:link,
+.supervisor-home .accordion-content .update-content-text a,
+.supervisor-home .accordion-content .update-content-text a:link {
     color: #0000EE !important;
     text-decoration: underline !important;
 }
 
-.supervisor-home .update-content-text a:visited {
+.supervisor-home .supervisor-content-wrapper .update-content-text a:visited,
+.supervisor-home .accordion-content .update-content-text a:visited {
     color: #551A8B !important;
     text-decoration: underline !important;
 }
 
-.supervisor-home .update-content-text a:hover,
-.supervisor-home .update-content-text a:focus {
+.supervisor-home .supervisor-content-wrapper .update-content-text a:hover,
+.supervisor-home .supervisor-content-wrapper .update-content-text a:focus,
+.supervisor-home .accordion-content .update-content-text a:hover,
+.supervisor-home .accordion-content .update-content-text a:focus {
     color: #0000EE !important;
     text-decoration: underline !important;
 }
 
-.supervisor-home .update-content-text a:active {
+.supervisor-home .supervisor-content-wrapper .update-content-text a:active,
+.supervisor-home .accordion-content .update-content-text a:active {
     color: #EE0000 !important;
     text-decoration: underline !important;
 }

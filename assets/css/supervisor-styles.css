@@ -2929,9 +2929,11 @@ body .supervisor-bib-cats .categories-grid {
         font-size: 16px;
     }
     
-    .supervisor-bib-cats .categories-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .supervisor-bib-cats .categories-grid,
+    .supervisor-home.supervisor-bib-cats .categories-grid,
+    body .supervisor-bib-cats .categories-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
     }
     
     .supervisor-bib-cats .category-card {

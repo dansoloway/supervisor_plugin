@@ -237,8 +237,18 @@ $total_results = $search_query->found_posts;
                             <!-- Bibliography Content - Always visible -->
                             <div class="accordion-content" style="display: block;">
                                 <div><?php echo apply_filters('the_content', get_the_content()); ?></div>
-                                <?php if ($link): ?>
-                                    <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
+                                <?php if ($link): 
+                                    // Check if link is an ACF link field (array) or just a URL (string)
+                                    if (is_array($link)) {
+                                        $link_url = esc_url($link['url']);
+                                        $link_text = !empty($link['title']) ? esc_html($link['title']) : esc_html($link['url']);
+                                    } else {
+                                        $link_url = esc_url($link);
+                                        $parsed_url = parse_url($link);
+                                        $link_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($link);
+                                    }
+                                ?>
+                                    <p><strong>לקישור:</strong> <a href="<?php echo $link_url; ?>" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;"><?php echo $link_text; ?></a></p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -296,14 +306,14 @@ $total_results = $search_query->found_posts;
                                             </p>
                                         <?php endif; ?>
                                         <?php if ($link): ?>
-                                            <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
+                                            <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;"><?php echo esc_url($link); ?></a></p>
                                         <?php endif; ?>
                                     </div>
                                 <?php elseif ($post_type === 'qa_orgs'): ?>
                                     <!-- Organizations Content -->
                                     <div><?php echo apply_filters('the_content', get_the_content()); ?></div>
                                     <?php if ($link): ?>
-                                        <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
+                                        <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;"><?php echo esc_url($link); ?></a></p>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </div>

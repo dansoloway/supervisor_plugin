@@ -106,21 +106,28 @@ $updates_query = new WP_Query($args);
                             $content = apply_filters('the_content', $content);
                             
                             // Add inline styles to all links in the content to force blue color
+                            // This regex matches <a> tags with any attributes
                             $content = preg_replace_callback(
                                 '/<a\s+([^>]*?)>/i',
                                 function($matches) {
                                     $attrs = $matches[1];
+                                    // Skip if already has inline color style
+                                    if (preg_match('/style\s*=\s*["\'][^"\']*color\s*:\s*#0000EE/i', $attrs)) {
+                                        return $matches[0]; // Return unchanged
+                                    }
                                     // Check if style attribute already exists
                                     if (preg_match('/style\s*=\s*["\']([^"\']*)["\']/i', $attrs, $style_match)) {
                                         // Add to existing style
                                         $existing_style = $style_match[1];
-                                        if (strpos($existing_style, 'color:') === false) {
-                                            $new_style = $existing_style . ' color: #0000EE !important; text-decoration: underline !important;';
-                                            $attrs = preg_replace('/style\s*=\s*["\']([^"\']*)["\']/i', 'style="' . esc_attr($new_style) . '"', $attrs);
-                                        }
+                                        $new_style = rtrim($existing_style, '; ') . '; color: #0000EE !important; text-decoration: underline !important;';
+                                        $attrs = preg_replace('/style\s*=\s*["\']([^"\']*)["\']/i', 'style="' . esc_attr($new_style) . '"', $attrs);
                                     } else {
-                                        // Add new style attribute
-                                        $attrs .= ' style="color: #0000EE !important; text-decoration: underline !important;"';
+                                        // Add new style attribute - ensure it's properly formatted
+                                        $attrs = trim($attrs);
+                                        if (!empty($attrs) && substr($attrs, -1) !== ' ') {
+                                            $attrs .= ' ';
+                                        }
+                                        $attrs .= 'style="color: #0000EE !important; text-decoration: underline !important;"';
                                     }
                                     return '<a ' . $attrs . '>';
                                 },
@@ -145,7 +152,19 @@ $updates_query = new WP_Query($args);
 
                             // External Link
                             if ($link) {
-                                echo '<p><strong>למקור:</strong> <a href="' . esc_url($link) . '" target="_blank" class="source-link">' . esc_url($link) . '</a></p>';
+                                // Check if link is an ACF link field (array) or just a URL (string)
+                                if (is_array($link)) {
+                                    // ACF link field returns array with 'url' and 'title'
+                                    $link_url = esc_url($link['url']);
+                                    $link_text = !empty($link['title']) ? esc_html($link['title']) : esc_html($link['url']);
+                                } else {
+                                    // Just a URL string - use domain name or URL as text
+                                    $link_url = esc_url($link);
+                                    // Try to extract readable text from URL (domain name)
+                                    $parsed_url = parse_url($link);
+                                    $link_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($link);
+                                }
+                                echo '<p><strong>למקור:</strong> <a href="' . $link_url . '" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;">' . $link_text . '</a></p>';
                             }
 
                             echo '</div>'; // taxonomy-boxes

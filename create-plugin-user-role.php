@@ -295,7 +295,7 @@ add_filter('map_meta_cap', 'supervisor_map_page_capabilities', 10, 4);
 // Remove unwanted admin menu items for supervisor_editor role
 function restrict_supervisor_editor_menu() {
     if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
-        // Remove all menu items except: Media, Pages, and Supervisor menu
+        // Remove all menu items except: Pages and Supervisor menu
         
         // Remove Dashboard
         remove_menu_page('index.php'); // Dashboard
@@ -306,15 +306,23 @@ function restrict_supervisor_editor_menu() {
         // Remove Posts
         remove_menu_page('edit.php'); // Posts
         
+        // Remove Media
+        remove_menu_page('upload.php'); // Media
+        
         // Remove custom post types (these are likely from other plugins/themes)
         remove_menu_page('edit.php?post_type=team'); // The Team
         remove_menu_page('edit.php?post_type=project'); // Projects
+        remove_menu_page('edit.php?post_type=projects'); // Projects (alternative slug)
         remove_menu_page('edit.php?post_type=partner'); // Partners
         remove_menu_page('edit.php?post_type=publication'); // Publications
         remove_menu_page('edit.php?post_type=disability'); // Disabilities
+        remove_menu_page('edit.php?post_type=disabilities'); // Disabilities (alternative slug)
         remove_menu_page('edit.php?post_type=event'); // Conferences and Events
+        remove_menu_page('edit.php?post_type=conference'); // Conference (alternative slug)
         remove_menu_page('edit.php?post_type=aging_data'); // Aging Data
+        remove_menu_page('edit.php?post_type=aging'); // Aging (alternative slug)
         remove_menu_page('edit.php?post_type=interactive_report'); // Interactive Reports
+        remove_menu_page('edit.php?post_type=interactive_reports'); // Interactive Reports (alternative slug)
         
         // Remove Comments
         remove_menu_page('edit-comments.php'); // Comments
@@ -322,6 +330,14 @@ function restrict_supervisor_editor_menu() {
         // Remove Contact Us (likely from a contact form plugin)
         remove_menu_page('wpcf7'); // Contact Form 7 (if that's what it is)
         remove_menu_page('contact'); // Generic contact menu
+        remove_menu_page('CF7DBPluginSubmissions'); // Contact Form DB
+        
+        // Remove Profile
+        remove_menu_page('profile.php'); // Profile
+        
+        // Remove Site Settings (try both possible slugs)
+        remove_menu_page('theme-general-settings'); // Site Settings
+        remove_menu_page('admin.php?page=theme-general-settings'); // Site Settings (alternative)
         
         // Remove dangerous/restricted items
         remove_menu_page('themes.php'); // Appearance
@@ -330,11 +346,54 @@ function restrict_supervisor_editor_menu() {
         remove_menu_page('tools.php'); // Tools
         remove_menu_page('options-general.php'); // Settings
         
-        // Keep: Media (upload.php), Pages (edit.php?post_type=page), and Supervisor menu
+        // Keep: Pages (edit.php?post_type=page) and Supervisor menu
         // The supervisor admin menu will be added by the main admin-menu.php file
     }
 }
 add_action('admin_menu', 'restrict_supervisor_editor_menu', 999);
+
+// Additional cleanup for menu items that might be added later
+function restrict_supervisor_editor_menu_late() {
+    if (current_user_can('supervisor_editor') && !current_user_can('manage_options')) {
+        // Remove any remaining custom post types
+        global $menu, $submenu;
+        
+        // Remove any menu items that aren't Pages or Supervisor menu
+        if (isset($menu)) {
+            foreach ($menu as $key => $item) {
+                if (isset($item[2])) {
+                    $menu_slug = $item[2];
+                    // Keep only Pages and Supervisor menu
+                    if ($menu_slug !== 'edit.php?post_type=page' && 
+                        $menu_slug !== 'supervisor-admin' &&
+                        $menu_slug !== 'the-supervisor/') {
+                        // Check if it's a custom post type or other unwanted menu
+                        if (strpos($menu_slug, 'edit.php?post_type=') === 0 && 
+                            strpos($menu_slug, 'edit.php?post_type=page') === false) {
+                            remove_menu_page($menu_slug);
+                        } elseif (in_array($menu_slug, [
+                            'upload.php', // Media
+                            'profile.php', // Profile
+                            'index.php', // Dashboard
+                            'edit.php', // Posts
+                            'edit-comments.php', // Comments
+                            'themes.php', // Appearance
+                            'plugins.php', // Plugins
+                            'users.php', // Users
+                            'tools.php', // Tools
+                            'options-general.php', // Settings
+                            'CF7DBPluginSubmissions', // Contact Form DB
+                            'theme-general-settings', // Site Settings
+                        ])) {
+                            remove_menu_page($menu_slug);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+add_action('admin_menu', 'restrict_supervisor_editor_menu_late', 9999);
 
 // Restrict Pages list to only show supervisor pages
 function supervisor_restrict_pages_list($query) {

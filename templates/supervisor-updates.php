@@ -99,7 +99,12 @@ $updates_query = new WP_Query($args);
                         $is_highlighted = ($highlight_id && $post_id == $highlight_id);
                         $display_style = $is_highlighted ? 'display: block;' : 'display: none;';
                         echo '<div class="accordion-content" id="accordion-' . esc_attr($post_id) . '" style="' . $display_style . '">';
-                            echo '<div class="update-content-text">' . apply_filters('the_content', get_the_content()) . '</div>';
+                            // Get and process content properly to preserve link text
+                            // Use get_post_field to get raw content, then apply filters
+                            $content = get_post_field('post_content', $post_id);
+                            // Apply all content filters (includes block rendering, wpautop, and link processing)
+                            $content = apply_filters('the_content', $content);
+                            echo '<div class="update-content-text">' . $content . '</div>';
 
                             echo '<div class="taxonomy-boxes">';
                             

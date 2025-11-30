@@ -1,18 +1,18 @@
 
 
 /* ===== GLOBAL LINK COLOR OVERRIDES ===== */
-/* Override any external CSS that sets link colors - but exclude important home page links */
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button),
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):link,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):visited,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):hover,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):focus,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):active {
+/* Override any external CSS that sets link colors - but exclude important home page links and update content text */
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a),
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):link,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):visited,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):focus,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):active {
     color: var(--sv-blue) !important;
 }
 
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):hover,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):focus {
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.update-content-text a):focus {
     color: var(--sv-blue-600) !important;
 }
 
@@ -1017,24 +1017,25 @@
 }
 
 /* Links in update content text - traditional blue color */
-.update-content-text a,
-.update-content-text a:link {
+/* High specificity to override global link color rules */
+.supervisor-home .update-content-text a,
+.supervisor-home .update-content-text a:link {
     color: #0000EE !important;
     text-decoration: underline !important;
 }
 
-.update-content-text a:visited {
+.supervisor-home .update-content-text a:visited {
     color: #551A8B !important;
     text-decoration: underline !important;
 }
 
-.update-content-text a:hover,
-.update-content-text a:focus {
+.supervisor-home .update-content-text a:hover,
+.supervisor-home .update-content-text a:focus {
     color: #0000EE !important;
     text-decoration: underline !important;
 }
 
-.update-content-text a:active {
+.supervisor-home .update-content-text a:active {
     color: #EE0000 !important;
     text-decoration: underline !important;
 }

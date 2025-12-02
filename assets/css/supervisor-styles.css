@@ -180,7 +180,26 @@
 /* Updates page: make search/filters narrower (RTL: first value = right column = search/filters) */
 .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
 .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
+    display: grid !important; /* Ensure grid is used on desktop */
     grid-template-columns: 3fr 7fr; /* Search/filters 20% (right), Updates list 80% (left) */
+}
+
+/* Ensure desktop uses grid layout (override any flex that might leak through) */
+@media (min-width: 769px) {
+    .supervisor-content-wrapper.supervisor-two-column {
+        display: grid !important;
+    }
+    
+    .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
+    .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
+        display: grid !important;
+        grid-template-columns: 3fr 7fr !important;
+    }
+    
+    .ajax-search-component,
+    .qa-updates-list {
+        order: initial !important; /* Reset any order from mobile */
+    }
 }
 
 /* Three column layout */
@@ -1177,9 +1196,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         gap: 20px;
     }
     
-    /* Ensure filters are on top on mobile */
+    /* Ensure filters are on top on mobile - override grid with flex */
     .supervisor-content-wrapper.supervisor-two-column {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
     }
     

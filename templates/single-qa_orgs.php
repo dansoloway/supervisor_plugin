@@ -67,8 +67,20 @@ get_header('supervisor');
                 <div class="info-item">
                     <span class="info-label">אתר הארגון:</span>
                     <span class="info-value">
-                        <a href="<?php echo esc_url($org_link); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
-                            <?php echo esc_html($org_link); ?>
+                        <?php
+                        // Handle ACF link field (array) or plain URL (string)
+                        if (is_array($org_link) && isset($org_link['url'])) {
+                            $link_url = esc_url($org_link['url']);
+                            $link_text = !empty($org_link['title']) ? esc_html($org_link['title']) : esc_html($org_link['url']);
+                        } else {
+                            $link_url = esc_url($org_link);
+                            // Extract domain name from URL for readability
+                            $parsed_url = parse_url($link_url);
+                            $link_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($link_url);
+                        }
+                        ?>
+                        <a href="<?php echo $link_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
+                            <?php echo $link_text; ?>
                         </a>
                     </span>
                 </div>
@@ -87,8 +99,20 @@ get_header('supervisor');
                 <div class="info-item">
                     <span class="info-label">דוח שנתי:</span>
                     <span class="info-value">
-                        <a href="<?php echo esc_url($org_report); ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
-                            <?php echo esc_html($org_report); ?>
+                        <?php
+                        // Handle ACF link field (array) or plain URL (string)
+                        if (is_array($org_report) && isset($org_report['url'])) {
+                            $report_url = esc_url($org_report['url']);
+                            $report_text = !empty($org_report['title']) ? esc_html($org_report['title']) : esc_html($org_report['url']);
+                        } else {
+                            $report_url = esc_url($org_report);
+                            // Extract domain name from URL for readability
+                            $parsed_url = parse_url($report_url);
+                            $report_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($report_url);
+                        }
+                        ?>
+                        <a href="<?php echo $report_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
+                            <?php echo $report_text; ?>
                         </a>
                     </span>
                 </div>
@@ -98,7 +122,7 @@ get_header('supervisor');
 
         <!-- General Text Section -->
         <div class="org-content">
-            <h2 class="content-title">מלל כללי על הארגון</h2>
+            <!-- <h2 class="content-title">מלל כללי על הארגון</h2> -->
             <div class="content-text">
                 <?php echo apply_filters('the_content', get_the_content()); ?>
             </div>

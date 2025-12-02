@@ -1059,13 +1059,13 @@
 .supervisor-home.supervisor-single-org .org-content .content-text a,
 .supervisor-home.supervisor-single-org .org-content .content-text a:link {
     color: #0000EE !important;
-    text-decoration: underline !important;
+    text-decoration: none !important;
 }
 
 .supervisor-home.supervisor-single-org .supervisor-page-container .org-content .content-text a:visited,
 .supervisor-home.supervisor-single-org .org-content .content-text a:visited {
     color: #551A8B !important;
-    text-decoration: underline !important;
+    text-decoration: none !important;
 }
 
 .supervisor-home.supervisor-single-org .supervisor-page-container .org-content .content-text a:hover,
@@ -1073,13 +1073,13 @@
 .supervisor-home.supervisor-single-org .org-content .content-text a:hover,
 .supervisor-home.supervisor-single-org .org-content .content-text a:focus {
     color: #0000EE !important;
-    text-decoration: underline !important;
+    text-decoration: none !important;
 }
 
 .supervisor-home.supervisor-single-org .supervisor-page-container .org-content .content-text a:active,
 .supervisor-home.supervisor-single-org .org-content .content-text a:active {
     color: #EE0000 !important;
-    text-decoration: underline !important;
+    text-decoration: none !important;
 }
 
 .search-results-container .qa-update-item {

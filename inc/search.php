@@ -69,6 +69,7 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- Filter Button -->
         <!-- <button type="button" id="search-submit" class="filter-button">סנן (אופציונלי)</button> -->

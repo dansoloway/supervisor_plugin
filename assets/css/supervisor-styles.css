@@ -177,29 +177,16 @@
     align-items: start;
 }
 
+/* Ensure supervisor-content-wrapper with two-column uses grid by default */
+.supervisor-content-wrapper.supervisor-two-column {
+    display: grid;
+}
+
 /* Updates page: make search/filters narrower (RTL: first value = right column = search/filters) */
 .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
 .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
     display: grid !important; /* Ensure grid is used on desktop */
     grid-template-columns: 3fr 7fr; /* Search/filters 20% (right), Updates list 80% (left) */
-}
-
-/* Ensure desktop uses grid layout (override any flex that might leak through) */
-@media (min-width: 769px) {
-    .supervisor-content-wrapper.supervisor-two-column {
-        display: grid !important;
-    }
-    
-    .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
-    .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
-        display: grid !important;
-        grid-template-columns: 3fr 7fr !important;
-    }
-    
-    .ajax-search-component,
-    .qa-updates-list {
-        order: initial !important; /* Reset any order from mobile */
-    }
 }
 
 /* Three column layout */
@@ -1228,6 +1215,28 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     /* Hide knowledge map description text on mobile */
     .supervisor-knowledge-map .knowledge-map-description {
         display: none;
+    }
+}
+
+/* Ensure desktop uses grid layout (override any flex from mobile) */
+/* Placed AFTER mobile media query to ensure it takes precedence */
+@media (min-width: 769px) {
+    .supervisor-content-wrapper.supervisor-two-column {
+        display: grid !important;
+        flex-direction: initial !important; /* Reset flex direction */
+    }
+    
+    .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
+    .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
+        display: grid !important;
+        grid-template-columns: 3fr 7fr !important;
+        flex-direction: initial !important; /* Reset flex direction */
+    }
+    
+    .ajax-search-component,
+    .qa-updates-list {
+        order: initial !important; /* Reset any order from mobile */
+        width: initial !important; /* Reset width from mobile */
     }
 }
 

@@ -20,12 +20,11 @@ get_header('supervisor');
         while (have_posts()) : the_post();
             $acf_fields = get_fields();
             $org_title = get_the_title();
-            $org_country = $acf_fields['qa_country'] ?? '';
             $org_year = $acf_fields['qa_yearoffounding'] ?? '';
             $org_services = $acf_fields['qa_services_supervised'] ?? '';
             $org_link = $acf_fields['qa_link'] ?? '';
             $org_report = $acf_fields['qa_yearly_report'] ?? '';
-            $org_ministry = $acf_fields['qa_government_ministry'] ?? '';
+            $org_ministry = $acf_fields['qa_gov_agency'] ?? '';
             
             // Get taxonomy terms
             $terms = get_the_terms(get_the_ID(), 'qa_themes');
@@ -53,13 +52,6 @@ get_header('supervisor');
                 <div class="info-item">
                     <span class="info-label">משרד ממשלתי אחראי:</span>
                     <span class="info-value"><?php echo esc_html($org_ministry); ?></span>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ($org_country): ?>
-                <div class="info-item">
-                    <span class="info-label">מדינה:</span>
-                    <span class="info-value"><?php echo esc_html($org_country); ?></span>
                 </div>
                 <?php endif; ?>
                 

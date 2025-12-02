@@ -180,13 +180,27 @@
 /* Ensure supervisor-content-wrapper with two-column uses grid by default */
 .supervisor-content-wrapper.supervisor-two-column {
     display: grid;
+    grid-template-columns: 4fr 6fr; /* Default two-column layout */
+    gap: 40px;
+    align-items: start;
 }
 
 /* Updates page: make search/filters narrower (RTL: first value = right column = search/filters) */
+/* Target updates page specifically - both children are direct children of grid container */
+.supervisor-home .supervisor-content-wrapper.supervisor-two-column {
+    display: grid !important;
+    grid-template-columns: 3fr 7fr !important; /* Search/filters 30% (right), Updates list 70% (left) */
+    gap: 40px !important;
+    align-items: start !important;
+}
+
+/* Also apply when :has() is supported */
 .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
-.supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
-    display: grid !important; /* Ensure grid is used on desktop */
-    grid-template-columns: 3fr 7fr; /* Search/filters 20% (right), Updates list 80% (left) */
+.supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
+    display: grid !important;
+    grid-template-columns: 3fr 7fr !important;
+    gap: 40px !important;
+    align-items: start !important;
 }
 
 /* Three column layout */
@@ -1224,13 +1238,19 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     .supervisor-content-wrapper.supervisor-two-column {
         display: grid !important;
         flex-direction: initial !important; /* Reset flex direction */
+        grid-template-columns: 4fr 6fr !important; /* Default two-column */
+        gap: 40px !important;
+        align-items: start !important;
     }
     
     .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
-    .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
+    .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list),
+    .supervisor-home .supervisor-content-wrapper.supervisor-two-column {
         display: grid !important;
         grid-template-columns: 3fr 7fr !important;
         flex-direction: initial !important; /* Reset flex direction */
+        gap: 40px !important;
+        align-items: start !important;
     }
     
     .ajax-search-component,

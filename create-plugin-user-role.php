@@ -285,7 +285,7 @@ function supervisor_map_page_capabilities($caps, $cap, $user_id, $args) {
         } else {
             // Not an allowed page - deny access
             $caps = ['do_not_allow'];
-        }
+    }
     }
     
     return $caps;

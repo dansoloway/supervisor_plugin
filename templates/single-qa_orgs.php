@@ -27,12 +27,16 @@ get_header('supervisor');
             $org_report = get_field('qa_yearly_report');
             $org_ministry = $acf_fields['qa_gov_agency'] ?? '';
             
-            // Debug: Log the structure of ACF Link fields (remove after debugging)
-            if (is_array($org_link)) {
-                error_log('DEBUG qa_link structure: ' . print_r($org_link, true));
-            }
-            if (is_array($org_report)) {
-                error_log('DEBUG qa_yearly_report structure: ' . print_r($org_report, true));
+            // Debug: Display the structure of ACF Link fields (remove after debugging)
+            // Temporarily show debug info on page
+            if (isset($_GET['asd']) && current_user_can('manage_options')) {
+                echo '<!-- DEBUG qa_link: ' . print_r($org_link, true) . ' -->';
+                echo '<!-- DEBUG qa_yearly_report: ' . print_r($org_report, true) . ' -->';
+                echo '<div style="background: #fff3cd; padding: 10px; margin: 10px 0; border: 1px solid #ffc107;">';
+                echo '<strong>DEBUG INFO:</strong><br>';
+                echo 'qa_link: <pre>' . print_r($org_link, true) . '</pre>';
+                echo 'qa_yearly_report: <pre>' . print_r($org_report, true) . '</pre>';
+                echo '</div>';
             }
             
             // Normalize link values for comparison (handle both array and string formats)

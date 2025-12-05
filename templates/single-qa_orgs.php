@@ -26,6 +26,15 @@ get_header('supervisor');
             $org_report = $acf_fields['qa_yearly_report'] ?? '';
             $org_ministry = $acf_fields['qa_gov_agency'] ?? '';
             
+            // Normalize link values for comparison (handle both array and string formats)
+            $org_link_value = is_array($org_link) && isset($org_link['url']) ? $org_link['url'] : $org_link;
+            $org_report_value = is_array($org_report) && isset($org_report['url']) ? $org_report['url'] : $org_report;
+            
+            // Check if both fields have the same value (potential ACF config issue)
+            if ($org_link_value && $org_report_value && $org_link_value === $org_report_value) {
+                error_log('WARNING: qa_link and qa_yearly_report have the same value for post ID: ' . get_the_ID() . ' - This suggests an ACF field configuration issue.');
+            }
+            
             // Get taxonomy terms
             $terms = get_the_terms(get_the_ID(), 'qa_themes');
             $org_themes = $terms && !is_wp_error($terms)
@@ -63,12 +72,23 @@ get_header('supervisor');
                         // Handle ACF link field (array) or plain URL (string)
                         if (is_array($org_link) && isset($org_link['url'])) {
                             $link_url = esc_url($org_link['url']);
-                            $link_text = !empty($org_link['title']) ? esc_html($org_link['title']) : esc_html($org_link['url']);
+                            // Use title if available, otherwise show a descriptive version of the URL
+                            if (!empty($org_link['title'])) {
+                                $link_text = esc_html($org_link['title']);
+                            } else {
+                                // Show full URL or hostname + path for better distinction
+                                $parsed_url = parse_url($org_link['url']);
+                                $link_text = !empty($parsed_url['host']) 
+                                    ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
+                                    : esc_html($org_link['url']);
+                            }
                         } else {
                             $link_url = esc_url($org_link);
                             // Extract domain name from URL for readability
                             $parsed_url = parse_url($link_url);
-                            $link_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($link_url);
+                            $link_text = !empty($parsed_url['host']) 
+                                ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
+                                : esc_html($link_url);
                         }
                         ?>
                         <a href="<?php echo $link_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
@@ -95,12 +115,23 @@ get_header('supervisor');
                         // Handle ACF link field (array) or plain URL (string)
                         if (is_array($org_report) && isset($org_report['url'])) {
                             $report_url = esc_url($org_report['url']);
-                            $report_text = !empty($org_report['title']) ? esc_html($org_report['title']) : esc_html($org_report['url']);
+                            // Use title if available, otherwise show a descriptive version of the URL
+                            if (!empty($org_report['title'])) {
+                                $report_text = esc_html($org_report['title']);
+                            } else {
+                                // Show full URL or hostname + path for better distinction
+                                $parsed_url = parse_url($org_report['url']);
+                                $report_text = !empty($parsed_url['host']) 
+                                    ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
+                                    : esc_html($org_report['url']);
+                            }
                         } else {
                             $report_url = esc_url($org_report);
                             // Extract domain name from URL for readability
                             $parsed_url = parse_url($report_url);
-                            $report_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($report_url);
+                            $report_text = !empty($parsed_url['host']) 
+                                ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
+                                : esc_html($report_url);
                         }
                         ?>
                         <a href="<?php echo $report_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">

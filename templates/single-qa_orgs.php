@@ -27,17 +27,6 @@ get_header('supervisor');
             $org_report = get_field('qa_yearly_report');
             $org_ministry = $acf_fields['qa_gov_agency'] ?? '';
             
-            // Debug: Display the structure of ACF Link fields (remove after debugging)
-            // Temporarily show debug info on page
-            if (isset($_GET['asd']) && current_user_can('manage_options')) {
-                echo '<!-- DEBUG qa_link: ' . print_r($org_link, true) . ' -->';
-                echo '<!-- DEBUG qa_yearly_report: ' . print_r($org_report, true) . ' -->';
-                echo '<div style="background: #fff3cd; padding: 10px; margin: 10px 0; border: 1px solid #ffc107;">';
-                echo '<strong>DEBUG INFO:</strong><br>';
-                echo 'qa_link: <pre>' . print_r($org_link, true) . '</pre>';
-                echo 'qa_yearly_report: <pre>' . print_r($org_report, true) . '</pre>';
-                echo '</div>';
-            }
             
             // Normalize link values for comparison (handle both array and string formats)
             $org_link_value = is_array($org_link) && isset($org_link['url']) ? $org_link['url'] : $org_link;
@@ -85,31 +74,13 @@ get_header('supervisor');
                         // Handle ACF link field (array) or plain URL (string)
                         if (is_array($org_link) && isset($org_link['url'])) {
                             $link_url = esc_url($org_link['url']);
-                            // ACF Link fields can have 'title' key for the link text
-                            // Check multiple possible keys for link text
-                            $link_text = '';
-                            if (!empty($org_link['title'])) {
-                                $link_text = esc_html($org_link['title']);
-                            } elseif (!empty($org_link['text'])) {
-                                $link_text = esc_html($org_link['text']);
-                            } elseif (!empty($org_link['label'])) {
-                                $link_text = esc_html($org_link['label']);
-                            }
-                            
-                            // If no title found, show a descriptive version of the URL
-                            if (empty($link_text)) {
-                                $parsed_url = parse_url($org_link['url']);
-                                $link_text = !empty($parsed_url['host']) 
-                                    ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
-                                    : esc_html($org_link['url']);
-                            }
+                            // ACF Link fields return array with 'url', 'title', and 'target'
+                            $link_text = !empty($org_link['title']) 
+                                ? esc_html($org_link['title']) 
+                                : esc_html($org_link['url']);
                         } else {
                             $link_url = esc_url($org_link);
-                            // Extract domain name from URL for readability
-                            $parsed_url = parse_url($link_url);
-                            $link_text = !empty($parsed_url['host']) 
-                                ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
-                                : esc_html($link_url);
+                            $link_text = esc_html($org_link);
                         }
                         ?>
                         <a href="<?php echo $link_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
@@ -136,31 +107,13 @@ get_header('supervisor');
                         // Handle ACF link field (array) or plain URL (string)
                         if (is_array($org_report) && isset($org_report['url'])) {
                             $report_url = esc_url($org_report['url']);
-                            // ACF Link fields can have 'title' key for the link text
-                            // Check multiple possible keys for link text
-                            $report_text = '';
-                            if (!empty($org_report['title'])) {
-                                $report_text = esc_html($org_report['title']);
-                            } elseif (!empty($org_report['text'])) {
-                                $report_text = esc_html($org_report['text']);
-                            } elseif (!empty($org_report['label'])) {
-                                $report_text = esc_html($org_report['label']);
-                            }
-                            
-                            // If no title found, show a descriptive version of the URL
-                            if (empty($report_text)) {
-                                $parsed_url = parse_url($org_report['url']);
-                                $report_text = !empty($parsed_url['host']) 
-                                    ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
-                                    : esc_html($org_report['url']);
-                            }
+                            // ACF Link fields return array with 'url', 'title', and 'target'
+                            $report_text = !empty($org_report['title']) 
+                                ? esc_html($org_report['title']) 
+                                : esc_html($org_report['url']);
                         } else {
                             $report_url = esc_url($org_report);
-                            // Extract domain name from URL for readability
-                            $parsed_url = parse_url($report_url);
-                            $report_text = !empty($parsed_url['host']) 
-                                ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
-                                : esc_html($report_url);
+                            $report_text = esc_html($org_report);
                         }
                         ?>
                         <a href="<?php echo $report_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">

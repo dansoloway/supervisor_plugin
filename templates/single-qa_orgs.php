@@ -22,9 +22,18 @@ get_header('supervisor');
             $org_title = get_the_title();
             $org_year = $acf_fields['qa_yearoffounding'] ?? '';
             $org_services = $acf_fields['qa_services_supervised'] ?? '';
-            $org_link = $acf_fields['qa_link'] ?? '';
-            $org_report = $acf_fields['qa_yearly_report'] ?? '';
+            // Use get_field() directly for Link fields to ensure proper formatting
+            $org_link = get_field('qa_link');
+            $org_report = get_field('qa_yearly_report');
             $org_ministry = $acf_fields['qa_gov_agency'] ?? '';
+            
+            // Debug: Log the structure of ACF Link fields (remove after debugging)
+            if (is_array($org_link)) {
+                error_log('DEBUG qa_link structure: ' . print_r($org_link, true));
+            }
+            if (is_array($org_report)) {
+                error_log('DEBUG qa_yearly_report structure: ' . print_r($org_report, true));
+            }
             
             // Normalize link values for comparison (handle both array and string formats)
             $org_link_value = is_array($org_link) && isset($org_link['url']) ? $org_link['url'] : $org_link;
@@ -72,11 +81,19 @@ get_header('supervisor');
                         // Handle ACF link field (array) or plain URL (string)
                         if (is_array($org_link) && isset($org_link['url'])) {
                             $link_url = esc_url($org_link['url']);
-                            // Use title if available, otherwise show a descriptive version of the URL
+                            // ACF Link fields can have 'title' key for the link text
+                            // Check multiple possible keys for link text
+                            $link_text = '';
                             if (!empty($org_link['title'])) {
                                 $link_text = esc_html($org_link['title']);
-                            } else {
-                                // Show full URL or hostname + path for better distinction
+                            } elseif (!empty($org_link['text'])) {
+                                $link_text = esc_html($org_link['text']);
+                            } elseif (!empty($org_link['label'])) {
+                                $link_text = esc_html($org_link['label']);
+                            }
+                            
+                            // If no title found, show a descriptive version of the URL
+                            if (empty($link_text)) {
                                 $parsed_url = parse_url($org_link['url']);
                                 $link_text = !empty($parsed_url['host']) 
                                     ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))
@@ -115,11 +132,19 @@ get_header('supervisor');
                         // Handle ACF link field (array) or plain URL (string)
                         if (is_array($org_report) && isset($org_report['url'])) {
                             $report_url = esc_url($org_report['url']);
-                            // Use title if available, otherwise show a descriptive version of the URL
+                            // ACF Link fields can have 'title' key for the link text
+                            // Check multiple possible keys for link text
+                            $report_text = '';
                             if (!empty($org_report['title'])) {
                                 $report_text = esc_html($org_report['title']);
-                            } else {
-                                // Show full URL or hostname + path for better distinction
+                            } elseif (!empty($org_report['text'])) {
+                                $report_text = esc_html($org_report['text']);
+                            } elseif (!empty($org_report['label'])) {
+                                $report_text = esc_html($org_report['label']);
+                            }
+                            
+                            // If no title found, show a descriptive version of the URL
+                            if (empty($report_text)) {
                                 $parsed_url = parse_url($org_report['url']);
                                 $report_text = !empty($parsed_url['host']) 
                                     ? esc_html($parsed_url['host'] . (!empty($parsed_url['path']) && $parsed_url['path'] !== '/' ? $parsed_url['path'] : ''))

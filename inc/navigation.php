@@ -125,6 +125,13 @@ function render_nav_item($item) {
     </button>
 
     <nav class="site-nav supervisor_header_links mobile-menu" aria-label="ראשי">
+        <!-- Close button at top of mobile menu -->
+        <button class="mobile-menu-close" aria-label="סגור תפריט" aria-expanded="false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        
         <?php
         foreach ($supervisor_menu as $menu_item) {
             render_nav_item($menu_item);

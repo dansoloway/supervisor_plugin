@@ -1417,6 +1417,130 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     content: none !important;
 }
 
+/* ===== MOBILE HAMBURGER MENU ===== */
+.mobile-menu-toggle {
+    display: none; /* Hidden by default on desktop */
+    background: var(--sv-blue-050, #f3f7fc);
+    border: 2px solid #BFD3EB;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1001;
+    margin: 8px auto 14px;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 3px;
+    background-color: var(--sv-text, #333);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Hamburger animation when active */
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile styles - show hamburger, hide regular menu */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .supervisor-home .site-nav.supervisor_header_links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 8px;
+        right: 8px;
+        background: var(--sv-blue-050, #f3f7fc);
+        border: 2px solid #BFD3EB;
+        border-radius: 8px;
+        margin: 0;
+        padding: 8px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        max-width: none;
+        height: auto;
+    }
+    
+    /* Position hamburger button relative to nav container */
+    .supervisor-home .mobile-menu-toggle {
+        position: relative;
+        margin: 8px auto 14px;
+        align-self: center;
+    }
+    
+    .supervisor-home .site-nav.supervisor_header_links.mobile-active {
+        display: flex;
+    }
+    
+    .supervisor-home .site-nav a {
+        flex: none;
+        width: 100%;
+        padding: 14px 20px;
+        border-radius: 0 !important;
+        text-align: right; /* RTL */
+        justify-content: flex-start;
+        height: auto;
+        border-bottom: 1px solid #BFD3EB;
+    }
+    
+    .supervisor-home .site-nav a:last-child {
+        border-bottom: none;
+    }
+    
+    /* Remove separators on mobile */
+    .supervisor-home .site-nav a::before {
+        display: none !important;
+    }
+    
+    /* Mobile dropdown menu styles */
+    .supervisor-home .dropdown-menu {
+        position: static;
+        transform: none;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        border-top: 1px solid #BFD3EB;
+        border-bottom: 1px solid #BFD3EB;
+        margin: 0;
+        background: rgba(255, 255, 255, 0.5);
+    }
+    
+    .supervisor-home .site-nav a.dropdown.active .dropdown-icon {
+        transform: rotate(180deg);
+    }
+}
+
 
 
 /* ===== SEARCH BAR ===== */

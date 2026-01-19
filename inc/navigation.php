@@ -105,6 +105,15 @@ function render_nav_item($item) {
 }
 ?>
 
+<!-- Hamburger Menu Button (mobile only) -->
+<button class="mobile-menu-toggle" aria-label="תפריט" aria-expanded="false">
+    <span class="hamburger-icon">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </span>
+</button>
+
 <nav class="site-nav supervisor_header_links" aria-label="ראשי">
     <?php
     foreach ($supervisor_menu as $menu_item) {

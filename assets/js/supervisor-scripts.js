@@ -31,14 +31,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Basic mobile navigation toggle (if needed)
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    if (mobileNavToggle) {
-        mobileNavToggle.addEventListener('click', function() {
-            const nav = document.querySelector('.supervisor_header_links');
-            if (nav) {
-                nav.classList.toggle('mobile-active');
+    // Mobile hamburger menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const siteNav = document.querySelector('.supervisor_header_links');
+    
+    if (mobileMenuToggle && siteNav) {
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Toggle menu visibility
+            const isActive = siteNav.classList.toggle('mobile-active');
+            mobileMenuToggle.classList.toggle('active');
+            mobileMenuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuToggle.contains(e.target) && !siteNav.contains(e.target)) {
+                siteNav.classList.remove('mobile-active');
+                mobileMenuToggle.classList.remove('active');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
             }
+        });
+        
+        // Close menu when a link is clicked (for better UX on mobile)
+        const navLinks = siteNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Only close if it's not a dropdown toggle
+                if (!this.classList.contains('dropdown')) {
+                    siteNav.classList.remove('mobile-active');
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
         });
     }
     
@@ -55,8 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Toggle dropdown on click
             dropdown.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
+                // On mobile, always use click mode for dropdowns
+                const isMobile = window.innerWidth <= 768;
+                
+                if (isMobile || !this.href || this.href === '#' || this.href.endsWith('#') || this.href.endsWith(window.location.pathname + '#')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
                 
                 isClickMode = true;
                 

@@ -24,12 +24,23 @@ get_header('supervisor');
             </div>
         </div>
 
-        <!-- Main Content Area - 2 Column Layout -->
-        <div class="supervisor-content-wrapper supervisor-two-column">
+        <!-- Knowledge Map Diagram - After intro, before updates -->
+        <div class="knowledge-map-section">
+            <div class="knowledge-map-card card">
+                <div class="knowledge-map-header">מפת הידע</div>
+                <div class="knowledge-map-diagram">
+                    <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-image-link">
+                        <img src="<?php echo plugins_url('assets/img/knowledge_map.svg', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
+                    </a>
+                </div>
+                <div class="knowledge-map-footer">
+                    <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
+                </div>
+            </div>
+        </div>
 
-      
-         <!-- Right Column: Search and Updates -->
-        <div class="center-content-section">
+        <!-- Main Content Area - Search and Updates -->
+        <div class="supervisor-content-wrapper supervisor-single-column">
             <!-- Search Bar -->
             <div class="search-section">
                 <form class="supervisor-search" role="search" action="<?php echo home_url('/supervisor-search/'); ?>">
@@ -89,22 +100,6 @@ get_header('supervisor');
                     <a class="more-updates-button" href="<?php echo get_the_permalink(SUPERVISOR_UPDATES)?>">לעדכונים נוספים</a>
                 </div>
             </div>
-        </div>
-     <!-- Left Column: Knowledge Map Diagram -->
-     <div class="knowledge-map-section">
-            <div class="knowledge-map-card card">
-                <div class="knowledge-map-header">מפת הידע</div>
-                <div class="knowledge-map-diagram">
-                    <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-image-link">
-                        <img src="<?php echo plugins_url('assets/img/knowledge_map.svg', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
-                    </a>
-                </div>
-                <div class="knowledge-map-footer">
-                    <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
-                </div>
-            </div>
-        </div>
-
         </div> <!-- End supervisor-content-wrapper -->
 
     </div> <!-- End supervisor-page-container -->

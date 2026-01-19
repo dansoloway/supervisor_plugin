@@ -855,6 +855,12 @@
         text-align: center !important;
     }
     
+    /* Hide col-left and col-right on mobile only */
+    .supervisor-knowledge-map .col-left,
+    .supervisor-knowledge-map .col-right {
+        display: none !important;
+    }
+    
     /* Layout - simple vertical stack */
     .supervisor-knowledge-map .knowledge-layout {
         position: relative !important;
@@ -1493,10 +1499,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         order: 1; /* First on mobile */
     }
     
-    /* Knowledge map section - full width */
+    /* Knowledge map section - full width, positioned after intro */
     .supervisor-home .knowledge-map-section {
         width: 100% !important;
-        order: 2; /* Second on mobile */
+        margin: 0 0 30px 0 !important;
+        order: 0; /* Natural order on mobile */
     }
     
     /* Search section - bigger on mobile */

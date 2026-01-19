@@ -1492,90 +1492,72 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         z-index: 10000; /* Above the menu */
     }
     
+    /* Simple mobile menu - full screen overlay */
     .supervisor-home .site-nav.supervisor_header_links {
-        display: none !important; /* Force hide on mobile by default */
-        flex-direction: column !important;
-        flex-wrap: nowrap !important;
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         background: var(--sv-blue-050, #f3f7fc);
-        border: none;
-        border-radius: 0;
-        margin: 0;
-        padding: 60px 16px 16px;
-        box-shadow: none;
         z-index: 9999;
-        max-width: none;
-        height: 100vh;
-        width: 100%;
-        align-items: stretch !important;
         overflow-y: auto;
+        padding: 80px 20px 20px;
     }
     
     .supervisor-home .site-nav.supervisor_header_links.mobile-active {
-        display: flex !important; /* Force show when active */
+        display: block;
     }
     
-    /* Optional: Add backdrop when menu is open */
-    .supervisor-home .nav-wrapper::after {
-        content: '';
-        display: none;
-    }
-    
-    .supervisor-home .site-nav.supervisor_header_links.mobile-active ~ *,
-    body.menu-open {
-        overflow: hidden;
-    }
-    
+    /* Simple list items - just block elements */
     .supervisor-home .site-nav a {
-        flex: none !important;
-        display: block !important;
+        display: block;
         width: 100%;
-        padding: 14px 20px;
-        border-radius: 0 !important;
-        text-align: right; /* RTL */
-        justify-content: flex-start;
-        height: auto !important;
-        min-height: 48px;
+        padding: 16px 0;
+        text-align: right;
+        color: var(--sv-text) !important;
+        text-decoration: none;
         border-bottom: 1px solid #BFD3EB;
-        position: relative !important;
-        margin: 0 !important;
+        font-size: 18px;
+        font-weight: 600;
     }
     
     .supervisor-home .site-nav a:last-child {
         border-bottom: none;
     }
     
-    /* Remove separators on mobile */
+    /* Remove all separators and complex styles */
     .supervisor-home .site-nav a::before {
         display: none !important;
     }
     
-    /* Mobile dropdown menu styles */
+    /* Simple dropdown - just show inline */
     .supervisor-home .dropdown-menu {
-        position: static !important;
-        transform: none !important;
-        width: 100% !important;
-        box-shadow: none;
-        border: none;
-        border-top: 1px solid #BFD3EB;
-        border-bottom: 1px solid #BFD3EB;
-        margin: 0 !important;
-        padding: 0 !important;
+        display: none;
         background: rgba(255, 255, 255, 0.5);
-        display: block !important;
-        order: 999; /* Ensure dropdown appears after its parent link */
+        padding: 0 0 0 20px;
+        margin: 0;
+        border: none;
     }
     
-    /* Ensure dropdown items are properly stacked */
+    .supervisor-home .dropdown-menu.show {
+        display: block;
+    }
+    
     .supervisor-home .dropdown-menu .submenu-item {
-        display: block !important;
-        width: 100% !important;
-        position: relative !important;
-        margin: 0 !important;
+        display: block;
+        padding: 12px 0;
+        text-align: right;
+        color: var(--sv-text) !important;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        border-bottom: 1px solid #BFD3EB;
+    }
+    
+    .supervisor-home .dropdown-menu .submenu-item:last-child {
+        border-bottom: none;
     }
     
     .supervisor-home .site-nav a.dropdown.active .dropdown-icon {

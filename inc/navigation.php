@@ -106,7 +106,16 @@ function render_nav_item($item) {
 ?>
 
 <div class="nav-wrapper">
-    <!-- Hamburger Menu Button (mobile only) -->
+    <!-- Desktop Navigation Menu -->
+    <nav class="site-nav supervisor_header_links desktop-menu" aria-label="ראשי">
+        <?php
+        foreach ($supervisor_menu as $menu_item) {
+            render_nav_item($menu_item);
+        }
+        ?>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
     <button class="mobile-menu-toggle" aria-label="תפריט" aria-expanded="false">
         <span class="hamburger-icon">
             <span class="hamburger-line"></span>
@@ -115,7 +124,7 @@ function render_nav_item($item) {
         </span>
     </button>
 
-    <nav class="site-nav supervisor_header_links" aria-label="ראשי">
+    <nav class="site-nav supervisor_header_links mobile-menu" aria-label="ראשי">
         <?php
         foreach ($supervisor_menu as $menu_item) {
             render_nav_item($menu_item);

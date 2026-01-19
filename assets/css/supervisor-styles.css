@@ -1268,7 +1268,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     width: 100%;
 }
 
-.supervisor-home nav.site-nav.supervisor_header_links {
+/* Desktop menu styles */
+.supervisor-home nav.site-nav.supervisor_header_links.desktop-menu {
     display: flex;
     align-items: stretch;
     gap: 0;
@@ -1286,8 +1287,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     position: relative;
 }
 
-/* 2) Links behave like equal-width tabs */
-.supervisor-home .site-nav a {
+/* 2) Links behave like equal-width tabs - DESKTOP ONLY */
+.supervisor-home .desktop-menu a {
     flex: 1 1 0;
     display: inline-flex;
     align-items: center;
@@ -1307,28 +1308,28 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     box-sizing: border-box;
 }
 
-/* Add rounded corners to first and last items for pill effect (excluding dropdown items) */
-.supervisor-home .site-nav a:first-child:not(.dropdown) {
+/* Add rounded corners to first and last items for pill effect (excluding dropdown items) - DESKTOP ONLY */
+.supervisor-home .desktop-menu a:first-child:not(.dropdown) {
     border-radius: 0 9999px 9999px 0 !important; /* Rounded right side for first item (RTL) */
 }
 
-.supervisor-home .site-nav a:last-child:not(.dropdown) {
+.supervisor-home .desktop-menu a:last-child:not(.dropdown) {
     border-radius: 9999px 0 0 9999px !important; /* Rounded left side for last item (RTL) */
 }
 
-/* Ensure dropdown items have no border radius - ultra-specific selectors */
-.supervisor-home nav.site-nav.supervisor_header_links a.dropdown,
-.supervisor-home nav.site-nav.supervisor_header_links a.dropdown:first-child,
-.supervisor-home nav.site-nav.supervisor_header_links a.dropdown:last-child,
-.supervisor-home nav.site-nav.supervisor_header_links a.dropdown:hover,
-.supervisor-home nav.site-nav.supervisor_header_links a.dropdown:focus,
-.supervisor-home nav.site-nav.supervisor_header_links a.dropdown:active,
-.supervisor-home nav.site-nav.supervisor_header_links a.dropdown.active {
+/* Ensure dropdown items have no border radius - ultra-specific selectors - DESKTOP ONLY */
+.supervisor-home .desktop-menu a.dropdown,
+.supervisor-home .desktop-menu a.dropdown:first-child,
+.supervisor-home .desktop-menu a.dropdown:last-child,
+.supervisor-home .desktop-menu a.dropdown:hover,
+.supervisor-home .desktop-menu a.dropdown:focus,
+.supervisor-home .desktop-menu a.dropdown:active,
+.supervisor-home .desktop-menu a.dropdown.active {
     border-radius: 0 !important;
 }
 
-/* 3) Vertical separators (RTL-friendly: put them on the left of each item) */
-.supervisor-home .site-nav a:not(:last-child)::before {
+/* 3) Vertical separators (RTL-friendly: put them on the left of each item) - DESKTOP ONLY */
+.supervisor-home .desktop-menu a:not(:last-child)::before {
     content: "";
     position: absolute;
     inset: 12px auto 12px 0;   /* top / right / bottom / left */
@@ -1336,33 +1337,32 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: #BFD3EB;
 }
 
-/* 4) Hover/Focus — no layout shift, color only */
-.supervisor-home .site-nav a:hover,
-.supervisor-home .site-nav a:focus-visible {
+/* 4) Hover/Focus — no layout shift, color only - DESKTOP ONLY */
+.supervisor-home .desktop-menu a:hover,
+.supervisor-home .desktop-menu a:focus-visible {
     background: var(--sv-blue, #a9c4e6) !important;
     color: var(--sv-text) !important;
     outline: 0;
 }
 
-/* Active state */
-.supervisor-home .site-nav a.active,
-.supervisor-home nav.site-nav.supervisor_header_links a.active {
+/* Active state - DESKTOP ONLY */
+.supervisor-home .desktop-menu a.active {
     background: #CEDEEF !important;
     color: var(--sv-text) !important;
 }
 
-/* 5) Dropdown caret spacing stays tidy */
-.supervisor-home .site-nav .dropdown-icon {
+/* 5) Dropdown caret spacing stays tidy - DESKTOP ONLY */
+.supervisor-home .desktop-menu .dropdown-icon {
     margin-inline-start: 8px; /* RTL-friendly */
     transition: transform 0.2s ease;
 }
 
-.supervisor-home .site-nav a.dropdown.active .dropdown-icon {
+.supervisor-home .desktop-menu a.dropdown.active .dropdown-icon {
     transform: rotate(180deg);
 }
 
-/* ===== DROPDOWN MENU ===== */
-.supervisor-home .dropdown-menu {
+/* ===== DROPDOWN MENU - DESKTOP ONLY ===== */
+.supervisor-home .desktop-menu .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 50%; /* Center horizontally */
@@ -1380,16 +1380,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     padding: 0;
 }
 
-.supervisor-home .dropdown-menu.show {
+.supervisor-home .desktop-menu .dropdown-menu.show {
     display: block;
 }
 
-.supervisor-home .dropdown-menu .submenu-item,
-.supervisor-home .dropdown-menu .submenu-item:first-child,
-.supervisor-home .dropdown-menu .submenu-item:last-child,
-.supervisor-home .dropdown-menu .submenu-item:hover,
-.supervisor-home .dropdown-menu .submenu-item:focus,
-.supervisor-home .dropdown-menu .submenu-item:active {
+/* Desktop dropdown menu submenu items */
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item,
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item:first-child,
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item:last-child,
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item:hover,
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item:focus,
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item:active {
     display: block;
     padding: 14px 20px;
     color: var(--sv-text) !important;
@@ -1407,17 +1408,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     text-align: right; /* RTL alignment */
 }
 
-.supervisor-home .dropdown-menu .submenu-item:last-child {
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item:last-child {
     border-bottom: none;
 }
 
-.supervisor-home .dropdown-menu .submenu-item:hover {
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item:hover {
     background-color: var(--sv-blue, #a9c4e6) !important;
     color: var(--sv-text) !important;
 }
 
 /* Prevent any ::before pseudo-elements on dropdown items (remove left border) */
-.supervisor-home .dropdown-menu .submenu-item::before {
+.supervisor-home .desktop-menu .dropdown-menu .submenu-item::before {
     display: none !important;
     content: none !important;
 }
@@ -1426,6 +1427,16 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 .nav-wrapper {
     position: relative;
     width: 100%;
+}
+
+/* Desktop menu - visible by default */
+.supervisor-home .desktop-menu {
+    display: flex;
+}
+
+/* Mobile menu - hidden by default */
+.supervisor-home .mobile-menu {
+    display: none;
 }
 
 .mobile-menu-toggle {
@@ -1478,22 +1489,23 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Mobile styles - show hamburger, hide regular menu */
+/* Mobile styles - hide desktop menu, show hamburger */
 @media (max-width: 768px) {
-    .supervisor-home .nav-wrapper {
-        position: relative;
-        margin: 8px auto 14px;
+    /* Hide desktop menu on mobile */
+    .supervisor-home .desktop-menu {
+        display: none !important;
     }
     
+    /* Show hamburger button on mobile */
     .supervisor-home .mobile-menu-toggle {
         display: flex;
-        margin: 0 auto;
+        margin: 8px auto 14px;
         position: relative;
-        z-index: 10000; /* Above the menu */
+        z-index: 10000;
     }
     
-    /* Simple mobile menu - full screen overlay */
-    .supervisor-home .site-nav.supervisor_header_links {
+    /* Mobile menu - full screen overlay */
+    .supervisor-home .mobile-menu {
         display: none;
         position: fixed;
         top: 0;
@@ -1504,14 +1516,19 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         z-index: 9999;
         overflow-y: auto;
         padding: 80px 20px 20px;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        flex-direction: column;
+        align-items: stretch;
     }
     
-    .supervisor-home .site-nav.supervisor_header_links.mobile-active {
+    .supervisor-home .mobile-menu.mobile-active {
         display: block;
     }
     
-    /* Simple list items - just block elements */
-    .supervisor-home .site-nav a {
+    /* Mobile menu items - simple block list */
+    .supervisor-home .mobile-menu a {
         display: block;
         width: 100%;
         padding: 16px 0;
@@ -1521,31 +1538,37 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         border-bottom: 1px solid #BFD3EB;
         font-size: 18px;
         font-weight: 600;
+        background: transparent !important;
+        border-radius: 0 !important;
     }
     
-    .supervisor-home .site-nav a:last-child {
+    .supervisor-home .mobile-menu a:last-child {
         border-bottom: none;
     }
     
-    /* Remove all separators and complex styles */
-    .supervisor-home .site-nav a::before {
+    /* Remove all separators on mobile */
+    .supervisor-home .mobile-menu a::before {
         display: none !important;
     }
     
-    /* Simple dropdown - just show inline */
-    .supervisor-home .dropdown-menu {
+    /* Mobile dropdown menus */
+    .supervisor-home .mobile-menu .dropdown-menu {
         display: none;
         background: rgba(255, 255, 255, 0.5);
         padding: 0 0 0 20px;
         margin: 0;
         border: none;
+        position: static;
+        transform: none;
+        width: 100%;
+        box-shadow: none;
     }
     
-    .supervisor-home .dropdown-menu.show {
+    .supervisor-home .mobile-menu .dropdown-menu.show {
         display: block;
     }
     
-    .supervisor-home .dropdown-menu .submenu-item {
+    .supervisor-home .mobile-menu .dropdown-menu .submenu-item {
         display: block;
         padding: 12px 0;
         text-align: right;
@@ -1556,11 +1579,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         border-bottom: 1px solid #BFD3EB;
     }
     
-    .supervisor-home .dropdown-menu .submenu-item:last-child {
+    .supervisor-home .mobile-menu .dropdown-menu .submenu-item:last-child {
         border-bottom: none;
     }
     
-    .supervisor-home .site-nav a.dropdown.active .dropdown-icon {
+    .supervisor-home .mobile-menu a.dropdown.active .dropdown-icon {
         transform: rotate(180deg);
     }
 }

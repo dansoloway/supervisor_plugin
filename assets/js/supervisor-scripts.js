@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Mobile hamburger menu toggle
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const siteNav = document.querySelector('.supervisor_header_links');
+    const mobileMenu = document.querySelector('.mobile-menu');
     
-    if (mobileMenuToggle && siteNav) {
+    if (mobileMenuToggle && mobileMenu) {
         mobileMenuToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
             // Toggle menu visibility
-            const isActive = siteNav.classList.toggle('mobile-active');
+            const isActive = mobileMenu.classList.toggle('mobile-active');
             mobileMenuToggle.classList.toggle('active');
             mobileMenuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
             
@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-            if (!mobileMenuToggle.contains(e.target) && !siteNav.contains(e.target)) {
-                siteNav.classList.remove('mobile-active');
+            if (!mobileMenuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('mobile-active');
                 mobileMenuToggle.classList.remove('active');
                 mobileMenuToggle.setAttribute('aria-expanded', 'false');
                 document.body.style.overflow = '';
@@ -64,12 +64,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Close menu when a link is clicked (for better UX on mobile)
-        const navLinks = siteNav.querySelectorAll('a');
-        navLinks.forEach(link => {
+        const mobileNavLinks = mobileMenu.querySelectorAll('a');
+        mobileNavLinks.forEach(link => {
             link.addEventListener('click', function() {
                 // Only close if it's not a dropdown toggle
                 if (!this.classList.contains('dropdown')) {
-                    siteNav.classList.remove('mobile-active');
+                    mobileMenu.classList.remove('mobile-active');
                     mobileMenuToggle.classList.remove('active');
                     mobileMenuToggle.setAttribute('aria-expanded', 'false');
                     document.body.style.overflow = '';
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Dropdown menu functionality
-    const dropdownItems = document.querySelectorAll('.supervisor-home .site-nav a.dropdown');
+    // Dropdown menu functionality - desktop menu
+    const dropdownItems = document.querySelectorAll('.supervisor-home .desktop-menu a.dropdown');
     
     dropdownItems.forEach(dropdown => {
         // Find the dropdown menu that follows this dropdown item
@@ -185,4 +185,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+    
+    // Mobile menu dropdown functionality (separate from desktop)
+    if (mobileMenu) {
+        const mobileDropdownItems = mobileMenu.querySelectorAll('a.dropdown');
+        
+        mobileDropdownItems.forEach(dropdown => {
+            const dropdownMenu = dropdown.nextElementSibling;
+            
+            if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+                dropdown.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Close any other open dropdowns
+                    mobileMenu.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                        if (menu !== dropdownMenu) {
+                            menu.classList.remove('show');
+                            menu.previousElementSibling.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdownMenu.classList.toggle('show');
+                    dropdown.classList.toggle('active');
+                });
+            }
+        });
+    }
 });

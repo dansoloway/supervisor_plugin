@@ -1263,6 +1263,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 /* ===== HORIZONTAL MENU BAR (PILLS) ===== */
 /* 1) Turn the whole bar into a pill */
+.supervisor-home .nav-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .supervisor-home nav.site-nav.supervisor_header_links {
     display: flex;
     align-items: stretch;
@@ -1418,6 +1423,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* ===== MOBILE HAMBURGER MENU ===== */
+.nav-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .mobile-menu-toggle {
     display: none; /* Hidden by default on desktop */
     background: var(--sv-blue-050, #f3f7fc);
@@ -1470,12 +1480,18 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 /* Mobile styles - show hamburger, hide regular menu */
 @media (max-width: 768px) {
-    .mobile-menu-toggle {
+    .supervisor-home .nav-wrapper {
+        position: relative;
+        margin: 8px auto 14px;
+    }
+    
+    .supervisor-home .mobile-menu-toggle {
         display: flex;
+        margin: 0 auto;
     }
     
     .supervisor-home .site-nav.supervisor_header_links {
-        display: none;
+        display: none !important; /* Force hide on mobile by default */
         flex-direction: column;
         position: absolute;
         top: calc(100% + 8px);
@@ -1490,17 +1506,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         z-index: 1000;
         max-width: none;
         height: auto;
-    }
-    
-    /* Position hamburger button relative to nav container */
-    .supervisor-home .mobile-menu-toggle {
-        position: relative;
-        margin: 8px auto 14px;
-        align-self: center;
+        width: calc(100% - 16px);
     }
     
     .supervisor-home .site-nav.supervisor_header_links.mobile-active {
-        display: flex;
+        display: flex !important; /* Force show when active */
     }
     
     .supervisor-home .site-nav a {

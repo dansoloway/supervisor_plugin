@@ -239,22 +239,117 @@
     }
 }
 
+/* ===== GLOBAL MOBILE STYLES - ALL PAGES ===== */
 @media (max-width: 768px) {
     .supervisor-page-container {
         padding: 0 16px 32px 16px;
     }
     
+    /* Force single column on mobile - no multi-column views */
     .supervisor-two-column,
     .supervisor-three-column,
-    .supervisor-four-column {
-        grid-template-columns: 1fr;
+    .supervisor-four-column,
+    .supervisor-main-content,
+    .supervisor-content-wrapper.supervisor-two-column {
+        grid-template-columns: 1fr !important;
         gap: 20px;
+        display: grid !important;
+    }
+    
+    /* Increase base font sizes on mobile for better readability */
+    .supervisor-home {
+        font-size: 18px; /* Base font size increase */
+    }
+    
+    /* Headings - bigger on mobile */
+    .supervisor-home h1 {
+        font-size: 28px !important;
+    }
+    
+    .supervisor-home h2 {
+        font-size: 24px !important;
+    }
+    
+    .supervisor-home h3 {
+        font-size: 22px !important;
+    }
+    
+    .supervisor-home h4 {
+        font-size: 20px !important;
+    }
+    
+    /* Paragraph text - bigger on mobile */
+    .supervisor-home p,
+    .supervisor-home .content-text,
+    .supervisor-home .content-main p {
+        font-size: 18px !important;
+        line-height: 1.7 !important;
+    }
+    
+    /* Titles and labels - bigger on mobile */
+    .supervisor-home .page-title,
+    .supervisor-home .org-main-title,
+    .supervisor-home .intro-title {
+        font-size: 26px !important;
+    }
+    
+    /* Info labels and values - bigger on mobile */
+    .supervisor-home .info-label,
+    .supervisor-home .info-value {
+        font-size: 18px !important;
+    }
+    
+    /* Search and form elements - bigger on mobile */
+    .supervisor-home .search-title {
+        font-size: 24px !important;
+    }
+    
+    .supervisor-home .search-input-field {
+        font-size: 18px !important;
+        height: 50px !important;
+    }
+    
+    /* Buttons - bigger text and touch targets */
+    .supervisor-home button,
+    .supervisor-home .button,
+    .supervisor-home .knowledge-map-button {
+        font-size: 18px !important;
+        padding: 14px 24px !important;
+        min-height: 48px !important;
+    }
+    
+    /* Links - bigger on mobile */
+    .supervisor-home a:not(.site-nav a) {
+        font-size: 18px !important;
+    }
+    
+    /* Single org page specific */
+    .supervisor-single-org .org-info-boxes {
+        grid-template-columns: 1fr !important;
     }
 }
 
 @media (max-width: 480px) {
     .supervisor-page-container {
         padding: 0 12px 24px 12px;
+    }
+    
+    /* Even bigger fonts on very small screens */
+    .supervisor-home {
+        font-size: 19px;
+    }
+    
+    .supervisor-home h1 {
+        font-size: 26px !important;
+    }
+    
+    .supervisor-home h2 {
+        font-size: 22px !important;
+    }
+    
+    .supervisor-home p,
+    .supervisor-home .content-text {
+        font-size: 19px !important;
     }
 }
 
@@ -1186,7 +1281,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     flex-shrink: 0;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
+/* ===== RESPONSIVE DESIGN - UPDATES TO FOLLOW GLOBAL MOBILE STYLES ===== */
 @media (max-width: 768px) {
     .supervisor-home {
         padding: 16px;
@@ -2931,11 +3026,11 @@ img[src*=".svg"] {
     }
     
     .supervisor-single-org .org-main-title {
-        font-size: 18px;
+        font-size: 26px !important; /* Bigger on mobile */
     }
     
     .supervisor-single-org .org-info-boxes {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important; /* Single column */
     }
     
     .supervisor-single-org .info-box.left-box {
@@ -2956,12 +3051,25 @@ img[src*=".svg"] {
         margin-left: 0;
         margin-bottom: 5px;
         min-width: auto;
+        font-size: 18px !important; /* Bigger on mobile */
+    }
+    
+    .supervisor-single-org .info-value {
+        font-size: 18px !important; /* Bigger on mobile */
+    }
+    
+    .supervisor-single-org .content-title {
+        font-size: 22px !important; /* Bigger on mobile */
+    }
+    
+    .supervisor-single-org .content-text {
+        font-size: 18px !important; /* Bigger on mobile */
     }
 }
 
 @media (max-width: 480px) {
     .supervisor-single-org .org-main-title {
-        font-size: 18px;
+        font-size: 24px !important;
     }
     
     .supervisor-single-org .info-box {
@@ -2969,11 +3077,16 @@ img[src*=".svg"] {
     }
     
     .supervisor-single-org .content-title {
-        font-size: 18px;
+        font-size: 20px !important;
     }
     
     .supervisor-single-org .content-text {
-        font-size: 16px;
+        font-size: 19px !important; /* Bigger on very small screens */
+    }
+    
+    .supervisor-single-org .info-label,
+    .supervisor-single-org .info-value {
+        font-size: 19px !important;
     }
 }
 

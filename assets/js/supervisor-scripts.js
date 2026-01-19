@@ -44,6 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const isActive = siteNav.classList.toggle('mobile-active');
             mobileMenuToggle.classList.toggle('active');
             mobileMenuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            
+            // Prevent body scroll when menu is open
+            if (isActive) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
         
         // Close menu when clicking outside
@@ -52,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 siteNav.classList.remove('mobile-active');
                 mobileMenuToggle.classList.remove('active');
                 mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
             }
         });
         
@@ -64,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     siteNav.classList.remove('mobile-active');
                     mobileMenuToggle.classList.remove('active');
                     mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
                 }
             });
         });

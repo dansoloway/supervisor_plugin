@@ -1488,31 +1488,46 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     .supervisor-home .mobile-menu-toggle {
         display: flex;
         margin: 0 auto;
+        position: relative;
+        z-index: 10000; /* Above the menu */
     }
     
     .supervisor-home .site-nav.supervisor_header_links {
         display: none !important; /* Force hide on mobile by default */
         flex-direction: column !important;
         flex-wrap: nowrap !important;
-        position: absolute;
-        top: calc(100% + 8px);
-        left: 8px;
-        right: 8px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background: var(--sv-blue-050, #f3f7fc);
-        border: 2px solid #BFD3EB;
-        border-radius: 8px;
+        border: none;
+        border-radius: 0;
         margin: 0;
-        padding: 0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
+        padding: 60px 16px 16px;
+        box-shadow: none;
+        z-index: 9999;
         max-width: none;
-        height: auto;
-        width: calc(100% - 16px);
+        height: 100vh;
+        width: 100%;
         align-items: stretch !important;
+        overflow-y: auto;
     }
     
     .supervisor-home .site-nav.supervisor_header_links.mobile-active {
         display: flex !important; /* Force show when active */
+    }
+    
+    /* Optional: Add backdrop when menu is open */
+    .supervisor-home .nav-wrapper::after {
+        content: '';
+        display: none;
+    }
+    
+    .supervisor-home .site-nav.supervisor_header_links.mobile-active ~ *,
+    body.menu-open {
+        overflow: hidden;
     }
     
     .supervisor-home .site-nav a {

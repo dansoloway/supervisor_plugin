@@ -2422,6 +2422,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     margin: 0px auto;
 }
 
+/* Desktop: limit knowledge map image size to original 600px */
+@media (min-width: 769px) {
+    .knowledge-map-image[src*=".svg"] {
+        max-width: 600px !important;
+    }
+}
+
 /* SVG frame styling for the knowledge map page */
 .supervisor-knowledge-map .svg-frame img[src*=".svg"] {
     width: 100% !important;

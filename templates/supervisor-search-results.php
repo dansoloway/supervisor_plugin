@@ -235,7 +235,7 @@ $total_results = $search_query->found_posts;
                                 </div>
                             </div>
                             <!-- Bibliography Content - Always visible -->
-                            <div class="accordion-content" style="display: block;">
+                            <div class="accordion-content is-open">
                                 <div><?php echo apply_filters('the_content', get_the_content()); ?></div>
                                 <?php if ($link): 
                                     // Check if link is an ACF link field (array) or just a URL (string)
@@ -248,7 +248,7 @@ $total_results = $search_query->found_posts;
                                         $link_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($link);
                                     }
                                 ?>
-                                    <p><strong>לקישור:</strong> <a href="<?php echo $link_url; ?>" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;"><?php echo $link_text; ?></a></p>
+                                    <p><strong>לקישור:</strong> <a href="<?php echo $link_url; ?>" target="_blank" class="source-link"><?php echo $link_text; ?></a></p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -267,7 +267,7 @@ $total_results = $search_query->found_posts;
                             </div>
 
                             <!-- Accordion Content -->
-                            <div class="accordion-content" id="accordion-<?php echo esc_attr($accordion_id); ?>" style="display: none;">
+                            <div class="accordion-content" id="accordion-<?php echo esc_attr($accordion_id); ?>">
                                 <?php if ($post_type === 'qa_updates'): ?>
                                     <!-- Updates Content -->
                                     <div><?php echo apply_filters('the_content', get_the_content()); ?></div>
@@ -306,14 +306,14 @@ $total_results = $search_query->found_posts;
                                             </p>
                                         <?php endif; ?>
                                         <?php if ($link): ?>
-                                            <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;"><?php echo esc_url($link); ?></a></p>
+                                            <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
                                         <?php endif; ?>
                                     </div>
                                 <?php elseif ($post_type === 'qa_orgs'): ?>
                                     <!-- Organizations Content -->
                                     <div><?php echo apply_filters('the_content', get_the_content()); ?></div>
                                     <?php if ($link): ?>
-                                        <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;"><?php echo esc_url($link); ?></a></p>
+                                        <p><strong>לקישור:</strong> <a href="<?php echo esc_url($link); ?>" target="_blank" class="source-link"><?php echo esc_url($link); ?></a></p>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </div>
@@ -339,7 +339,7 @@ $total_results = $search_query->found_posts;
                     
                     if ($pagination_links):
                         foreach ($pagination_links as $link):
-                            echo '<span style="display: inline-block; margin-right: 8px;">' . $link . '</span>';
+                            echo '<span>' . $link . '</span>';
                         endforeach;
                     endif;
                     ?>
@@ -388,20 +388,20 @@ $total_results = $search_query->found_posts;
                                 const otherIcon = document.getElementById('icon-' + otherAccordionId);
                                 
                                 if (otherContent && otherIcon) {
-                                    otherContent.style.display = 'none';
-                                    otherIcon.innerHTML = '⌄';
+                                    otherContent.classList.remove('is-open');
+                                    otherIcon.textContent = '⌄';
                                 }
                             }
                         }
                     });
 
                     // Toggle the clicked accordion
-                    if (content.style.display === 'none' || content.style.display === '') {
-                        content.style.display = 'block';
-                        icon.innerHTML = '⌃';
+                    if (content.classList.contains('is-open')) {
+                        content.classList.remove('is-open');
+                        icon.textContent = '⌄';
                     } else {
-                        content.style.display = 'none';
-                        icon.innerHTML = '⌄';
+                        content.classList.add('is-open');
+                        icon.textContent = '⌃';
                     }
                 });
             });

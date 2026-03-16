@@ -60,8 +60,8 @@ $updates_query = new WP_Query($args);
         <!-- Left: QA Updates List -->
         <div class="qa-updates-list">
            
-            <div class="search-results-container" style="display: none;"></div>
-            <div class="initial-content"<?php echo $highlight_id ? ' style="display: block !important;"' : ''; ?>>
+            <div class="search-results-container"></div>
+            <div class="initial-content<?php echo $highlight_id ? ' initial-content--visible' : ''; ?>">
                 <?php
                 if ($updates_query->have_posts()):
                     while ($updates_query->have_posts()):
@@ -81,6 +81,8 @@ $updates_query = new WP_Query($args);
                             $formatted_date = get_the_date('F Y');
                         }
 
+                        $is_highlighted = ($highlight_id && $post_id == $highlight_id);
+
                         echo '<div class="qa-update-item">';
 
                         // Accordion Header (Clickable)
@@ -96,44 +98,13 @@ $updates_query = new WP_Query($args);
                         echo '</div>'; // accordion-header
 
                         // Accordion Content (Hidden by Default, unless highlighted)
-                        $is_highlighted = ($highlight_id && $post_id == $highlight_id);
-                        $display_style = $is_highlighted ? 'display: block;' : 'display: none;';
-                        echo '<div class="accordion-content" id="accordion-' . esc_attr($post_id) . '" style="' . $display_style . '">';
+                        $accordion_class = 'accordion-content' . ($is_highlighted ? ' is-open' : '');
+                        echo '<div class="' . esc_attr($accordion_class) . '" id="accordion-' . esc_attr($post_id) . '">';
                             // Get and process content properly to preserve link text
                             // Use get_post_field to get raw content, then apply filters
                             $content = get_post_field('post_content', $post_id);
                             // Apply all content filters (includes block rendering, wpautop, and link processing)
                             $content = apply_filters('the_content', $content);
-                            
-                            // Add inline styles to all links in the content to force blue color
-                            // This regex matches <a> tags with any attributes
-                            $content = preg_replace_callback(
-                                '/<a\s+([^>]*?)>/i',
-                                function($matches) {
-                                    $attrs = $matches[1];
-                                    // Skip if already has inline color style
-                                    if (preg_match('/style\s*=\s*["\'][^"\']*color\s*:\s*#0000EE/i', $attrs)) {
-                                        return $matches[0]; // Return unchanged
-                                    }
-                                    // Check if style attribute already exists
-                                    if (preg_match('/style\s*=\s*["\']([^"\']*)["\']/i', $attrs, $style_match)) {
-                                        // Add to existing style
-                                        $existing_style = $style_match[1];
-                                        $new_style = rtrim($existing_style, '; ') . '; color: #0000EE !important; text-decoration: underline !important;';
-                                        $attrs = preg_replace('/style\s*=\s*["\']([^"\']*)["\']/i', 'style="' . esc_attr($new_style) . '"', $attrs);
-                                    } else {
-                                        // Add new style attribute - ensure it's properly formatted
-                                        $attrs = trim($attrs);
-                                        if (!empty($attrs) && substr($attrs, -1) !== ' ') {
-                                            $attrs .= ' ';
-                                        }
-                                        $attrs .= 'style="color: #0000EE !important; text-decoration: underline !important;"';
-                                    }
-                                    return '<a ' . $attrs . '>';
-                                },
-                                $content
-                            );
-                            
                             echo '<div class="update-content-text">' . $content . '</div>';
 
                             echo '<div class="taxonomy-boxes">';
@@ -164,7 +135,7 @@ $updates_query = new WP_Query($args);
                                     $parsed_url = parse_url($link);
                                     $link_text = !empty($parsed_url['host']) ? esc_html($parsed_url['host']) : esc_html($link);
                                 }
-                                echo '<p><strong>למקור:</strong> <a href="' . $link_url . '" target="_blank" class="source-link" style="color: #0000EE !important; text-decoration: underline !important;">' . $link_text . '</a></p>';
+                                echo '<p><strong>למקור:</strong> <a href="' . $link_url . '" target="_blank" class="source-link">' . $link_text . '</a></p>';
                             }
 
                             echo '</div>'; // taxonomy-boxes
@@ -188,7 +159,7 @@ $updates_query = new WP_Query($args);
                        if ($pagination_links) {
                            echo '<div class="pagination">';
                            foreach ($pagination_links as $link) {
-                               echo '<span style="display: inline-block; margin-right: 8px;">' . $link . '</span>';
+                               echo '<span>' . $link . '</span>';
                            }
                            echo '</div>';
                        }
@@ -239,20 +210,20 @@ $updates_query = new WP_Query($args);
                                 const otherIcon = document.getElementById('icon-' + otherPostId);
                                 
                                 if (otherContent && otherIcon) {
-                                    otherContent.style.display = 'none';
-                                    otherIcon.innerHTML = '⌄';
+                                    otherContent.classList.remove('is-open');
+                                    otherIcon.textContent = '⌄';
                                 }
                             }
                         }
                     });
 
                     // Toggle the clicked accordion
-                    if (content.style.display === 'none' || content.style.display === '') {
-                        content.style.display = 'block';
-                        icon.innerHTML = '⌃';
+                    if (content.classList.contains('is-open')) {
+                        content.classList.remove('is-open');
+                        icon.textContent = '⌄';
                     } else {
-                        content.style.display = 'none';
-                        icon.innerHTML = '⌄';
+                        content.classList.add('is-open');
+                        icon.textContent = '⌃';
                     }
                 });
             });
@@ -266,15 +237,15 @@ $updates_query = new WP_Query($args);
         const initialContent = document.querySelector('.initial-content');
         const searchResults = document.querySelector('.search-results-container');
         if (initialContent && searchResults) {
-            initialContent.style.display = 'block';
+            initialContent.classList.add('initial-content--visible');
             searchResults.style.display = 'none';
         }
         
-        // Open the highlighted accordion
+        // Open the highlighted accordion (already has is-open from PHP)
         const highlightedContent = document.getElementById('accordion-<?php echo esc_js($highlight_id); ?>');
         const highlightedIcon = document.getElementById('icon-<?php echo esc_js($highlight_id); ?>');
         if (highlightedContent && highlightedIcon) {
-            highlightedContent.style.display = 'block';
+            highlightedContent.classList.add('is-open');
             highlightedIcon.textContent = '⌃';
         }
         <?php endif; ?>

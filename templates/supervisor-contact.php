@@ -21,7 +21,7 @@ get_header('supervisor');
         <div class="supervisor-content-wrapper supervisor-two-column">
         
         <!-- Page Title -->
-        <div class="page-header" style="grid-column: 1 / -1;">
+        <div class="page-header">
             <h1 class="page-title">יצירת קשר</h1>
         </div>
         

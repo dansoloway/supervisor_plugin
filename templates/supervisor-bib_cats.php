@@ -18,9 +18,9 @@ error_log('Loading supervisor-bib_cats.php template');
         
         <!-- Main Content -->
         <div class="supervisor-content-wrapper supervisor-single-column">
-        <h1 class="page-title" style="text-align: right;">נושאי מפתח</h1>
+        <h1 class="page-title">נושאי מפתח</h1>
         
-        <p class="intro-text" style="text-align: right;">
+        <p class="intro-text">
             <?php 
             // Get the page description or use default text
             $page_description = get_post_meta(get_the_ID(), 'page_description', true);

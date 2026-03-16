@@ -46,18 +46,7 @@
     color: var(--sv-text) !important;
 }
 
-/* ===== SOURCE LINK STYLING ===== */
-.source-link {
-    direction: ltr !important;
-    color: var(--sv-blue) !important;
-    text-decoration: none;
-}
-
-.source-link:hover,
-.source-link:focus {
-    color: var(--sv-blue-600) !important;
-    text-decoration: underline;
-}
+/* Source link styling in SHARED DESIGN LAYER (template-derived styles) */
 
 /* ===== PAGINATION STYLING ===== */
 .pagination {
@@ -358,18 +347,36 @@
     /* Color Variables */
     --sv-blue: #B3CBE7;       /* primary - consistent everywhere */
     --sv-blue-600: #9BB8D9;   /* hover - slightly darker */
+    --sv-blue-050: #f3f7fc;   /* light tint - inputs, dropdowns */
     --sv-blue-strip: #B3CBE7; /* updates header strip - same as primary */
     --sv-text: #1F2937;
     --sv-text-2: #4B5563;
+    --sv-text-muted: #9CA3AF;
     --sv-card: #FFFFFF;
     --sv-border: #E5EAF0;
+    --sv-border-input: #D1D5DB;
     --sv-divider: #D7DEE7;
     --sv-bar: #EEF4FA;        /* nav bar bg */
     --sv-bar-border: #A0B4C8; /* nav bar border - darker */
+    --sv-focus-ring: #79B8FF;
+    --sv-input-bg: #FFFFFF;
+    --sv-link-external: #0000EE;  /* traditional link blue - source/external links */
     
     /* Typography Variables */
     --sv-font-primary: 'Assistant', sans-serif;
     --sv-font-secondary: 'Assistant', sans-serif;
+    --sv-fs-body: 16px;
+    --sv-fs-body-lg: 18px;
+    --sv-fs-sm: 14px;
+    --sv-fs-h1: 28px;
+    --sv-fs-h2: 24px;
+    --sv-fs-h3: 22px;
+    --sv-fs-h4: 20px;
+    --sv-lh-body: 1.6;
+    --sv-lh-tight: 1.2;
+    --sv-fw-normal: 400;
+    --sv-fw-medium: 500;
+    --sv-fw-bold: 700;
     
     /* Spacing Variables */
     --sv-spacing-xs: 4px;
@@ -378,17 +385,285 @@
     --sv-spacing-lg: 24px;
     --sv-spacing-xl: 32px;
     --sv-spacing-xxl: 48px;
+    --sv-section-gap: 24px;
+    --sv-block-gap: 20px;
+    --sv-inline-gap: 12px;
     
     /* Border Radius Variables */
     --sv-radius-sm: 4px;
     --sv-radius-md: 8px;
     --sv-radius-lg: 12px;
     --sv-radius-xl: 16px;
+    --sv-radius-none: 0;
     
     /* Shadow Variables */
     --sv-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --sv-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
     --sv-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --sv-shadow-input: 0 4px 12px rgba(0, 0, 0, 0.08);
+    
+    /* Breakpoints (reference only - use in media queries) */
+    /* 480px, 768px, 992px, 1200px */
+}
+
+/* ===== SHARED DESIGN LAYER ===== */
+/* Reusable base styles - components inherit from here. RTL-aware. */
+
+/* --- Typography --- */
+.supervisor-home h1,
+.supervisor-home h2,
+.supervisor-home h3,
+.supervisor-home h4,
+.supervisor-home h5,
+.supervisor-home h6 {
+    font-family: var(--sv-font-primary) !important;
+    font-weight: var(--sv-fw-bold) !important;
+    color: var(--sv-text);
+    line-height: var(--sv-lh-tight);
+    margin: 0 0 var(--sv-spacing-md);
+}
+
+.supervisor-home h1 { font-size: var(--sv-fs-h1); }
+.supervisor-home h2 { font-size: var(--sv-fs-h2); }
+.supervisor-home h3 { font-size: var(--sv-fs-h3); }
+.supervisor-home h4 { font-size: var(--sv-fs-h4); }
+
+.supervisor-home p,
+.supervisor-home .content-text,
+.supervisor-home .content-main p {
+    font-family: var(--sv-font-primary);
+    font-size: var(--sv-fs-body);
+    line-height: var(--sv-lh-body);
+    color: var(--sv-text);
+    margin: 0 0 var(--sv-spacing-md);
+}
+
+/* --- Content containers --- */
+/* Base defined in STANDARDIZED CONTAINER SYSTEM above; spacing tokens used in section spacing */
+
+/* --- Card shell (shared) --- */
+.card {
+    background: var(--sv-card);
+    border: 1px solid var(--sv-border);
+    padding: var(--sv-block-gap);
+    border-radius: var(--sv-radius-none);
+    box-shadow: none;
+}
+
+/* --- Buttons (base) --- */
+.supervisor-home .search-button,
+.supervisor-home .filter-button,
+.supervisor-home .knowledge-map-button,
+.supervisor-home .more-updates-button {
+    font-family: var(--sv-font-secondary);
+    font-weight: var(--sv-fw-bold);
+    font-size: var(--sv-fs-body);
+    background: var(--sv-blue);
+    color: #000000;
+    border: none;
+    border-radius: var(--sv-radius-none);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.supervisor-home .search-button:hover,
+.supervisor-home .filter-button:hover,
+.supervisor-home .knowledge-map-button:hover,
+.supervisor-home .more-updates-button:hover {
+    background: var(--sv-blue-600);
+}
+
+/* --- Inputs (base) --- */
+.supervisor-home input[type="text"],
+.supervisor-home input[type="search"],
+.supervisor-home .search-input-field,
+.supervisor-home .supervisor-search-bar {
+    font-family: var(--sv-font-primary);
+    font-size: var(--sv-fs-body);
+    color: var(--sv-text);
+    background: var(--sv-input-bg);
+    border: 1px solid var(--sv-border-input);
+    border-radius: var(--sv-radius-none);
+    padding: 0 var(--sv-spacing-md);
+}
+
+.supervisor-home input::placeholder,
+.supervisor-home .search-input-field::placeholder,
+.supervisor-home .supervisor-search-bar::placeholder {
+    color: var(--sv-text-muted);
+}
+
+/* --- Search fields (unified) --- */
+.supervisor-search,
+.supervisor-home .search-input-container {
+    direction: rtl;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--sv-border-input);
+    background: var(--sv-input-bg);
+    border-radius: var(--sv-radius-none);
+    overflow: hidden;
+}
+
+.supervisor-home .search-section {
+    margin: 0 0 var(--sv-spacing-md);
+}
+
+.supervisor-home .search-title {
+    font-family: var(--sv-font-secondary);
+    font-size: var(--sv-fs-h3);
+    font-weight: var(--sv-fw-bold);
+    color: var(--sv-text);
+    margin: 0;
+    line-height: var(--sv-lh-tight);
+}
+
+.supervisor-home .filter-title {
+    font-family: var(--sv-font-secondary);
+    font-size: var(--sv-fs-body-lg);
+    font-weight: var(--sv-fw-bold);
+    color: var(--sv-text);
+    margin: 0;
+}
+
+/* --- Filter groups --- */
+.supervisor-home .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-inline-gap);
+}
+
+.supervisor-home .taxonomy-filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-inline-gap);
+}
+
+.supervisor-home .filter-group-title {
+    font-size: var(--sv-fs-body);
+    font-weight: var(--sv-fw-bold);
+    color: var(--sv-text);
+    padding: var(--sv-spacing-sm) var(--sv-spacing-md);
+}
+
+/* --- Section spacing --- */
+.supervisor-home .intro-text-block,
+.supervisor-home .knowledge-map-section,
+.supervisor-home .search-section {
+    margin-bottom: var(--sv-section-gap);
+}
+
+.supervisor-home .intro-text-block {
+    margin: 0 auto var(--sv-block-gap);
+}
+
+/* --- Grid/list gaps --- */
+/* Two-column gap (40px) defined in STANDARDIZED CONTAINER SYSTEM */
+.supervisor-home .update-content {
+    gap: var(--sv-inline-gap);
+}
+
+/* --- Focus states (shared) --- */
+.supervisor-home a:focus-visible,
+.supervisor-home button:focus-visible,
+.supervisor-home input:focus-visible {
+    outline: 3px solid var(--sv-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--sv-radius-md);
+}
+
+/* --- Template-derived styles (moved from inline) --- */
+/* Search results container - hidden until AJAX populates */
+.search-results-container {
+    display: none;
+}
+
+/* Initial content visibility - force-visible when coming from homepage highlight */
+.initial-content--visible {
+    display: block !important;
+}
+
+/* Accordion content - hidden by default, .is-open toggled by JS */
+.accordion-content {
+    display: none;
+}
+
+.accordion-content.is-open {
+    display: block;
+}
+
+/* Bibliography item content - hidden by default, .is-open toggled by JS */
+.bib-content {
+    display: none;
+}
+
+.bib-content.is-open {
+    display: block;
+}
+
+/* Knowledge map page title - centered */
+.supervisor-knowledge-map .page-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Knowledge map links - traditional link blue, override global link colors */
+.supervisor-knowledge-map .knowledge-map-links a,
+.supervisor-knowledge-map .knowledge-map-links a:hover,
+.supervisor-knowledge-map .knowledge-map-links a:focus,
+.supervisor-knowledge-map .knowledge-map-links a:visited {
+    color: var(--sv-link-external) !important;
+    text-decoration: none !important;
+}
+
+.supervisor-knowledge-map .knowledge-map-links a:hover {
+    text-decoration: underline !important;
+}
+
+/* Bibliography categories - right-aligned text */
+.supervisor-bib-cats .page-title,
+.supervisor-bib-cats .intro-text,
+.supervisor-taxonomy .intro-text {
+    text-align: right;
+}
+
+/* Contact page header - full grid width */
+.supervisor-contact-page .page-header {
+    grid-column: 1 / -1;
+}
+
+/* Organization detail - external links in info boxes (LTR for URLs) */
+.supervisor-single-org .info-value a {
+    color: var(--sv-link-external) !important;
+    text-align: left;
+    direction: ltr;
+}
+
+/* Bibliography original link - external link styling */
+.supervisor-taxonomy .bib-original-link a {
+    color: var(--sv-link-external) !important;
+    font-size: var(--sv-fs-body-lg) !important;
+    font-weight: var(--sv-fw-medium) !important;
+    text-decoration: none !important;
+}
+
+/* Source link - traditional link blue (used in updates, search results) */
+.source-link {
+    direction: ltr !important;
+    color: var(--sv-link-external) !important;
+    text-decoration: underline !important;
+}
+
+.source-link:hover,
+.source-link:focus {
+    color: var(--sv-link-external) !important;
+    text-decoration: underline !important;
+}
+
+/* Pagination item spacing (RTL-aware) */
+.pagination > span {
+    margin-inline-end: var(--sv-inline-gap) !important;
 }
 
 /* Font Tokens - Consolidated into main :root section above */
@@ -2051,11 +2326,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* ===== UPDATES BOX ===== */
-/* Card shell shared */
+/* Card shell shared - extends SHARED DESIGN LAYER .card */
 .card {
-    background: #FFFFFF;
+    background: var(--sv-card);
     border: 1px solid var(--sv-border);
-    padding: 20px;
+    padding: var(--sv-block-gap);
 }
 
 /* Header strip full-bleed - NO border radius */
@@ -2507,22 +2782,24 @@ img[src*=".svg"] {
     margin: 0 auto !important;
 }
 /* ===== INTRO BLOCK SPACING ===== */
+/* Extends SHARED DESIGN LAYER section spacing */
 .intro-text-block {
-    margin: 0 auto 20px;
+    margin: 0 auto var(--sv-block-gap);
     text-align: right;
     padding: 0;
+    direction: rtl;
 }
 
 .intro-title {
     font-family: var(--sv-font-secondary);
-    font-size: 22px;
-    font-weight: 700;
+    font-size: var(--sv-fs-h3);
+    font-weight: var(--sv-fw-bold);
     color: var(--sv-blue);
-    margin: 0 0 8px;
+    margin: 0 0 var(--sv-spacing-sm);
 }
 
 .intro-content p {
-    margin: 0 0 8px;
+    margin: 0 0 var(--sv-spacing-sm);
     color: var(--sv-text);
     font-family: var(--sv-font-primary);
     font-weight: 600;
@@ -2575,14 +2852,7 @@ img[src*=".svg"] {
     font-weight: 700 !important;
 }
 
-/* ===== FOCUS STATES ===== */
-.supervisor-home a:focus-visible,
-.supervisor-home button:focus-visible,
-.supervisor-home input:focus-visible {
-    outline: 3px solid #79B8FF;
-    outline-offset: 2px;
-    border-radius: 6px;
-}
+/* Focus states defined in SHARED DESIGN LAYER */
 
 /* ===== AJAX SEARCH COMPONENT - NEW DESIGN ===== */
 .supervisor-home .ajax-search-component {

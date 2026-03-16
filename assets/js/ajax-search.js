@@ -113,7 +113,7 @@ jQuery(document).ready(function ($) {
                                                     <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
                                                 </div>
                                             </div>
-                                            <div class="accordion-content" id="accordion-${accordionId}" style="display: none;">
+                                            <div class="accordion-content" id="accordion-${accordionId}">
                                                 <p>${item.content || ''}</p>
                                                 <div class="taxonomy-boxes">
                                                     ${item.tags && item.tags.length > 0 ? `<p><strong>נושאי מפתח:</strong> ${item.tags.join(', ')}</p>` : ''}
@@ -233,20 +233,20 @@ jQuery(document).ready(function ($) {
                             const otherIcon = document.getElementById('icon-' + otherAccordionId);
                             
                             if (otherContent && otherIcon) {
-                                otherContent.style.display = 'none';
-                                otherIcon.innerHTML = '⌄';
+                                otherContent.classList.remove('is-open');
+                                otherIcon.textContent = '⌄';
                             }
                         }
                     }
                 });
                 
                 // Toggle the clicked accordion
-                if (content.style.display === 'none' || content.style.display === '') {
-                    content.style.display = 'block';
-                    icon.innerHTML = '⌃';
+                if (content.classList.contains('is-open')) {
+                    content.classList.remove('is-open');
+                    icon.textContent = '⌄';
                 } else {
-                    content.style.display = 'none';
-                    icon.innerHTML = '⌄';
+                    content.classList.add('is-open');
+                    icon.textContent = '⌃';
                 }
             });
         });

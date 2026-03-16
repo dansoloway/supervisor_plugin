@@ -17,7 +17,7 @@ get_header('supervisor');
         
         <!-- Main Content -->
         <div class="supervisor-content-wrapper supervisor-single-column">
-        <h1 class="page-title" style="text-align: center; margin-bottom: 40px;">מפת הידע</h1>
+        <h1 class="page-title">מפת הידע</h1>
         
         <!-- Knowledge Map Diagram -->
         <section class="knowledge-layout" dir="rtl">
@@ -82,8 +82,8 @@ get_header('supervisor');
         
         <!-- Navigation Links -->
         <div class="knowledge-map-links">
-            <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>" style="color: #0000EE !important; text-decoration: none !important;" onmouseover="this.style.setProperty('color', '#0000EE', 'important')" onmouseout="this.style.setProperty('color', '#0000EE', 'important')" onfocus="this.style.setProperty('color', '#0000EE', 'important')" onblur="this.style.setProperty('color', '#0000EE', 'important')">נושאי מפתח</a>
-            <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>" style="color: #0000EE !important; text-decoration: none !important;" onmouseover="this.style.setProperty('color', '#0000EE', 'important')" onmouseout="this.style.setProperty('color', '#0000EE', 'important')" onfocus="this.style.setProperty('color', '#0000EE', 'important')" onblur="this.style.setProperty('color', '#0000EE', 'important')">ארגוני פיקוח</a>
+            <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>">נושאי מפתח</a>
+            <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>">ארגוני פיקוח</a>
         </div>
         
         </div> <!-- End supervisor-content-wrapper -->

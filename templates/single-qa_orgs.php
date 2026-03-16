@@ -83,7 +83,7 @@ get_header('supervisor');
                             $link_text = esc_html($org_link);
                         }
                         ?>
-                        <a href="<?php echo $link_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
+                        <a href="<?php echo $link_url; ?>" target="_blank" rel="noopener noreferrer" class="info-value-link">
                             <?php echo $link_text; ?>
                         </a>
                     </span>
@@ -116,7 +116,7 @@ get_header('supervisor');
                             $report_text = esc_html($org_report);
                         }
                         ?>
-                        <a href="<?php echo $report_url; ?>" target="_blank" rel="noopener noreferrer" style="color: blue !important; text-align: left; direction: ltr;">
+                        <a href="<?php echo $report_url; ?>" target="_blank" rel="noopener noreferrer" class="info-value-link">
                             <?php echo $report_text; ?>
                         </a>
                     </span>

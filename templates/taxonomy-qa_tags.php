@@ -34,7 +34,7 @@ error_log('Loading taxonomy-qa_tags.php template');
             ?>
         </h1>
         
-        <p class="intro-text" style="text-align: right;">
+        <p class="intro-text">
             <?php 
             $description = get_term_meta($term->term_id, 'qa_bib_description', true);
             if ($description) {
@@ -79,14 +79,14 @@ error_log('Loading taxonomy-qa_tags.php template');
                                 if ($original_link) :
                                 ?>
                                     <div class="bib-original-link">
-                                        <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer" style="color: #0000EE !important; font-size: 18px !important; font-weight: 500 !important; text-decoration: none !important;" onmouseover="this.style.textDecoration='none'" onmouseout="this.style.textDecoration='none'">
+                                        <a href="<?php echo esc_url($original_link); ?>" target="_blank" rel="noopener noreferrer">
                                             <?php echo esc_html($original_link); ?>
                                         </a>
                                     </div>
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="bib-content" style="display: none;">
+                        <div class="bib-content">
                             <div class="bib-description">
                                 <?php echo apply_filters('the_content', get_the_content()); ?>
                             </div>
@@ -112,14 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.addEventListener('click', function() {
             const item = this.closest('.bib-item');
             const content = item.querySelector('.bib-content');
-            const isExpanded = content.style.display !== 'none';
+            const isExpanded = content.classList.contains('is-open');
             
             if (isExpanded) {
-                content.style.display = 'none';
+                content.classList.remove('is-open');
                 this.classList.remove('fa-chevron-up');
                 this.classList.add('fa-chevron-down');
             } else {
-                content.style.display = 'block';
+                content.classList.add('is-open');
                 this.classList.remove('fa-chevron-down');
                 this.classList.add('fa-chevron-up');
             }

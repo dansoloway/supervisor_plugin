@@ -358,6 +358,7 @@
     --sv-divider: #D7DEE7;
     --sv-bar: #EEF4FA;        /* nav bar bg */
     --sv-bar-border: #A0B4C8; /* nav bar border - darker */
+    --sv-nav-accent: #5B8FC9; /* nav: dark blue for borders, active bg, inactive text - matches target */
     --sv-focus-ring: #79B8FF;
     --sv-input-bg: #FFFFFF;
     --sv-link-external: #0000EE;  /* traditional link blue - source/external links */
@@ -2465,8 +2466,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     align-items: stretch;
     gap: 0;
     border: none;
-    border-top: 2px solid var(--sv-blue);
-    border-bottom: 2px solid var(--sv-blue);
+    border-top: 2px solid var(--sv-nav-accent);
+    border-bottom: 2px solid var(--sv-nav-accent);
     background: transparent;
     border-radius: 0;
     padding: 0;
@@ -2488,10 +2489,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     align-items: center;
     justify-content: center;
     padding: 16px 28px;
-    color: var(--sv-blue) !important;
+    color: var(--sv-nav-accent) !important;
     font-family: var(--sv-font-secondary);
-    font-weight: 700;
-    font-size: 20px;
+    font-weight: 700 !important;
+    font-size: 20px !important;
     line-height: 1;
     text-decoration: none;
     border-radius: 0;
@@ -2510,7 +2511,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 /* Active state - full-height block, dark blue bg, white text - DESKTOP ONLY */
 .supervisor-home .desktop-menu a.active {
-    background: var(--sv-blue) !important;
+    background: var(--sv-nav-accent) !important;
     color: white !important;
 }
 
@@ -2521,6 +2522,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 .supervisor-home .desktop-menu a.active .nav-icon-home svg {
     stroke: white;
+}
+
+/* Inactive icon (home when not active) - dark blue */
+.supervisor-home .desktop-menu a:not(.active) .nav-icon-home svg {
+    stroke: var(--sv-nav-accent);
 }
 
 /* Home icon - slightly narrower flex for icon-only item */
@@ -2540,13 +2546,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     height: 22px;
 }
 
-/* Vertical separators between nav items - DESKTOP ONLY */
+/* Vertical separators between nav items - dark blue, DESKTOP ONLY */
 .supervisor-home .desktop-menu a:not(:last-child)::before {
     content: "";
     position: absolute;
     inset: 12px auto 12px 0;   /* top / right / bottom / left */
     width: 2px;
-    background: var(--sv-bar-border);
+    background: var(--sv-nav-accent);
 }
 
 /* Hide separator before active item (optional - active block overlaps) */
@@ -2554,18 +2560,23 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     display: none;
 }
 
-/* Hover/Focus - inactive items - DESKTOP ONLY */
+/* Hover/Focus - inactive items - subtle tint, keep dark blue text - DESKTOP ONLY */
 .supervisor-home .desktop-menu a:not(.active):hover,
 .supervisor-home .desktop-menu a:not(.active):focus-visible {
     background: var(--sv-blue-050) !important;
-    color: var(--sv-blue-600) !important;
+    color: var(--sv-nav-accent) !important;
     outline: 0;
 }
 
-/* Hover on active - slightly darker blue */
+.supervisor-home .desktop-menu a:not(.active):hover .nav-icon-home svg,
+.supervisor-home .desktop-menu a:not(.active):focus-visible .nav-icon-home svg {
+    stroke: var(--sv-nav-accent);
+}
+
+/* Hover on active - slightly darker shade */
 .supervisor-home .desktop-menu a.active:hover,
 .supervisor-home .desktop-menu a.active:focus-visible {
-    background: var(--sv-blue-600) !important;
+    background: #4A7AB8 !important;
     color: white !important;
     outline: 0;
 }

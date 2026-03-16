@@ -94,7 +94,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.3', // Version bump to force cache refresh
+        '1.0.4', // Version bump to force cache refresh (Phase 1)
         'all' // Media type
     );
 

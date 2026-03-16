@@ -573,6 +573,159 @@
     border-radius: var(--sv-radius-md);
 }
 
+/* ===== PHASE 1: HOMEPAGE & CONTACT REDESIGN ===== */
+/* Reuses shared design tokens and component base styles. Localized to Phase 1 scope. */
+
+/* --- Homepage section spacing (design: section gap > block gap) --- */
+.supervisor-home .intro-text-block,
+.supervisor-home .knowledge-map-section,
+.supervisor-home .supervisor-content-wrapper {
+    margin-bottom: var(--sv-section-gap);
+}
+
+.supervisor-home .intro-text-block {
+    margin: 0 auto var(--sv-spacing-xl);
+}
+
+.supervisor-home .knowledge-map-section {
+    margin-bottom: var(--sv-spacing-xl);
+}
+
+.supervisor-home .supervisor-content-wrapper.supervisor-single-column {
+    margin-bottom: 0;
+}
+
+/* --- Intro / hero block (design: comfortable spacing, clearer hierarchy) --- */
+.supervisor-home .intro-text-block {
+    max-width: 720px;
+    padding: var(--sv-spacing-lg) 0;
+}
+
+.supervisor-home .intro-content p {
+    margin: 0 0 var(--sv-spacing-md);
+    font-size: var(--sv-fs-body-lg);
+    line-height: var(--sv-lh-body);
+    font-weight: var(--sv-fw-normal);
+    color: var(--sv-text);
+}
+
+.supervisor-home .intro-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Knowledge map card (design: rounded corners, clear grouping, hover states) --- */
+.supervisor-home .knowledge-map-section .knowledge-map-card.card {
+    border-radius: var(--sv-radius-lg);
+    border: 1px solid var(--sv-border);
+    padding: var(--sv-spacing-xl);
+    box-shadow: var(--sv-shadow-sm);
+}
+
+.supervisor-home .knowledge-map-section .knowledge-map-diagram {
+    margin: var(--sv-spacing-md) 0;
+}
+
+.supervisor-home .knowledge-map-section .knowledge-map-image-link:hover {
+    opacity: 0.9;
+}
+
+.supervisor-home .knowledge-map-section .knowledge-map-footer {
+    margin-top: var(--sv-spacing-lg);
+}
+
+.supervisor-home .knowledge-map-section .knowledge-map-button {
+    border-radius: var(--sv-radius-md);
+    padding: 0 var(--sv-spacing-lg);
+    min-height: 48px;
+}
+
+/* --- Search bar (design: large input, rounded border, primary interaction feel) --- */
+.supervisor-home .search-section {
+    margin-bottom: var(--sv-spacing-lg);
+}
+
+.supervisor-home .search-section .supervisor-search {
+    border-radius: var(--sv-radius-md);
+    border: 1px solid var(--sv-border-input);
+    overflow: hidden;
+}
+
+.supervisor-home .search-section .supervisor-search-bar {
+    min-height: 48px;
+    padding: 0 var(--sv-spacing-lg);
+    font-size: var(--sv-fs-body-lg);
+}
+
+.supervisor-home .search-section .search-button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+/* --- Contact page (design: clearer grouping, comfortable layout) --- */
+.supervisor-contact-page .page-header {
+    margin-bottom: var(--sv-spacing-xl);
+}
+
+.supervisor-contact-page .supervisor-content-wrapper.supervisor-two-column {
+    gap: var(--sv-spacing-xl);
+}
+
+.supervisor-contact-page .contact-info-column {
+    border-radius: var(--sv-radius-lg);
+    padding: var(--sv-spacing-xl);
+}
+
+.supervisor-contact-page .contact-info-title {
+    font-size: var(--sv-fs-h3);
+    margin-bottom: var(--sv-spacing-md);
+}
+
+.supervisor-contact-page .contact-email {
+    font-size: var(--sv-fs-body-lg);
+}
+
+.supervisor-contact-page .supervisor-contact-form {
+    padding: var(--sv-spacing-xl);
+    background: var(--sv-blue-050);
+    border: 1px solid var(--sv-border);
+    border-radius: var(--sv-radius-lg);
+}
+
+.supervisor-contact-page .supervisor-contact-form .form-group {
+    margin-bottom: var(--sv-spacing-lg);
+}
+
+.supervisor-contact-page .supervisor-contact-form input {
+    border-radius: var(--sv-radius-md);
+    border: 1px solid var(--sv-border-input);
+    padding: var(--sv-spacing-md);
+    min-height: 44px;
+}
+
+.supervisor-contact-page .supervisor-contact-form textarea {
+    border-radius: var(--sv-radius-md);
+    border: 1px solid var(--sv-border-input);
+    padding: var(--sv-spacing-md);
+    min-height: 120px;
+}
+
+.supervisor-contact-page .supervisor-contact-form .supervisor-button {
+    border-radius: var(--sv-radius-md);
+    padding: var(--sv-spacing-md) var(--sv-spacing-lg);
+    min-height: 48px;
+}
+
+/* Phase 1 mobile adjustments */
+@media (max-width: 768px) {
+    .supervisor-home .intro-text-block {
+        padding: var(--sv-spacing-md) 0;
+    }
+    
+    .supervisor-home .knowledge-map-section .knowledge-map-card.card {
+        padding: var(--sv-spacing-lg);
+    }
+}
+
 /* --- Template-derived styles (moved from inline) --- */
 /* Search results container - hidden until AJAX populates */
 .search-results-container {

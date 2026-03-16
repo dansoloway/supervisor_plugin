@@ -2488,7 +2488,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     align-items: center;
     justify-content: center;
     padding: 16px 28px;
-    color: var(--sv-text) !important;
+    color: var(--sv-blue) !important;
     font-family: var(--sv-font-secondary);
     font-weight: 700;
     font-size: 20px;
@@ -2500,6 +2500,44 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     height: 100%;
     min-width: 0;
     box-sizing: border-box;
+    min-height: 52px;
+}
+
+/* Inactive items - transparent background, blue text */
+.supervisor-home .desktop-menu a:not(.active) {
+    background: transparent !important;
+}
+
+/* Active state - full-height block, dark blue bg, white text - DESKTOP ONLY */
+.supervisor-home .desktop-menu a.active {
+    background: var(--sv-blue) !important;
+    color: white !important;
+}
+
+.supervisor-home .desktop-menu a.active .nav-text,
+.supervisor-home .desktop-menu a.active .nav-icon {
+    color: white !important;
+}
+
+.supervisor-home .desktop-menu a.active .nav-icon-home svg {
+    stroke: white;
+}
+
+/* Home icon - slightly narrower flex for icon-only item */
+.supervisor-home .desktop-menu a.nav-item-home {
+    flex: 0 1 auto;
+    min-width: 56px;
+}
+
+.supervisor-home .desktop-menu a.nav-item-home .nav-icon-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.supervisor-home .desktop-menu a.nav-item-home .nav-icon-home svg {
+    width: 22px;
+    height: 22px;
 }
 
 /* Vertical separators between nav items - DESKTOP ONLY */
@@ -2511,18 +2549,25 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: var(--sv-bar-border);
 }
 
-/* Hover/Focus - DESKTOP ONLY */
-.supervisor-home .desktop-menu a:hover,
-.supervisor-home .desktop-menu a:focus-visible {
-    background: var(--sv-blue, #a9c4e6) !important;
-    color: var(--sv-text) !important;
+/* Hide separator before active item (optional - active block overlaps) */
+.supervisor-home .desktop-menu a.active::before {
+    display: none;
+}
+
+/* Hover/Focus - inactive items - DESKTOP ONLY */
+.supervisor-home .desktop-menu a:not(.active):hover,
+.supervisor-home .desktop-menu a:not(.active):focus-visible {
+    background: var(--sv-blue-050) !important;
+    color: var(--sv-blue-600) !important;
     outline: 0;
 }
 
-/* Active state - DESKTOP ONLY */
-.supervisor-home .desktop-menu a.active {
-    background: #CEDEEF !important;
-    color: var(--sv-text) !important;
+/* Hover on active - slightly darker blue */
+.supervisor-home .desktop-menu a.active:hover,
+.supervisor-home .desktop-menu a.active:focus-visible {
+    background: var(--sv-blue-600) !important;
+    color: white !important;
+    outline: 0;
 }
 
 /* Dropdown caret - DESKTOP ONLY */

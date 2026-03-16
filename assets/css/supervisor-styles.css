@@ -2459,13 +2459,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     width: 100%;
 }
 
-/* Desktop menu styles */
+/* Desktop menu styles - design tokens: --sv-bar, --sv-bar-border */
 .supervisor-home nav.site-nav.supervisor_header_links.desktop-menu {
     display: flex;
     align-items: stretch;
     gap: 0;
-    border: 2px solid #BFD3EB;
-    background: var(--sv-blue-050, #f3f7fc);
+    border: 2px solid var(--sv-bar-border);
+    background: var(--sv-bar);
     border-radius: 9999px;     /* the magic */
     padding: 0;                /* no padding so hover reaches curved ends */
     direction: rtl;
@@ -2525,7 +2525,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     position: absolute;
     inset: 12px auto 12px 0;   /* top / right / bottom / left */
     width: 2px;
-    background: #BFD3EB;
+    background: var(--sv-bar-border);
 }
 
 /* 4) Hover/Focus — no layout shift, color only - DESKTOP ONLY */
@@ -2558,10 +2558,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     top: 100%;
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Center the dropdown under its parent */
-    background: var(--sv-blue-050, #f3f7fc);
-    border-top: 1px solid #BFD3EB;
-    border-right: 1px solid #BFD3EB;
-    border-bottom: 1px solid #BFD3EB;
+    background: var(--sv-bar);
+    border-top: 1px solid var(--sv-bar-border);
+    border-right: 1px solid var(--sv-bar-border);
+    border-bottom: 1px solid var(--sv-bar-border);
     border-left: none !important; /* Remove left border with !important */
     border-radius: 0; /* No border radius */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -2590,8 +2590,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     font-size: 16px;
     font-weight: 500;
     line-height: 1.4;
-    background: var(--sv-blue-050, #f3f7fc);
-    border-bottom: 1px solid #BFD3EB;
+    background: var(--sv-bar);
+    border-bottom: 1px solid var(--sv-bar-border);
     border-radius: 0 !important; /* Ensure no border radius on dropdown items */
     transition: background-color 0.2s ease;
     cursor: pointer;
@@ -2630,10 +2630,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     display: none;
 }
 
-.mobile-menu-toggle {
+.supervisor-home .mobile-menu-toggle {
     display: none; /* Hidden by default on desktop */
-    background: var(--sv-blue-050, #f3f7fc);
-    border: 2px solid #BFD3EB;
+    background: var(--sv-bar);
+    border: 2px solid var(--sv-bar-border);
     border-radius: 8px;
     padding: 12px;
     cursor: pointer;
@@ -2703,7 +2703,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         left: 0;
         right: 0;
         bottom: 0;
-        background: var(--sv-blue-050, #f3f7fc);
+        background: var(--sv-bar);
         z-index: 9999;
         overflow-y: auto;
         padding: 0;
@@ -2765,7 +2765,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         text-align: right;
         color: var(--sv-text) !important;
         text-decoration: none;
-        border-bottom: 1px solid #BFD3EB;
+        border-bottom: 1px solid var(--sv-bar-border);
         font-size: 20px;
         font-weight: 500;
         background: transparent !important;
@@ -2815,7 +2815,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         text-decoration: none;
         font-size: 18px;
         font-weight: 400;
-        border-bottom: 1px solid #BFD3EB;
+        border-bottom: 1px solid var(--sv-bar-border);
         line-height: 1.5;
     }
     

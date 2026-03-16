@@ -103,7 +103,7 @@ jQuery(document).ready(function ($) {
                                 if (item && item.title && item.link) {
                                     const accordionId = 'search-result-' + index;
                                     output += `
-                                        <div class="qa-update-item">
+                                        <div class="qa-update-item content-card">
                                             <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">
                                                 <div class="qa-update-title">
                                                     <div class="title-date-container">
@@ -114,7 +114,7 @@ jQuery(document).ready(function ($) {
                                                 </div>
                                             </div>
                                             <div class="accordion-content" id="accordion-${accordionId}">
-                                                <p>${item.content || ''}</p>
+                                                <div class="update-content-text"><p>${item.content || ''}</p></div>
                                                 <div class="taxonomy-boxes">
                                                     ${item.tags && item.tags.length > 0 ? `<p><strong>נושאי מפתח:</strong> ${item.tags.join(', ')}</p>` : ''}
                                                     ${item.themes && item.themes.length > 0 ? `<p><strong>תחומים:</strong> ${item.themes.join(', ')}</p>` : ''}

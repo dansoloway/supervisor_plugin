@@ -442,12 +442,273 @@
 /* Base defined in STANDARDIZED CONTAINER SYSTEM above; spacing tokens used in section spacing */
 
 /* --- Card shell (shared) --- */
-.card {
+.card,
+.qa-update-item.content-card,
+.bib-item.content-card,
+.org-card.content-card {
     background: var(--sv-card);
     border: 1px solid var(--sv-border);
+}
+
+.card {
     padding: var(--sv-block-gap);
     border-radius: var(--sv-radius-none);
     box-shadow: none;
+}
+
+/* --- Content card pattern (reusable for updates, search results, bibliography, org listings) --- */
+/* Extends .card base; adds structure for list items. Uses design tokens. RTL-aware. */
+.qa-update-item.content-card,
+.bib-item.content-card,
+.org-card.content-card {
+    padding: 0;
+    border-radius: var(--sv-radius-md);
+    box-shadow: var(--sv-shadow-sm);
+    overflow: hidden;
+    direction: rtl;
+    margin-bottom: var(--sv-block-gap);
+}
+
+.qa-update-item.content-card:last-child,
+.bib-item.content-card:last-child,
+.org-card.content-card:last-child {
+    margin-bottom: 0;
+}
+
+/* Content card header (maps to accordion-header, bib-item-header, org-card title area) */
+.content-card > .accordion-header,
+.content-card .content-card-header {
+    padding: var(--sv-spacing-md) var(--sv-spacing-lg);
+}
+
+/* Content card body (maps to accordion-content, bib-content, org-card body) */
+.content-card > .accordion-content,
+.content-card .content-card-body {
+    padding: var(--sv-spacing-md) var(--sv-spacing-lg);
+    border-top: 1px solid var(--sv-border);
+}
+
+/* Content card metadata (dates, taxonomies, secondary info) */
+.content-card .content-card-meta,
+.content-card .update-date,
+.content-card .taxonomy-boxes {
+    font-size: var(--sv-fs-sm);
+    color: var(--sv-text-muted);
+}
+
+.content-card .taxonomy-boxes {
+    margin-top: var(--sv-spacing-sm);
+}
+
+/* Content card list spacing - use on parent when all children are content-cards */
+.content-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-block-gap);
+}
+
+/*
+ * Content card reuse:
+ * - Updates: Add content-card to .qa-update-item (PHP + AJAX)
+ * - Search results: Same .qa-update-item structure
+ * - Bibliography: Add content-card to .bib-item
+ * - Organizations: Add content-card to .org-card
+ * Structure maps: accordion-header→header, accordion-content→body; bib-item-header→header, bib-content→body
+ */
+
+/* ===== PHASE 2: UPDATES PAGE & AJAX SEARCH ===== */
+/* Filters, accordion/content-cards, search/results containers. Reuses tokens and content-card. */
+
+/* Accordion header background (used by .light-green-bkg) */
+:root {
+    --sv-accordion-header-bg: #F3F9F9;
+}
+
+.light-green-bkg {
+    background-color: var(--sv-accordion-header-bg);
+}
+
+/* Content-card accordion: stronger header hierarchy */
+.qa-update-item.content-card > .accordion-header {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.qa-update-item.content-card > .accordion-header:hover {
+    background-color: var(--sv-blue-050);
+}
+
+.qa-update-item.content-card .qa-update-title h3 {
+    font-size: var(--sv-fs-h3);
+    font-weight: var(--sv-fw-bold);
+    color: var(--sv-text);
+}
+
+.qa-update-item.content-card .update-date {
+    color: var(--sv-text-muted);
+    font-size: var(--sv-fs-sm);
+}
+
+.qa-update-item.content-card .accordion-icon {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.qa-update-item.content-card > .accordion-content .update-content-text {
+    margin-bottom: var(--sv-spacing-md);
+}
+
+.qa-update-item.content-card > .accordion-content .update-content-text:last-child {
+    margin-bottom: 0;
+}
+
+.qa-update-item.content-card .taxonomy-boxes p {
+    margin: 0 0 var(--sv-spacing-xs);
+}
+
+.qa-update-item.content-card .taxonomy-boxes p:last-child {
+    margin-bottom: 0;
+}
+
+/* Override legacy list-item styles when content-card is used */
+.qa-updates-list .qa-update-item.content-card,
+.search-results-container .qa-update-item.content-card {
+    padding: 0;
+    border-bottom: none;
+}
+
+/* AJAX search component - use design tokens */
+.supervisor-home .ajax-search-component {
+    background: var(--sv-blue-050);
+    border: 1px solid var(--sv-border);
+    border-radius: var(--sv-radius-lg);
+    padding: var(--sv-spacing-lg);
+    box-shadow: var(--sv-shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-block-gap);
+    direction: rtl;
+}
+
+.supervisor-home .ajax-search-component .search-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-spacing-sm);
+}
+
+.supervisor-home .ajax-search-component .search-title {
+    font-size: var(--sv-fs-h3) !important;
+    font-weight: var(--sv-fw-bold) !important;
+    color: var(--sv-text) !important;
+    margin: 0 !important;
+}
+
+.supervisor-home .ajax-search-component .search-input-container {
+    background: var(--sv-input-bg);
+    border: 1px solid var(--sv-border-input);
+    border-radius: var(--sv-radius-md);
+    overflow: hidden;
+}
+
+.supervisor-home .ajax-search-component .search-input-field {
+    padding: 0 var(--sv-spacing-md) 0 var(--sv-spacing-xl);
+    font-size: var(--sv-fs-body);
+    color: var(--sv-text);
+}
+
+.supervisor-home .ajax-search-component .search-button {
+    background: var(--sv-blue) !important;
+}
+
+.supervisor-home .ajax-search-component .search-button:hover {
+    background: var(--sv-blue-600) !important;
+}
+
+/* Filter section - clear group titles, well spaced checkboxes */
+.supervisor-home .ajax-search-component .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-spacing-md);
+}
+
+.supervisor-home .ajax-search-component .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.supervisor-home .ajax-search-component .filter-title {
+    font-size: var(--sv-fs-body-lg) !important;
+    font-weight: var(--sv-fw-bold) !important;
+    color: var(--sv-text) !important;
+}
+
+.supervisor-home .ajax-search-component .filter-content {
+    display: block;
+}
+
+.supervisor-home .ajax-search-component .taxonomy-filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-spacing-lg);
+}
+
+.supervisor-home .ajax-search-component .filter-group-title {
+    font-size: var(--sv-fs-body) !important;
+    font-weight: var(--sv-fw-bold) !important;
+    color: var(--sv-text) !important;
+    background: var(--sv-card) !important;
+    padding: var(--sv-spacing-sm) var(--sv-spacing-md) !important;
+    border-radius: var(--sv-radius-md) !important;
+}
+
+.supervisor-home .ajax-search-component .filter-listbox {
+    background: var(--sv-input-bg) !important;
+    border: 1px solid var(--sv-border-input) !important;
+    border-radius: var(--sv-radius-md) !important;
+    padding: var(--sv-spacing-sm) !important;
+    gap: var(--sv-spacing-sm) !important;
+}
+
+.supervisor-home .ajax-search-component .checkbox-label {
+    color: var(--sv-text) !important;
+}
+
+.supervisor-home .ajax-search-component .checkbox-label input {
+    accent-color: var(--sv-blue) !important;
+}
+
+/* Updates list and results container spacing */
+.qa-updates-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-block-gap);
+}
+
+.initial-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-block-gap);
+}
+
+/* Loading and no-results states */
+.search-loading,
+.no-results {
+    padding: var(--sv-spacing-xl);
+    text-align: center;
+    color: var(--sv-text-muted);
+}
+
+.search-loading .loading-text,
+.no-results {
+    font-size: var(--sv-fs-body-lg);
+}
+
+/* Phase 2 mobile */
+@media (max-width: 768px) {
+    .supervisor-home .ajax-search-component {
+        padding: var(--sv-spacing-md);
+    }
 }
 
 /* --- Buttons (base) --- */
@@ -3273,11 +3534,44 @@ img[src*=".svg"] {
     background: #8BA4C8;
 }
 
+/* Phase 2 overrides: tokens, content-card, spacing */
+.supervisor-home .ajax-search-component {
+    background: var(--sv-blue-050) !important;
+    border: 1px solid var(--sv-border) !important;
+    border-radius: var(--sv-radius-lg) !important;
+    padding: var(--sv-spacing-lg) !important;
+    box-shadow: var(--sv-shadow-sm) !important;
+}
+
+.supervisor-home .ajax-search-component .search-input-container {
+    border-radius: var(--sv-radius-md) !important;
+}
+
+.supervisor-home .ajax-search-component .search-button {
+    background: var(--sv-blue) !important;
+}
+
+.supervisor-home .ajax-search-component .search-button:hover {
+    background: var(--sv-blue-600) !important;
+}
+
+.supervisor-home .ajax-search-component .filter-group-title {
+    background: var(--sv-card) !important;
+    border-radius: var(--sv-radius-md) !important;
+}
+
+.supervisor-home .ajax-search-component .filter-listbox {
+    border-radius: var(--sv-radius-md) !important;
+}
+
+.supervisor-home .ajax-search-component .checkbox-label input {
+    accent-color: var(--sv-blue) !important;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .supervisor-home .ajax-search-component {
-        padding: 14px 14px 14px 20px;
-        gap: 10px;
+        padding: var(--sv-spacing-md) !important;
     }
     
     .supervisor-home .search-title {

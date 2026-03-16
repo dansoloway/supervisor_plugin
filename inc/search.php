@@ -21,7 +21,7 @@
                     <span class="filter-toggle-icon">⌃</span>
                 </button>
             </div>
-            <div class="filter-content" style="display: block;">
+            <div class="filter-content">
             
             <div class="taxonomy-filters">
                 <!-- Key Topics -->

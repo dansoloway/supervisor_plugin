@@ -100,15 +100,20 @@ get_header('supervisor');
 
                 <section class="knowledge-map-section" aria-labelledby="knowledge-map-heading">
                     <h2 id="knowledge-map-heading" class="home-section-title">מפת הידע</h2>
-                    <div class="knowledge-map-card card">
-                        <div class="knowledge-map-diagram">
-                            <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-image-link">
-                                <img src="<?php echo plugins_url('assets/img/knowledge_map.svg', dirname(__FILE__)); ?>" alt="מפת ידע - בקרת איכות" class="knowledge-map-image">
-                            </a>
+                    <div class="home-knowledge-map">
+                        <div class="knowledge-map-grid">
+                            <a class="km-tile km-top-left" href="<?php echo esc_url(home_url('/social-procurement/')); ?>"><span>רכש חברתי</span></a>
+                            <a class="km-tile km-top-right" href="<?php echo esc_url(home_url('/regulatory-welfare-state/')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>
+                            <a class="km-tile km-mid-left" href="<?php echo esc_url(home_url('/knowledge-development/')); ?>"><span>פיתוח ידע והדרכה</span></a>
+                            <a class="km-tile km-mid-right" href="<?php echo esc_url(home_url('/policy/')); ?>"><span>מדיניות</span></a>
+                            <a class="km-tile km-bottom-left" href="<?php echo esc_url(home_url('/enforcement/')); ?>"><span>אכיפה</span></a>
+                            <a class="km-tile km-bottom-right" href="<?php echo esc_url(home_url('/control/')); ?>"><span>בקרה</span></a>
+                            <a class="km-wide" href="<?php echo esc_url(home_url('/work-methods/')); ?>"><span>שיטות עבודה</span></a>
+                            <div class="km-center" aria-hidden="true"><span>גוף<br>פיקוח</span></div>
                         </div>
-                        <div class="knowledge-map-footer">
-                            <a href="<?php echo get_permalink(SUPERVISOR_KNOWLEDGE_MAP); ?>" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
-                        </div>
+                    </div>
+                    <div class="knowledge-map-footer">
+                        <a href="<?php echo esc_url(get_permalink(SUPERVISOR_KNOWLEDGE_MAP)); ?>" class="knowledge-map-button">למידע נוסף על מפת הידע</a>
                     </div>
                 </section>
             </main>
@@ -117,7 +122,6 @@ get_header('supervisor');
         <!-- Stories from the Field - Carousel -->
         <section class="stories-from-field-section" aria-labelledby="stories-heading">
             <div class="stories-section-header">
-                <span class="stories-section-icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
                 <h2 id="stories-heading" class="stories-section-title-with-lines">
                     <span class="title-line"></span>
                     <span class="title-text">סיפורים מהשטח</span>

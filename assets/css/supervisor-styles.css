@@ -3,17 +3,17 @@
 /* ===== GLOBAL LINK COLOR OVERRIDES ===== */
 /* Override any external CSS that sets link colors - but exclude important home page links */
 /* Note: .update-content-text links and .content-text links are handled separately below with higher specificity */
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card),
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):link,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):visited,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):hover,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):focus,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):active {
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide),
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide):link,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide):visited,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide):focus,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide):active {
     color: var(--sv-blue) !important;
 }
 
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):hover,
-.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):focus {
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide):hover,
+.supervisor-home a:not(.site-nav a):not(.update-title a):not(.more-updates-button):not(.knowledge-map-button):not(.story-card):not(.km-tile):not(.km-wide):focus {
     color: var(--sv-blue-600) !important;
 }
 
@@ -896,20 +896,115 @@
     margin-bottom: 0;
 }
 
-/* --- Knowledge map card (design: rounded corners, clear grouping, hover states) --- */
-.supervisor-home .knowledge-map-section .knowledge-map-card.card {
+/* --- Knowledge map (home: clickable tiles grid, center box, wide bottom bar) --- */
+.supervisor-home .home-knowledge-map {
+    margin-bottom: var(--sv-spacing-lg);
+}
+
+.supervisor-home .knowledge-map-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    grid-template-rows: 1fr 1fr 1fr auto;
+    gap: 12px;
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.supervisor-home .km-tile,
+.supervisor-home .km-wide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--sv-spacing-lg);
     border-radius: var(--sv-radius-lg);
-    border: 1px solid var(--sv-border);
-    padding: var(--sv-spacing-xl);
-    box-shadow: var(--sv-shadow-sm);
+    text-decoration: none !important;
+    color: #fff !important;
+    font-weight: 700;
+    font-size: var(--sv-fs-body-lg);
+    line-height: 1.3;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
-.supervisor-home .knowledge-map-section .knowledge-map-diagram {
-    margin: var(--sv-spacing-md) 0;
+.supervisor-home .km-tile:hover,
+.supervisor-home .km-tile:focus-visible,
+.supervisor-home .km-wide:hover,
+.supervisor-home .km-wide:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.08);
 }
 
-.supervisor-home .knowledge-map-section .knowledge-map-image-link:hover {
-    opacity: 0.9;
+.supervisor-home .km-tile:focus-visible,
+.supervisor-home .km-wide:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.supervisor-home .km-top-left,
+.supervisor-home .km-top-right {
+    background-color: #8a9a3c;
+    min-height: 100px;
+}
+
+.supervisor-home .km-mid-left,
+.supervisor-home .km-mid-right,
+.supervisor-home .km-bottom-left,
+.supervisor-home .km-bottom-right {
+    background-color: #1a7f7a;
+    min-height: 100px;
+}
+
+.supervisor-home .km-wide {
+    grid-column: 1 / -1;
+    background-color: #4a7c8c;
+    min-height: 56px;
+}
+
+.supervisor-home .km-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border-radius: var(--sv-radius-lg);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    font-weight: 700;
+    font-size: var(--sv-fs-h4);
+    color: var(--sv-blue);
+    line-height: 1.3;
+    pointer-events: none;
+}
+
+@media (max-width: 480px) {
+    .supervisor-home .knowledge-map-grid {
+        gap: 8px;
+        max-width: 100%;
+    }
+
+    .supervisor-home .km-tile {
+        min-height: 80px;
+        padding: var(--sv-spacing-md);
+        font-size: var(--sv-fs-body);
+    }
+
+    .supervisor-home .km-wide {
+        min-height: 48px;
+        font-size: var(--sv-fs-body);
+    }
+
+    .supervisor-home .km-center {
+        width: 80px;
+        height: 80px;
+        font-size: var(--sv-fs-body-lg);
+    }
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
@@ -4642,18 +4737,10 @@ body .supervisor-bib-cats .categories-grid {
     width: 100%;
 }
 
-/* Styled section title with horizontal lines and icon */
+/* Styled section title with horizontal lines */
 .supervisor-home .stories-section-header {
     text-align: center;
     margin-bottom: var(--sv-spacing-lg, 24px);
-}
-
-.supervisor-home .stories-section-icon {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 28px;
-    color: var(--sv-blue, #2563eb);
-    opacity: 0.9;
 }
 
 .supervisor-home .stories-section-title-with-lines {
@@ -4734,9 +4821,9 @@ body .supervisor-bib-cats .categories-grid {
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
-    background: var(--sv-card, #fff);
+    background: #f3f4f6;
     border: 1px solid var(--sv-border, #E5EAF0);
-    border-radius: var(--sv-radius-lg, 12px);
+    border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
@@ -4757,7 +4844,8 @@ body .supervisor-bib-cats .categories-grid {
     width: 100%;
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    background: var(--sv-border, #E5EAF0);
+    background: #e5e7eb;
+    border-radius: 16px 16px 0 0;
 }
 
 .story-card-image img {

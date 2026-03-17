@@ -44,7 +44,7 @@ get_header('supervisor');
                             <?php
                             $updates_query = new WP_Query([
                                 'post_type' => 'qa_updates',
-                                'posts_per_page' => 5,
+                                'posts_per_page' => 2,
                                 'orderby' => 'date',
                                 'order' => 'DESC',
                                 'post_status' => 'publish',
@@ -116,14 +116,21 @@ get_header('supervisor');
 
         <!-- Stories from the Field - Carousel -->
         <section class="stories-from-field-section" aria-labelledby="stories-heading">
-            <h2 id="stories-heading" class="home-section-title">סיפורים מהשטח</h2>
+            <div class="stories-section-header">
+                <span class="stories-section-icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+                <h2 id="stories-heading" class="stories-section-title-with-lines">
+                    <span class="title-line"></span>
+                    <span class="title-text">סיפורים מהשטח</span>
+                    <span class="title-line"></span>
+                </h2>
+            </div>
             <div class="stories-carousel-wrapper">
                 <button type="button" class="stories-carousel-prev" aria-label="<?php esc_attr_e('הקודם', 'text-domain'); ?>">‹</button>
                 <div class="stories-carousel" role="region" aria-label="<?php esc_attr_e('סיפורים מהשטח', 'text-domain'); ?>">
                     <?php
                     $stories_query = new WP_Query([
                         'post_type' => 'qa_stories',
-                        'posts_per_page' => 12,
+                        'posts_per_page' => 3,
                         'orderby' => 'date',
                         'order' => 'DESC',
                         'post_status' => 'publish',

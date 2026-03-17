@@ -838,22 +838,40 @@
 /* ===== PHASE 1: HOMEPAGE & CONTACT REDESIGN ===== */
 /* Reuses shared design tokens and component base styles. Localized to Phase 1 scope. */
 
-/* --- Homepage section spacing (design: section gap > block gap) --- */
-.supervisor-home .intro-text-block,
-.supervisor-home .knowledge-map-section,
-.supervisor-home .supervisor-content-wrapper {
-    margin-bottom: var(--sv-section-gap);
+/* --- Homepage two-column layout (main left, sidebar right in RTL) --- */
+.supervisor-home .home-two-column {
+    display: grid !important;
+    grid-template-columns: 1fr 2fr !important; /* RTL: first=sidebar right, second=main left */
+    gap: var(--sv-spacing-xl) !important;
+    align-items: start !important;
 }
 
+.supervisor-home .home-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-spacing-xl);
+}
+
+.supervisor-home .home-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-spacing-xxl);
+}
+
+/* --- Homepage section spacing --- */
 .supervisor-home .intro-text-block {
     margin: 0 auto var(--sv-spacing-xl);
 }
 
 .supervisor-home .knowledge-map-section {
-    margin-bottom: var(--sv-spacing-xl);
+    margin-bottom: 0;
 }
 
-.supervisor-home .supervisor-content-wrapper.supervisor-single-column {
+.supervisor-home .home-search-section {
+    margin-bottom: 0;
+}
+
+.supervisor-home .home-updates-section {
     margin-bottom: 0;
 }
 
@@ -1031,11 +1049,6 @@
 }
 
 /* Main content layout - section spacing */
-.supervisor-home .home-main-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sv-spacing-xxl);
-}
 
 /* Search: icon inside field - wrapper positions button inside input */
 .supervisor-home .home-search-form .search-input-wrapper {
@@ -2332,24 +2345,26 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         margin-bottom: 16px !important;
     }
     
-    /* Ensure single column layout for homepage */
+    /* Ensure single column layout for homepage on mobile */
     .supervisor-home .supervisor-content-wrapper.supervisor-two-column {
         display: flex !important;
         flex-direction: column !important;
         gap: 30px !important;
     }
-    
-    /* Center content section (search + updates) - full width */
-    .supervisor-home .center-content-section {
-        width: 100% !important;
-        order: 1; /* First on mobile */
+
+    /* Mobile: main content (hero + knowledge map) first, sidebar (search + updates) second */
+    .supervisor-home .home-main {
+        order: -1;
+    }
+
+    .supervisor-home .home-sidebar {
+        order: 1;
     }
     
-    /* Knowledge map section - full width, positioned after intro */
+    /* Knowledge map section - full width on mobile */
     .supervisor-home .knowledge-map-section {
         width: 100% !important;
         margin: 0 0 30px 0 !important;
-        order: 0; /* Natural order on mobile */
     }
     
     /* Search section - bigger on mobile */
@@ -2437,13 +2452,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     }
     
     .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
-    .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list),
-    .supervisor-home .supervisor-content-wrapper.supervisor-two-column {
+    .supervisor-home .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
         display: grid !important;
         grid-template-columns: 3fr 7fr !important;
         flex-direction: initial !important; /* Reset flex direction */
         gap: 40px !important;
         align-items: start !important;
+    }
+
+    /* Homepage: main wider (left), sidebar narrower (right in RTL) */
+    .supervisor-home .supervisor-content-wrapper.home-two-column {
+        grid-template-columns: 1fr 2fr !important;
     }
     
     .ajax-search-component,
@@ -2515,19 +2534,29 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: white !important;
 }
 
+/* Home icon never gets active block - always blue on white */
+.supervisor-home .desktop-menu a.nav-item-home.active {
+    background: white !important;
+    color: var(--sv-nav-accent) !important;
+}
+
 .supervisor-home .desktop-menu a.active .nav-text,
 .supervisor-home .desktop-menu a.active .nav-icon {
     color: white !important;
 }
 
 .supervisor-home .desktop-menu a.active .nav-icon-home svg {
-    stroke: white;
+    fill: white;
+}
+
+/* Home icon when active - still blue, not white */
+.supervisor-home .desktop-menu a.nav-item-home.active .nav-icon-home svg {
+    fill: var(--sv-nav-accent) !important;
 }
 
 /* Inactive icon (home when not active) - blue on white */
 .supervisor-home .desktop-menu a:not(.active) .nav-icon-home svg {
-    stroke: var(--sv-nav-accent) !important;
-    fill: none;
+    fill: var(--sv-nav-accent) !important;
 }
 
 /* Home icon - same treatment as text items, icon-only width - DESKTOP ONLY */
@@ -2556,15 +2585,25 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 .supervisor-home .desktop-menu a:not(.active):hover .nav-icon-home svg,
-.supervisor-home .desktop-menu a:not(.active):focus-visible .nav-icon-home svg {
-    stroke: var(--sv-nav-accent);
+.supervisor-home .desktop-menu a:not(.active):focus-visible .nav-icon-home svg,
+.supervisor-home .desktop-menu a.nav-item-home:hover .nav-icon-home svg,
+.supervisor-home .desktop-menu a.nav-item-home:focus-visible .nav-icon-home svg {
+    fill: var(--sv-nav-accent) !important;
 }
 
-/* Hover on active - slightly darker shade */
-.supervisor-home .desktop-menu a.active:hover,
-.supervisor-home .desktop-menu a.active:focus-visible {
+/* Hover on active - slightly darker shade (not for home) */
+.supervisor-home .desktop-menu a.active:not(.nav-item-home):hover,
+.supervisor-home .desktop-menu a.active:not(.nav-item-home):focus-visible {
     background: #183d5c !important;
     color: white !important;
+    outline: 0;
+}
+
+/* Home hover - light tint like other inactive items */
+.supervisor-home .desktop-menu a.nav-item-home:hover,
+.supervisor-home .desktop-menu a.nav-item-home:focus-visible {
+    background: var(--sv-blue-050) !important;
+    color: var(--sv-nav-accent) !important;
     outline: 0;
 }
 

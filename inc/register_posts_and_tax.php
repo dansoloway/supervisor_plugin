@@ -62,6 +62,26 @@ function register_qa_cpts() {
         'supports' => ['title', 'editor', 'thumbnail'],
     ]);
 
+    // CPT: סיפורים מהשטח
+    register_post_type('qa_stories', [
+        'labels' => [
+            'name' => __('סיפורים מהשטח', 'text-domain'),
+            'singular_name' => __('סיפור מהשטח', 'text-domain'),
+            'add_new' => __('הוסף חדש', 'text-domain'),
+            'add_new_item' => __('הוסף סיפור חדש', 'text-domain'),
+            'edit_item' => __('ערוך סיפור', 'text-domain'),
+            'new_item' => __('סיפור חדש', 'text-domain'),
+            'view_item' => __('הצג סיפור', 'text-domain'),
+            'search_items' => __('חפש סיפורים', 'text-domain'),
+            'not_found' => __('לא נמצאו סיפורים', 'text-domain'),
+            'not_found_in_trash' => __('לא נמצאו סיפורים באשפה', 'text-domain'),
+        ],
+        'public' => true,
+        'has_archive' => false,
+        'rewrite' => ['slug' => 'qa-stories'],
+        'supports' => ['title', 'editor', 'thumbnail'],
+    ]);
+
 }
 add_action('init', 'register_qa_cpts');
 
@@ -83,7 +103,7 @@ function register_additional_taxonomies() {
         'menu_name' => __('תחומים', 'text-domain'),
     ];
     
-    register_taxonomy('qa_themes', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
+    register_taxonomy('qa_themes', ['qa_orgs', 'qa_updates', 'qa_bib_items', 'qa_stories'], [
         'labels' => $themes_labels,
         'hierarchical' => true, // Enables hierarchical structure (like categories)
         'public' => true, // Allows taxonomy to be publicly queryable
@@ -112,7 +132,7 @@ function register_additional_taxonomies() {
         'menu_name' => __('נושאי מפתח', 'text-domain'),
     ];
 
-    register_taxonomy('qa_tags', ['qa_orgs', 'qa_updates', 'qa_bib_items'], [
+    register_taxonomy('qa_tags', ['qa_orgs', 'qa_updates', 'qa_bib_items', 'qa_stories'], [
         'labels' => $tags_labels,
         'hierarchical' => true, // Non-hierarchical (like tags)
         'public' => true, // Allows taxonomy to be publicly queryable
@@ -168,7 +188,7 @@ function supervisor_qa_tags_metabox_js() {
     }
     
     // Only on post edit screens for relevant post types
-    $relevant_types = ['qa_bib_items', 'qa_updates', 'qa_orgs'];
+    $relevant_types = ['qa_bib_items', 'qa_updates', 'qa_orgs', 'qa_stories'];
     if (in_array($screen->post_type, $relevant_types) && ($screen->base === 'post' || $screen->base === 'edit')) {
         ?>
         <script>
@@ -267,7 +287,7 @@ function supervisor_remove_qa_bib_cats_metaboxes() {
         return;
     }
     
-    $post_types = ['qa_bib_items', 'qa_updates', 'qa_orgs'];
+    $post_types = ['qa_bib_items', 'qa_updates', 'qa_orgs', 'qa_stories'];
     foreach ($post_types as $post_type) {
         remove_meta_box('qa_bib_catsdiv', $post_type, 'side');
         remove_meta_box('tagsdiv-qa_bib_cats', $post_type, 'side');

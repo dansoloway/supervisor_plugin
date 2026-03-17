@@ -92,12 +92,9 @@ get_header('supervisor');
             <!-- Main content (left in RTL): Hero + Knowledge map -->
             <main class="home-main" role="main">
                 <header class="home-hero">
-                    <h1 class="home-hero-title"><?php echo esc_html(get_the_title() ?: 'המפקחת'); ?></h1>
                     <div class="intro-text-block">
-                        <div class="intro-content">
-                            <p>מערכת בקרת האיכות בשירותים חברתיים נועדה להבטיח שהשירותים הניתנים לאזרחים עומדים בסטנדרטים הגבוהים ביותר של איכות, מקצועיות ואפקטיביות.</p>
-                            <p>המערכת כוללת כלים מתקדמים לניטור, הערכה ושיפור מתמיד של השירותים החברתיים בישראל.</p>
-                        </div>
+                        <h1 class="home-hero-title">ברוכים הבאים לאתר הקהילה המקצועית של הפיקוח</h1>
+                        <p class="home-hero-subtitle">ידע וכלים לחיזוק עבודת הפיקוח בישראל בנושאי רווחה, חינוך ובריאות</p>
                     </div>
                 </header>
 
@@ -116,6 +113,45 @@ get_header('supervisor');
                 </section>
             </main>
         </div> <!-- End supervisor-content-wrapper -->
+
+        <!-- Stories from the Field - Carousel -->
+        <section class="stories-from-field-section" aria-labelledby="stories-heading">
+            <h2 id="stories-heading" class="home-section-title">סיפורים מהשטח</h2>
+            <div class="stories-carousel-wrapper">
+                <button type="button" class="stories-carousel-prev" aria-label="<?php esc_attr_e('הקודם', 'text-domain'); ?>">‹</button>
+                <div class="stories-carousel" role="region" aria-label="<?php esc_attr_e('סיפורים מהשטח', 'text-domain'); ?>">
+                    <?php
+                    $stories_query = new WP_Query([
+                        'post_type' => 'qa_stories',
+                        'posts_per_page' => 12,
+                        'orderby' => 'date',
+                        'order' => 'DESC',
+                        'post_status' => 'publish',
+                    ]);
+                    if ($stories_query->have_posts()) :
+                        while ($stories_query->have_posts()) : $stories_query->the_post();
+                            $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 25);
+                    ?>
+                            <a href="<?php the_permalink(); ?>" class="story-card">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <div class="story-card-image"><?php the_post_thumbnail('medium'); ?></div>
+                                <?php else : ?>
+                                    <div class="story-card-image story-card-placeholder"></div>
+                                <?php endif; ?>
+                                <h3 class="story-card-title"><?php the_title(); ?></h3>
+                                <?php if ($excerpt) : ?>
+                                    <p class="story-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                                <?php endif; ?>
+                            </a>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+                <button type="button" class="stories-carousel-next" aria-label="<?php esc_attr_e('הבא', 'text-domain'); ?>">›</button>
+            </div>
+        </section>
 
     </div> <!-- End supervisor-page-container -->
 

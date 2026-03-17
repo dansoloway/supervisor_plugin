@@ -69,6 +69,15 @@ function supervisor_admin_menu() {
 
     add_submenu_page(
         'supervisor-admin', // Parent slug
+        __('ניהול סיפורים', 'text-domain'), // Page title
+        __('ניהול סיפורים', 'text-domain'), // Menu title
+        $capability, // Capability - visible to all, but editing restricted
+        'supervisor-stories', // Menu slug
+        'supervisor_stories_page' // Callback function
+    );
+
+    add_submenu_page(
+        'supervisor-admin', // Parent slug
         __('ניהול נושאי מפתח', 'text-domain'), // Page title
         __('ניהול נושאי מפתח', 'text-domain'), // Menu title
         $capability, // Capability - visible to all, but editing restricted
@@ -161,7 +170,7 @@ add_action('admin_menu', 'supervisor_remove_duplicate_menu_item', 25); // Run af
 
 // Helper function to check if user can edit supervisor content
 function supervisor_can_edit() {
-    return current_user_can('manage_options') || current_user_can('edit_qa_updates') || current_user_can('supervisor_editor');
+    return current_user_can('manage_options') || current_user_can('edit_qa_updates') || current_user_can('edit_qa_stories') || current_user_can('supervisor_editor');
 }
 
 // Handle delete actions for management pages
@@ -176,7 +185,7 @@ function supervisor_handle_delete_actions() {
         
         if (wp_verify_nonce($_GET['_wpnonce'], 'supervisor_delete_post_' . $post_id)) {
             $post = get_post($post_id);
-            if ($post && in_array($post->post_type, ['qa_updates', 'qa_orgs', 'qa_bib_items'])) {
+            if ($post && in_array($post->post_type, ['qa_updates', 'qa_orgs', 'qa_bib_items', 'qa_stories'])) {
                 wp_delete_post($post_id, true); // Force delete
                 
                 // Redirect to appropriate page
@@ -185,6 +194,8 @@ function supervisor_handle_delete_actions() {
                     $redirect_url = admin_url('admin.php?page=supervisor-organizations');
                 } elseif ($post->post_type === 'qa_bib_items') {
                     $redirect_url = admin_url('admin.php?page=supervisor-bibliography');
+                } elseif ($post->post_type === 'qa_stories') {
+                    $redirect_url = admin_url('admin.php?page=supervisor-stories');
                 }
                 
                 wp_redirect(add_query_arg('deleted', '1', $redirect_url));
@@ -246,6 +257,7 @@ function supervisor_admin_dashboard() {
                     <li><strong><?php echo esc_html__('פריטי ביבליוגרפיה:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_bib_items')->publish; ?></li>
                     <li><strong><?php echo esc_html__('עדכונים:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_updates')->publish; ?></li>
                     <li><strong><?php echo esc_html__('ארגונים:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_orgs')->publish; ?></li>
+                    <li><strong><?php echo esc_html__('סיפורים מהשטח:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_stories')->publish; ?></li>
                     <li><strong><?php echo esc_html__('נושאי מפתח:', 'text-domain'); ?></strong> <?php echo count(get_terms(['taxonomy' => 'qa_tags', 'hide_empty' => false])); ?></li>
                 </ul>
             </div>
@@ -261,6 +273,9 @@ function supervisor_admin_dashboard() {
                     </a>
                     <a href="<?php echo admin_url('post-new.php?post_type=qa_orgs'); ?>" class="button button-secondary">
                         <?php echo esc_html__('הוסף ארגון חדש', 'text-domain'); ?>
+                    </a>
+                    <a href="<?php echo admin_url('post-new.php?post_type=qa_stories'); ?>" class="button button-secondary">
+                        <?php echo esc_html__('הוסף סיפור חדש', 'text-domain'); ?>
                     </a>
                 </p>
             </div>
@@ -418,6 +433,78 @@ function supervisor_organizations_page() {
                 </a>
                 <a href="<?php echo admin_url('edit.php?post_type=qa_orgs'); ?>" class="button button-secondary">
                     <?php echo esc_html__('צפה בכל הארגונים', 'text-domain'); ?>
+                </a>
+            </p>
+        </div>
+    </div>
+    <?php
+}
+
+// Stories management page callback
+function supervisor_stories_page() {
+    if (!supervisor_can_edit()) {
+        wp_die(__('אין לך הרשאות לגשת לעמוד זה.', 'text-domain'));
+    }
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html__('ניהול סיפורים מהשטח', 'text-domain'); ?></h1>
+        <p><?php echo esc_html__('ניהול סיפורים מהשטח במערכת המפקחת. הסיפורים מוצגים בקרוסלת הבית.', 'text-domain'); ?></p>
+        
+        <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php echo esc_html__('הסיפור נמחק בהצלחה.', 'text-domain'); ?></p>
+            </div>
+        <?php endif; ?>
+        
+        <div class="stories-management">
+            <h2><?php echo esc_html__('כל הסיפורים', 'text-domain'); ?></h2>
+            <?php
+            $stories = new WP_Query([
+                'post_type' => 'qa_stories',
+                'posts_per_page' => -1,
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'post_status' => 'publish'
+            ]);
+            
+            if ($stories->have_posts()) :
+                echo '<table class="wp-list-table widefat fixed striped">';
+                echo '<thead><tr>';
+                echo '<th>' . esc_html__('כותרת', 'text-domain') . '</th>';
+                echo '<th>' . esc_html__('תאריך', 'text-domain') . '</th>';
+                echo '<th>' . esc_html__('פעולות', 'text-domain') . '</th>';
+                echo '</tr></thead><tbody>';
+                
+                while ($stories->have_posts()) : $stories->the_post();
+                    echo '<tr>';
+                    echo '<td>' . esc_html(get_the_title()) . '</td>';
+                    echo '<td>' . esc_html(get_the_date()) . '</td>';
+                    echo '<td>';
+                    echo '<a href="' . admin_url('post.php?post=' . get_the_ID() . '&action=edit') . '" class="button button-small">' . esc_html__('ערוך', 'text-domain') . '</a> ';
+                    echo '<a href="' . get_permalink() . '" class="button button-small" target="_blank">' . esc_html__('צפה', 'text-domain') . '</a> ';
+                    $delete_url = wp_nonce_url(
+                        add_query_arg(['supervisor_delete_post' => get_the_ID()], admin_url('admin.php?page=supervisor-stories')),
+                        'supervisor_delete_post_' . get_the_ID(),
+                        '_wpnonce'
+                    );
+                    echo '<a href="' . esc_url($delete_url) . '" class="button button-small button-link-delete" onclick="return confirm(\'' . esc_js(__('האם אתה בטוח שברצונך למחוק את הסיפור הזה? פעולה זו לא הפיכה!', 'text-domain')) . '\');">' . esc_html__('מחק', 'text-domain') . '</a>';
+                    echo '</td>';
+                    echo '</tr>';
+                endwhile;
+                
+                echo '</tbody></table>';
+                wp_reset_postdata();
+            else :
+                echo '<p>' . esc_html__('לא נמצאו סיפורים.', 'text-domain') . '</p>';
+            endif;
+            ?>
+            
+            <p>
+                <a href="<?php echo admin_url('post-new.php?post_type=qa_stories'); ?>" class="button button-primary">
+                    <?php echo esc_html__('הוסף סיפור חדש', 'text-domain'); ?>
+                </a>
+                <a href="<?php echo admin_url('edit.php?post_type=qa_stories'); ?>" class="button button-secondary">
+                    <?php echo esc_html__('צפה בכל הסיפורים', 'text-domain'); ?>
                 </a>
             </p>
         </div>
@@ -720,6 +807,7 @@ function remove_old_bibliography_menu() {
     remove_menu_page('edit.php?post_type=qa_updates'); // Remove auto-generated "עדכונים" menu
     remove_menu_page('edit.php?post_type=qa_orgs'); // Remove auto-generated "ארגונים" menu  
     remove_menu_page('edit.php?post_type=qa_bib_items'); // Remove auto-generated "פריטים ביבליוגרפיים" menu
+    remove_menu_page('edit.php?post_type=qa_stories'); // Remove auto-generated "סיפורים מהשטח" menu
     
     // Also remove any other potential unwanted menu items
     remove_menu_page('supervisor-category-icons'); // Remove if exists

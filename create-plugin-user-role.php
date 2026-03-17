@@ -66,6 +66,18 @@ function add_supervisor_editor_role() {
             'delete_private_qa_bib_items' => true,
             'read_qa_bib_items' => true,
             
+            'edit_qa_stories' => true,
+            'edit_others_qa_stories' => true,
+            'edit_published_qa_stories' => true,
+            'publish_qa_stories' => true,
+            'delete_qa_stories' => true,
+            'delete_others_qa_stories' => true,
+            'delete_published_qa_stories' => true,
+            'read_private_qa_stories' => true,
+            'edit_private_qa_stories' => true,
+            'delete_private_qa_stories' => true,
+            'read_qa_stories' => true,
+            
             // Taxonomy capabilities - ALLOW
             'manage_qa_tags' => true,
             'edit_qa_tags' => true,
@@ -112,6 +124,7 @@ function update_supervisor_editor_capabilities() {
         $role->add_cap('read_qa_updates');
         $role->add_cap('read_qa_orgs');
         $role->add_cap('read_qa_bib_items');
+        $role->add_cap('read_qa_stories');
     }
 }
 add_action('init', 'update_supervisor_editor_capabilities');
@@ -167,6 +180,18 @@ function fix_supervisor_editor_permissions() {
         $user->add_cap('edit_private_qa_bib_items');
         $user->add_cap('delete_private_qa_bib_items');
         $user->add_cap('read_qa_bib_items');
+        
+        $user->add_cap('edit_qa_stories');
+        $user->add_cap('edit_others_qa_stories');
+        $user->add_cap('edit_published_qa_stories');
+        $user->add_cap('publish_qa_stories');
+        $user->add_cap('delete_qa_stories');
+        $user->add_cap('delete_others_qa_stories');
+        $user->add_cap('delete_published_qa_stories');
+        $user->add_cap('read_private_qa_stories');
+        $user->add_cap('edit_private_qa_stories');
+        $user->add_cap('delete_private_qa_stories');
+        $user->add_cap('read_qa_stories');
         
         // Taxonomy capabilities
         $user->add_cap('manage_qa_tags');
@@ -499,6 +524,13 @@ function hide_admin_bar_items() {
             'id' => 'new-qa-bib-items',
             'title' => __('פריט ביבליוגרפיה חדש'),
             'href' => admin_url('post-new.php?post_type=qa_bib_items'),
+        ));
+        
+        $wp_admin_bar->add_menu(array(
+            'parent' => 'new-content',
+            'id' => 'new-qa-stories',
+            'title' => __('סיפור חדש'),
+            'href' => admin_url('post-new.php?post_type=qa_stories'),
         ));
         
         // Keep logout and user account items - don't remove 'my-account'

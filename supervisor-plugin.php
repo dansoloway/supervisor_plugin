@@ -70,7 +70,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-activities.php', // Add activities template
     ];
 
-    $singles = ['qa_orgs', 'qa_updates', 'qa_bib_items']; // Removed old 'qa_bibs' post type
+    $singles = ['qa_orgs', 'qa_updates', 'qa_bib_items', 'qa_stories'];
     $post_type_archives = ['qa_updates', 'qa_bib_items'];
     $is_taxonomy = is_tax('qa_tags'); // Check if it's a taxonomy archive
 
@@ -125,13 +125,20 @@ function enqueue_alternate_header_assets() {
         true // Load in the footer
     );
 
-    // Enqueue Home Search JavaScript (only on home page)
+    // Enqueue Home Search and Stories Carousel JavaScript (only on home page)
     if (is_page(SUPERVISOR_HOME)) {
         wp_enqueue_script(
             'home-search',
             plugins_url('/assets/js/home-search.js', __FILE__),
             ['jquery'], // Dependencies
             time(), // Force cache refresh
+            true // Load in the footer
+        );
+        wp_enqueue_script(
+            'stories-carousel',
+            plugins_url('/assets/js/stories-carousel.js', __FILE__),
+            [], // No dependencies
+            time(),
             true // Load in the footer
         );
     }
@@ -238,6 +245,10 @@ function supervisor_load_templates($template) {
 
     if (is_singular('qa_orgs') && file_exists(plugin_dir_path(__FILE__) . 'templates/single-qa_orgs.php')) {
         return plugin_dir_path(__FILE__) . 'templates/single-qa_orgs.php';
+    }
+
+    if (is_singular('qa_stories') && file_exists(plugin_dir_path(__FILE__) . 'templates/single-qa_stories.php')) {
+        return plugin_dir_path(__FILE__) . 'templates/single-qa_stories.php';
     }
 
     // Single qa_updates pages are now redirected, so we don't load the template

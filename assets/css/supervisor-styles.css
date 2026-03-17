@@ -2468,7 +2468,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     border: none;
     border-top: 2px solid var(--sv-nav-accent);
     border-bottom: 2px solid var(--sv-nav-accent);
-    background: transparent;
+    background: white;
     border-radius: 0;
     padding: 0;
     direction: rtl;
@@ -2504,9 +2504,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     min-height: 56px;
 }
 
-/* Inactive items - transparent background, blue text */
+/* Inactive items - white background, blue text/icon */
 .supervisor-home .desktop-menu a:not(.active) {
-    background: transparent !important;
+    background: white !important;
 }
 
 /* Active state - full-height block, dark blue bg, white text - DESKTOP ONLY */
@@ -2524,9 +2524,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     stroke: white;
 }
 
-/* Inactive icon (home when not active) - dark blue */
+/* Inactive icon (home when not active) - blue on white */
 .supervisor-home .desktop-menu a:not(.active) .nav-icon-home svg {
-    stroke: var(--sv-nav-accent);
+    stroke: var(--sv-nav-accent) !important;
+    fill: none;
 }
 
 /* Home icon - same treatment as text items, icon-only width - DESKTOP ONLY */
@@ -2546,7 +2547,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     height: 24px;
 }
 
-/* Hover/Focus - inactive items - subtle tint, keep dark blue text - DESKTOP ONLY */
+/* Hover/Focus - inactive items - light blue tint, keep blue text/icon - DESKTOP ONLY */
 .supervisor-home .desktop-menu a:not(.active):hover,
 .supervisor-home .desktop-menu a:not(.active):focus-visible {
     background: var(--sv-blue-050) !important;
@@ -3366,6 +3367,7 @@ img[src*=".svg"] {
     width: 100% !important;
     height: auto !important;
     display: block !important;
+    margin: 0px auto !important;
 }
 
 /* Specific styling for SVG logo in header */

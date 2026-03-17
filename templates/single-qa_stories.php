@@ -21,17 +21,20 @@ get_header('supervisor');
         ?>
             <article class="story-single">
                 <header class="story-header">
+                    <span class="story-title-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></span>
                     <h1 class="story-main-title"><?php the_title(); ?></h1>
                 </header>
 
-                <?php if (has_post_thumbnail()) : ?>
-                <div class="story-featured-image">
-                    <?php the_post_thumbnail('large'); ?>
-                </div>
-                <?php endif; ?>
+                <div class="story-body">
+                    <?php if (has_post_thumbnail()) : ?>
+                    <div class="story-featured-image">
+                        <?php the_post_thumbnail('large'); ?>
+                    </div>
+                    <?php endif; ?>
 
-                <div class="story-content content-text">
-                    <?php the_content(); ?>
+                    <div class="story-content content-text">
+                        <?php the_content(); ?>
+                    </div>
                 </div>
             </article>
         <?php endwhile; ?>

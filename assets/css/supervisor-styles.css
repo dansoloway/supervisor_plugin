@@ -975,7 +975,7 @@
 
 .supervisor-home .km-center {
     position: absolute;
-    top: 43%;
+    top: 63%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -1021,23 +1021,26 @@
         font-size: var(--sv-fs-body-lg);
     }
 
+    .supervisor-home .knowledge-map-section .knowledge-map-footer,
     .supervisor-home .knowledge-map-section .knowledge-map-button {
         max-width: 100%;
     }
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
-    margin-top: var(--sv-spacing-sm);
+    margin-top: var(--sv-spacing-md);
+    max-width: 320px;
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-button {
     display: block;
     width: 100%;
-    max-width: 380px;
+    max-width: 320px;
     text-align: center;
-    border-radius: var(--sv-radius-md);
+    border-radius: 0;
     padding: var(--sv-spacing-sm) var(--sv-spacing-lg);
     min-height: 48px;
+    color: #fff !important;
 }
 
 /* --- Search bar (design: sits directly above updates) --- */

@@ -4795,10 +4795,8 @@ body .supervisor-bib-cats .categories-grid {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border: 2px solid var(--sv-border, #E5EAF0);
-    background: var(--sv-card, #fff);
-    color: var(--sv-text, #1f2937);
-    font-size: 24px;
+    color: black !important; 
+    font-size: 40px;
     line-height: 1;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s, color 0.2s;
@@ -4806,6 +4804,7 @@ body .supervisor-bib-cats .categories-grid {
     align-items: center;
     justify-content: center;
     padding: 0;
+
 }
 
 .stories-carousel-prev:hover:not(:disabled),

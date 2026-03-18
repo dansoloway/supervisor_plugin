@@ -958,7 +958,7 @@
 .supervisor-home .km-mid-right,
 .supervisor-home .km-bottom-left,
 .supervisor-home .km-bottom-right {
-    background-color: #1a7f7a;
+    background-color: #319694;
     min-height: 0;
 }
 
@@ -968,7 +968,7 @@
 
 .supervisor-home .km-wide {
     grid-column: 1 / -1;
-    background-color: #4a7c8c;
+    background-color: #82ABAD;
     min-height: 48px;
     padding: var(--sv-spacing-md) var(--sv-spacing-lg);
 }
@@ -1028,12 +1028,14 @@
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
-    margin-top: var(--sv-spacing-md);
+    margin-top: 30px;
     max-width: 320px;
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-button {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     max-width: 320px;
     text-align: center;
@@ -1195,7 +1197,6 @@
 .supervisor-home .home-search-form .search-input-wrapper .supervisor-search-bar {
     flex: 1;
     border: none;
-    border-inline-start: 1px solid var(--sv-border-input);
     padding: 0 var(--sv-spacing-md);
     min-height: 38px;
     font-size: var(--sv-fs-body);
@@ -4751,7 +4752,6 @@ body .supervisor-bib-cats .categories-grid {
 .supervisor-home .stories-from-field-section {
     margin-top: var(--sv-section-gap, 40px);
     padding-top: var(--sv-section-gap, 40px);
-    border-top: 1px solid var(--sv-border, #E5EAF0);
     width: 100%;
 }
 

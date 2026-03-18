@@ -1,6 +1,6 @@
 /**
- * Stories from the Field - Slider (carousel) arrow navigation
- * Shows arrows when there are more items than can fit; uses item count for visibility.
+ * Stories from the Field - RTL-safe carousel
+ * Uses visible-card detection and scrollIntoView. No scrollLeft math.
  */
 (function() {
     'use strict';
@@ -15,12 +15,41 @@
 
         if (!carousel || !prevBtn || !nextBtn) return;
 
-        var scrollAmount = 304; /* one card (280px) + gap (24px) */
-        var isRTL = getComputedStyle(carousel).direction === 'rtl';
-        var cards = carousel.querySelectorAll('.story-card');
+        var cards = Array.prototype.slice.call(carousel.querySelectorAll('.story-card'));
+
+        function hasOverflow() {
+            return carousel.scrollWidth > carousel.clientWidth;
+        }
+
+        function isCardVisible(card) {
+            var cRect = carousel.getBoundingClientRect();
+            var cardRect = card.getBoundingClientRect();
+            var overlapStart = Math.max(cRect.left, cardRect.left);
+            var overlapEnd = Math.min(cRect.right, cardRect.right);
+            return overlapEnd > overlapStart;
+        }
+
+        function getVisibleIndices() {
+            var indices = [];
+            for (var i = 0; i < cards.length; i++) {
+                if (isCardVisible(cards[i])) indices.push(i);
+            }
+            return indices;
+        }
 
         function shouldShowArrows() {
-            return cards.length > 1;
+            return cards.length >= 2 && hasOverflow();
+        }
+
+        function atStart() {
+            var indices = getVisibleIndices();
+            return indices.length === 0 || indices[0] <= 0;
+        }
+
+        function atEnd() {
+            var indices = getVisibleIndices();
+            var lastIdx = cards.length - 1;
+            return indices.length === 0 || indices[indices.length - 1] >= lastIdx;
         }
 
         function updateArrowVisibility() {
@@ -30,33 +59,47 @@
         function updateButtonStates() {
             if (!shouldShowArrows()) return;
 
-            var maxScroll = carousel.scrollWidth - carousel.clientWidth;
-            var atStart, atEnd;
+            prevBtn.disabled = atStart();
+            nextBtn.disabled = atEnd();
+        }
 
-            if (isRTL) {
-                atStart = carousel.scrollLeft >= 0;
-                atEnd = maxScroll <= 0 || carousel.scrollLeft <= -maxScroll;
-            } else {
-                atStart = carousel.scrollLeft <= 0;
-                atEnd = maxScroll <= 0 || carousel.scrollLeft >= maxScroll - 1;
-            }
+        function scrollToCard(index, alignStart) {
+            if (index < 0 || index >= cards.length) return;
 
-            prevBtn.disabled = atStart;
-            nextBtn.disabled = atEnd;
+            var el = cards[index];
+            el.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: alignStart ? 'start' : 'end'
+            });
         }
 
         prevBtn.addEventListener('click', function() {
             if (prevBtn.disabled) return;
-            carousel.scrollBy({ left: isRTL ? scrollAmount : -scrollAmount, behavior: 'smooth' });
+
+            var indices = getVisibleIndices();
+            var targetIdx = indices.length > 0 ? indices[0] - 1 : 0;
+            if (targetIdx < 0) targetIdx = 0;
+
+            scrollToCard(targetIdx, true);
         });
 
         nextBtn.addEventListener('click', function() {
             if (nextBtn.disabled) return;
-            carousel.scrollBy({ left: isRTL ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+
+            var indices = getVisibleIndices();
+            var lastIdx = cards.length - 1;
+            var targetIdx = indices.length > 0 ? indices[indices.length - 1] + 1 : 0;
+            if (targetIdx > lastIdx) targetIdx = lastIdx;
+
+            scrollToCard(targetIdx, false);
         });
 
         carousel.addEventListener('scroll', updateButtonStates);
-        window.addEventListener('resize', updateButtonStates);
+        window.addEventListener('resize', function() {
+            updateArrowVisibility();
+            updateButtonStates();
+        });
 
         updateArrowVisibility();
         updateButtonStates();

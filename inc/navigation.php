@@ -91,7 +91,7 @@ function render_nav_item($item) {
     echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '"' . $style . $aria_label . '>';
     
     if (!empty($item['is_home_icon'])) {
-        $house_icon_url = plugin_dir_url(dirname(__FILE__)) . 'assets/img/house2.svg';
+        $house_icon_url = plugin_dir_url(dirname(__FILE__)) . 'assets/img/house3.svg';
         echo '<span class="nav-icon nav-icon-home" aria-hidden="true">';
         echo '<img src="' . esc_url($house_icon_url) . '" alt="" width="24" height="24" class="nav-icon-home-img">';
         echo '</span>';

@@ -2710,12 +2710,12 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     opacity: 1;
 }
 
-/* Home icon when active - uses built-in colors from house2.svg */
+/* Home icon when active - uses built-in colors from house3.svg */
 .supervisor-home .desktop-menu a.nav-item-home.active .nav-icon-home img {
     opacity: 1;
 }
 
-/* Inactive icon (home when not active) - uses built-in colors from house2.svg */
+/* Inactive icon (home when not active) - uses built-in colors from house3.svg */
 .supervisor-home .desktop-menu a:not(.active) .nav-icon-home img {
     opacity: 0.9;
 }
@@ -2736,6 +2736,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     width: 24px;
     height: 24px;
     display: block;
+    object-fit: contain;
 }
 
 /* Hover/Focus - inactive items - light blue tint, keep blue text/icon - DESKTOP ONLY */

@@ -2810,13 +2810,14 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     padding: 14px 20px;
     color: var(--sv-nav-accent) !important;
     text-decoration: none;
-    font-family: var(--sv-font-primary);
+    font-family: var(--sv-font-secondary);
     font-size: 16px;
     font-weight: 500;
     line-height: 1.4;
     background: #B1B4B6;
+    border: none;
     border-bottom: 1px solid white;
-    border-radius: 0 !important;
+    border-radius: 0;
     transition: background-color 0.2s ease;
     cursor: pointer;
     margin: 0;
@@ -3038,9 +3039,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         text-align: right;
         color: var(--sv-nav-accent) !important;
         text-decoration: none;
+        font-family: var(--sv-font-secondary);
         font-size: 18px;
-        font-weight: 400;
+        font-weight: 500;
         background: #B1B4B6;
+        border: none;
         border-bottom: 1px solid white;
         line-height: 1.5;
     }

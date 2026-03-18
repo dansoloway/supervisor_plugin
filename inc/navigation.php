@@ -117,7 +117,7 @@ function render_nav_item($item) {
                 $submenu_classes[] = 'active';
             }
             
-            echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '" style="border-radius: 0 !important; border: none !important; border-bottom: none !important; border-top: none !important; border-left: none !important; border-right: none !important; font-family: var(--sv-font-secondary) !important; font-weight: 500 !important;">';
+            echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
             echo esc_html($submenu_item['title']);
             echo '</a>';
         }

@@ -839,10 +839,11 @@
 /* Reuses shared design tokens and component base styles. Localized to Phase 1 scope. */
 
 /* --- Homepage two-column layout (main left, sidebar right in RTL) --- */
+/* RTL: first col = sidebar (search+updates) right, second col = main (hero+knowledge map) left */
 .supervisor-home .home-two-column {
     display: grid !important;
-    grid-template-columns: 1fr 2fr !important; /* RTL: first=sidebar right, second=main left */
-    gap: var(--sv-spacing-xl) !important;
+    grid-template-columns: 1fr minmax(300px, 380px) !important;
+    gap: var(--sv-spacing-lg) !important;
     align-items: start !important;
 }
 
@@ -850,17 +851,19 @@
     display: flex;
     flex-direction: column;
     gap: var(--sv-spacing-md);
+    min-width: 0;
 }
 
 .supervisor-home .home-main {
     display: flex;
     flex-direction: column;
-    gap: var(--sv-spacing-xxl);
+    gap: var(--sv-spacing-lg);
+    min-width: 0;
 }
 
 /* --- Homepage section spacing --- */
 .supervisor-home .intro-text-block {
-    margin: 0 auto var(--sv-spacing-xl);
+    margin: 0 0 var(--sv-spacing-md);
 }
 
 .supervisor-home .knowledge-map-section {
@@ -870,18 +873,15 @@
 .supervisor-home .home-search-section {
     margin-bottom: 0;
 }
-.supervisor-home .home-search-section .search-section {
-    margin-bottom: 0;
-}
 
 .supervisor-home .home-updates-section {
     margin-bottom: 0;
 }
 
-/* --- Intro / hero block (design: comfortable spacing, clearer hierarchy) --- */
-.supervisor-home .intro-text-block {
-    max-width: 720px;
-    padding: var(--sv-spacing-lg) 0;
+/* --- Intro / hero block (design: aligned with column, compact) --- */
+.supervisor-home .home-hero .intro-text-block {
+    max-width: 100%;
+    padding: 0 0 var(--sv-spacing-sm);
 }
 
 .supervisor-home .intro-content p {
@@ -896,19 +896,19 @@
     margin-bottom: 0;
 }
 
-/* --- Knowledge map (home: clickable tiles grid, center box, wide bottom bar) --- */
+/* --- Knowledge map (home: compact, tiles closer to square) --- */
 .supervisor-home .home-knowledge-map {
-    margin-bottom: var(--sv-spacing-lg);
+    margin-bottom: var(--sv-spacing-md);
 }
 
 .supervisor-home .knowledge-map-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(120px, 1fr));
-    grid-template-rows: 1fr 1fr 1fr auto;
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    grid-template-rows: minmax(130px, 1fr) minmax(130px, 1fr) minmax(130px, 1fr) auto;
+    gap: 8px;
     position: relative;
-    max-width: 480px;
-    margin: 0 auto;
+    max-width: 340px;
+    margin: 0;
     direction: rtl;
 }
 
@@ -918,7 +918,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: var(--sv-spacing-lg);
+    padding: var(--sv-spacing-md);
     border-radius: var(--sv-radius-lg);
     text-decoration: none !important;
     color: #fff !important;
@@ -946,7 +946,7 @@
 .supervisor-home .km-top-left,
 .supervisor-home .km-top-right {
     background-color: #8a9a3c;
-    min-height: 100px;
+    min-height: 0;
 }
 
 .supervisor-home .km-mid-left,
@@ -954,13 +954,13 @@
 .supervisor-home .km-bottom-left,
 .supervisor-home .km-bottom-right {
     background-color: #1a7f7a;
-    min-height: 100px;
+    min-height: 0;
 }
 
 .supervisor-home .km-wide {
     grid-column: 1 / -1;
     background-color: #4a7c8c;
-    min-height: 56px;
+    min-height: 48px;
     padding: var(--sv-spacing-md) var(--sv-spacing-lg);
 }
 
@@ -973,8 +973,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 100px;
-    height: 100px;
+    width: 88px;
+    height: 88px;
     background: #fff;
     border-radius: var(--sv-radius-lg);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
@@ -989,7 +989,9 @@
     .supervisor-home .knowledge-map-grid {
         gap: 8px;
         max-width: 100%;
+        margin: 0 auto;
         grid-template-columns: repeat(2, minmax(100px, 1fr));
+        grid-template-rows: minmax(110px, 1fr) minmax(110px, 1fr) minmax(110px, 1fr) auto;
     }
 
     .supervisor-home .km-tile {
@@ -1009,21 +1011,29 @@
         height: 80px;
         font-size: var(--sv-fs-body-lg);
     }
+
+    .supervisor-home .knowledge-map-section .knowledge-map-button {
+        max-width: 100%;
+    }
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
-    margin-top: var(--sv-spacing-lg);
+    margin-top: var(--sv-spacing-md);
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-button {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
     border-radius: var(--sv-radius-md);
-    padding: 0 var(--sv-spacing-lg);
+    padding: var(--sv-spacing-md) var(--sv-spacing-lg);
     min-height: 48px;
 }
 
-/* --- Search bar (design: large input, rounded border, primary interaction feel) --- */
-.supervisor-home .search-section {
-    margin-bottom: var(--sv-spacing-lg);
+/* --- Search bar (design: sits directly above updates) --- */
+.supervisor-home .home-search-section .search-section {
+    margin-bottom: var(--sv-spacing-sm);
 }
 
 .supervisor-home .search-section .supervisor-search {
@@ -1123,13 +1133,14 @@
     border: 0;
 }
 
-/* Hero / welcome block */
+/* Hero / welcome block - aligned with left column, tighter */
 .supervisor-home .home-hero {
-    margin-bottom: var(--sv-spacing-xxl);
-    text-align: center;
+    margin-bottom: var(--sv-spacing-lg);
+    text-align: right;
 }
 .supervisor-home .home-hero .intro-text-block {
-    margin: 0 auto;
+    margin: 0;
+    max-width: 100%;
 }
 .supervisor-home .home-hero-title {
     font-size: var(--sv-fs-h1);
@@ -1204,7 +1215,7 @@
     max-width: 100%;
 }
 
-/* Updates section - card styling, tighter spacing */
+/* Updates section - stronger card, mockup proportions */
 .supervisor-home .home-updates-card {
     border-radius: var(--sv-radius-lg);
     overflow: hidden;
@@ -2576,9 +2587,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         align-items: start !important;
     }
 
-    /* Homepage: main wider (left), sidebar narrower (right in RTL) */
+    /* Homepage: main compact (left), sidebar flexible (right in RTL) */
     .supervisor-home .supervisor-content-wrapper.home-two-column {
-        grid-template-columns: 1fr 2fr !important;
+        grid-template-columns: 1fr minmax(300px, 380px) !important;
     }
     
     .ajax-search-component,

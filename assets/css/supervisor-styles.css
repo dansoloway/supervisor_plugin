@@ -840,15 +840,16 @@
 
 /* --- Homepage two-column layout (main left, sidebar right in RTL) --- */
 /* RTL: first col = sidebar (search+updates) right, second col = main (knowledge map) left */
-/* Centered as a unit under the heading */
+/* Optically centered: nudge compensates for heavier right column */
 .supervisor-home .home-two-column {
     display: grid !important;
-    grid-template-columns: 1fr minmax(420px, 1.35fr) !important;
-    gap: var(--sv-spacing-lg) !important;
+    grid-template-columns: 1fr minmax(400px, 1.25fr) !important;
+    gap: 20px !important;
     align-items: start !important;
-    max-width: 960px;
+    max-width: 940px;
     width: 100%;
     margin-inline: auto;
+    margin-inline-end: 14px;
 }
 
 .supervisor-home .home-sidebar {
@@ -1027,7 +1028,7 @@
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
-    margin-top: var(--sv-spacing-sm);
+    margin-top: 6px;
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-button {
@@ -1036,8 +1037,8 @@
     max-width: 380px;
     text-align: center;
     border-radius: var(--sv-radius-md);
-    padding: var(--sv-spacing-md) var(--sv-spacing-lg);
-    min-height: 48px;
+    padding: 10px 20px;
+    min-height: 44px;
 }
 
 /* --- Search bar (design: sits directly above updates) --- */
@@ -2610,9 +2611,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         align-items: start !important;
     }
 
-    /* Homepage: main primary (left), columns balanced */
+    /* Homepage: main primary (left), optical balance */
     .supervisor-home .supervisor-content-wrapper.home-two-column {
-        grid-template-columns: 1fr minmax(420px, 1.35fr) !important;
+        grid-template-columns: 1fr minmax(400px, 1.25fr) !important;
     }
     
     .ajax-search-component,

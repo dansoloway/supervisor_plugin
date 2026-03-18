@@ -875,7 +875,7 @@
 /* --- Intro / hero block (design: aligned with two-column, optical centering) --- */
 .supervisor-home .home-hero .intro-text-block {
     margin: 0;
-    max-width: 960px;
+    max-width: 100%;
     margin-inline: auto;
     padding: 0;
     text-align: center;

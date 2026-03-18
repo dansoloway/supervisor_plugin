@@ -102,12 +102,12 @@ get_header('supervisor');
                 <section class="knowledge-map-section" aria-labelledby="knowledge-map-heading">
                     <div class="home-knowledge-map">
                         <div class="knowledge-map-grid">
-                            <a class="km-tile km-top-left" href="<?php echo esc_url(home_url('/social-procurement/')); ?>"><span>רכש חברתי</span></a>
-                            <a class="km-tile km-top-right" href="<?php echo esc_url(home_url('/regulatory-welfare-state/')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>
-                            <a class="km-tile km-mid-left" href="<?php echo esc_url(home_url('/knowledge-development/')); ?>"><span>פיתוח ידע והדרכה</span></a>
-                            <a class="km-tile km-mid-right" href="<?php echo esc_url(home_url('/policy/')); ?>"><span>מדיניות</span></a>
-                            <a class="km-tile km-bottom-left" href="<?php echo esc_url(home_url('/enforcement/')); ?>"><span>אכיפה</span></a>
-                            <a class="km-tile km-bottom-right" href="<?php echo esc_url(home_url('/control/')); ?>"><span>בקרה</span></a>
+                            <a class="km-tile km-top-left" href="<?php echo esc_url(home_url('/regulatory-welfare-state/')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>
+                            <a class="km-tile km-top-right" href="<?php echo esc_url(home_url('/social-procurement/')); ?>"><span>רכש חברתי</span></a>
+                            <a class="km-tile km-mid-left" href="<?php echo esc_url(home_url('/policy/')); ?>"><span>מדיניות</span></a>
+                            <a class="km-tile km-mid-right" href="<?php echo esc_url(home_url('/knowledge-development/')); ?>"><span>פיתוח ידע והדרכה</span></a>
+                            <a class="km-tile km-bottom-left" href="<?php echo esc_url(home_url('/control/')); ?>"><span>בקרה</span></a>
+                            <a class="km-tile km-bottom-right" href="<?php echo esc_url(home_url('/enforcement/')); ?>"><span>אכיפה</span></a>
                             <a class="km-wide" href="<?php echo esc_url(home_url('/work-methods/')); ?>"><span>שיטות עבודה</span></a>
                             <div class="km-center" aria-hidden="true"><span>גוף<br>פיקוח</span></div>
                         </div>

@@ -908,11 +908,11 @@
 
 .supervisor-home .knowledge-map-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    grid-template-columns: repeat(2, minmax(90px, 1fr));
     grid-template-rows: minmax(148px, 1fr) minmax(148px, 1fr) minmax(148px, 1fr) auto;
     gap: 6px;
     position: relative;
-    max-width: 380px;
+    max-width: 320px;
     margin: 0;
     direction: rtl;
 }

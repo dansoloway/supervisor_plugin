@@ -578,7 +578,7 @@
     border-bottom: none;
 }
 
-/* AJAX search component - use design tokens */
+/* AJAX search component - canonical token-based block */
 .supervisor-home .ajax-search-component {
     background: var(--sv-blue-050);
     border: 1px solid var(--sv-border);
@@ -589,6 +589,7 @@
     flex-direction: column;
     gap: var(--sv-block-gap);
     direction: rtl;
+    font-family: var(--sv-font-primary);
 }
 
 .supervisor-home .ajax-search-component .search-section {
@@ -705,12 +706,7 @@
     font-size: var(--sv-fs-body-lg);
 }
 
-/* Phase 2 mobile */
-@media (max-width: 768px) {
-    .supervisor-home .ajax-search-component {
-        padding: var(--sv-spacing-md);
-    }
-}
+/* Phase 2 mobile: ajax-search padding consolidated in larger 768px block (~3947) */
 
 /* --- Buttons (base) - homepage uses #1e4e79 --- */
 .supervisor-home .search-button,
@@ -810,14 +806,14 @@
 }
 
 /* --- Section spacing --- */
-.supervisor-home .intro-text-block,
 .supervisor-home .knowledge-map-section,
 .supervisor-home .search-section {
     margin-bottom: var(--sv-section-gap);
 }
 
+/* Canonical: homepage intro-text-block spacing */
 .supervisor-home .intro-text-block {
-    margin: 0 auto var(--sv-block-gap);
+    margin: 0 0 var(--sv-spacing-sm);
 }
 
 /* --- Grid/list gaps --- */
@@ -840,22 +836,22 @@
 
 /* --- Homepage two-column layout (main left, sidebar right in RTL) --- */
 /* RTL: first col = sidebar (search+updates) right, second col = main (knowledge map) left */
-/* Optically centered: nudge compensates for heavier right column */
+/* Optically centered: nudge toward map (lighter side) to balance heavier sidebar */
 .supervisor-home .home-two-column {
     display: grid !important;
-    grid-template-columns: 1fr minmax(400px, 1.25fr) !important;
-    gap: 20px !important;
+    grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
+    gap: var(--sv-spacing-lg) !important;
     align-items: start !important;
-    max-width: 940px;
+    max-width: 960px;
     width: 100%;
     margin-inline: auto;
-    margin-inline-end: 14px;
+    margin-inline-start: 16px;
 }
 
 .supervisor-home .home-sidebar {
     display: flex;
     flex-direction: column;
-    gap: var(--sv-spacing-md);
+    gap: var(--sv-spacing-lg);
     min-width: 0;
 }
 
@@ -867,10 +863,6 @@
 }
 
 /* --- Homepage section spacing --- */
-.supervisor-home .intro-text-block {
-    margin: 0 0 var(--sv-spacing-sm);
-}
-
 .supervisor-home .knowledge-map-section {
     margin-bottom: 0;
 }
@@ -883,10 +875,13 @@
     margin-bottom: 0;
 }
 
-/* --- Intro / hero block (design: aligned with column, compact) --- */
+/* --- Intro / hero block (design: aligned with two-column, optical centering) --- */
 .supervisor-home .home-hero .intro-text-block {
-    max-width: 100%;
+    margin: 0;
+    max-width: 960px;
+    margin-inline: auto;
     padding: 0;
+    text-align: center;
 }
 
 .supervisor-home .intro-content p {
@@ -1028,7 +1023,7 @@
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
-    margin-top: 6px;
+    margin-top: var(--sv-spacing-sm);
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-button {
@@ -1037,13 +1032,13 @@
     max-width: 380px;
     text-align: center;
     border-radius: var(--sv-radius-md);
-    padding: 10px 20px;
-    min-height: 44px;
+    padding: var(--sv-spacing-sm) var(--sv-spacing-lg);
+    min-height: 48px;
 }
 
 /* --- Search bar (design: sits directly above updates) --- */
 .supervisor-home .home-search-section .search-section {
-    margin-bottom: var(--sv-spacing-sm);
+    margin-bottom: var(--sv-spacing-md);
 }
 
 .supervisor-home .search-section .supervisor-search {
@@ -1145,12 +1140,8 @@
 
 /* Hero / welcome block - full-width above columns, centered */
 .supervisor-home .home-hero {
-    margin-bottom: var(--sv-spacing-md);
+    margin-bottom: var(--sv-spacing-lg);
     text-align: center;
-}
-.supervisor-home .home-hero .intro-text-block {
-    margin: 0;
-    max-width: 100%;
 }
 .supervisor-home .home-hero-title {
     font-size: var(--sv-fs-h1);
@@ -2496,10 +2487,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         margin-bottom: 16px !important;
     }
     
-    /* Ensure single column layout for homepage on mobile */
+    /* Homepage two-column: gap override (display/flex from 2455) */
     .supervisor-home .supervisor-content-wrapper.supervisor-two-column {
-        display: flex !important;
-        flex-direction: column !important;
         gap: 30px !important;
     }
 
@@ -2611,9 +2600,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         align-items: start !important;
     }
 
-    /* Homepage: main primary (left), optical balance */
+    /* Homepage: main primary (left), optical balance - matches base .home-two-column */
     .supervisor-home .supervisor-content-wrapper.home-two-column {
-        grid-template-columns: 1fr minmax(400px, 1.25fr) !important;
+        grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
     }
     
     .ajax-search-component,
@@ -3642,32 +3631,7 @@ img[src*=".svg"] {
 /* Focus states defined in SHARED DESIGN LAYER */
 
 /* ===== AJAX SEARCH COMPONENT - NEW DESIGN ===== */
-.supervisor-home .ajax-search-component {
-    background: #E9F1F7;
-    border-radius: 0;
-    padding: 16px 16px 16px 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    direction: rtl;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-/* Search Section */
-.supervisor-home .search-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.supervisor-home .search-title {
-    font-size: 22px !important;
-    font-weight: 700 !important;
-    color: #1F2937 !important;
-    margin: 0 !important;
-    line-height: 1.2 !important;
-}
+/* Consolidated: .ajax-search-component, .search-section, .search-title use canonical token block ~582 */
 
 .supervisor-home .search-input-container {
     position: relative;
@@ -3908,13 +3872,7 @@ img[src*=".svg"] {
 }
 
 /* Phase 2 overrides: tokens, content-card, spacing */
-.supervisor-home .ajax-search-component {
-    background: var(--sv-blue-050) !important;
-    border: 1px solid var(--sv-border) !important;
-    border-radius: var(--sv-radius-lg) !important;
-    padding: var(--sv-spacing-lg) !important;
-    box-shadow: var(--sv-shadow-sm) !important;
-}
+/* Consolidated: .ajax-search-component uses canonical token block ~582 */
 
 .supervisor-home .ajax-search-component .search-input-container {
     border-radius: var(--sv-radius-md) !important;

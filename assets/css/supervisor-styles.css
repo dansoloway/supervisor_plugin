@@ -840,12 +840,12 @@
 .supervisor-home .home-two-column {
     display: grid !important;
     grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
-    gap: var(--sv-spacing-lg) !important;
+    gap: var(--sv-spacing-xl) !important;
     align-items: start !important;
     max-width: 960px;
     width: 100%;
     margin-inline: auto;
-    margin-inline-start: 16px;
+    margin-inline-start: 12px;
 }
 
 .supervisor-home .home-sidebar {

@@ -119,7 +119,7 @@ get_header('supervisor');
             </main>
         </div> <!-- End supervisor-content-wrapper -->
 
-        <!-- Stories from the Field - Carousel -->
+        <!-- Stories from the Field -->
         <section class="stories-from-field-section" aria-labelledby="stories-heading">
             <div class="stories-section-header">
                 <h2 id="stories-heading" class="stories-section-title-with-lines">
@@ -128,39 +128,35 @@ get_header('supervisor');
                     <span class="title-line"></span>
                 </h2>
             </div>
-            <div class="stories-carousel-wrapper">
-                <button type="button" class="stories-carousel-prev" aria-label="<?php esc_attr_e('הקודם', 'text-domain'); ?>"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                <div class="stories-carousel" role="region" aria-label="<?php esc_attr_e('סיפורים מהשטח', 'text-domain'); ?>">
-                    <?php
-                    $stories_query = new WP_Query([
-                        'post_type' => 'qa_stories',
-                        'posts_per_page' => 3,
-                        'orderby' => 'date',
-                        'order' => 'DESC',
-                        'post_status' => 'publish',
-                    ]);
-                    if ($stories_query->have_posts()) :
-                        while ($stories_query->have_posts()) : $stories_query->the_post();
-                            $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 25);
-                    ?>
-                            <a href="<?php the_permalink(); ?>" class="story-card">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <div class="story-card-image"><?php the_post_thumbnail('medium'); ?></div>
-                                <?php else : ?>
-                                    <div class="story-card-image story-card-placeholder"></div>
-                                <?php endif; ?>
-                                <h3 class="story-card-title"><?php the_title(); ?></h3>
-                                <?php if ($excerpt) : ?>
-                                    <p class="story-card-excerpt"><?php echo esc_html($excerpt); ?></p>
-                                <?php endif; ?>
-                            </a>
-                    <?php
-                        endwhile;
-                        wp_reset_postdata();
-                    endif;
-                    ?>
-                </div>
-                <button type="button" class="stories-carousel-next" aria-label="<?php esc_attr_e('הבא', 'text-domain'); ?>"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+            <div class="stories-grid" role="region" aria-label="<?php esc_attr_e('סיפורים מהשטח', 'text-domain'); ?>">
+                <?php
+                $stories_query = new WP_Query([
+                    'post_type' => 'qa_stories',
+                    'posts_per_page' => 3,
+                    'orderby' => 'date',
+                    'order' => 'DESC',
+                    'post_status' => 'publish',
+                ]);
+                if ($stories_query->have_posts()) :
+                    while ($stories_query->have_posts()) : $stories_query->the_post();
+                        $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 25);
+                ?>
+                        <a href="<?php the_permalink(); ?>" class="story-card">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <div class="story-card-image"><?php the_post_thumbnail('medium'); ?></div>
+                            <?php else : ?>
+                                <div class="story-card-image story-card-placeholder"></div>
+                            <?php endif; ?>
+                            <h3 class="story-card-title"><?php the_title(); ?></h3>
+                            <?php if ($excerpt) : ?>
+                                <p class="story-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                            <?php endif; ?>
+                        </a>
+                <?php
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
             </div>
         </section>
 

@@ -4781,70 +4781,13 @@ body .supervisor-bib-cats .categories-grid {
     white-space: nowrap;
 }
 
-.stories-carousel-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    position: relative;
-}
-
-.stories-carousel-prev,
-.stories-carousel-next {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 2px solid var(--sv-border, #E5EAF0);
-    background: var(--sv-card, #fff);
-    color: var(--sv-text, #1f2937);
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-}
-
-.stories-carousel-prev svg,
-.stories-carousel-next svg {
-    flex-shrink: 0;
-}
-
-.stories-carousel-prev:hover:not(:disabled),
-.stories-carousel-next:hover:not(:disabled) {
-    background: var(--sv-blue, #2563eb);
-    border-color: var(--sv-blue, #2563eb);
-    color: white;
-}
-
-.stories-carousel-wrapper.no-scroll-needed .stories-carousel-prev,
-.stories-carousel-wrapper.no-scroll-needed .stories-carousel-next {
-    display: none;
-}
-
-.stories-carousel-prev:disabled,
-.stories-carousel-next:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.stories-carousel {
-    flex: 1;
-    min-width: 0;
-    display: flex;
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    padding: 8px 0;
-    /* Hide scrollbar but keep functionality */
-    scrollbar-width: thin;
 }
 
 .story-card {
-    flex: 0 0 280px;
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     background: #f3f4f6;
@@ -4969,19 +4912,9 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 @media (max-width: 768px) {
-    .story-card {
-        flex: 0 0 240px;
-    }
-
-    .stories-carousel-prev,
-    .stories-carousel-next {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-
-    .stories-carousel-wrapper {
-        gap: 12px;
+    .stories-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .supervisor-single-story .story-featured-image {

@@ -101,7 +101,6 @@ get_header('supervisor');
             <main class="home-main" role="main">
                 <section class="knowledge-map-section" aria-labelledby="knowledge-map-heading">
                     <div class="home-knowledge-map">
-                        <h2 id="knowledge-map-heading" class="km-module-title">מפת הידע</h2>
                         <div class="knowledge-map-grid">
                             <a class="km-tile km-top-left" href="<?php echo esc_url(home_url('/social-procurement/')); ?>"><span>רכש חברתי</span></a>
                             <a class="km-tile km-top-right" href="<?php echo esc_url(home_url('/regulatory-welfare-state/')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>

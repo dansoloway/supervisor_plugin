@@ -179,7 +179,7 @@
 .supervisor-home .supervisor-content-wrapper.supervisor-two-column {
     display: grid !important;
     grid-template-columns: 3fr 7fr !important; /* Search/filters 30% (right), Updates list 70% (left) */
-    gap: 40px !important;
+    gap: 160px !important;
     align-items: start !important;
 }
 
@@ -1181,7 +1181,7 @@
     align-items: stretch;
     width: 100%;
     gap: 0;
-    border-radius: var(--sv-radius-md);
+    border-radius: 0;
     overflow: hidden;
     border: 1px solid var(--sv-border-input);
 }

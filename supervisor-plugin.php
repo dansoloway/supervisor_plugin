@@ -161,7 +161,7 @@ function supervisor_load_template($template) {
         SUPERVISOR_HOME => 'supervisor-home.php',
         SUPERVISOR_UPDATES => 'supervisor-updates.php',
         SUPERVISOR_INTRO_TEXT => 'supervisor-content.php',
-        SUPERVISOR_ABOUT => 'supervisor-content.php',
+        SUPERVISOR_ABOUT => 'supervisor-about.php',
         SUPERVISOR_CONTACT => 'supervisor-contact.php',
         SUPERVISOR_ACTIVITIES => 'supervisor-activities.php',
         SUPERVISOR_KNOWLEDGE_MAP => 'supervisor-knowledge-map.php',

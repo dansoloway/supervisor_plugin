@@ -22,7 +22,7 @@
         }
 
         function updateCanScroll() {
-            wrapper.classList.toggle('can-scroll', hasOverflow());
+            wrapper.classList.toggle('no-scroll-needed', !hasOverflow());
         }
 
         function updateButtonStates() {

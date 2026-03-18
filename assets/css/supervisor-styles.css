@@ -914,6 +914,7 @@
     position: relative;
     max-width: 320px;
     margin: 0;
+    margin-inline-start: auto;
     direction: rtl;
 }
 
@@ -4818,8 +4819,8 @@ body .supervisor-bib-cats .categories-grid {
     color: white;
 }
 
-.stories-carousel-wrapper:not(.can-scroll) .stories-carousel-prev,
-.stories-carousel-wrapper:not(.can-scroll) .stories-carousel-next {
+.stories-carousel-wrapper.no-scroll-needed .stories-carousel-prev,
+.stories-carousel-wrapper.no-scroll-needed .stories-carousel-next {
     display: none;
 }
 
@@ -4831,6 +4832,7 @@ body .supervisor-bib-cats .categories-grid {
 
 .stories-carousel {
     flex: 1;
+    min-width: 0;
     display: flex;
     gap: 24px;
     overflow-x: auto;

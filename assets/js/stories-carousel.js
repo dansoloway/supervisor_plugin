@@ -1,5 +1,6 @@
 /**
- * Stories from the Field - Carousel arrow navigation
+ * Stories from the Field - Slider (carousel) arrow navigation
+ * Shows arrows when there are more items than can fit; uses item count for visibility.
  */
 (function() {
     'use strict';
@@ -14,29 +15,30 @@
 
         if (!carousel || !prevBtn || !nextBtn) return;
 
-        var scrollAmount = 300;
+        var scrollAmount = 304; /* one card (280px) + gap (24px) */
         var isRTL = getComputedStyle(carousel).direction === 'rtl';
+        var cards = carousel.querySelectorAll('.story-card');
 
-        function hasOverflow() {
-            return carousel.scrollWidth > carousel.clientWidth;
+        function shouldShowArrows() {
+            return cards.length > 1;
         }
 
-        function updateCanScroll() {
-            wrapper.classList.toggle('no-scroll-needed', !hasOverflow());
+        function updateArrowVisibility() {
+            wrapper.classList.toggle('no-scroll-needed', !shouldShowArrows());
         }
 
         function updateButtonStates() {
-            if (!hasOverflow()) return;
+            if (!shouldShowArrows()) return;
 
             var maxScroll = carousel.scrollWidth - carousel.clientWidth;
             var atStart, atEnd;
 
             if (isRTL) {
                 atStart = carousel.scrollLeft >= 0;
-                atEnd = carousel.scrollLeft <= -maxScroll;
+                atEnd = maxScroll <= 0 || carousel.scrollLeft <= -maxScroll;
             } else {
                 atStart = carousel.scrollLeft <= 0;
-                atEnd = carousel.scrollLeft >= maxScroll - 1;
+                atEnd = maxScroll <= 0 || carousel.scrollLeft >= maxScroll - 1;
             }
 
             prevBtn.disabled = atStart;
@@ -54,16 +56,10 @@
         });
 
         carousel.addEventListener('scroll', updateButtonStates);
-        window.addEventListener('resize', function() {
-            updateCanScroll();
-            updateButtonStates();
-        });
+        window.addEventListener('resize', updateButtonStates);
 
-        updateCanScroll();
+        updateArrowVisibility();
         updateButtonStates();
-
-        setTimeout(updateCanScroll, 100);
-        window.addEventListener('load', updateCanScroll);
     }
 
     if (document.readyState === 'loading') {

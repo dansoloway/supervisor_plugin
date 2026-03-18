@@ -1031,6 +1031,7 @@
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
     margin-top: 30px;
     max-width: 320px;
+    margin-inline-start: auto;
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-button {

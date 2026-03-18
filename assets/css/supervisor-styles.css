@@ -1216,53 +1216,66 @@
     max-width: 100%;
 }
 
-/* Updates section - stronger card, mockup proportions */
+/* Updates section - compact, crisp, box-like (redesign) */
 .supervisor-home .home-updates-card {
-    border-radius: var(--sv-radius-lg);
+    border-radius: var(--sv-radius-sm);
     overflow: hidden;
     padding: 0;
-    box-shadow: var(--sv-shadow-sm);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
-/* Updates header: light gray strip (not blue) */
+/* Updates header: light gray strip - flatter, crisper */
 .supervisor-home .home-updates-card .updates-header {
     background: #e5e7eb;
     color: var(--sv-text);
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: var(--sv-fs-body-lg);
 }
+
 .supervisor-home .home-updates-card .updates-list {
-    padding: var(--sv-spacing-md);
+    padding: var(--sv-spacing-sm) var(--sv-spacing-md);
 }
+
 .supervisor-home .home-update-card {
-    padding: var(--sv-spacing-sm) 0;
+    padding: 8px 0;
     border-top: 1px solid var(--sv-divider);
 }
+
 .supervisor-home .home-update-card:first-child {
     border-top: none;
     padding-top: 0;
 }
+
 .supervisor-home .home-update-card .update-content {
     padding: 0;
     display: block;
     gap: 0;
 }
+
 .supervisor-home .home-update-card .update-title {
     margin: 0 0 var(--sv-spacing-xs);
 }
+
 .supervisor-home .home-update-card .update-title a {
-    font-size: var(--sv-fs-h3);
+    font-size: var(--sv-fs-body-lg);
+    font-weight: 600;
 }
+
 .supervisor-home .home-update-card .update-date {
     font-size: var(--sv-fs-sm);
     color: var(--sv-text-muted);
-    margin: 0 0 var(--sv-spacing-sm);
+    margin: 0 0 var(--sv-spacing-xs);
 }
+
 .supervisor-home .home-update-card .update-excerpt {
     font-size: var(--sv-fs-body);
     color: var(--sv-text-2);
-    line-height: var(--sv-lh-body);
+    line-height: 1.45;
     margin: 0;
 }
-/* Full-width footer bar: darker blue, spans card */
+
+/* Full-width footer bar: strip-like, not chunky */
 .supervisor-home .updates-footer-link {
     display: block;
     width: 100%;
@@ -1270,6 +1283,7 @@
     border-top: none;
     background: #1e4e79;
 }
+
 .supervisor-home .updates-footer-link .more-updates-button,
 .supervisor-home .updates-footer-link .more-updates-button:link,
 .supervisor-home .updates-footer-link .more-updates-button:visited,
@@ -1278,7 +1292,7 @@
 .supervisor-home .updates-footer-link .more-updates-button:active {
     display: block;
     width: 100%;
-    padding: var(--sv-spacing-md) var(--sv-spacing-lg);
+    padding: 10px var(--sv-spacing-md);
     text-align: center;
     color: #fff !important;
     background: transparent !important;
@@ -2596,7 +2610,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         display: grid !important;
         grid-template-columns: 3fr 7fr !important;
         flex-direction: initial !important; /* Reset flex direction */
-        gap: 40px !important;
+        gap: 160px !important;
         align-items: start !important;
     }
 

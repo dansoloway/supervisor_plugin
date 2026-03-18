@@ -842,7 +842,7 @@
 /* RTL: first col = sidebar (search+updates) right, second col = main (hero+knowledge map) left */
 .supervisor-home .home-two-column {
     display: grid !important;
-    grid-template-columns: 1fr minmax(300px, 380px) !important;
+    grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
     gap: var(--sv-spacing-lg) !important;
     align-items: start !important;
 }
@@ -897,6 +897,11 @@
 }
 
 /* --- Knowledge map (home: compact, tiles closer to square) --- */
+/* "מפת הידע" integrated into module */
+.supervisor-home .km-module-title {
+    margin: 0 0 var(--sv-spacing-md);
+}
+
 .supervisor-home .home-knowledge-map {
     margin-bottom: var(--sv-spacing-md);
 }
@@ -1133,10 +1138,10 @@
     border: 0;
 }
 
-/* Hero / welcome block - aligned with left column, tighter */
+/* Hero / welcome block - full-width above columns, centered */
 .supervisor-home .home-hero {
     margin-bottom: var(--sv-spacing-lg);
-    text-align: right;
+    text-align: center;
 }
 .supervisor-home .home-hero .intro-text-block {
     margin: 0;
@@ -1255,18 +1260,17 @@
     line-height: var(--sv-lh-body);
     margin: 0;
 }
+/* Full-width footer bar structure */
 .supervisor-home .updates-footer-link {
-    display: flex;
-    justify-content: center;
+    display: block;
+    width: 100%;
     padding: var(--sv-spacing-md);
     border-top: 1px solid var(--sv-border);
 }
 .supervisor-home .updates-footer-link .more-updates-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    min-width: 160px;
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 
 /* Homepage mobile adjustments for new structure */
@@ -2587,9 +2591,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         align-items: start !important;
     }
 
-    /* Homepage: main compact (left), sidebar flexible (right in RTL) */
+    /* Homepage: main primary (left), columns balanced */
     .supervisor-home .supervisor-content-wrapper.home-two-column {
-        grid-template-columns: 1fr minmax(300px, 380px) !important;
+        grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
     }
     
     .ajax-search-component,

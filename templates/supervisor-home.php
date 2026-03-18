@@ -16,6 +16,14 @@ get_header('supervisor');
     <!-- Standardized Page Container -->
     <div class="supervisor-page-container supervisor-home-page">
 
+        <!-- Hero: full-width above columns for vertical alignment of map + search -->
+        <header class="home-hero">
+            <div class="intro-text-block">
+                <h1 class="home-hero-title">ברוכים הבאים לאתר הקהילה המקצועית של הפיקוח</h1>
+                <p class="home-hero-subtitle">ידע וכלים לחיזוק עבודת הפיקוח בישראל בנושאי רווחה, חינוך ובריאות</p>
+            </div>
+        </header>
+
         <!-- Two-column layout: main (left) + sidebar (right) - RTL -->
         <div class="supervisor-content-wrapper supervisor-two-column home-two-column">
             <!-- Sidebar (right in RTL): Search + Updates -->
@@ -38,8 +46,8 @@ get_header('supervisor');
                 </section>
 
                 <section class="home-updates-section" aria-labelledby="home-updates-heading">
-                    <h2 id="home-updates-heading" class="home-section-title">עדכונים</h2>
                     <div class="updates-box card home-updates-card">
+                        <div id="home-updates-heading" class="updates-header" aria-label="עדכונים">עדכונים</div>
                         <div class="updates-list">
                             <?php
                             $updates_query = new WP_Query([
@@ -89,18 +97,11 @@ get_header('supervisor');
                 </section>
             </aside>
 
-            <!-- Main content (left in RTL): Hero + Knowledge map -->
+            <!-- Main content (left in RTL): Knowledge map -->
             <main class="home-main" role="main">
-                <header class="home-hero">
-                    <div class="intro-text-block">
-                        <h1 class="home-hero-title">ברוכים הבאים לאתר הקהילה המקצועית של הפיקוח</h1>
-                        <p class="home-hero-subtitle">ידע וכלים לחיזוק עבודת הפיקוח בישראל בנושאי רווחה, חינוך ובריאות</p>
-                    </div>
-                </header>
-
                 <section class="knowledge-map-section" aria-labelledby="knowledge-map-heading">
-                    <h2 id="knowledge-map-heading" class="home-section-title">מפת הידע</h2>
                     <div class="home-knowledge-map">
+                        <h2 id="knowledge-map-heading" class="km-module-title">מפת הידע</h2>
                         <div class="knowledge-map-grid">
                             <a class="km-tile km-top-left" href="<?php echo esc_url(home_url('/social-procurement/')); ?>"><span>רכש חברתי</span></a>
                             <a class="km-tile km-top-right" href="<?php echo esc_url(home_url('/regulatory-welfare-state/')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>

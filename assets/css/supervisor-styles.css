@@ -142,7 +142,7 @@
 /* Main container for all supervisor pages */
 .supervisor-page-container {
     max-width: 100%;
-    margin: 20px auto 0;
+    margin: 20px auto;
     padding: 0 20px;
     direction: rtl;
 }
@@ -2646,8 +2646,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     align-items: stretch;
     gap: 0;
     border: none;
-    border-top: 2px solid var(--sv-nav-accent);
-    border-bottom: 2px solid var(--sv-nav-accent);
+    border-top: 1px solid var(--sv-nav-accent);
+    border-bottom: 1px solid var(--sv-nav-accent);
     background: white;
     border-radius: 0;
     padding: 0;
@@ -2671,8 +2671,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     padding: 16px 28px;
     color: var(--sv-nav-accent) !important;
     font-family: var(--sv-font-secondary);
-    font-weight: 800 !important;
-    font-size: 22px !important;
+    font-weight: 400 !important;
+    font-size: 20px !important;
     line-height: 1;
     text-decoration: none;
     border-radius: 0;

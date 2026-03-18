@@ -842,7 +842,7 @@
 /* RTL: first col = sidebar (search+updates) right, second col = main (hero+knowledge map) left */
 .supervisor-home .home-two-column {
     display: grid !important;
-    grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
+    grid-template-columns: 1fr minmax(420px, 1.35fr) !important;
     gap: var(--sv-spacing-lg) !important;
     align-items: start !important;
 }
@@ -863,7 +863,7 @@
 
 /* --- Homepage section spacing --- */
 .supervisor-home .intro-text-block {
-    margin: 0 0 var(--sv-spacing-md);
+    margin: 0 0 var(--sv-spacing-sm);
 }
 
 .supervisor-home .knowledge-map-section {
@@ -881,7 +881,7 @@
 /* --- Intro / hero block (design: aligned with column, compact) --- */
 .supervisor-home .home-hero .intro-text-block {
     max-width: 100%;
-    padding: 0 0 var(--sv-spacing-sm);
+    padding: 0;
 }
 
 .supervisor-home .intro-content p {
@@ -896,23 +896,23 @@
     margin-bottom: 0;
 }
 
-/* --- Knowledge map (home: compact, tiles closer to square) --- */
+/* --- Knowledge map (home: ~12% larger, denser, vertical tiles) --- */
 /* "מפת הידע" integrated into module */
 .supervisor-home .km-module-title {
-    margin: 0 0 var(--sv-spacing-md);
+    margin: 0 0 var(--sv-spacing-sm);
 }
 
 .supervisor-home .home-knowledge-map {
-    margin-bottom: var(--sv-spacing-md);
+    margin-bottom: var(--sv-spacing-sm);
 }
 
 .supervisor-home .knowledge-map-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(100px, 1fr));
-    grid-template-rows: minmax(130px, 1fr) minmax(130px, 1fr) minmax(130px, 1fr) auto;
-    gap: 8px;
+    grid-template-rows: minmax(148px, 1fr) minmax(148px, 1fr) minmax(148px, 1fr) auto;
+    gap: 6px;
     position: relative;
-    max-width: 340px;
+    max-width: 380px;
     margin: 0;
     direction: rtl;
 }
@@ -978,8 +978,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 88px;
-    height: 88px;
+    width: 96px;
+    height: 96px;
     background: #fff;
     border-radius: var(--sv-radius-lg);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
@@ -1023,13 +1023,13 @@
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
-    margin-top: var(--sv-spacing-md);
+    margin-top: var(--sv-spacing-sm);
 }
 
 .supervisor-home .knowledge-map-section .knowledge-map-button {
     display: block;
     width: 100%;
-    max-width: 340px;
+    max-width: 380px;
     text-align: center;
     border-radius: var(--sv-radius-md);
     padding: var(--sv-spacing-md) var(--sv-spacing-lg);
@@ -1140,7 +1140,7 @@
 
 /* Hero / welcome block - full-width above columns, centered */
 .supervisor-home .home-hero {
-    margin-bottom: var(--sv-spacing-lg);
+    margin-bottom: var(--sv-spacing-md);
     text-align: center;
 }
 .supervisor-home .home-hero .intro-text-block {
@@ -1194,15 +1194,15 @@
     border: none;
     border-inline-start: 1px solid var(--sv-border-input);
     padding: 0 var(--sv-spacing-md);
-    min-height: 44px;
+    min-height: 38px;
     font-size: var(--sv-fs-body);
     background: white;
 }
 .supervisor-home .home-search-form .search-input-wrapper .search-button {
     flex-shrink: 0;
-    width: 44px;
-    min-width: 44px;
-    min-height: 44px;
+    width: 38px;
+    min-width: 38px;
+    min-height: 38px;
     margin: 0;
     border: none;
     border-radius: 0;
@@ -1226,6 +1226,12 @@
     overflow: hidden;
     padding: 0;
     box-shadow: var(--sv-shadow-sm);
+}
+
+/* Updates header: light gray strip (not blue) */
+.supervisor-home .home-updates-card .updates-header {
+    background: #e5e7eb;
+    color: var(--sv-text);
 }
 .supervisor-home .home-updates-card .updates-list {
     padding: var(--sv-spacing-md);
@@ -1260,17 +1266,26 @@
     line-height: var(--sv-lh-body);
     margin: 0;
 }
-/* Full-width footer bar structure */
+/* Full-width footer bar: darker blue, spans card */
 .supervisor-home .updates-footer-link {
     display: block;
     width: 100%;
-    padding: var(--sv-spacing-md);
-    border-top: 1px solid var(--sv-border);
+    padding: 0;
+    border-top: none;
+    background: #1e4e79;
 }
-.supervisor-home .updates-footer-link .more-updates-button {
+.supervisor-home .updates-footer-link .more-updates-button,
+.supervisor-home .updates-footer-link .more-updates-button:link,
+.supervisor-home .updates-footer-link .more-updates-button:visited,
+.supervisor-home .updates-footer-link .more-updates-button:hover,
+.supervisor-home .updates-footer-link .more-updates-button:focus,
+.supervisor-home .updates-footer-link .more-updates-button:active {
     display: block;
     width: 100%;
+    padding: var(--sv-spacing-md) var(--sv-spacing-lg);
     text-align: center;
+    color: #fff !important;
+    background: transparent !important;
 }
 
 /* Homepage mobile adjustments for new structure */
@@ -2593,7 +2608,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
     /* Homepage: main primary (left), columns balanced */
     .supervisor-home .supervisor-content-wrapper.home-two-column {
-        grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
+        grid-template-columns: 1fr minmax(420px, 1.35fr) !important;
     }
     
     .ajax-search-component,

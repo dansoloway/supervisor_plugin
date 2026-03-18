@@ -4960,9 +4960,9 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 [dir="rtl"] .supervisor-single-story .story-featured-image {
-    float: left;
-    margin-left: 0;
-    margin-right: var(--sv-spacing-lg, 24px);
+    float: right;
+    margin-left: var(--sv-spacing-lg, 24px);
+    margin-right: 0;
 }
 
 [dir="rtl"] .supervisor-single-story .story-title-icon {

@@ -2706,18 +2706,18 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: white !important;
 }
 
-.supervisor-home .desktop-menu a.active .nav-icon-home svg {
-    fill: white;
+.supervisor-home .desktop-menu a.active .nav-icon-home img {
+    opacity: 1;
 }
 
-/* Home icon when active - still blue, not white */
-.supervisor-home .desktop-menu a.nav-item-home.active .nav-icon-home svg {
-    fill: var(--sv-nav-accent) !important;
+/* Home icon when active - uses built-in colors from house2.svg */
+.supervisor-home .desktop-menu a.nav-item-home.active .nav-icon-home img {
+    opacity: 1;
 }
 
-/* Inactive icon (home when not active) - blue on white */
-.supervisor-home .desktop-menu a:not(.active) .nav-icon-home svg {
-    fill: var(--sv-nav-accent) !important;
+/* Inactive icon (home when not active) - uses built-in colors from house2.svg */
+.supervisor-home .desktop-menu a:not(.active) .nav-icon-home img {
+    opacity: 0.9;
 }
 
 /* Home icon - same treatment as text items, icon-only width - DESKTOP ONLY */
@@ -2732,9 +2732,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     justify-content: center;
 }
 
-.supervisor-home .desktop-menu a.nav-item-home .nav-icon-home svg {
+.supervisor-home .nav-icon-home img {
     width: 24px;
     height: 24px;
+    display: block;
 }
 
 /* Hover/Focus - inactive items - light blue tint, keep blue text/icon - DESKTOP ONLY */
@@ -2745,11 +2746,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     outline: 0;
 }
 
-.supervisor-home .desktop-menu a:not(.active):hover .nav-icon-home svg,
-.supervisor-home .desktop-menu a:not(.active):focus-visible .nav-icon-home svg,
-.supervisor-home .desktop-menu a.nav-item-home:hover .nav-icon-home svg,
-.supervisor-home .desktop-menu a.nav-item-home:focus-visible .nav-icon-home svg {
-    fill: var(--sv-nav-accent) !important;
+.supervisor-home .desktop-menu a:not(.active):hover .nav-icon-home img,
+.supervisor-home .desktop-menu a:not(.active):focus-visible .nav-icon-home img,
+.supervisor-home .desktop-menu a.nav-item-home:hover .nav-icon-home img,
+.supervisor-home .desktop-menu a.nav-item-home:focus-visible .nav-icon-home img {
+    opacity: 1;
 }
 
 /* Hover on active - slightly darker shade (not for home) */

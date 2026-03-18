@@ -91,8 +91,9 @@ function render_nav_item($item) {
     echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '"' . $style . $aria_label . '>';
     
     if (!empty($item['is_home_icon'])) {
+        $house_icon_url = plugin_dir_url(dirname(__FILE__)) . 'assets/img/house2.svg';
         echo '<span class="nav-icon nav-icon-home" aria-hidden="true">';
-        echo '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 2L2 10v12h20V10L12 2zM10 15h4v7h-4v-7zm5-10h2v6h-2V5z"/></svg>';
+        echo '<img src="' . esc_url($house_icon_url) . '" alt="" width="24" height="24" class="nav-icon-home-img">';
         echo '</span>';
     } else {
         echo '<span class="nav-text">' . esc_html($item['title']) . '</span>';

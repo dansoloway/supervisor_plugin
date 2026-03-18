@@ -19,6 +19,7 @@ add_action('admin_enqueue_scripts', 'qa_bib_enqueue_admin_scripts');
 // Add custom fields to taxonomy edit screen
 function qa_tags_custom_fields($term) {
     $icon = get_term_meta($term->term_id, 'fa_icon', true);
+    $excerpt = get_term_meta($term->term_id, 'qa_bib_excerpt', true);
     $description = get_term_meta($term->term_id, 'qa_bib_description', true);
     ?>
     <tr class="form-field">
@@ -32,11 +33,20 @@ function qa_tags_custom_fields($term) {
     </tr>
     <tr class="form-field">
         <th scope="row">
-            <label for="qa_bib_description"><?php esc_html_e('תיאור הקטגוריה', 'text-domain'); ?></label>
+            <label for="qa_bib_excerpt"><?php esc_html_e('משפט קצר לדף ראשי הנושאים', 'text-domain'); ?></label>
         </th>
         <td>
-            <textarea name="qa_bib_description" id="qa_bib_description" rows="4" style="width: 100%; max-width: 500px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;"><?php echo esc_textarea($description); ?></textarea>
-            <p class="description"><?php esc_html_e('תיאור קצר לקטגוריה זו. יופיע בדף הארכיון של הקטגוריה.', 'text-domain'); ?></p>
+            <input type="text" name="qa_bib_excerpt" id="qa_bib_excerpt" value="<?php echo esc_attr($excerpt); ?>" style="width: 100%; max-width: 500px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;">
+            <p class="description"><?php esc_html_e('משפט קצר אחד. מופיע בכרטיס בדף ראשי נושאי מפתח.', 'text-domain'); ?></p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th scope="row">
+            <label for="qa_bib_description"><?php esc_html_e('פסקה מלאה לעמוד הנושא', 'text-domain'); ?></label>
+        </th>
+        <td>
+            <textarea name="qa_bib_description" id="qa_bib_description" rows="6" style="width: 100%; max-width: 500px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;"><?php echo esc_textarea($description); ?></textarea>
+            <p class="description"><?php esc_html_e('פסקה מלאה. מופיע בעמוד של הנושא בלבד.', 'text-domain'); ?></p>
         </td>
     </tr>
     <?php
@@ -47,6 +57,9 @@ add_action('qa_tags_edit_form_fields', 'qa_tags_custom_fields', 10, 2);
 function save_qa_tags_custom_fields($term_id) {
     if (isset($_POST['fa_icon'])) {
         update_term_meta($term_id, 'fa_icon', sanitize_text_field($_POST['fa_icon']));
+    }
+    if (isset($_POST['qa_bib_excerpt'])) {
+        update_term_meta($term_id, 'qa_bib_excerpt', sanitize_text_field($_POST['qa_bib_excerpt']));
     }
     if (isset($_POST['qa_bib_description'])) {
         update_term_meta($term_id, 'qa_bib_description', sanitize_textarea_field($_POST['qa_bib_description']));
@@ -83,6 +96,7 @@ function qa_bib_render_admin_page() {
             if (!empty($categories)) {
                 foreach ($categories as $category) {
                     $icon = get_term_meta($category->term_id, 'fa_icon', true);
+                    $excerpt = get_term_meta($category->term_id, 'qa_bib_excerpt', true);
                     $description = get_term_meta($category->term_id, 'qa_bib_description', true);
 
                     echo '<div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 6px; background: #f9f9f9;">';
@@ -96,9 +110,13 @@ function qa_bib_render_admin_page() {
                     echo '<p style="margin-bottom: 15px;"><label for="category_icon_' . esc_attr($category->term_id) . '" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">' . esc_html__('אייקון:', 'text-domain') . '</label>';
                     echo '<input type="text" name="category_icon[' . esc_attr($category->term_id) . ']" id="category_icon_' . esc_attr($category->term_id) . '" value="' . esc_attr($icon) . '" placeholder="fa-solid fa-compass" style="width: 100%; max-width: 500px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-family: monospace; font-size: 14px; background: white;"></p>';
 
-                    // Description field
-                    echo '<p style="margin-bottom: 15px;"><label for="category_description_' . esc_attr($category->term_id) . '" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">' . esc_html__('תיאור:', 'text-domain') . '</label>';
-                    echo '<textarea name="category_description[' . esc_attr($category->term_id) . ']" id="category_description_' . esc_attr($category->term_id) . '" rows="3" style="width: 100%; max-width: 500px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 14px; background: white;">' . esc_textarea($description) . '</textarea></p>';
+                    // Excerpt field (short sentence for main topics index)
+                    echo '<p style="margin-bottom: 15px;"><label for="category_excerpt_' . esc_attr($category->term_id) . '" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">' . esc_html__('משפט קצר (לדף ראשי נושאים):', 'text-domain') . '</label>';
+                    echo '<input type="text" name="category_excerpt[' . esc_attr($category->term_id) . ']" id="category_excerpt_' . esc_attr($category->term_id) . '" value="' . esc_attr($excerpt) . '" style="width: 100%; max-width: 500px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 14px; background: white;"></p>';
+
+                    // Description field (full paragraph for topic page)
+                    echo '<p style="margin-bottom: 15px;"><label for="category_description_' . esc_attr($category->term_id) . '" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">' . esc_html__('פסקה מלאה (לעמוד הנושא):', 'text-domain') . '</label>';
+                    echo '<textarea name="category_description[' . esc_attr($category->term_id) . ']" id="category_description_' . esc_attr($category->term_id) . '" rows="5" style="width: 100%; max-width: 500px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 14px; background: white;">' . esc_textarea($description) . '</textarea></p>';
 
                     // Items for this category
                     echo '<h4>' . esc_html__('פריטים', 'text-domain') . '</h4>';
@@ -227,6 +245,11 @@ function qa_bib_save_admin_settings() {
         if (!empty($_POST['category_icon'])) {
             foreach ($_POST['category_icon'] as $term_id => $icon) {
                 update_term_meta($term_id, 'fa_icon', sanitize_text_field($icon));
+            }
+        }
+        if (!empty($_POST['category_excerpt'])) {
+            foreach ($_POST['category_excerpt'] as $term_id => $excerpt) {
+                update_term_meta($term_id, 'qa_bib_excerpt', sanitize_text_field($excerpt));
             }
         }
         if (!empty($_POST['category_description'])) {

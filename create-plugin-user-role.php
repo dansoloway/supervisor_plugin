@@ -129,6 +129,21 @@ function update_supervisor_editor_capabilities() {
 }
 add_action('init', 'update_supervisor_editor_capabilities');
 
+// Grant qa_tags taxonomy capabilities to Administrator and Editor roles
+// (Custom taxonomy caps are not granted automatically; only supervisor_editor had them)
+function supervisor_grant_qa_tags_capabilities() {
+    $qa_tags_caps = ['manage_qa_tags', 'edit_qa_tags', 'delete_qa_tags', 'assign_qa_tags'];
+    foreach (['administrator', 'editor'] as $role_name) {
+        $role = get_role($role_name);
+        if ($role) {
+            foreach ($qa_tags_caps as $cap) {
+                $role->add_cap($cap);
+            }
+        }
+    }
+}
+add_action('init', 'supervisor_grant_qa_tags_capabilities', 20);
+
 // Force update existing supervisor_editor users with ALL capabilities
 function fix_supervisor_editor_permissions() {
     // Get all users with supervisor_editor role

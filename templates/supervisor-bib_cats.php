@@ -42,7 +42,11 @@ error_log('Loading supervisor-bib_cats.php template');
 
             if (!empty($categories)) :
                 foreach ($categories as $index => $category) :
-                    $description = get_term_meta($category->term_id, 'qa_bib_description', true);
+                    $excerpt = get_term_meta($category->term_id, 'qa_bib_excerpt', true);
+                    if (empty($excerpt)) {
+                        $description = get_term_meta($category->term_id, 'qa_bib_description', true);
+                        $excerpt = $description ? wp_trim_words($description, 15) : '';
+                    }
                     // Link to taxonomy archive page for this qa_tag
                     $archive_url = get_term_link($category);
                     // Get custom Font Awesome icon for this term, or use default
@@ -53,7 +57,7 @@ error_log('Loading supervisor-bib_cats.php template');
                             <i class="<?php echo esc_attr($icon); ?>"></i>
                         </div>
                         <h2 class="category-title"><?php echo esc_html($category->name); ?></h2>
-                        <p class="category-description"><?php echo esc_html($description); ?></p>
+                        <p class="category-description"><?php echo esc_html($excerpt); ?></p>
                         <div class="category-arrow">
                             <i class="fas fa-arrow-left"></i>
                         </div>

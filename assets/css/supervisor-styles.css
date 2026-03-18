@@ -836,16 +836,13 @@
 
 /* --- Homepage two-column layout (main left, sidebar right in RTL) --- */
 /* RTL: first col = sidebar (search+updates) right, second col = main (knowledge map) left */
-/* Align grid to visual left (end in RTL) so home-main extends to left edge */
+/* Full-width grid so sidebar reaches right edge, main reaches left edge */
 .supervisor-home .home-two-column {
     display: grid !important;
-    grid-template-columns: 1fr minmax(380px, 1.2fr) !important;
+    grid-template-columns: minmax(320px, 380px) 1fr !important;
     gap: var(--sv-spacing-xl) !important;
     align-items: start !important;
-    max-width: 960px;
     width: 100%;
-    margin-inline-start: auto;
-    margin-inline-end: 0;
 }
 
 .supervisor-home .home-sidebar {

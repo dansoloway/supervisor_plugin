@@ -4795,16 +4795,20 @@ body .supervisor-bib-cats .categories-grid {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    color: black !important; 
-    font-size: 40px;
-    line-height: 1;
+    border: 2px solid var(--sv-border, #E5EAF0);
+    background: var(--sv-card, #fff);
+    color: var(--sv-text, #1f2937);
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s, color 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
+}
 
+.stories-carousel-prev svg,
+.stories-carousel-next svg {
+    flex-shrink: 0;
 }
 
 .stories-carousel-prev:hover:not(:disabled),
@@ -4812,6 +4816,11 @@ body .supervisor-bib-cats .categories-grid {
     background: var(--sv-blue, #2563eb);
     border-color: var(--sv-blue, #2563eb);
     color: white;
+}
+
+.stories-carousel-wrapper:not(.can-scroll) .stories-carousel-prev,
+.stories-carousel-wrapper:not(.can-scroll) .stories-carousel-next {
+    display: none;
 }
 
 .stories-carousel-prev:disabled,
@@ -4920,7 +4929,7 @@ body .supervisor-bib-cats .categories-grid {
     font-size: var(--sv-fs-h1, 32px);
     font-weight: 700;
     margin: 0;
-    color: var(--sv-blue, #2563eb);
+    color: black;
 }
 
 .supervisor-single-story .story-body {

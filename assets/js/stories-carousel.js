@@ -14,24 +14,56 @@
 
         if (!carousel || !prevBtn || !nextBtn) return;
 
-        var scrollAmount = 300; // pixels to scroll per click
+        var scrollAmount = 300;
+        var isRTL = getComputedStyle(carousel).direction === 'rtl';
+
+        function hasOverflow() {
+            return carousel.scrollWidth > carousel.clientWidth;
+        }
+
+        function updateCanScroll() {
+            wrapper.classList.toggle('can-scroll', hasOverflow());
+        }
 
         function updateButtonStates() {
-            prevBtn.disabled = carousel.scrollLeft <= 0;
-            nextBtn.disabled = carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 1;
+            if (!hasOverflow()) return;
+
+            var maxScroll = carousel.scrollWidth - carousel.clientWidth;
+            var atStart, atEnd;
+
+            if (isRTL) {
+                atStart = carousel.scrollLeft >= 0;
+                atEnd = carousel.scrollLeft <= -maxScroll;
+            } else {
+                atStart = carousel.scrollLeft <= 0;
+                atEnd = carousel.scrollLeft >= maxScroll - 1;
+            }
+
+            prevBtn.disabled = atStart;
+            nextBtn.disabled = atEnd;
         }
 
         prevBtn.addEventListener('click', function() {
-            carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            if (prevBtn.disabled) return;
+            carousel.scrollBy({ left: isRTL ? scrollAmount : -scrollAmount, behavior: 'smooth' });
         });
 
         nextBtn.addEventListener('click', function() {
-            carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            if (nextBtn.disabled) return;
+            carousel.scrollBy({ left: isRTL ? -scrollAmount : scrollAmount, behavior: 'smooth' });
         });
 
         carousel.addEventListener('scroll', updateButtonStates);
-        window.addEventListener('resize', updateButtonStates);
+        window.addEventListener('resize', function() {
+            updateCanScroll();
+            updateButtonStates();
+        });
+
+        updateCanScroll();
         updateButtonStates();
+
+        setTimeout(updateCanScroll, 100);
+        window.addEventListener('load', updateCanScroll);
     }
 
     if (document.readyState === 'loading') {

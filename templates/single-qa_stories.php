@@ -21,7 +21,6 @@ get_header('supervisor');
         ?>
             <article class="story-single">
                 <header class="story-header">
-                    <span class="story-title-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></span>
                     <h1 class="story-main-title"><?php the_title(); ?></h1>
                 </header>
 

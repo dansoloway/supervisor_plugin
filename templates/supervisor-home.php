@@ -129,7 +129,7 @@ get_header('supervisor');
                 </h2>
             </div>
             <div class="stories-carousel-wrapper">
-                <button type="button" class="stories-carousel-prev" aria-label="<?php esc_attr_e('הקודם', 'text-domain'); ?>">‹</button>
+                <button type="button" class="stories-carousel-prev" aria-label="<?php esc_attr_e('הקודם', 'text-domain'); ?>"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                 <div class="stories-carousel" role="region" aria-label="<?php esc_attr_e('סיפורים מהשטח', 'text-domain'); ?>">
                     <?php
                     $stories_query = new WP_Query([
@@ -160,7 +160,7 @@ get_header('supervisor');
                     endif;
                     ?>
                 </div>
-                <button type="button" class="stories-carousel-next" aria-label="<?php esc_attr_e('הבא', 'text-domain'); ?>">›</button>
+                <button type="button" class="stories-carousel-next" aria-label="<?php esc_attr_e('הבא', 'text-domain'); ?>"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
             </div>
         </section>
 

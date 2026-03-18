@@ -4917,6 +4917,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-single-story .story-header {
+    margin-top: 0;
     margin-bottom: var(--sv-spacing-lg, 24px);
 }
 
@@ -4942,6 +4943,7 @@ body .supervisor-bib-cats .categories-grid {
 .supervisor-single-story .story-featured-image {
     float: right;
     width: 320px;
+    margin-top: 0;
     margin-left: var(--sv-spacing-lg, 24px);
     margin-bottom: var(--sv-spacing-md, 16px);
     border-radius: 12px;

@@ -20,16 +20,16 @@ get_header('supervisor');
         while (have_posts()) : the_post();
         ?>
             <article class="story-single">
-                <header class="story-header">
-                    <h1 class="story-main-title"><?php the_title(); ?></h1>
-                </header>
-
                 <div class="story-body">
                     <?php if (has_post_thumbnail()) : ?>
                     <div class="story-featured-image">
                         <?php the_post_thumbnail('large'); ?>
                     </div>
                     <?php endif; ?>
+
+                    <header class="story-header">
+                        <h1 class="story-main-title"><?php the_title(); ?></h1>
+                    </header>
 
                     <div class="story-content content-text">
                         <?php the_content(); ?>

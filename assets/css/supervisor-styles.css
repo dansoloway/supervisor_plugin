@@ -609,8 +609,9 @@
 }
 
 .about-accordion-section .about-accordion-item .accordion-icon {
-    font-size: 1.25em;
+    font-size: 32px;
     flex-shrink: 0;
+    color: black;
 }
 
 .about-accordion-section .about-accordion-item > .accordion-content {

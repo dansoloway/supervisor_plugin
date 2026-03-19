@@ -23,8 +23,6 @@ get_header('supervisor');
                 <?php
                 $has_about_accordion = false;
                 while (have_posts()) : the_post();
-                    the_title('<h1 class="page-title">', '</h1>');
-                    echo apply_filters('the_content', get_the_content());
 
                     $about_context = get_queried_object_id();
                     $accordion_context = have_rows('qa_about_accordion', $about_context) ? $about_context : (have_rows('qa_about_accordion', 'option') ? 'option' : null);
@@ -43,7 +41,7 @@ get_header('supervisor');
                                 <div class="qa-update-item about-accordion-item">
                                     <div class="accordion-header" data-accordion="<?php echo esc_attr($accordion_id); ?>">
                                         <div class="qa-update-title">
-                                            <h3><?php echo esc_html($subtitle); ?></h3>
+                                            <h2><?php echo esc_html($subtitle); ?></h2>
                                             <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>
                                         </div>
                                     </div>

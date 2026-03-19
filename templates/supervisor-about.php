@@ -26,13 +26,15 @@ get_header('supervisor');
                     the_title('<h1 class="page-title">', '</h1>');
                     echo apply_filters('the_content', get_the_content());
 
-                    if (have_rows('qa_about_accordion')) :
+                    $about_context = get_queried_object_id();
+                    $accordion_context = have_rows('qa_about_accordion', $about_context) ? $about_context : (have_rows('qa_about_accordion', 'option') ? 'option' : null);
+                    if ($accordion_context !== null) :
                         $has_about_accordion = true;
                         ?>
                         <section class="about-accordion-section content-card-list" aria-label="<?php esc_attr_e('About accordion', 'supervisor-plugin'); ?>">
                             <?php
                             $row_index = 0;
-                            while (have_rows('qa_about_accordion')) : the_row();
+                            while (have_rows('qa_about_accordion', $accordion_context)) : the_row();
                                 $subtitle = get_sub_field('qa_about_subtitle');
                                 $text    = get_sub_field('qa_about_text');
                                 $accordion_id = 'about-' . $row_index;

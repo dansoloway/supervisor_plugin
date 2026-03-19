@@ -86,7 +86,7 @@ $updates_query = new WP_Query($args);
                         echo '<div class="qa-update-item content-card">';
 
                         // Accordion Header (Clickable)
-                        echo '<div class="light-green-bkg accordion-header" data-accordion="' . esc_attr($post_id) . '">';
+                        echo '<div class="accordion-header" data-accordion="' . esc_attr($post_id) . '">';
                             echo '<div class="qa-update-title">';
                                 echo '<div class="title-date-container">';
                                     echo '<h3>' . get_the_title() . '</h3>';

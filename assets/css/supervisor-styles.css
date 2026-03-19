@@ -592,6 +592,7 @@
     border: none;
     padding: var(--sv-spacing-md) 0;
     box-shadow: none;
+    border-bottom: 1px solid black;
 }
 
 .about-accordion-section .about-accordion-item > .accordion-header {
@@ -623,11 +624,11 @@
 
 /* AJAX search component - canonical token-based block */
 .supervisor-home .ajax-search-component {
-    background: var(--sv-blue-050);
-    border: 1px solid var(--sv-border);
-    border-radius: var(--sv-radius-lg);
+    background: #F4F5F5;
+    border: none;
+    border-radius: 0;
     padding: var(--sv-spacing-lg);
-    box-shadow: var(--sv-shadow-sm);
+    box-shadow: none;
     display: flex;
     flex-direction: column;
     gap: var(--sv-block-gap);
@@ -702,7 +703,6 @@
     font-size: var(--sv-fs-body) !important;
     font-weight: var(--sv-fw-bold) !important;
     color: var(--sv-text) !important;
-    background: var(--sv-card) !important;
     padding: var(--sv-spacing-sm) var(--sv-spacing-md) !important;
     border-radius: var(--sv-radius-md) !important;
 }
@@ -2715,7 +2715,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: var(--sv-nav-accent) !important;
     font-family: var(--sv-font-secondary);
     font-weight: 400 !important;
-    font-size: 20px !important;
+    font-size: 22px !important;
     line-height: 1;
     text-decoration: none;
     border-radius: 0;
@@ -3836,7 +3836,6 @@ img[src*=".svg"] {
     font-size: 16px;
     font-weight: 700;
     color: #1F2937;
-    background: #F3F4F6;
     padding: 6px 10px;
     border-radius: 6px;
     margin: 0;
@@ -3950,7 +3949,6 @@ img[src*=".svg"] {
 }
 
 .supervisor-home .ajax-search-component .filter-group-title {
-    background: var(--sv-card) !important;
     border-radius: var(--sv-radius-md) !important;
 }
 

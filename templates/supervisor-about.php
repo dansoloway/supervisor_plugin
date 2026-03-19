@@ -31,7 +31,7 @@ get_header('supervisor');
                     if ($accordion_context !== null) :
                         $has_about_accordion = true;
                         ?>
-                        <section class="about-accordion-section content-card-list" aria-label="<?php esc_attr_e('About accordion', 'supervisor-plugin'); ?>">
+                        <section class="about-accordion-section" aria-label="<?php esc_attr_e('About accordion', 'supervisor-plugin'); ?>">
                             <?php
                             $row_index = 0;
                             while (have_rows('qa_about_accordion', $accordion_context)) : the_row();
@@ -40,8 +40,8 @@ get_header('supervisor');
                                 $accordion_id = 'about-' . $row_index;
                                 $row_index++;
                                 ?>
-                                <div class="qa-update-item content-card">
-                                    <div class="light-green-bkg accordion-header" data-accordion="<?php echo esc_attr($accordion_id); ?>">
+                                <div class="qa-update-item about-accordion-item">
+                                    <div class="accordion-header" data-accordion="<?php echo esc_attr($accordion_id); ?>">
                                         <div class="qa-update-title">
                                             <h3><?php echo esc_html($subtitle); ?></h3>
                                             <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>

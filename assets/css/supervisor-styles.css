@@ -578,6 +578,46 @@
     border-bottom: none;
 }
 
+/* About page accordion - minimal, no borders/backgrounds */
+.about-accordion-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-block-gap);
+}
+
+.about-accordion-section .about-accordion-item {
+    background: none;
+    border: none;
+    padding: var(--sv-spacing-md) 0;
+    box-shadow: none;
+}
+
+.about-accordion-section .about-accordion-item > .accordion-header {
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.about-accordion-section .about-accordion-item > .accordion-header:hover {
+    background: none;
+}
+
+.about-accordion-section .about-accordion-item .qa-update-title h3 {
+    font-size: var(--sv-fs-h3);
+    font-weight: var(--sv-fw-bold);
+    color: var(--sv-text);
+}
+
+.about-accordion-section .about-accordion-item .accordion-icon {
+    font-size: 1.25em;
+    flex-shrink: 0;
+}
+
+.about-accordion-section .about-accordion-item > .accordion-content {
+    padding: var(--sv-spacing-sm) 0 0 0;
+    border: none;
+}
+
 /* AJAX search component - canonical token-based block */
 .supervisor-home .ajax-search-component {
     background: var(--sv-blue-050);

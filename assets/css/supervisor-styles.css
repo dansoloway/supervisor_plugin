@@ -183,6 +183,12 @@
     align-items: start !important;
 }
 
+/* Prevent accordion expansion from resizing columns - grid children must respect column widths */
+.supervisor-home .supervisor-content-wrapper.supervisor-two-column > .ajax-search-component,
+.supervisor-home .supervisor-content-wrapper.supervisor-two-column > .qa-updates-list {
+    min-width: 0;
+}
+
 /* Also apply when :has() is supported */
 .supervisor-content-wrapper.supervisor-two-column:has(.ajax-search-component),
 .supervisor-content-wrapper.supervisor-two-column:has(.qa-updates-list) {
@@ -578,6 +584,13 @@
     border-bottom: none;
 }
 
+/* Prevent accordion content from forcing column width */
+.qa-updates-list .accordion-content .update-content-text,
+.search-results-container .accordion-content .update-content-text {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
 /* About page accordion - minimal, no borders/backgrounds */
 .about-accordion-section {
     display: flex;
@@ -663,11 +676,11 @@
 }
 
 .supervisor-home .ajax-search-component .search-button {
-    background: var(--sv-blue) !important;
+    background: #183d5c !important;
 }
 
 .supervisor-home .ajax-search-component .search-button:hover {
-    background: var(--sv-blue-600) !important;
+    background: #2a5a85 !important;
 }
 
 /* Filter section - clear group titles, well spaced checkboxes */
@@ -717,6 +730,10 @@
 
 .supervisor-home .ajax-search-component .checkbox-label {
     color: var(--sv-text) !important;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
 }
 
 .supervisor-home .ajax-search-component .checkbox-label input {
@@ -3741,9 +3758,10 @@ img[src*=".svg"] {
     left: 0;
     width: 40px;
     height: 44px;
+    min-height: 44px;
     border: none;
     border-radius: 0;
-    background: #AFC6E8;
+    background: #183d5c;
     color: white;
     display: flex;
     align-items: center;
@@ -3753,8 +3771,8 @@ img[src*=".svg"] {
     z-index: 2;
 }
 
-.supervisor-home .search-button:hover {
-    background: #9BB5D9;
+.supervisor-home .ajax-search-component .search-button:hover {
+    background: #2a5a85;
 }
 
 .supervisor-home .search-button:focus {
@@ -3841,17 +3859,27 @@ img[src*=".svg"] {
     font-size: 16px;
     font-weight: 700;
     color: #1F2937;
-    padding: 6px 10px;
-    border-radius: 6px;
+    padding: 10px 12px;
     margin: 0;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.supervisor-home .filter-group-title::after {
+    content: '⌄';
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-inline-start: auto;
 }
 
 .supervisor-home .filter-listbox {
-    /* height: 140px; */
+    max-height: 140px;
     overflow-y: auto;
     background: white;
-    border: 1px solid #D9E2EC;
-    border-radius: 0px;
+    border: 1px solid #D1D5DB;
+    border-radius: 0;
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -3905,15 +3933,16 @@ img[src*=".svg"] {
 }
 
 /* Filter Button */
-.supervisor-home .filter-button,
-.supervisor-home #search-submit {
+.supervisor-home .ajax-search-component .filter-button,
+.supervisor-home .ajax-search-component #search-submit {
     width: 100% !important;
-    height: 44px;
-    background: #AFC6E8;
+    height: 48px;
+    margin-top: 16px;
+    background: #183d5c !important;
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 16px;
+    border-radius: 0;
+    font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -3925,40 +3954,43 @@ img[src*=".svg"] {
     max-width: 100% !important;
 }
 
-.filter-button:hover {
-    background: #9BB5D9;
+.supervisor-home .filter-button:hover,
+.supervisor-home #search-submit:hover {
+    background: #2a5a85 !important;
 }
 
-.filter-button:focus {
+.supervisor-home .filter-button:focus,
+.supervisor-home #search-submit:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(175, 198, 232, 0.3);
+    box-shadow: 0 0 0 3px rgba(24, 61, 92, 0.3);
 }
 
-.filter-button:active {
-    background: #8BA4C8;
+.supervisor-home .filter-button:active,
+.supervisor-home #search-submit:active {
+    background: #1e4a6f !important;
 }
 
 /* Phase 2 overrides: tokens, content-card, spacing */
 /* Consolidated: .ajax-search-component uses canonical token block ~582 */
 
 .supervisor-home .ajax-search-component .search-input-container {
-    border-radius: var(--sv-radius-md) !important;
+    border-radius: 0 !important;
 }
 
 .supervisor-home .ajax-search-component .search-button {
-    background: var(--sv-blue) !important;
+    background: #183d5c !important;
 }
 
 .supervisor-home .ajax-search-component .search-button:hover {
-    background: var(--sv-blue-600) !important;
+    background: #2a5a85 !important;
 }
 
 .supervisor-home .ajax-search-component .filter-group-title {
-    border-radius: var(--sv-radius-md) !important;
+    border-radius: 0 !important;
 }
 
 .supervisor-home .ajax-search-component .filter-listbox {
-    border-radius: var(--sv-radius-md) !important;
+    border-radius: 0 !important;
 }
 
 .supervisor-home .ajax-search-component .checkbox-label input {

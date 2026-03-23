@@ -83,7 +83,7 @@ $updates_query = new WP_Query($args);
 
                         $is_highlighted = ($highlight_id && $post_id == $highlight_id);
 
-                        echo '<div class="qa-update-item content-card">';
+                        echo '<div class="qa-update-item">';
 
                         // Accordion Header (Clickable)
                         echo '<div class="accordion-header" data-accordion="' . esc_attr($post_id) . '">';

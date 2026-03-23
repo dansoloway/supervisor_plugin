@@ -952,7 +952,7 @@
     grid-template-rows: minmax(148px, 1fr) minmax(148px, 1fr) minmax(148px, 1fr) auto;
     gap: 6px;
     position: relative;
-    max-width: 320px;
+    max-width: 360px;
     margin: 0;
     margin-inline-start: auto;
     direction: rtl;
@@ -1079,7 +1079,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 320px;
+    max-width: 360px;
     text-align: center;
     border-radius: 0;
     padding: var(--sv-spacing-sm) var(--sv-spacing-lg);
@@ -2714,8 +2714,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     padding: 16px 28px;
     color: var(--sv-nav-accent) !important;
     font-family: var(--sv-font-secondary);
-    font-weight: 400 !important;
-    font-size: 22px !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
     line-height: 1;
     text-decoration: none;
     border-radius: 0;
@@ -2732,20 +2732,21 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: white !important;
 }
 
-/* Active state - light tint, blue text - DESKTOP ONLY */
+/* Active state - solid dark blue, white text - DESKTOP ONLY */
 .supervisor-home .desktop-menu a.active {
-    background: var(--sv-blue-050) !important;
-    color: var(--sv-nav-accent) !important;
+    background: var(--sv-nav-accent) !important;
+    color: white !important;
     outline: 0;
 }
 
 .supervisor-home .desktop-menu a.active .nav-text,
 .supervisor-home .desktop-menu a.active .nav-icon {
-    color: var(--sv-nav-accent) !important;
+    color: white !important;
 }
 
 .supervisor-home .desktop-menu a.active .nav-icon-home img {
     opacity: 1;
+    filter: brightness(0) invert(1);
 }
 
 /* Inactive icon (home when not active) - uses built-in colors from house3.svg */
@@ -2800,6 +2801,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 .supervisor-home .desktop-menu a.dropdown.active .dropdown-icon {
     transform: rotate(180deg);
+}
+
+.supervisor-home .desktop-menu a.active .dropdown-icon {
+    color: white;
 }
 
 /* ===== DROPDOWN MENU - DESKTOP ONLY ===== */

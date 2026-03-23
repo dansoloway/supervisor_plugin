@@ -22,13 +22,6 @@ $supervisor_menu = [
         'submenu' => []
     ],
     [
-        'title' => 'תחומי פעילות',
-        'url' => get_the_permalink(SUPERVISOR_ACTIVITIES),
-        'is_active' => is_page(SUPERVISOR_ACTIVITIES),
-        'has_dropdown' => false,
-        'submenu' => []
-    ],
-    [
         'title' => 'מפת הידע',
         'url' => '#', // Will be handled by JavaScript
         'is_active' => is_page(SUPERVISOR_BIB_CATS) || is_page(SUPERVISOR_KNOWLEDGE_MAP) || is_tax('qa_tags'),
@@ -43,11 +36,6 @@ $supervisor_menu = [
                 'title' => 'נושאי מפתח',
                 'url' => get_the_permalink(SUPERVISOR_BIB_CATS),
                 'is_active' => is_page(SUPERVISOR_BIB_CATS)
-            ],
-            [
-                'title' => 'ארגוני פיקוח',
-                'url' => get_the_permalink(SUPERVISOR_ORGS),
-                'is_active' => is_page(SUPERVISOR_ORGS)
             ]
         ]
     ],
@@ -55,6 +43,13 @@ $supervisor_menu = [
         'title' => 'עדכונים',
         'url' => get_the_permalink(SUPERVISOR_UPDATES),
         'is_active' => is_page(SUPERVISOR_UPDATES),
+        'has_dropdown' => false,
+        'submenu' => []
+    ],
+    [
+        'title' => 'גופי פיקוח',
+        'url' => get_the_permalink(SUPERVISOR_ORGS),
+        'is_active' => is_page(SUPERVISOR_ORGS),
         'has_dropdown' => false,
         'submenu' => []
     ],

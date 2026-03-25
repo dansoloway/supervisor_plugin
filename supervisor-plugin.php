@@ -12,6 +12,9 @@ require_once plugin_dir_path(__FILE__) . 'config.php';
 // Include post type and taxonomy registration
 require_once plugin_dir_path(__FILE__) . 'inc/register_posts_and_tax.php';
 
+// Knowledge-map category automap (qa_tags meta) + optional WP-CLI command
+require_once plugin_dir_path(__FILE__) . 'inc/knowledge-map-automap.php';
+
 // Include bibliography admin functionality
 require_once plugin_dir_path(__FILE__) . 'inc/bib_admin_page.php';
 

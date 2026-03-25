@@ -540,6 +540,7 @@ function supervisor_categories_page() {
                 echo '<table class="wp-list-table widefat fixed striped">';
                 echo '<thead><tr>';
                 echo '<th>' . esc_html__('שם נושא המפתח', 'text-domain') . '</th>';
+                echo '<th>' . esc_html__('קטגוריית מפת הידע', 'text-domain') . '</th>';
                 echo '<th>' . esc_html__('איקון', 'text-domain') . '</th>';
                 echo '<th>' . esc_html__('מספר פריטים', 'text-domain') . '</th>';
                 echo '<th>' . esc_html__('פעולות', 'text-domain') . '</th>';
@@ -547,9 +548,12 @@ function supervisor_categories_page() {
                 
                 foreach ($tags as $tag) :
                     $icon = get_term_meta($tag->term_id, 'fa_icon', true);
+                    $map_cat = get_term_meta($tag->term_id, 'qa_knowledge_map_category', true);
+                    $map_label = $map_cat ? supervisor_knowledge_map_category_label($map_cat) : '';
                     $count = $tag->count;
                     echo '<tr>';
                     echo '<td>' . esc_html($tag->name) . '</td>';
+                    echo '<td>' . ($map_label ? esc_html($map_label) : esc_html__('—', 'text-domain')) . '</td>';
                     echo '<td>';
                     if ($icon) {
                         echo '<i class="' . esc_attr($icon) . '"></i> ' . esc_html($icon);

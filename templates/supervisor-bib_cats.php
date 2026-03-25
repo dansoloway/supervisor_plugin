@@ -1,7 +1,6 @@
 <?php
 /* Template Name: Supervisor Bibliography Categories */
 get_header('supervisor');
-error_log('Loading supervisor-bib_cats.php template');
 ?>
 
 <div class="supervisor-home supervisor-bib-cats">
@@ -32,13 +31,59 @@ error_log('Loading supervisor-bib_cats.php template');
             ?>
         </p>
 
+        <?php
+        $km_cat_raw    = isset($_GET['km_cat']) ? sanitize_key(wp_unslash($_GET['km_cat'])) : '';
+        $filter_slugs  = $km_cat_raw ? supervisor_knowledge_map_resolve_to_leaf_slugs($km_cat_raw) : [];
+        $filter_active = ! empty($filter_slugs);
+        $filter_label  = $filter_active ? supervisor_knowledge_map_filter_banner_label($km_cat_raw) : '';
+        $bib_page_url  = get_permalink();
+        ?>
+
+        <?php if ($filter_active) : ?>
+            <div class="bib-cats-map-filter-active" role="status">
+                <span class="bib-cats-map-filter-label">
+                    <?php
+                    echo esc_html(
+                        sprintf(
+                            /* translators: %s: knowledge-map region name */
+                            __('מסנן לפי: %s', 'text-domain'),
+                            $filter_label
+                        )
+                    );
+                    ?>
+                </span>
+                <a class="bib-cats-map-filter-clear" href="<?php echo esc_url($bib_page_url); ?>"><?php echo esc_html__('הצג את כל נושאי המפתח', 'text-domain'); ?></a>
+            </div>
+        <?php endif; ?>
+
         <div class="categories-grid">
             <?php
-            // Fetch all categories in the 'qa_tags' taxonomy
-            $categories = get_terms([
-                'taxonomy' => 'qa_tags',
+            $term_args = [
+                'taxonomy'   => 'qa_tags',
                 'hide_empty' => false,
-            ]);
+            ];
+            if ($filter_active) {
+                if (count($filter_slugs) === 1) {
+                    $term_args['meta_query'] = [
+                        [
+                            'key'   => 'qa_knowledge_map_category',
+                            'value' => $filter_slugs[0],
+                        ],
+                    ];
+                } else {
+                    $term_args['meta_query'] = [
+                        [
+                            'key'     => 'qa_knowledge_map_category',
+                            'value'   => $filter_slugs,
+                            'compare' => 'IN',
+                        ],
+                    ];
+                }
+            }
+            $categories = get_terms($term_args);
+            if (is_wp_error($categories)) {
+                $categories = [];
+            }
 
             if (!empty($categories)) :
                 foreach ($categories as $index => $category) :
@@ -64,7 +109,13 @@ error_log('Loading supervisor-bib_cats.php template');
                     </a>
                 <?php endforeach;
             else : ?>
-                <p class="no-categories"><?php esc_html_e('No categories found.', 'text-domain'); ?></p>
+                <p class="no-categories">
+                    <?php
+                    echo $filter_active
+                        ? esc_html__('לא נמצאו נושאי מפתח המשויכים לאזור זה במפה. שיוך נושאים נעשה בלוח ניהול נושאי מפתח, בשדה קטגוריית מפת הידע.', 'text-domain')
+                        : esc_html__('No categories found.', 'text-domain');
+                    ?>
+                </p>
             <?php endif; ?>
         </div>
         

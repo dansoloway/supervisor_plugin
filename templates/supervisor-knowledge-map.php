@@ -1,6 +1,7 @@
 <?php
 /* Template Name: Supervisor Knowledge Map */
 get_header('supervisor');
+$hierarchy = supervisor_knowledge_map_hierarchy();
 ?>
 
 <div class="supervisor-home supervisor-knowledge-map">
@@ -19,46 +20,44 @@ get_header('supervisor');
         <div class="supervisor-content-wrapper supervisor-single-column">
         <h1 class="page-title">מפת הידע</h1>
         
-        <!-- Knowledge Map Diagram -->
-        <section class="knowledge-layout" dir="rtl">
-            <!-- RIGHT column -->
-            <aside class="col-right">
-                <ul class="arrow-list group-top">
-                    <li>מדריכים ופרקטיקות מיטביות</li>
-                    <li>מחקרים</li>
-                </ul>
-
-                <ul class="arrow-list group-bottom">
-                    <li>אכיפה מתקנת</li>
-                    <li>אכיפה עונשית</li>
-                </ul>
-            </aside>
-
-            <!-- CENTER column -->
+        <!-- Knowledge Map Diagram (center) -->
+        <section class="knowledge-layout knowledge-layout-svg-only" dir="rtl">
             <div class="col-center">
                 <div class="svg-frame">
                     <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/knowledge_map.svg'; ?>" alt="מפת הידע - תרשים מרכזי"/>
                 </div>
             </div>
+        </section>
 
-            <!-- LEFT column -->
-            <aside class="col-left">
-                <ul class="arrow-list group-top">
-                    <li>סטנדרטים לאיכות השירות</li>
-                    <li>סטנדרטים לעבודת הפיקוח</li>
-                    <li>
-                        שיטות עבודה
-                        <div class="sub">
-                            שקיפות, ניהול סיכונים, שיתוף מקבלי שירות, רספונסיביות, פיקוח משולב
-                        </div>
-                    </li>
-                </ul>
-
-                <ul class="arrow-list group-bottom">
-                    <li>בקרה עצמית</li>
-                    <li>בקרה חיצונית</li>
-                </ul>
-            </aside>
+        <!-- Structured index: groups + sub-items → נושאי מפתח filters -->
+        <section class="knowledge-map-topic-index" dir="rtl" aria-label="<?php esc_attr_e('מפת הידע לפי נושאים', 'text-domain'); ?>">
+            <h2 class="knowledge-map-topic-index-title"><?php echo esc_html__('נושאים במפת הידע', 'text-domain'); ?></h2>
+            <div class="knowledge-map-topic-grid">
+                <?php foreach ($hierarchy as $index => $group) : ?>
+                    <div class="km-topic-group">
+                        <h3 class="km-topic-group-title">
+                            <a class="km-topic-group-link" href="<?php echo esc_url(supervisor_knowledge_map_topics_url($group['slug'])); ?>"><?php echo esc_html($group['label']); ?></a>
+                        </h3>
+                        <?php if (count($group['items']) === 1 && $group['items'][0]['slug'] === $group['slug']) : ?>
+                            <p class="km-topic-group-note"><?php echo esc_html__('תחום על — שיוך נושאי מפתח ישירות לקטגוריה זו.', 'text-domain'); ?></p>
+                        <?php else : ?>
+                            <ul class="km-topic-group-list">
+                                <?php foreach ($group['items'] as $item) : ?>
+                                    <li>
+                                        <a href="<?php echo esc_url(supervisor_knowledge_map_topics_url($item['slug'])); ?>"><?php echo esc_html($item['label']); ?></a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <p class="knowledge-map-tile-aliases-note">
+                <?php echo esc_html__('קישורי טילים במפה:', 'text-domain'); ?>
+                <a href="<?php echo esc_url(supervisor_knowledge_map_topics_url('tile_info_dissemination')); ?>"><?php echo esc_html__('הפצת מידע וידע', 'text-domain'); ?></a>
+                <?php echo ' · '; ?>
+                <a href="<?php echo esc_url(supervisor_knowledge_map_topics_url('tile_policy_social_services')); ?>"><?php echo esc_html__('מדיניות פיקוח על שירותים חברתיים', 'text-domain'); ?></a>
+            </p>
         </section>
         
         <!-- Explanatory Text -->

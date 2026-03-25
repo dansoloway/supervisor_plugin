@@ -349,11 +349,313 @@ function save_taxonomy_icon_field($term_id) {
     }
 }
 
+/**
+ * Knowledge-map hierarchy: 7 groups + sub-items (נושאי מפתח assign to leaves only).
+ *
+ * @return list<array{slug: string, label: string, items: list<array{slug: string, label: string}>}>
+ */
+function supervisor_knowledge_map_hierarchy() {
+    return [
+        [
+            'slug'  => 'policy',
+            'label' => __('מדיניות', 'text-domain'),
+            'items' => [
+                ['slug' => 'policy_supervision', 'label' => __('מדיניות פיקוח', 'text-domain')],
+                ['slug' => 'policy_service_quality_standards', 'label' => __('סטנדרטים לאיכות השירותים', 'text-domain')],
+            ],
+        ],
+        [
+            'slug'  => 'control',
+            'label' => __('בקרה', 'text-domain'),
+            'items' => [
+                ['slug' => 'control_external', 'label' => __('בקרה חיצונית', 'text-domain')],
+                ['slug' => 'control_self', 'label' => __('בקרה עצמית', 'text-domain')],
+            ],
+        ],
+        [
+            'slug'  => 'enforcement',
+            'label' => __('אכיפה', 'text-domain'),
+            'items' => [
+                ['slug' => 'enforcement_corrective_punitive', 'label' => __('אכיפה מתקנת ואכיפה עונשית', 'text-domain')],
+            ],
+        ],
+        [
+            'slug'  => 'knowledge_development',
+            'label' => __('פיתוח ידע והדרכה', 'text-domain'),
+            'items' => [
+                ['slug' => 'knowledge_training_materials', 'label' => __('חומרי הדרכה', 'text-domain')],
+                ['slug' => 'knowledge_research', 'label' => __('מחקרים', 'text-domain')],
+            ],
+        ],
+        [
+            'slug'  => 'working_methods',
+            'label' => __('שיטות עבודה', 'text-domain'),
+            'items' => [
+                ['slug' => 'wm_risk_management', 'label' => __('ניהול סיכונים', 'text-domain')],
+                ['slug' => 'wm_service_user_participation', 'label' => __('שיתוף מקבלי השירות בפיקוח', 'text-domain')],
+                ['slug' => 'wm_transparency_access', 'label' => __('שקיפות והנגשת מידע', 'text-domain')],
+                ['slug' => 'wm_integrated_supervision', 'label' => __('פיקוח משולב', 'text-domain')],
+                ['slug' => 'wm_supervisor_supervisee_relations', 'label' => __('יחסי מפקחים מפוקחים', 'text-domain')],
+            ],
+        ],
+        [
+            'slug'  => 'social_procurement',
+            'label' => __('רכש חברתי', 'text-domain'),
+            'items' => [
+                ['slug' => 'sp_service_delivery_outsourcing', 'label' => __('אספקת שירותים חברתיים ומיקור חוץ', 'text-domain')],
+            ],
+        ],
+        [
+            'slug'  => 'regulatory_welfare_state',
+            'label' => __('מדינת הרווחה הרגולטורית', 'text-domain'),
+            'items' => [
+                ['slug' => 'regulatory_welfare_state', 'label' => __('מדינת הרווחה הרגולטורית', 'text-domain')],
+            ],
+        ],
+    ];
+}
+
+/**
+ * Legacy / tile alias slugs → canonical leaf slug (see product notes: tile vs sub-item).
+ *
+ * @return array<string, string>
+ */
+function supervisor_knowledge_map_slug_aliases() {
+    return [
+        'guides_best_practices'        => 'knowledge_training_materials',
+        'research'                     => 'knowledge_research',
+        'enforcement_corrective'       => 'enforcement_corrective_punitive',
+        'enforcement_punitive'         => 'enforcement_corrective_punitive',
+        'standards_service_quality'    => 'policy_service_quality_standards',
+        'standards_supervision_work'   => 'policy_supervision',
+        'control_self'                 => 'control_self',
+        'control_external'             => 'control_external',
+        // Tiles / explicit routing (הפצת מידע וידע → שקיפות והנגשת מידע; מדיניות פיקוח על שירותים חברתיים → מדיניות פיקוח)
+        'tile_info_dissemination'      => 'wm_transparency_access',
+        'tile_policy_social_services'  => 'policy_supervision',
+    ];
+}
+
+/**
+ * @param string $slug Raw slug from URL or storage.
+ */
+function supervisor_knowledge_map_normalize_slug($slug) {
+    $slug = sanitize_key($slug);
+    if ($slug === '') {
+        return '';
+    }
+    $aliases = supervisor_knowledge_map_slug_aliases();
+
+    return isset($aliases[ $slug ]) ? $aliases[ $slug ] : $slug;
+}
+
+/**
+ * @return array<string, string> Leaf slug => label (assignable on נושא מפתח).
+ */
+function supervisor_knowledge_map_category_choices() {
+    $out = [];
+    foreach (supervisor_knowledge_map_hierarchy() as $group) {
+        foreach ($group['items'] as $item) {
+            $out[ $item['slug'] ] = $item['label'];
+        }
+    }
+
+    return $out;
+}
+
+/**
+ * @param string $slug
+ */
+function supervisor_knowledge_map_is_parent_slug($slug) {
+    $slug = sanitize_key($slug);
+    foreach (supervisor_knowledge_map_hierarchy() as $group) {
+        if ($group['slug'] === $slug) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * @param string $slug Parent group slug.
+ */
+function supervisor_knowledge_map_parent_label($slug) {
+    $slug = sanitize_key($slug);
+    foreach (supervisor_knowledge_map_hierarchy() as $group) {
+        if ($group['slug'] === $slug) {
+            return $group['label'];
+        }
+    }
+
+    return '';
+}
+
+/**
+ * Leaf slugs under a parent group, or single-element array for a leaf slug.
+ *
+ * @param string $km_raw From query string (parent or leaf, may be legacy).
+ *
+ * @return list<string>
+ */
+function supervisor_knowledge_map_resolve_to_leaf_slugs($km_raw) {
+    $km_raw = sanitize_key($km_raw);
+    if ($km_raw === '') {
+        return [];
+    }
+
+    if (supervisor_knowledge_map_is_parent_slug($km_raw)) {
+        $slugs = [];
+        foreach (supervisor_knowledge_map_hierarchy() as $group) {
+            if ($group['slug'] === $km_raw) {
+                foreach ($group['items'] as $item) {
+                    $slugs[] = $item['slug'];
+                }
+                break;
+            }
+        }
+
+        return $slugs;
+    }
+
+    $leaf = supervisor_knowledge_map_normalize_slug($km_raw);
+    $flat = supervisor_knowledge_map_category_choices();
+    if (isset($flat[ $leaf ])) {
+        return [$leaf];
+    }
+
+    return [];
+}
+
+/**
+ * Label for filter banner (parent group name or sub-item name).
+ *
+ * @param string $km_raw Query value before normalization.
+ */
+function supervisor_knowledge_map_filter_banner_label($km_raw) {
+    $km_raw = sanitize_key($km_raw);
+    if ($km_raw === '') {
+        return '';
+    }
+    if (supervisor_knowledge_map_is_parent_slug($km_raw)) {
+        return supervisor_knowledge_map_parent_label($km_raw);
+    }
+    $leaf = supervisor_knowledge_map_normalize_slug($km_raw);
+    $flat = supervisor_knowledge_map_category_choices();
+    if (isset($flat[ $leaf ])) {
+        return $flat[ $leaf ];
+    }
+
+    return '';
+}
+
+/**
+ * @param string $slug Normalized leaf or parent (for backwards calls).
+ */
+function supervisor_knowledge_map_category_label($slug) {
+    $slug = supervisor_knowledge_map_normalize_slug($slug);
+    if (supervisor_knowledge_map_is_parent_slug($slug)) {
+        return supervisor_knowledge_map_parent_label($slug);
+    }
+    $choices = supervisor_knowledge_map_category_choices();
+
+    return isset($choices[ $slug ]) ? $choices[ $slug ] : '';
+}
+
+/**
+ * Front-end URL for the נושאי מפתח page filtered by knowledge-map group or leaf.
+ *
+ * @param string $slug Parent group slug OR leaf slug OR tile alias (normalized in resolve).
+ */
+function supervisor_knowledge_map_topics_url($slug) {
+    if (! defined('SUPERVISOR_BIB_CATS') || ! SUPERVISOR_BIB_CATS) {
+        return home_url('/');
+    }
+    $slug = sanitize_key($slug);
+    if (! supervisor_knowledge_map_is_parent_slug($slug)) {
+        $slug = supervisor_knowledge_map_normalize_slug($slug);
+    }
+
+    return add_query_arg('km_cat', $slug, get_permalink(SUPERVISOR_BIB_CATS));
+}
+
+function add_qa_tags_knowledge_map_category_field($term) {
+    $raw       = get_term_meta($term->term_id, 'qa_knowledge_map_category', true);
+    $current   = $raw !== '' && $raw !== null ? sanitize_key($raw) : '';
+    $flat      = supervisor_knowledge_map_category_choices();
+    if ($current !== '' && ! isset($flat[ $current ])) {
+        $current = supervisor_knowledge_map_normalize_slug($current);
+    }
+    if ($current !== '' && ! isset($flat[ $current ])) {
+        $current = '';
+    }
+    $hierarchy = supervisor_knowledge_map_hierarchy();
+    ?>
+    <tr class="form-field">
+        <th scope="row">
+            <label for="qa_knowledge_map_category"><?php echo esc_html__('קטגוריית מפת הידע', 'text-domain'); ?></label>
+        </th>
+        <td>
+            <select name="qa_knowledge_map_category" id="qa_knowledge_map_category">
+                <option value=""><?php echo esc_html__('ללא (לא מוצג בסינון מהמפה)', 'text-domain'); ?></option>
+                <?php foreach ($hierarchy as $group) : ?>
+                    <optgroup label="<?php echo esc_attr($group['label']); ?>">
+                        <?php foreach ($group['items'] as $item) : ?>
+                            <option value="<?php echo esc_attr($item['slug']); ?>" <?php selected($current, $item['slug']); ?>><?php echo esc_html($item['label']); ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                <?php endforeach; ?>
+            </select>
+            <p class="description"><?php echo esc_html__('בחרו תת-נושא במפת הידע. סינון מהמפה או מקישור קבוצה מציג את כל נושאי המפתח באותה קבוצה.', 'text-domain'); ?></p>
+        </td>
+    </tr>
+    <?php
+}
+
+function add_qa_tags_knowledge_map_category_field_add() {
+    $hierarchy = supervisor_knowledge_map_hierarchy();
+    ?>
+    <div class="form-field">
+        <label for="qa_knowledge_map_category"><?php echo esc_html__('קטגוריית מפת הידע', 'text-domain'); ?></label>
+        <select name="qa_knowledge_map_category" id="qa_knowledge_map_category">
+            <option value=""><?php echo esc_html__('ללא', 'text-domain'); ?></option>
+            <?php foreach ($hierarchy as $group) : ?>
+                <optgroup label="<?php echo esc_attr($group['label']); ?>">
+                    <?php foreach ($group['items'] as $item) : ?>
+                        <option value="<?php echo esc_attr($item['slug']); ?>"><?php echo esc_html($item['label']); ?></option>
+                    <?php endforeach; ?>
+                </optgroup>
+            <?php endforeach; ?>
+        </select>
+        <p class="description"><?php echo esc_html__('אופציונלי: שיוך לתת-נושא במפת הידע.', 'text-domain'); ?></p>
+    </div>
+    <?php
+}
+
+function save_qa_tags_knowledge_map_category($term_id) {
+    if (! isset($_POST['qa_knowledge_map_category'])) {
+        return;
+    }
+    $raw     = sanitize_key(wp_unslash($_POST['qa_knowledge_map_category']));
+    $choices = supervisor_knowledge_map_category_choices();
+    if ($raw === '' || array_key_exists($raw, $choices)) {
+        if ($raw === '') {
+            delete_term_meta($term_id, 'qa_knowledge_map_category');
+        } else {
+            update_term_meta($term_id, 'qa_knowledge_map_category', $raw);
+        }
+    }
+}
+
 // Add hooks for qa_tags taxonomy
 add_action('qa_tags_edit_form_fields', 'add_taxonomy_icon_field', 10, 1);
+add_action('qa_tags_edit_form_fields', 'add_qa_tags_knowledge_map_category_field', 15, 1);
 add_action('qa_tags_add_form_fields', 'add_taxonomy_icon_field_add');
+add_action('qa_tags_add_form_fields', 'add_qa_tags_knowledge_map_category_field_add');
 add_action('edited_qa_tags', 'save_taxonomy_icon_field', 10, 1);
 add_action('created_qa_tags', 'save_taxonomy_icon_field', 10, 1);
+add_action('edited_qa_tags', 'save_qa_tags_knowledge_map_category', 15, 1);
+add_action('created_qa_tags', 'save_qa_tags_knowledge_map_category', 15, 1);
 
 // Helper function to get icon for a term
 function get_term_fa_icon($term_id, $default_icon = 'fas fa-folder') {

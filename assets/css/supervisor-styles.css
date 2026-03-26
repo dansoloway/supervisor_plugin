@@ -1461,8 +1461,8 @@
 }
 
 /* Bibliography categories - right-aligned text */
-.supervisor-bib-cats .page-title,
-.supervisor-bib-cats .intro-text,
+.supervisor-bib-cats .bib-cats-main .page-title,
+.supervisor-bib-cats .bib-cats-lead,
 .supervisor-taxonomy .intro-text {
     text-align: right;
 }
@@ -4766,10 +4766,20 @@ img[src*=".svg"] {
     min-width: 0;
 }
 
-.supervisor-bib-cats .bib-cats-main .intro-text {
+.supervisor-bib-cats .bib-cats-main .bib-cats-lead {
     margin-left: 0;
     margin-right: 0;
     max-width: none;
+    margin-bottom: 1.5rem;
+}
+
+.supervisor-bib-cats .bib-cats-main .bib-cats-lead--empty {
+    min-height: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.supervisor-bib-cats .bib-cats-main .bib-cats-lead.entry-content > :last-child {
+    margin-bottom: 0;
 }
 
 .supervisor-bib-cats .bib-cats-sidebar {
@@ -4788,26 +4798,23 @@ img[src*=".svg"] {
     box-sizing: border-box;
 }
 
-/* Page Header */
-.supervisor-bib-cats .page-title {
+/* Page header + lead: inside left column, flush right */
+.supervisor-bib-cats .bib-cats-main .page-title {
     font-family: var(--sv-font-primary);
     font-size: 28px;
     font-weight: 700;
     color: var(--sv-text);
-    text-align: center;
-    margin: 0 0 20px 0;
+    text-align: right;
+    margin: 0 0 1rem 0;
     line-height: 1.2;
 }
 
-.supervisor-bib-cats .intro-text {
+.supervisor-bib-cats .bib-cats-main .bib-cats-lead.entry-content {
     font-family: var(--sv-font-primary);
     font-size: 18px;
-    line-height: 1.6;
+    line-height: 1.65;
     color: var(--sv-text);
-    margin-bottom: 40px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    text-align: right;
 }
 
 /* Categories grid: fills main column; auto-fit square tiles */
@@ -5007,11 +5014,11 @@ body .supervisor-bib-cats .categories-grid {
         padding: 20px 15px;
     }
     
-    .supervisor-bib-cats .page-title {
+    .supervisor-bib-cats .bib-cats-main .page-title {
         font-size: 28px;
     }
-    
-    .supervisor-bib-cats .intro-text {
+
+    .supervisor-bib-cats .bib-cats-main .bib-cats-lead.entry-content {
         font-size: 16px;
     }
     
@@ -5034,7 +5041,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 @media (max-width: 480px) {
-    .supervisor-bib-cats .page-title {
+    .supervisor-bib-cats .bib-cats-main .page-title {
         font-size: 18px;
     }
     

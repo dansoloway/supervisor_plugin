@@ -17,21 +17,29 @@ get_header('supervisor');
 
         <!-- Main Content -->
         <div class="supervisor-content-wrapper supervisor-single-column">
-        <h1 class="page-title">נושאי מפתח</h1>
 
         <div class="bib-cats-layout">
             <div class="bib-cats-main">
-                <p class="intro-text">
-                    <?php
-                    // Get the page description or use default text
-                    $page_description = get_post_meta(get_the_ID(), 'page_description', true);
-                    if ($page_description) {
-                        echo esc_html($page_description);
-                    } else {
-                        echo 'כאן יהיה טקסט הקדמה קצר המסביר כיצד הרשימה נבנתה';
-                    }
-                    ?>
-                </p>
+                <h1 class="page-title"><?php echo esc_html(get_the_title()); ?></h1>
+
+                <?php
+                while (have_posts()) :
+                    the_post();
+                    $has_lead = trim((string) get_post_field('post_content', get_the_ID())) !== '';
+                    if ($has_lead) :
+                        ?>
+                        <div class="bib-cats-lead entry-content">
+                            <?php the_content(); ?>
+                        </div>
+                        <?php
+                    else :
+                        ?>
+                        <div class="bib-cats-lead bib-cats-lead--empty" aria-hidden="true"></div>
+                        <?php
+                    endif;
+                endwhile;
+                rewind_posts();
+                ?>
 
                 <?php
                 $km_cat_raw    = isset($_GET['km_cat']) ? sanitize_key(wp_unslash($_GET['km_cat'])) : '';

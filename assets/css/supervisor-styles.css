@@ -149,12 +149,23 @@
 }
 
 /* ===== STANDARDIZED CONTAINER SYSTEM ===== */
-/* Main container for all supervisor pages */
+/* Main container for all supervisor pages (matches homepage / grid width) */
 .supervisor-page-container {
-    max-width: 100%;
+    max-width: var(--sv-page-max-width);
+    width: 100%;
     margin: 20px auto;
     padding: 0 20px;
     direction: rtl;
+    box-sizing: border-box;
+}
+
+/* Main nav strip: same horizontal measure as page content */
+.supervisor-home > .nav-wrapper {
+    max-width: var(--sv-page-max-width);
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 20px;
+    box-sizing: border-box;
 }
 
 /* Content wrapper for different page layouts */
@@ -249,6 +260,10 @@
     .supervisor-page-container {
         padding: 0 16px 32px 16px;
     }
+
+    .supervisor-home > .nav-wrapper {
+        padding-inline: 16px;
+    }
     
     /* Force single column on mobile - no multi-column views */
     .supervisor-two-column,
@@ -338,6 +353,10 @@
     .supervisor-page-container {
         padding: 0 12px 24px 12px;
     }
+
+    .supervisor-home > .nav-wrapper {
+        padding-inline: 12px;
+    }
     
     /* Even bigger fonts on very small screens */
     .supervisor-home {
@@ -418,6 +437,9 @@
     --sv-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
     --sv-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
     --sv-shadow-input: 0 4px 12px rgba(0, 0, 0, 0.08);
+    
+    /* Single content column width — homepage + all supervisor templates */
+    --sv-page-max-width: 1140px;
     
     /* Breakpoints (reference only - use in media queries) */
     /* 480px, 768px, 992px, 1200px */
@@ -1518,7 +1540,7 @@
 
 /* ===== LAYOUT GRID + ORDER ===== */
 .supervisor-main-content {
-    max-width: 1140px;
+    max-width: var(--sv-page-max-width);
     margin: 0 auto;
     padding: 0 0 48px;
     display: grid;
@@ -1724,9 +1746,10 @@
 
 /* ===== TAXONOMY ARCHIVE PAGE LAYOUT ===== */
 .supervisor-taxonomy {
-    max-width: 1200px;
+    max-width: var(--sv-page-max-width);
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .supervisor-taxonomy .taxonomy-content {
@@ -1736,10 +1759,58 @@
 }
 
 /* ===== KNOWLEDGE MAP PAGE STYLING ===== */
+/* Width comes from .supervisor-page-container + .nav-wrapper (site-wide) */
 .supervisor-knowledge-map {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 70% visual-left main / 30% visual-right filter rail; LTR grid so tracks map to physical sides in RTL site */
+.supervisor-knowledge-map .knowledge-map-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+    gap: clamp(1rem, 2.5vw, 2rem);
+    align-items: start;
+    direction: ltr;
+}
+
+.supervisor-knowledge-map .knowledge-map-main,
+.supervisor-knowledge-map .knowledge-map-sidebar {
+    direction: rtl;
+    text-align: right;
+    min-width: 0;
+}
+
+.supervisor-knowledge-map .knowledge-map-lead {
+    margin-bottom: 1.25rem;
+}
+
+.supervisor-knowledge-map .knowledge-map-lead--empty {
+    min-height: 0.75rem;
+}
+
+.supervisor-knowledge-map .knowledge-map-sidebar {
+    position: sticky;
+    top: 1rem;
+}
+
+.supervisor-knowledge-map .knowledge-map-filter-placeholder {
+    min-height: 12rem;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-layout {
+    max-width: 100%;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-topic-index {
+    max-width: 100%;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
 }
 
 .knowledge-map-content {
@@ -1757,7 +1828,7 @@
 /* 1) container with relative positioning for absolute child positioning */
 .supervisor-knowledge-map .knowledge-layout{
   position: relative;
-  max-width: 1200px;
+  max-width: var(--sv-page-max-width);
   margin: 0 auto;
   padding: 60px 20px;
   min-height: 380px;
@@ -1918,7 +1989,7 @@
 .supervisor-knowledge-map .knowledge-map-topic-index {
   margin: 0 auto 2rem;
   padding: 0 12px;
-  max-width: 1200px;
+  max-width: var(--sv-page-max-width);
 }
 
 .supervisor-knowledge-map .knowledge-map-topic-index-title {
@@ -1937,9 +2008,16 @@
 }
 
 .supervisor-knowledge-map .km-topic-group {
+  aspect-ratio: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: #f4f6f9;
   border-radius: 10px;
   padding: 1rem 1.1rem;
+  box-sizing: border-box;
   border-inline-start: 4px solid #183d5c;
 }
 
@@ -2043,6 +2121,19 @@
 
 /* Knowledge Map Page - Mobile Optimized (768px) */
 @media (max-width: 768px) {
+    .supervisor-knowledge-map .knowledge-map-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .supervisor-knowledge-map .knowledge-map-sidebar {
+        position: static;
+    }
+
+    .supervisor-knowledge-map .knowledge-map-filter-placeholder {
+        min-height: 4rem;
+    }
+
     .supervisor-knowledge-map .page-title {
         font-size: 26px !important;
         margin-bottom: 30px !important;
@@ -2271,7 +2362,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin-bottom: 24px;
-    max-width: 1140px;
+    max-width: var(--sv-page-max-width);
     margin-left: auto;
     margin-right: auto;
 }
@@ -2368,9 +2459,10 @@
 /* Override main content layout for activities page */
 .supervisor-home .supervisor-main-content {
     grid-template-columns: 1fr;
-    max-width: 1140px;
+    max-width: var(--sv-page-max-width);
     margin: 0 auto;
     padding: 0 16px 48px;
+    box-sizing: border-box;
 }
 
 /* Responsive Design for Activities */
@@ -2408,11 +2500,12 @@
     }
 }
 
-/* ===== SUPERVISOR UPDATES PAGE LAYOUT ===== */
+/* ===== SUPERVISOR SITE WRAPPER ===== */
+/* Outer shell is full width; content width is .nav-wrapper + .supervisor-page-container */
 .supervisor-home {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
     direction: rtl;
 }
 
@@ -4292,9 +4385,10 @@ img[src*=".svg"] {
 
 /* ===== ORGANIZATIONS PAGE STYLING ===== */
 .supervisor-qa_orgs .supervisor-main {
-    max-width: 1200px;
+    max-width: var(--sv-page-max-width);
     margin: 0 auto;
     padding: 40px 20px;
+    box-sizing: border-box;
 }
 
 .supervisor-qa_orgs .categories-container {
@@ -4657,9 +4751,10 @@ img[src*=".svg"] {
 
 /* ===== BIBLIOGRAPHY CATEGORIES PAGE STYLING ===== */
 .supervisor-bib-cats .bib-cats-content {
-    max-width: 1200px;
+    max-width: var(--sv-page-max-width);
     margin: 0 auto;
     padding: 40px 20px;
+    box-sizing: border-box;
 }
 
 /* Page Header */

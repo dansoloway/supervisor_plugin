@@ -96,7 +96,9 @@ get_header('supervisor');
                         </div>
                         <h2 class="category-title"><?php echo esc_html($category->name); ?></h2>
                         <div class="category-arrow" aria-hidden="true">
-                            <i class="fas fa-arrow-left"></i>
+                            <svg class="category-arrow-svg" width="32" height="10" viewBox="0 0 32 10" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <path class="category-arrow-path" d="M30 5H6M12 1L6 5l6 4" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </div>
                     </a>
                 <?php endforeach;

@@ -4684,27 +4684,30 @@ img[src*=".svg"] {
     margin-right: auto;
 }
 
-/* Categories Grid (mockup: 3 columns) */
+/* Categories Grid: compact 3-col band (not full content width) */
 .supervisor-bib-cats .categories-grid,
 .supervisor-home.supervisor-bib-cats .categories-grid,
 body .supervisor-bib-cats .categories-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 28px !important;
-    margin-top: 30px !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px 20px !important;
+    margin-top: 28px !important;
+    max-width: 720px;
+    margin-inline: auto;
+    width: 100%;
 }
 
-/* Category Cards — light gray tile, seafoam hover, icon in white rounded box */
+/* Category Cards — compact portrait tile; seafoam hover */
 .supervisor-bib-cats .category-card {
-    --bib-cat-bg: #efefef;
+    --bib-cat-bg: #eeeeee;
     --bib-cat-bg-hover: #cbdad9;
     --bib-cat-icon-teal: #7ca4a3;
     --bib-cat-icon-well: #ffffff;
 
     background: var(--bib-cat-bg);
     border: none;
-    border-radius: 18px;
-    padding: 20px;
+    border-radius: 14px;
+    padding: 14px 14px 12px;
     text-decoration: none;
     color: #1a1a1a;
     transition: background 0.25s ease, box-shadow 0.25s ease;
@@ -4712,10 +4715,12 @@ body .supervisor-bib-cats .categories-grid {
     position: relative;
     overflow: hidden;
     text-align: right;
+    direction: rtl;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     min-height: 0;
-    aspect-ratio: 1;
+    width: 100%;
     max-width: 100%;
 }
 
@@ -4726,13 +4731,13 @@ body .supervisor-bib-cats .categories-grid {
     box-shadow: none;
 }
 
-/* Category Icon — small white square, teal glyph (unchanged on hover per mockup) */
+/* Category Icon — top visual right in RTL: cross-start */
 .supervisor-bib-cats .category-icon {
-    align-self: flex-end;
+    align-self: flex-start;
     flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    margin: 0 0 12px 0;
+    width: 44px;
+    height: 44px;
+    margin: 0 0 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4742,7 +4747,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-icon i {
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     color: var(--bib-cat-icon-teal);
     width: auto;
     height: auto;
@@ -4756,20 +4761,21 @@ body .supervisor-bib-cats .categories-grid {
     color: var(--bib-cat-icon-teal);
 }
 
-/* Category Title — bold, vertically centered in remaining space */
+/* Category Title — bold, middle of card */
 .supervisor-bib-cats .category-title {
     font-family: var(--sv-font-primary);
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #1a1a1a;
     margin: 0;
     line-height: 1.35;
     transition: color 0.25s ease;
-    flex: 1;
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     text-align: right;
+    min-height: 2.75em;
 }
 
 .supervisor-bib-cats .category-card:hover .category-title,
@@ -4781,23 +4787,23 @@ body .supervisor-bib-cats .categories-grid {
     display: none !important;
 }
 
-/* Category Arrow — bottom inline-start (left in RTL); white on hover */
+/* Category Arrow — thin stroke SVG, physical bottom-left (flex-end on cross axis in RTL column) */
 .supervisor-bib-cats .category-arrow {
     margin-top: auto;
-    align-self: flex-start;
-    padding-top: 12px;
-    line-height: 1;
-}
-
-.supervisor-bib-cats .category-arrow i {
-    font-size: 1rem;
-    font-weight: 300;
+    align-self: flex-end;
+    padding-top: 8px;
+    line-height: 0;
     color: #1a1a1a;
     transition: color 0.25s ease;
 }
 
-.supervisor-bib-cats .category-card:hover .category-arrow i,
-.supervisor-bib-cats .category-card:focus-visible .category-arrow i {
+.supervisor-bib-cats .category-arrow-svg {
+    display: block;
+    vertical-align: middle;
+}
+
+.supervisor-bib-cats .category-card:hover .category-arrow,
+.supervisor-bib-cats .category-card:focus-visible .category-arrow {
     color: #ffffff;
 }
 
@@ -4843,15 +4849,16 @@ body .supervisor-bib-cats .categories-grid {
 /* Responsive Design */
 @media (max-width: 1200px) {
     .supervisor-bib-cats .categories-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 16px 18px !important;
     }
 }
 
 @media (max-width: 992px) {
     .supervisor-bib-cats .categories-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 16px 18px !important;
+        max-width: 480px;
     }
 }
 
@@ -4872,15 +4879,16 @@ body .supervisor-bib-cats .categories-grid {
     .supervisor-home.supervisor-bib-cats .categories-grid,
     body .supervisor-bib-cats .categories-grid {
         grid-template-columns: 1fr !important;
-        gap: 20px !important;
+        gap: 16px !important;
+        max-width: none;
     }
     
     .supervisor-bib-cats .category-card {
-        padding: 25px;
+        padding: 14px 14px 12px;
     }
     
     .supervisor-bib-cats .category-title {
-        font-size: 18px;
+        font-size: 0.95rem;
     }
     
 }

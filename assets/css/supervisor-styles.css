@@ -4750,6 +4750,37 @@ img[src*=".svg"] {
 }
 
 /* ===== BIBLIOGRAPHY CATEGORIES PAGE STYLING ===== */
+/* 70% main / 30% filter rail; LTR grid so tracks match physical left/right on RTL site */
+.supervisor-bib-cats .bib-cats-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+    gap: clamp(1rem, 2.5vw, 2rem);
+    align-items: start;
+    direction: ltr;
+}
+
+.supervisor-bib-cats .bib-cats-main,
+.supervisor-bib-cats .bib-cats-sidebar {
+    direction: rtl;
+    text-align: right;
+    min-width: 0;
+}
+
+.supervisor-bib-cats .bib-cats-main .intro-text {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+}
+
+.supervisor-bib-cats .bib-cats-sidebar {
+    position: sticky;
+    top: 1rem;
+}
+
+.supervisor-bib-cats .bib-cats-filter-placeholder {
+    min-height: 12rem;
+}
+
 .supervisor-bib-cats .bib-cats-content {
     max-width: var(--sv-page-max-width);
     margin: 0 auto;
@@ -4779,36 +4810,39 @@ img[src*=".svg"] {
     margin-right: auto;
 }
 
-/* Categories Grid: compact 3-col band (not full content width) */
+/* Categories grid: fills main column; auto-fit square tiles */
 .supervisor-bib-cats .categories-grid,
 .supervisor-home.supervisor-bib-cats .categories-grid,
 body .supervisor-bib-cats .categories-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
     gap: 18px 20px !important;
     margin-top: 28px !important;
-    max-width: 720px;
-    margin-inline: auto;
+    max-width: none;
+    margin-inline: 0;
     width: 100%;
 }
 
-/* Category Cards — compact portrait tile; seafoam hover */
+/* Category Cards — square tiles; seafoam hover */
 .supervisor-bib-cats .category-card {
     --bib-cat-bg: #eeeeee;
     --bib-cat-bg-hover: #cbdad9;
     --bib-cat-icon-teal: #7ca4a3;
     --bib-cat-icon-well: #ffffff;
 
+    aspect-ratio: 1;
     background: var(--bib-cat-bg);
     border: none;
     border-radius: 14px;
     padding: 14px 14px 12px;
+    box-sizing: border-box;
     text-decoration: none;
     color: #1a1a1a;
     transition: background 0.25s ease, box-shadow 0.25s ease;
     box-shadow: none;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     text-align: right;
     direction: rtl;
     display: flex;
@@ -4931,6 +4965,7 @@ body .supervisor-bib-cats .categories-grid {
 
 /* No Categories Message */
 .supervisor-bib-cats .no-categories {
+    grid-column: 1 / -1;
     text-align: center;
     padding: 40px 20px;
     background: #f8f9fa;
@@ -4944,20 +4979,30 @@ body .supervisor-bib-cats .categories-grid {
 /* Responsive Design */
 @media (max-width: 1200px) {
     .supervisor-bib-cats .categories-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         gap: 16px 18px !important;
     }
 }
 
 @media (max-width: 992px) {
     .supervisor-bib-cats .categories-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 16px 18px !important;
-        max-width: 480px;
     }
 }
 
 @media (max-width: 768px) {
+    .supervisor-bib-cats .bib-cats-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .supervisor-bib-cats .bib-cats-sidebar {
+        position: static;
+    }
+
+    .supervisor-bib-cats .bib-cats-filter-placeholder {
+        min-height: 4rem;
+    }
+
     .supervisor-bib-cats .bib-cats-content {
         padding: 20px 15px;
     }

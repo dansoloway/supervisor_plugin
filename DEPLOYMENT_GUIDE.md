@@ -376,13 +376,41 @@ Verify these images exist:
 
 ### 8.2 Set Up Taxonomies
 
-#### Create Tags (QA Tags)
-1. Go to **QA Updates → Tags**
-2. Create relevant Hebrew tags (e.g., "עדכון", "חדש", "חשוב")
+#### נושאי מפתח (QA Tags)
+1. Go to **המפקחת → ניהול נושאי מפתח** in the WordPress admin, or manage terms via **נושאי מפתח** when editing Updates, Bibliography, Organizations, or Stories.
+2. Create relevant Hebrew terms as needed.
+3. Assign **קטגוריית מפת הידע** on each term so knowledge-map links and the filtered "נושאי מפתח" page work. After a deploy that changes the map hierarchy or term meta, run the automap in **§8.3** (dry-run first) to fill simple name matches and normalize legacy slugs.
 
 #### Create Themes (QA Themes)
 1. Go to **QA Organizations → Themes**
 2. Create relevant Hebrew themes (e.g., "חינוך", "בריאות", "רווחה")
+
+### 8.3 Knowledge map categories (נושאי מפתח) — after deploy
+
+Releases that introduce or change the knowledge-map hierarchy store a leaf slug in term meta `qa_knowledge_map_category` on each `qa_tags` term. Production terms may need that meta set, or older stored slugs may need normalizing, so map and filter URLs behave correctly.
+
+**Preferred: WP-CLI** (run from the WordPress installation root on the server, with WP-CLI available):
+
+```bash
+# Preview changes (no database writes)
+wp supervisor automap-km-tags --dry-run
+
+# Apply: assign meta from Hebrew term names + fix legacy slugs where possible
+wp supervisor automap-km-tags
+```
+
+Optional flags (see `inc/knowledge-map-automap.php`):
+
+- `--fill-all` — also set meta where a valid value already exists (use with care).
+- `--no-fix-legacy` — skip rewriting stored slugs via `supervisor_knowledge_map_normalize_slug()`.
+
+**Fallback: browser** — log in as an **Administrator**, then open (adjust path if your plugin folder name differs):
+
+`/wp-content/plugins/supervisor_plugin/development/assign-knowledge-map-categories.php`
+
+Use `?dry_run=1` on that URL for a preview with no writes; remove the query argument to apply.
+
+**After the run:** Review any terms reported as **no simple match** and set **קטגוריית מפת הידע** manually under **ניהול נושאי מפתח**. To teach the script new exact Hebrew titles, add rows to `supervisor_knowledge_map_automap_name_source_rows()` in `inc/knowledge-map-automap.php`.
 
 ---
 
@@ -411,6 +439,7 @@ Visit each page and verify:
 - [ ] Home page loads correctly
 - [ ] Activities page shows content (or "no activities" message)
 - [ ] Knowledge map displays properly
+- [ ] After a release that touches the knowledge map: run **§8.3** automap (`--dry-run` then real) or confirm **קטגוריית מפת הידע** is set on נושאי מפתח so filters and map links work
 - [ ] Updates page shows sample content
 - [ ] Organizations page lists sample organizations
 - [ ] Contact form works and sends emails
@@ -481,6 +510,7 @@ After successful deployment:
 3. **Backup Strategy**: Set up regular backups of database and files
 4. **Monitor**: Keep an eye on error logs and user feedback
 5. **Update Documentation**: Document any customizations made during deployment
+6. **Knowledge map tags**: If this release changed map categories or `qa_tags` meta, run **§8.3** (automap dry-run then apply) or verify manual assignments
 
 ---
 

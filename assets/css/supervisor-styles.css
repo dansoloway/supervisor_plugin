@@ -17,6 +17,16 @@
     color: var(--sv-blue-600) !important;
 }
 
+/* נושאי מפתח cards: mockup uses black title + teal icon, not global home link blue */
+.supervisor-home.supervisor-bib-cats a.category-card,
+.supervisor-home.supervisor-bib-cats a.category-card:link,
+.supervisor-home.supervisor-bib-cats a.category-card:visited,
+.supervisor-home.supervisor-bib-cats a.category-card:hover,
+.supervisor-home.supervisor-bib-cats a.category-card:focus,
+.supervisor-home.supervisor-bib-cats a.category-card:active {
+    color: #1a1a1a !important;
+}
+
 /* ===== HOME PAGE SPECIFIC LINK COLORS ===== */
 /* Ensure home page links have correct colors */
 .supervisor-home .update-title a,
@@ -1087,7 +1097,7 @@
 
 .supervisor-home .knowledge-map-section .knowledge-map-footer {
     margin-top: 30px;
-    max-width: 320px;
+    max-width: 360px;
     margin-inline-start: auto;
 }
 
@@ -4674,110 +4684,121 @@ img[src*=".svg"] {
     margin-right: auto;
 }
 
-/* Categories Grid */
+/* Categories Grid (mockup: 3 columns) */
 .supervisor-bib-cats .categories-grid,
 .supervisor-home.supervisor-bib-cats .categories-grid,
 body .supervisor-bib-cats .categories-grid {
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 40px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 28px !important;
     margin-top: 30px !important;
 }
 
-/* Category Cards */
+/* Category Cards — light gray tile, seafoam hover, icon in white rounded box */
 .supervisor-bib-cats .category-card {
-    background: #f5f5f5;
+    --bib-cat-bg: #efefef;
+    --bib-cat-bg-hover: #cbdad9;
+    --bib-cat-icon-teal: #7ca4a3;
+    --bib-cat-icon-well: #ffffff;
+
+    background: var(--bib-cat-bg);
     border: none;
-    border-radius: 12px;
-    padding: 30px 25px;
+    border-radius: 18px;
+    padding: 20px;
     text-decoration: none;
-    color: var(--sv-text);
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    color: #1a1a1a;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: none;
     position: relative;
     overflow: hidden;
     text-align: right;
     display: flex;
     flex-direction: column;
-    min-height: 200px;
+    min-height: 0;
+    aspect-ratio: 1;
+    max-width: 100%;
 }
 
-.supervisor-bib-cats .category-card:hover {
-    background: var(--sv-blue);
-    color: var(--sv-text);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+.supervisor-bib-cats .category-card:hover,
+.supervisor-bib-cats .category-card:focus-visible {
+    background: var(--bib-cat-bg-hover);
+    color: #1a1a1a;
+    box-shadow: none;
 }
 
-/* Category Icon */
+/* Category Icon — small white square, teal glyph (unchanged on hover per mockup) */
 .supervisor-bib-cats .category-icon {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
+    align-self: flex-end;
     flex-shrink: 0;
-}
-
-.supervisor-bib-cats .category-icon i {
-    font-size: 48px;
-    color: var(--sv-blue);
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
+    margin: 0 0 12px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.3s ease;
+    background: var(--bib-cat-icon-well);
+    border-radius: 12px;
+    box-sizing: border-box;
 }
 
-.supervisor-bib-cats .category-card:hover .category-icon i {
-    color: white;
+.supervisor-bib-cats .category-icon i {
+    font-size: 1.35rem;
+    color: var(--bib-cat-icon-teal);
+    width: auto;
+    height: auto;
+    display: block;
+    line-height: 1;
+    transition: color 0.25s ease;
 }
 
-/* Category Title */
+.supervisor-bib-cats .category-card:hover .category-icon i,
+.supervisor-bib-cats .category-card:focus-visible .category-icon i {
+    color: var(--bib-cat-icon-teal);
+}
+
+/* Category Title — bold, vertically centered in remaining space */
 .supervisor-bib-cats .category-title {
     font-family: var(--sv-font-primary);
-    font-size: 18px;
+    font-size: 1.05rem;
     font-weight: 700;
-    color: var(--sv-text);
-    margin: 0 0 15px 0;
-    line-height: 1.3;
-    transition: color 0.3s ease;
-}
-
-.supervisor-bib-cats .category-card:hover .category-title {
-    color: var(--sv-text);
-}
-
-/* Category Description */
-.supervisor-bib-cats .category-description {
-    font-family: var(--sv-font-primary);
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--sv-text-2);
+    color: #1a1a1a;
     margin: 0;
-    line-height: 1.5;
-    flex-grow: 1;
-    transition: color 0.3s ease;
+    line-height: 1.35;
+    transition: color 0.25s ease;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
 }
 
-.supervisor-bib-cats .category-card:hover .category-description {
-    color: var(--sv-text-2);
+.supervisor-bib-cats .category-card:hover .category-title,
+.supervisor-bib-cats .category-card:focus-visible .category-title {
+    color: #1a1a1a;
 }
 
-/* Category Arrow */
+.supervisor-bib-cats .category-description {
+    display: none !important;
+}
+
+/* Category Arrow — bottom inline-start (left in RTL); white on hover */
 .supervisor-bib-cats .category-arrow {
     margin-top: auto;
-    text-align: left;
-    padding-top: 15px;
+    align-self: flex-start;
+    padding-top: 12px;
+    line-height: 1;
 }
 
 .supervisor-bib-cats .category-arrow i {
-    font-size: 18px;
-    color: #000000;
-    transition: color 0.3s ease;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #1a1a1a;
+    transition: color 0.25s ease;
 }
 
-.supervisor-bib-cats .category-card:hover .category-arrow i {
-    color: #000000;
+.supervisor-bib-cats .category-card:hover .category-arrow i,
+.supervisor-bib-cats .category-card:focus-visible .category-arrow i {
+    color: #ffffff;
 }
 
 /* ===== TAXONOMY TERMS WITH ICONS ===== */
@@ -4862,9 +4883,6 @@ body .supervisor-bib-cats .categories-grid {
         font-size: 18px;
     }
     
-    .supervisor-bib-cats .category-description {
-        font-size: 16px;
-    }
 }
 
 @media (max-width: 480px) {

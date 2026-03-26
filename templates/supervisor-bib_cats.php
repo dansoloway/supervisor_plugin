@@ -87,23 +87,15 @@ get_header('supervisor');
 
             if (!empty($categories)) :
                 foreach ($categories as $index => $category) :
-                    $excerpt = get_term_meta($category->term_id, 'qa_bib_excerpt', true);
-                    if (empty($excerpt)) {
-                        $description = get_term_meta($category->term_id, 'qa_bib_description', true);
-                        $excerpt = $description ? wp_trim_words($description, 15) : '';
-                    }
-                    // Link to taxonomy archive page for this qa_tag
                     $archive_url = get_term_link($category);
-                    // Get custom Font Awesome icon for this term, or use default
-                    $icon = get_term_fa_icon($category->term_id, 'fas fa-folder');
+                    $icon        = get_term_fa_icon($category->term_id, 'fas fa-folder');
                     ?>
                     <a href="<?php echo esc_url($archive_url); ?>" class="category-card">
-                        <div class="category-icon">
+                        <div class="category-icon" aria-hidden="true">
                             <i class="<?php echo esc_attr($icon); ?>"></i>
                         </div>
                         <h2 class="category-title"><?php echo esc_html($category->name); ?></h2>
-                        <p class="category-description"><?php echo esc_html($excerpt); ?></p>
-                        <div class="category-arrow">
+                        <div class="category-arrow" aria-hidden="true">
                             <i class="fas fa-arrow-left"></i>
                         </div>
                     </a>

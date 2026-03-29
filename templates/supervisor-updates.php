@@ -2,11 +2,17 @@
 /* Template Name: Supervisor QA Updates */
 get_header('supervisor');
 
-// Set number of posts per page (change this value as needed)
-$posts_per_page = -1; // Show all updates 
+// Pagination: 5 updates per page (highlight mode still loads all so the deep-link can open)
+$posts_per_page = 5;
 
-// Get the current pagination page
-$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+// Page vs paged — both are used depending on permalink structure / static page context
+if (get_query_var('paged')) {
+    $paged = max(1, (int) get_query_var('paged'));
+} elseif (get_query_var('page')) {
+    $paged = max(1, (int) get_query_var('page'));
+} else {
+    $paged = 1;
+}
 
 // Check if we need to highlight a specific update
 $highlight_id = isset($_GET['highlight']) ? intval($_GET['highlight']) : null;
@@ -22,7 +28,7 @@ if ($highlight_id) {
         'post_status'    => 'publish',
     ];
 } else {
-    // Normal search page behavior
+    // Normal list: paginated
     $args = [
         'post_type'      => 'qa_updates',
         'posts_per_page' => $posts_per_page,
@@ -146,24 +152,27 @@ $updates_query = new WP_Query($args);
 
                    // Pagination (Numbers only, no "Next" or "Prev") - only show if not from home page
                    if (!$highlight_id) {
-                       $total_pages = $updates_query->max_num_pages;
+                       $total_pages = (int) $updates_query->max_num_pages;
 
                        if ($total_pages > 1) {
-                       $pagination_links = paginate_links([
-                           'total'     => $total_pages,
-                           'current'   => $paged,
-                           'prev_next' => false,
-                           'type'      => 'array',
-                       ]);
-                   
-                       if ($pagination_links) {
-                           echo '<div class="pagination">';
-                           foreach ($pagination_links as $link) {
-                               echo '<span>' . $link . '</span>';
+                           $pagination_links = paginate_links([
+                               'total'     => $total_pages,
+                               'current'   => $paged,
+                               'prev_next' => false,
+                               'type'      => 'array',
+                               'mid_size'  => 2,
+                               'end_size'  => 1,
+                           ]);
+
+                           if ($pagination_links) {
+                               echo '<nav class="updates-pagination updates-pagination--numeric" aria-label="' . esc_attr__('עמודי עדכונים', 'text-domain') . '">';
+                               echo '<div class="updates-pagination-inner">';
+                               foreach ($pagination_links as $link) {
+                                   echo '<span class="updates-pagination-item">' . $link . '</span>';
+                               }
+                               echo '</div></nav>';
                            }
-                           echo '</div>';
                        }
-                   }
                    } // End pagination conditional
 
                     wp_reset_postdata();

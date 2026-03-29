@@ -108,6 +108,103 @@
     font-weight: 500;
 }
 
+/* QA Updates: numeric pagination — grey circles, white text (server + AJAX) */
+.qa-updates-list .updates-pagination,
+.search-results-container .updates-pagination {
+    direction: rtl;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.qa-updates-list .updates-pagination-inner,
+.search-results-container .updates-pagination-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.qa-updates-list .updates-pagination-item {
+    display: inline-flex;
+    margin: 0 !important;
+    line-height: 1;
+}
+
+.qa-updates-list .updates-pagination a.page-numbers,
+.qa-updates-list .updates-pagination span.page-numbers:not(.dots) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: #6b7280;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-family: var(--sv-font-primary);
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.qa-updates-list .updates-pagination a.page-numbers:hover,
+.qa-updates-list .updates-pagination a.page-numbers:focus-visible {
+    background: #4b5563;
+    color: #fff !important;
+}
+
+.qa-updates-list .updates-pagination span.page-numbers.current {
+    background: #4b5563;
+    color: #fff !important;
+    font-weight: 700;
+}
+
+.qa-updates-list .updates-pagination span.page-numbers.dots {
+    background: transparent;
+    color: var(--sv-text-muted) !important;
+    min-width: auto;
+    height: auto;
+    padding: 0 4px;
+}
+
+.search-results-container .updates-pagination--ajax .updates-page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: none;
+    background: #6b7280;
+    color: #fff;
+    font-family: var(--sv-font-primary);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.search-results-container .updates-pagination--ajax .updates-page-btn:hover,
+.search-results-container .updates-pagination--ajax .updates-page-btn:focus-visible {
+    background: #4b5563;
+}
+
+.search-results-container .updates-pagination--ajax .updates-page-btn.is-current {
+    background: #4b5563;
+    font-weight: 700;
+    cursor: default;
+}
+
 /* ===== FOUNDATION CSS OVERRIDES ===== */
 /* Prevent Foundation from interfering with our custom design */
 
@@ -2533,7 +2630,7 @@
 .ajax-search-component form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
 }
 
 .search-input {
@@ -3937,7 +4034,7 @@ img[src*=".svg"] {
 
 .supervisor-home .search-input-field {
     width: 100%;
-    height: 44px;
+    height: 36px;
     padding: 0 12px 0 44px;
     border: none;
     border-radius: 0;

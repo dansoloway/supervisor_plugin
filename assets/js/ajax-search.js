@@ -6,6 +6,69 @@ jQuery(document).ready(function ($) {
 
     let searchRequestId = 0;
     let activeSearchXhr = null;
+    let lastSearchResults = [];
+
+    const UPDATES_PER_PAGE = 5;
+
+    function buildUpdateItemHtml(item, globalIndex) {
+        const accordionId = 'search-result-' + globalIndex;
+        return `
+                                        <div class="qa-update-item content-card">
+                                            <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">
+                                                <div class="qa-update-title">
+                                                    <div class="title-date-container">
+                                                        <h3>${item.title}</h3>
+                                                        <span class="update-date">${item.date || ''}</span>
+                                                    </div>
+                                                    <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-content" id="accordion-${accordionId}">
+                                                <div class="update-content-text"><p>${item.content || ''}</p></div>
+                                                <div class="taxonomy-boxes">
+                                                    ${item.tags && item.tags.length > 0 ? `<p><strong>נושאי מפתח:</strong> ${item.tags.join(', ')}</p>` : ''}
+                                                    ${item.themes && item.themes.length > 0 ? `<p><strong>תחומים:</strong> ${item.themes.join(', ')}</p>` : ''}
+                                                    ${item.source_link ? `<p><strong>לקישור:</strong> <a href="${item.source_link}" target="_blank" class="source-link">${item.source_link}</a></p>` : ''}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+    }
+
+    function renderAjaxPaginationNav(totalPages, currentPage) {
+        if (totalPages <= 1) {
+            return '';
+        }
+        let nav =
+            '<nav class="updates-pagination updates-pagination--ajax" aria-label="עמודי תוצאות חיפוש"><div class="updates-pagination-inner">';
+        for (let p = 1; p <= totalPages; p++) {
+            const isCur = p === currentPage;
+            nav += `<button type="button" class="updates-page-btn${isCur ? ' is-current' : ''}" data-page="${p}"${
+                isCur ? ' aria-current="page"' : ''
+            }>${p}</button>`;
+        }
+        nav += '</div></nav>';
+        return nav;
+    }
+
+    function renderSearchResultsPaged(results, page) {
+        const total = results.length;
+        const totalPages = Math.max(1, Math.ceil(total / UPDATES_PER_PAGE));
+        const pageNum = Math.min(Math.max(1, page), totalPages);
+        const start = (pageNum - 1) * UPDATES_PER_PAGE;
+        const slice = results.slice(start, start + UPDATES_PER_PAGE);
+
+        let cardsHtml = '';
+        for (let i = 0; i < slice.length; i++) {
+            cardsHtml += buildUpdateItemHtml(slice[i], start + i);
+        }
+        const navHtml = renderAjaxPaginationNav(totalPages, pageNum);
+        const output = '<div class="search-results-items">' + cardsHtml + '</div>' + navHtml;
+
+        $('.initial-content').hide();
+        $('.search-results-container').html(output).show();
+        initializeSearchAccordions();
+    }
 
     function debounce(func, wait) {
         let timeout;
@@ -30,6 +93,7 @@ jQuery(document).ready(function ($) {
             activeSearchXhr = null;
         }
         hideLoading();
+        lastSearchResults = [];
         $('.search-results-container').empty().hide();
         $('.initial-content').show();
     }
@@ -105,42 +169,19 @@ jQuery(document).ready(function ($) {
 
                     if (response && response.success) {
                         const results = response.data || [];
-                        let output = '';
+                        lastSearchResults = results.filter(function (item) {
+                            return item && item.title && item.link;
+                        });
 
-                        if (results.length > 0) {
-                            results.forEach((item, index) => {
-                                if (item && item.title && item.link) {
-                                    const accordionId = 'search-result-' + index;
-                                    output += `
-                                        <div class="qa-update-item content-card">
-                                            <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">
-                                                <div class="qa-update-title">
-                                                    <div class="title-date-container">
-                                                        <h3>${item.title}</h3>
-                                                        <span class="update-date">${item.date || ''}</span>
-                                                    </div>
-                                                    <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-content" id="accordion-${accordionId}">
-                                                <div class="update-content-text"><p>${item.content || ''}</p></div>
-                                                <div class="taxonomy-boxes">
-                                                    ${item.tags && item.tags.length > 0 ? `<p><strong>נושאי מפתח:</strong> ${item.tags.join(', ')}</p>` : ''}
-                                                    ${item.themes && item.themes.length > 0 ? `<p><strong>תחומים:</strong> ${item.themes.join(', ')}</p>` : ''}
-                                                    ${item.source_link ? `<p><strong>לקישור:</strong> <a href="${item.source_link}" target="_blank" class="source-link">${item.source_link}</a></p>` : ''}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
-                                }
-                            });
+                        if (lastSearchResults.length > 0) {
+                            renderSearchResultsPaged(lastSearchResults, 1);
                         } else {
-                            output = '<p class="no-results">לא נמצאו תוצאות.</p>';
+                            lastSearchResults = [];
+                            $('.initial-content').hide();
+                            $('.search-results-container')
+                                .html('<p class="no-results">לא נמצאו תוצאות.</p>')
+                                .show();
                         }
-
-                        $('.initial-content').hide();
-                        $('.search-results-container').html(output).show();
-                        initializeSearchAccordions();
                     } else {
                         console.error('Search failed:', response);
                         $('.initial-content').hide();
@@ -212,6 +253,23 @@ jQuery(document).ready(function ($) {
 
     $('#search-text').on('input', function () {
         syncSearchStateFromInputs();
+    });
+
+    $(document).on('click', '.updates-pagination--ajax .updates-page-btn', function (e) {
+        e.preventDefault();
+        const $btn = $(this);
+        if ($btn.hasClass('is-current')) {
+            return;
+        }
+        const p = parseInt($btn.data('page'), 10);
+        if (!p || lastSearchResults.length === 0) {
+            return;
+        }
+        renderSearchResultsPaged(lastSearchResults, p);
+        const wrap = document.querySelector('.search-results-container');
+        if (wrap) {
+            wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     });
 
     function initializeSearchAccordions() {

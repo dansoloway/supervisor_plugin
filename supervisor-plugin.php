@@ -12,6 +12,9 @@ require_once plugin_dir_path(__FILE__) . 'config.php';
 // Include post type and taxonomy registration
 require_once plugin_dir_path(__FILE__) . 'inc/register_posts_and_tax.php';
 
+// Country label → flag-icons SVG (orgs listing)
+require_once plugin_dir_path(__FILE__) . 'inc/org-country-flag.php';
+
 // Knowledge-map category automap (qa_tags meta) + optional WP-CLI command
 require_once plugin_dir_path(__FILE__) . 'inc/knowledge-map-automap.php';
 

@@ -1,7 +1,6 @@
 <?php
 /* Template Name: Supervisor Knowledge Map */
 get_header('supervisor');
-$hierarchy = supervisor_knowledge_map_hierarchy();
 ?>
 
 <div class="supervisor-home supervisor-knowledge-map">
@@ -41,42 +40,19 @@ $hierarchy = supervisor_knowledge_map_hierarchy();
                 rewind_posts();
                 ?>
 
-                <section class="knowledge-layout knowledge-layout-svg-only" dir="rtl">
-                    <div class="col-center">
-                        <div class="svg-frame">
-                            <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/knowledge_map.svg'; ?>" alt="מפת הידע - תרשים מרכזי"/>
+                <section class="knowledge-map-section knowledge-map-page-tiles" aria-label="<?php esc_attr_e('מפת הידע', 'text-domain'); ?>">
+                    <div class="home-knowledge-map">
+                        <div class="knowledge-map-grid">
+                            <a class="km-tile km-top-left" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('regulatory_welfare_state')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>
+                            <a class="km-tile km-top-right" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('social_procurement')); ?>"><span>רכש חברתי</span></a>
+                            <a class="km-tile km-mid-left" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('policy')); ?>"><span>מדיניות</span></a>
+                            <a class="km-tile km-mid-right" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('knowledge_development')); ?>"><span>פיתוח ידע והדרכה</span></a>
+                            <a class="km-tile km-bottom-left" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('control')); ?>"><span>בקרה</span></a>
+                            <a class="km-tile km-bottom-right" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('enforcement')); ?>"><span>אכיפה</span></a>
+                            <a class="km-wide" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('working_methods')); ?>"><span>שיטות עבודה</span></a>
+                            <div class="km-center" aria-hidden="true"><span>גוף<br>פיקוח</span></div>
                         </div>
                     </div>
-                </section>
-
-                <section class="knowledge-map-topic-index" dir="rtl" aria-label="<?php esc_attr_e('מפת הידע לפי נושאים', 'text-domain'); ?>">
-                    <h2 class="knowledge-map-topic-index-title"><?php echo esc_html__('נושאים במפת הידע', 'text-domain'); ?></h2>
-                    <div class="knowledge-map-topic-grid">
-                        <?php foreach ($hierarchy as $index => $group) : ?>
-                            <div class="km-topic-group">
-                                <h3 class="km-topic-group-title">
-                                    <a class="km-topic-group-link" href="<?php echo esc_url(supervisor_knowledge_map_topics_url($group['slug'])); ?>"><?php echo esc_html($group['label']); ?></a>
-                                </h3>
-                                <?php if (count($group['items']) === 1 && $group['items'][0]['slug'] === $group['slug']) : ?>
-                                    <p class="km-topic-group-note"><?php echo esc_html__('תחום על — שיוך נושאי מפתח ישירות לקטגוריה זו.', 'text-domain'); ?></p>
-                                <?php else : ?>
-                                    <ul class="km-topic-group-list">
-                                        <?php foreach ($group['items'] as $item) : ?>
-                                            <li>
-                                                <a href="<?php echo esc_url(supervisor_knowledge_map_topics_url($item['slug'])); ?>"><?php echo esc_html($item['label']); ?></a>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                <?php endif; ?>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <p class="knowledge-map-tile-aliases-note">
-                        <?php echo esc_html__('קישורי טילים במפה:', 'text-domain'); ?>
-                        <a href="<?php echo esc_url(supervisor_knowledge_map_topics_url('tile_info_dissemination')); ?>"><?php echo esc_html__('הפצת מידע וידע', 'text-domain'); ?></a>
-                        <?php echo ' · '; ?>
-                        <a href="<?php echo esc_url(supervisor_knowledge_map_topics_url('tile_policy_social_services')); ?>"><?php echo esc_html__('מדיניות פיקוח על שירותים חברתיים', 'text-domain'); ?></a>
-                    </p>
                 </section>
 
                 <div class="knowledge-map-description">

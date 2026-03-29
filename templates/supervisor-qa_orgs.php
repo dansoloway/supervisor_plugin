@@ -1,7 +1,11 @@
 <?php
-/* Template Name: Supervisor Organizations */
+/**
+ * Template Name: Supervisor Organizations
+ *
+ * ACF (qa_orgs): add optional text field `qa_org_acronym` (e.g. BHWP) in WordPress admin.
+ * Card acronym line uses qa_org_acronym when set, otherwise the post title.
+ */
 get_header('supervisor');
-error_log('Loading supervisor-qa_orgs.php template');
 ?>
 
 <div class="supervisor-home supervisor-qa_orgs">
@@ -15,55 +19,77 @@ error_log('Loading supervisor-qa_orgs.php template');
 
     <!-- Standardized Page Container -->
     <div class="supervisor-page-container">
-        
+
         <!-- Main Content -->
         <div>
 
         <!-- Column 1: Organizations Grid -->
-        <div class="categories-container"> 
-            <h1 class="page-title">ארגוני פיקוח</h1>
+        <div class="categories-container">
+            <h1 class="page-title">גופי פיקוח בעולם</h1>
             <p>
             ארגוני הפיקוח האמונים על השירותים החברתיים הם לעיתים גופים הפועלים מתוך הממשלה (בדומה לאלו במשרד הרווחה, במשרד הבריאות ובמשרד החינוך בישראל), ולעיתים הם פועלים כיחידות עצמאיות חוץ-ממשלתית בעבור משרד ממשלתי.
             </p>
 
             <div class="org-card-grid">
     <?php
-    // Query organizations (qa_orgs)
     $args = [
         'post_type'      => 'qa_orgs',
-        'posts_per_page' => -1, // Show all
+        'posts_per_page' => -1,
         'orderby'        => 'title',
-        'order'          => 'ASC'
+        'order'          => 'ASC',
     ];
     $query = new WP_Query($args);
 
     if ($query->have_posts()) :
         while ($query->have_posts()) : $query->the_post();
-            $acf_fields = get_fields(get_the_id());
+            $acf_fields = get_fields(get_the_ID());
             $organization_link = get_permalink();
             $qa_country = $acf_fields['qa_country'] ?? '';
+            $country_flag_code = supervisor_org_country_flag_code($qa_country);
+            $country_flag_url  = $country_flag_code ? supervisor_org_country_flag_url($country_flag_code) : '';
 
-            // Get taxonomy terms
+            $acronym_raw = isset($acf_fields['qa_org_acronym']) ? trim((string) $acf_fields['qa_org_acronym']) : '';
+            $acronym     = $acronym_raw !== '' ? $acronym_raw : get_the_title();
+            $tagline     = isset($acf_fields['qa_subtitle']) ? trim((string) $acf_fields['qa_subtitle']) : '';
+
             $terms = get_the_terms(get_the_ID(), 'qa_themes');
-            $qa_themes = $terms && !is_wp_error($terms)
-                ? implode(', ', wp_list_pluck($terms, 'name'))
-                : __('ללא', 'text-domain');
+            $has_themes = $terms && ! is_wp_error($terms) && count($terms) > 0;
+            $themes_text = $has_themes ? implode(', ', wp_list_pluck($terms, 'name')) : '';
+
+            $flag_alt = $qa_country !== ''
+                ? sprintf('%s — %s', $acronym, $qa_country)
+                : $acronym;
             ?>
-            
+
             <a href="<?php echo esc_url($organization_link); ?>" class="org-card">
-                <h2 class="dir_left org-title"><?php the_title(); ?></h2>
-                <p class="dir_left org-description"><?php echo esc_html($acf_fields['qa_subtitle'] ?? ''); ?></p>
-
-                <!-- Country -->
-                <div class="org-info">
-                    <i class="fa-solid fa-location-dot icon-space"></i>
-                    <span><?php echo esc_html($qa_country); ?></span>
+                <div class="org-card__main">
+                    <div class="org-card__en">
+                        <h2 class="org-card__acronym"><?php echo esc_html($acronym); ?></h2>
+                        <?php if ($tagline !== '') : ?>
+                            <p class="org-card__tagline"><?php echo esc_html($tagline); ?></p>
+                        <?php endif; ?>
+                    </div>
+                    <?php if ($country_flag_url) : ?>
+                        <img
+                            src="<?php echo esc_url($country_flag_url); ?>"
+                            alt="<?php echo esc_attr($flag_alt); ?>"
+                            class="org-card__flag"
+                            width="40"
+                            height="28"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    <?php endif; ?>
                 </div>
-
-                <!-- Themes (Taxonomy Terms) -->
-                <div class="org-info">
-                    <i class="fa-solid fa-pen-clip icon-space"></i>
-                    <span><?php echo esc_html($qa_themes); ?></span>
+                <div class="org-card__footer">
+                    <span class="org-card__arrow" aria-hidden="true">
+                        <svg class="org-card__arrow-svg" width="32" height="10" viewBox="0 0 32 10" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                            <path d="M30 5H6M12 1L6 5l6 4" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <?php if ($has_themes) : ?>
+                        <span class="org-card__themes" dir="rtl"><?php echo esc_html($themes_text); ?></span>
+                    <?php endif; ?>
                 </div>
             </a>
 
@@ -73,7 +99,7 @@ error_log('Loading supervisor-qa_orgs.php template');
         <p><?php esc_html_e('No organizations found.', 'text-domain'); ?></p>
     <?php endif; ?>
 </div>
-        </div> 
+        </div>
 
         </div> <!-- End supervisor-content-wrapper -->
 

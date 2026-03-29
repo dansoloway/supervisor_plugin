@@ -24,7 +24,7 @@
 .supervisor-home.supervisor-bib-cats a.category-card:hover,
 .supervisor-home.supervisor-bib-cats a.category-card:focus,
 .supervisor-home.supervisor-bib-cats a.category-card:active {
-    color: #1a1a1a !important;
+    color: #000000 !important;
 }
 
 /* ===== HOME PAGE SPECIFIC LINK COLORS ===== */
@@ -4856,40 +4856,39 @@ img[src*=".svg"] {
     text-align: right;
 }
 
-/* Categories grid: fills main column; auto-fit square tiles */
+/* Categories grid: 3 columns (mockup), square tiles */
 .supervisor-bib-cats .categories-grid,
 .supervisor-home.supervisor-bib-cats .categories-grid,
 body .supervisor-bib-cats .categories-grid {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
-    gap: 18px 20px !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 20px 24px !important;
     margin-top: 28px !important;
     max-width: none;
     margin-inline: 0;
     width: 100%;
 }
 
-/* Category Cards — square tiles; seafoam hover */
+/* Category Cards — light grey tile, seafoam hover, icon top-right / arrow bottom-left (RTL) */
 .supervisor-bib-cats .category-card {
-    --bib-cat-bg: #eeeeee;
-    --bib-cat-bg-hover: #cbdad9;
-    --bib-cat-icon-teal: #7ca4a3;
+    --bib-cat-bg: #f0f0f0;
+    --bib-cat-bg-hover: #c9d9d6;
+    --bib-cat-icon-teal: #319694;
     --bib-cat-icon-well: #ffffff;
 
     aspect-ratio: 1;
     background: var(--bib-cat-bg);
     border: none;
-    border-radius: 14px;
-    padding: 14px 14px 12px;
+    border-radius: 18px;
+    padding: 16px 16px 14px;
     box-sizing: border-box;
     text-decoration: none;
-    color: #1a1a1a;
-    transition: background 0.25s ease, box-shadow 0.25s ease;
+    color: #000000;
+    transition: background 0.22s ease, box-shadow 0.22s ease;
     box-shadow: none;
     position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-    text-align: right;
+    overflow: hidden;
+    text-align: center;
     direction: rtl;
     display: flex;
     flex-direction: column;
@@ -4902,17 +4901,22 @@ body .supervisor-bib-cats .categories-grid {
 .supervisor-bib-cats .category-card:hover,
 .supervisor-bib-cats .category-card:focus-visible {
     background: var(--bib-cat-bg-hover);
-    color: #1a1a1a;
+    color: #000000;
     box-shadow: none;
 }
 
-/* Category Icon — top visual right in RTL: cross-start */
+.supervisor-bib-cats .category-card:focus-visible {
+    outline: 2px solid #319694;
+    outline-offset: 3px;
+}
+
+/* Category Icon — top-right in RTL: white rounded well, teal glyph */
 .supervisor-bib-cats .category-icon {
     align-self: flex-start;
     flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    margin: 0 0 10px 0;
+    width: 48px;
+    height: 48px;
+    margin: 0 0 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4922,13 +4926,13 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-icon i {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     color: var(--bib-cat-icon-teal);
     width: auto;
     height: auto;
     display: block;
     line-height: 1;
-    transition: color 0.25s ease;
+    transition: color 0.22s ease;
 }
 
 .supervisor-bib-cats .category-card:hover .category-icon i,
@@ -4936,40 +4940,41 @@ body .supervisor-bib-cats .categories-grid {
     color: var(--bib-cat-icon-teal);
 }
 
-/* Category Title — bold, middle of card */
+/* Category Title — bold black, centered in card body */
 .supervisor-bib-cats .category-title {
     font-family: var(--sv-font-primary);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #000000;
     margin: 0;
-    line-height: 1.35;
-    transition: color 0.25s ease;
+    line-height: 1.4;
+    transition: color 0.22s ease;
     flex: 1 1 auto;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    text-align: right;
-    min-height: 2.75em;
+    justify-content: center;
+    text-align: center;
+    min-height: 2.5em;
+    padding-inline: 4px;
 }
 
 .supervisor-bib-cats .category-card:hover .category-title,
 .supervisor-bib-cats .category-card:focus-visible .category-title {
-    color: #1a1a1a;
+    color: #000000;
 }
 
 .supervisor-bib-cats .category-description {
     display: none !important;
 }
 
-/* Category Arrow — thin stroke SVG, physical bottom-left (flex-end on cross axis in RTL column) */
+/* Arrow — bottom-left in RTL (align flex-end); thin stroke; white on hover */
 .supervisor-bib-cats .category-arrow {
     margin-top: auto;
     align-self: flex-end;
-    padding-top: 8px;
+    padding-top: 10px;
     line-height: 0;
-    color: #1a1a1a;
-    transition: color 0.25s ease;
+    color: #000000;
+    transition: color 0.22s ease;
 }
 
 .supervisor-bib-cats .category-arrow-svg {
@@ -5024,14 +5029,19 @@ body .supervisor-bib-cats .categories-grid {
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-    .supervisor-bib-cats .categories-grid {
-        gap: 16px 18px !important;
+    .supervisor-bib-cats .categories-grid,
+    .supervisor-home.supervisor-bib-cats .categories-grid,
+    body .supervisor-bib-cats .categories-grid {
+        gap: 18px 20px !important;
     }
 }
 
 @media (max-width: 992px) {
-    .supervisor-bib-cats .categories-grid {
-        gap: 16px 18px !important;
+    .supervisor-bib-cats .categories-grid,
+    .supervisor-home.supervisor-bib-cats .categories-grid,
+    body .supervisor-bib-cats .categories-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 18px 20px !important;
     }
 }
 
@@ -5070,7 +5080,8 @@ body .supervisor-bib-cats .categories-grid {
     }
     
     .supervisor-bib-cats .category-card {
-        padding: 14px 14px 12px;
+        padding: 16px 16px 14px;
+        border-radius: 16px;
     }
     
     .supervisor-bib-cats .category-title {
@@ -5085,19 +5096,24 @@ body .supervisor-bib-cats .categories-grid {
     }
     
     .supervisor-bib-cats .category-card {
-        padding: 20px;
+        padding: 14px 14px 12px;
+    }
+    
+    .supervisor-bib-cats .category-icon {
+        width: 44px;
+        height: 44px;
     }
     
     .supervisor-bib-cats .category-icon i,
     .supervisor-bib-cats .category-icon .dashicons {
-        font-size: 40px;
-        width: 40px;
-        height: 40px;
+        font-size: 1.1rem;
+        width: auto;
+        height: auto;
     }
     
     .supervisor-bib-cats .category-icon img {
-        width: 40px;
-        height: 40px;
+        width: 28px;
+        height: 28px;
     }
 }
 

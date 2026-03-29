@@ -4953,6 +4953,8 @@ body .supervisor-bib-cats .categories-grid {
     display: flex;
     min-height: 2.5em;
     padding-inline: 4px;
+    text-align: right;
+    margin-top: 15px;
 }
 
 .supervisor-bib-cats .category-card:hover .category-title,

@@ -2,8 +2,9 @@
 /**
  * Template Name: Supervisor Organizations
  *
- * ACF (qa_orgs): add optional text field `qa_org_acronym` (e.g. BHWP) in WordPress admin.
- * Card acronym line uses qa_org_acronym when set, otherwise the post title.
+ * ACF (qa_orgs):
+ * - `qa_org_acronym` (optional text): English acronym; fallback post title.
+ * - `qa_country_code` (select): registered by plugin from flag-icons country.json; optional legacy `qa_country` text still used as flag fallback.
  */
 get_header('supervisor');
 ?>
@@ -44,9 +45,11 @@ get_header('supervisor');
         while ($query->have_posts()) : $query->the_post();
             $acf_fields = get_fields(get_the_ID());
             $organization_link = get_permalink();
-            $qa_country = $acf_fields['qa_country'] ?? '';
-            $country_flag_code = supervisor_org_country_flag_code($qa_country);
-            $country_flag_url  = $country_flag_code ? supervisor_org_country_flag_url($country_flag_code) : '';
+            $flag_meta           = supervisor_org_resolve_flag_meta($acf_fields ?: []);
+            $country_flag_url    = $flag_meta['url'];
+            $country_display_for_alt = $flag_meta['name'] !== ''
+                ? $flag_meta['name']
+                : ($acf_fields['qa_country'] ?? '');
 
             $acronym_raw = isset($acf_fields['qa_org_acronym']) ? trim((string) $acf_fields['qa_org_acronym']) : '';
             $acronym     = $acronym_raw !== '' ? $acronym_raw : get_the_title();
@@ -56,8 +59,8 @@ get_header('supervisor');
             $has_themes = $terms && ! is_wp_error($terms) && count($terms) > 0;
             $themes_text = $has_themes ? implode(', ', wp_list_pluck($terms, 'name')) : '';
 
-            $flag_alt = $qa_country !== ''
-                ? sprintf('%s — %s', $acronym, $qa_country)
+            $flag_alt = $country_display_for_alt !== ''
+                ? sprintf('%s — %s', $acronym, $country_display_for_alt)
                 : $acronym;
             ?>
 

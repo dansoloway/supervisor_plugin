@@ -7,6 +7,47 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+require_once dirname(__FILE__) . '/flag-countries-data.php';
+
+/**
+ * Prefer ACF qa_country_code; else parse legacy qa_country text. Returns flag URL and a human name for alt text.
+ *
+ * @param array<string, mixed>|null $acf_fields From get_fields() or equivalent.
+ * @return array{url: string, name: string}
+ */
+function supervisor_org_resolve_flag_meta($acf_fields) {
+    $acf_fields = is_array($acf_fields) ? $acf_fields : [];
+    $legacy     = isset($acf_fields['qa_country']) ? trim((string) $acf_fields['qa_country']) : '';
+
+    $raw = isset($acf_fields['qa_country_code']) ? trim((string) $acf_fields['qa_country_code']) : '';
+    $code = strtolower(preg_replace('/[^a-z0-9\-]/', '', $raw));
+
+    if ($code !== '') {
+        $url = supervisor_org_country_flag_url($code);
+        if ($url !== '') {
+            $name = supervisor_flag_country_name_for_code($code);
+            return [
+                'url'  => $url,
+                'name' => $name !== '' ? $name : $legacy,
+            ];
+        }
+    }
+
+    $parsed = supervisor_org_country_flag_code($legacy);
+    if ($parsed !== '') {
+        $url = supervisor_org_country_flag_url($parsed);
+        return [
+            'url'  => $url,
+            'name' => $legacy !== '' ? $legacy : supervisor_flag_country_name_for_code($parsed),
+        ];
+    }
+
+    return [
+        'url'  => '',
+        'name' => $legacy,
+    ];
+}
+
 /**
  * @return array<string, string> Normalized lowercase label => ISO 3166-1 alpha-2 (or flag-icons code).
  */

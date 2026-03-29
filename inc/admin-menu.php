@@ -402,7 +402,11 @@ function supervisor_organizations_page() {
                 echo '</tr></thead><tbody>';
                 
                 while ($organizations->have_posts()) : $organizations->the_post();
-                    $country = get_field('qa_country') ?: '';
+                    $org_fields = get_fields(get_the_ID());
+                    $flag_meta  = function_exists('supervisor_org_resolve_flag_meta')
+                        ? supervisor_org_resolve_flag_meta($org_fields ?: [])
+                        : ['name' => '', 'url' => ''];
+                    $country    = $flag_meta['name'] !== '' ? $flag_meta['name'] : (get_field('qa_country') ?: '');
                     echo '<tr>';
                     echo '<td>' . esc_html(get_the_title()) . '</td>';
                     echo '<td>' . esc_html($country) . '</td>';

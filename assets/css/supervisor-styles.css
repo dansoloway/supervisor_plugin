@@ -380,10 +380,10 @@
 /* Color Tokens */
 :root {
     /* Color Variables */
-    --sv-blue: #B3CBE7;       /* primary - consistent everywhere */
-    --sv-blue-600: #9BB8D9;   /* hover - slightly darker */
+    --sv-blue: #5982C2;       /* primary - consistent everywhere */
+    --sv-blue-600: #4B6BAE;   /* hover - slightly darker */
     --sv-blue-050: #f3f7fc;   /* light tint - inputs, dropdowns */
-    --sv-blue-strip: #B3CBE7; /* updates header strip - same as primary */
+    --sv-blue-strip: #5982C2; /* updates header strip - same as primary */
     --sv-text: #1F2937;
     --sv-text-2: #4B5563;
     --sv-text-muted: #9CA3AF;
@@ -2693,7 +2693,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 /* Homepage specific update date styling */
 .supervisor-home .update-date {
     font-size: 16px;
-    color: var(--sv-blue);
+    color: #5982C2 !important;
     margin-top: 4px;
     margin-bottom: 0;
     font-weight: 600;

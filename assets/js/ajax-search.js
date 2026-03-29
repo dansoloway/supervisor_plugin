@@ -1,14 +1,15 @@
 jQuery(document).ready(function ($) {
-    // Ensure jQuery is available
     if (typeof $ === 'undefined') {
         console.error('jQuery is not available');
         return;
     }
-    
-    // Debounce function to prevent too many requests
+
+    let searchRequestId = 0;
+    let activeSearchXhr = null;
+
     function debounce(func, wait) {
         let timeout;
-        return function executedFunction(...args) {
+        const executedFunction = function (...args) {
             const later = () => {
                 clearTimeout(timeout);
                 func(...args);
@@ -16,9 +17,23 @@ jQuery(document).ready(function ($) {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
         };
+        executedFunction.cancel = function () {
+            clearTimeout(timeout);
+        };
+        return executedFunction;
     }
-    
-    // Function to show loading animation
+
+    function resetToInitialList() {
+        searchRequestId++;
+        if (activeSearchXhr) {
+            activeSearchXhr.abort();
+            activeSearchXhr = null;
+        }
+        hideLoading();
+        $('.search-results-container').empty().hide();
+        $('.initial-content').show();
+    }
+
     function showLoading() {
         const loadingHtml = `
             <div class="search-loading">
@@ -29,76 +44,70 @@ jQuery(document).ready(function ($) {
         $('.initial-content').hide();
         $('.search-results-container').html(loadingHtml).show();
     }
-    
-    // Function to hide loading animation
+
     function hideLoading() {
         $('.search-loading').remove();
     }
-    
-    // Function to perform search
+
     function performSearch() {
         try {
-            // Show loading animation
-            showLoading();
-            
-            // Properly collect checkbox values
             const selectedThemes = [];
-            $('input[name="qa_themes[]"]:checked').each(function() {
+            $('input[name="qa_themes[]"]:checked').each(function () {
                 const value = $(this).val();
                 if (value && value.trim() !== '') {
                     selectedThemes.push(value.trim());
                 }
             });
-            
+
             const selectedTags = [];
-            $('input[name="qa_tags[]"]:checked').each(function() {
+            $('input[name="qa_tags[]"]:checked').each(function () {
                 const value = $(this).val();
                 if (value && value.trim() !== '') {
                     selectedTags.push(value.trim());
                 }
             });
-            
+
             const searchText = $('#search-text').val().trim();
-            
-            console.log('Search text:', searchText);
-            console.log('Selected themes:', selectedThemes);
-            console.log('Selected tags:', selectedTags);
-            
-            // Only search if there's a search term or selected filters
+
             if (!searchText && selectedThemes.length === 0 && selectedTags.length === 0) {
-                console.log('No search criteria provided');
-                hideLoading();
-                $('.qa-updates-list').html('<p class="no-results">אנא הכנס טקסט לחיפוש או בחר קטגוריות</p>');
+                resetToInitialList();
                 return;
             }
-            
+
+            const reqId = ++searchRequestId;
+
+            if (activeSearchXhr) {
+                activeSearchXhr.abort();
+                activeSearchXhr = null;
+            }
+
+            showLoading();
+
             const searchData = {
                 search_text: searchText,
                 qa_themes: selectedThemes,
                 qa_tags: selectedTags,
-                post_types: ['qa_updates'], // Only search updates on this page
+                post_types: ['qa_updates'],
             };
 
-            console.log('Search data being sent:', searchData);
-
-            // Use dynamic URL based on current site
             const ajaxUrl = window.location.origin + '/wp-content/plugins/supervisor-plugin/ajax/search_handler.php';
 
-            $.ajax({
+            const xhr = $.ajax({
                 url: ajaxUrl,
                 type: 'POST',
                 data: searchData,
                 dataType: 'json',
                 success: function (response) {
-                    console.log('AJAX response:', response);
+                    if (reqId !== searchRequestId) {
+                        return;
+                    }
                     hideLoading();
-                    
+
                     if (response && response.success) {
                         const results = response.data || [];
                         let output = '';
 
                         if (results.length > 0) {
-                            output += '<div class="search-results-container">';
                             results.forEach((item, index) => {
                                 if (item && item.title && item.link) {
                                     const accordionId = 'search-result-' + index;
@@ -125,16 +134,12 @@ jQuery(document).ready(function ($) {
                                     `;
                                 }
                             });
-                            output += '</div>';
                         } else {
                             output = '<p class="no-results">לא נמצאו תוצאות.</p>';
                         }
 
-                        // Hide initial content and show search results
                         $('.initial-content').hide();
                         $('.search-results-container').html(output).show();
-                        
-                        // Initialize accordion functionality for search results
                         initializeSearchAccordions();
                     } else {
                         console.error('Search failed:', response);
@@ -142,13 +147,24 @@ jQuery(document).ready(function ($) {
                         $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
                     }
                 },
-                error: function (xhr, status, error) {
-                    console.error('AJAX error:', error);
-                    console.error('Status:', status);
-                    console.error('Response:', xhr.responseText);
+                error: function (xhr, status) {
+                    if (status === 'abort') {
+                        return;
+                    }
+                    if (reqId !== searchRequestId) {
+                        return;
+                    }
+                    console.error('AJAX error:', status, xhr.responseText);
                     hideLoading();
                     $('.initial-content').hide();
                     $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
+                },
+            });
+
+            activeSearchXhr = xhr;
+            xhr.always(function () {
+                if (activeSearchXhr === xhr) {
+                    activeSearchXhr = null;
                 }
             });
         } catch (error) {
@@ -158,80 +174,76 @@ jQuery(document).ready(function ($) {
             $('.search-results-container').html('<p class="no-results">שגיאה בחיפוש. אנא נסה שוב.</p>').show();
         }
     }
-    
-    // Debounced version of performSearch for automatic filtering
+
     const debouncedSearch = debounce(performSearch, 300);
-    
-    // Event listeners for search buttons (only for AJAX search component)
+
     $('#search-submit').on('click', function (e) {
         e.preventDefault();
         performSearch();
     });
-    
-    // Only target search buttons within the AJAX search component
+
     $('.ajax-search-component .search-button').on('click', function (e) {
         e.preventDefault();
         performSearch();
     });
-    
-    // Also allow Enter key in search input (only for AJAX search component)
+
     $('#search-text').on('keypress', function (e) {
-        if (e.which === 13) { // Enter key
+        if (e.which === 13) {
             e.preventDefault();
             performSearch();
         }
     });
-    
-    // Automatic filtering for checkboxes
-    $('input[name="qa_themes[]"], input[name="qa_tags[]"]').on('change', function() {
-        // Only trigger automatic search if there are any checkboxes checked or if there's search text
+
+    function syncSearchStateFromInputs() {
         const hasCheckedBoxes = $('input[name="qa_themes[]"]:checked, input[name="qa_tags[]"]:checked').length > 0;
         const hasSearchText = $('#search-text').val().trim() !== '';
-        
+
         if (hasCheckedBoxes || hasSearchText) {
             debouncedSearch();
         } else {
-            // If no filters are selected and no search text, show initial content
-            $('.search-results-container').hide();
-            $('.initial-content').show();
+            debouncedSearch.cancel();
+            resetToInitialList();
         }
+    }
+
+    $('input[name="qa_themes[]"], input[name="qa_tags[]"]').on('change', function () {
+        syncSearchStateFromInputs();
     });
-    
-    // Initialize accordion functionality for search results
+
+    $('#search-text').on('input', function () {
+        syncSearchStateFromInputs();
+    });
+
     function initializeSearchAccordions() {
-        // Only target accordions within search results
         const searchResultsContainer = document.querySelector('.search-results-container');
         if (!searchResultsContainer) return;
-        
+
         const searchAccordions = searchResultsContainer.querySelectorAll('.accordion-header');
-        
-        searchAccordions.forEach(header => {
-            // Remove any existing click listeners by cloning
+
+        searchAccordions.forEach((header) => {
             const newHeader = header.cloneNode(true);
             header.parentNode.replaceChild(newHeader, header);
-            
-            // Add new click listener
+
             newHeader.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 const accordionId = this.getAttribute('data-accordion');
                 if (!accordionId) return;
-                
+
                 const content = document.getElementById('accordion-' + accordionId);
                 const icon = document.getElementById('icon-' + accordionId);
-                
+
                 if (!content || !icon) return;
-                
-                // Close all other accordions first (both search and main)
+
                 const allAccordions = document.querySelectorAll('.accordion-header');
-                allAccordions.forEach(otherHeader => {
+                allAccordions.forEach((otherHeader) => {
                     if (otherHeader !== this) {
                         const otherAccordionId = otherHeader.getAttribute('data-accordion');
                         if (otherAccordionId) {
                             const otherContent = document.getElementById('accordion-' + otherAccordionId);
                             const otherIcon = document.getElementById('icon-' + otherAccordionId);
-                            
+
                             if (otherContent && otherIcon) {
                                 otherContent.classList.remove('is-open');
                                 otherIcon.textContent = '⌄';
@@ -239,8 +251,7 @@ jQuery(document).ready(function ($) {
                         }
                     }
                 });
-                
-                // Toggle the clicked accordion
+
                 if (content.classList.contains('is-open')) {
                     content.classList.remove('is-open');
                     icon.textContent = '⌄';
@@ -251,13 +262,12 @@ jQuery(document).ready(function ($) {
             });
         });
     }
-    
-    // Filter toggle functionality - make filters collapsible
-    $('.filter-toggle').on('click', function() {
+
+    $('.filter-toggle').on('click', function () {
         const $toggle = $(this);
         const $content = $('.filter-content');
         const isExpanded = $toggle.attr('aria-expanded') === 'true';
-        
+
         if (isExpanded) {
             $content.slideUp(300);
             $toggle.attr('aria-expanded', 'false');

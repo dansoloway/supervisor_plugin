@@ -4943,7 +4943,7 @@ body .supervisor-bib-cats .categories-grid {
 /* Category Title — bold black, centered in card body */
 .supervisor-bib-cats .category-title {
     font-family: var(--sv-font-primary);
-    font-size: 1rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #000000;
     margin: 0;
@@ -4951,9 +4951,6 @@ body .supervisor-bib-cats .categories-grid {
     transition: color 0.22s ease;
     flex: 1 1 auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     min-height: 2.5em;
     padding-inline: 4px;
 }

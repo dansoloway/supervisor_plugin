@@ -18,8 +18,7 @@ get_header('supervisor');
         <div class="supervisor-content-wrapper supervisor-single-column knowledge-map-page-inner">
         <h1 class="page-title"><?php the_title(); ?></h1>
 
-        <div class="knowledge-map-layout">
-            <!-- Physical left (70%): intro, diagram, topic cards, description, links -->
+        <div class="knowledge-map-page-stack">
             <div class="knowledge-map-main">
                 <?php
                 while (have_posts()) :
@@ -78,11 +77,6 @@ get_header('supervisor');
                     <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>">ארגוני פיקוח</a>
                 </div>
             </div>
-
-            <!-- Physical right (30%): reserved for filter UI (not implemented yet) -->
-            <aside class="knowledge-map-sidebar" aria-label="<?php esc_attr_e('סינון', 'text-domain'); ?>">
-                <div class="knowledge-map-filter-placeholder"></div>
-            </aside>
         </div>
 
         </div> <!-- End supervisor-content-wrapper -->

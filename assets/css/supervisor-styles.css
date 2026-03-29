@@ -1868,37 +1868,58 @@
     padding: 0;
 }
 
-/* 70% visual-left main / 30% visual-right filter rail; LTR grid so tracks map to physical sides in RTL site */
-.supervisor-knowledge-map .knowledge-map-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-    gap: clamp(1rem, 2.5vw, 2rem);
-    align-items: start;
-    direction: ltr;
+/* Single column: sections stacked in one row each, centered */
+.supervisor-knowledge-map .knowledge-map-page-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-.supervisor-knowledge-map .knowledge-map-main,
-.supervisor-knowledge-map .knowledge-map-sidebar {
+.supervisor-knowledge-map .knowledge-map-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: var(--sv-page-max-width);
+    margin-inline: auto;
     direction: rtl;
-    text-align: right;
+    text-align: center;
     min-width: 0;
+    box-sizing: border-box;
 }
 
 .supervisor-knowledge-map .knowledge-map-lead {
     margin-bottom: 1.25rem;
+    width: 100%;
+    max-width: 65ch;
+    margin-inline: auto;
 }
 
 .supervisor-knowledge-map .knowledge-map-lead--empty {
     min-height: 0.75rem;
 }
 
-.supervisor-knowledge-map .knowledge-map-sidebar {
-    position: sticky;
-    top: 1rem;
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-section.knowledge-map-page-tiles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-.supervisor-knowledge-map .knowledge-map-filter-placeholder {
-    min-height: 12rem;
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description,
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description-title {
+    text-align: center;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description {
+    max-width: 65ch;
+    margin-inline: auto;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-links {
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .supervisor-knowledge-map .knowledge-map-main .knowledge-layout {
@@ -2126,19 +2147,6 @@
 
 /* Knowledge Map Page - Mobile Optimized (768px) */
 @media (max-width: 768px) {
-    .supervisor-knowledge-map .knowledge-map-layout {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .supervisor-knowledge-map .knowledge-map-sidebar {
-        position: static;
-    }
-
-    .supervisor-knowledge-map .knowledge-map-filter-placeholder {
-        min-height: 4rem;
-    }
-
     .supervisor-knowledge-map .page-title {
         font-size: 26px !important;
         margin-bottom: 30px !important;

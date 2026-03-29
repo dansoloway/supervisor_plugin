@@ -53,9 +53,8 @@ function supervisor_flag_country_name_lookup() {
         if (empty($row['code']) || empty($row['name'])) {
             continue;
         }
-        if (isset($row['iso']) && $row['iso'] === false) {
-            continue;
-        }
+        // Include every flag-icons entry (iso:false = regions, UK nations, UN, EU, etc.) so the ACF
+        // dropdown matches all SVGs under flags/1x1/.
         $code = strtolower((string) $row['code']);
         $map[$code] = (string) $row['name'];
     }

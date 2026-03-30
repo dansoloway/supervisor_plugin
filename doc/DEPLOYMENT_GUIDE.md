@@ -1,5 +1,7 @@
 # 🚀 Supervisor Plugin - Production Deployment Guide
 
+This file lives in the repo under **`doc/`**. For a shorter go-live checklist see **[GOING_LIVE.md](GOING_LIVE.md)**.
+
 This guide covers the complete process of deploying the Supervisor Plugin from staging to production, including all manual setup steps, ACF configuration, and dependencies.
 
 ## 📋 Pre-Deployment Checklist

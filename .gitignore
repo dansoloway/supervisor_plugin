@@ -6,6 +6,7 @@ logs/
 
 # Local analysis/docs (not in repo)
 HOMEPAGE_REDESIGN_GAP_ANALYSIS.md
+doc/HOMEPAGE_REDESIGN_GAP_ANALYSIS.md
 *.pdf
 
 # Archive files

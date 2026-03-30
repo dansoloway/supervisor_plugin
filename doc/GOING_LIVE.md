@@ -24,6 +24,9 @@ If you have [WP-CLI](https://wp-cli.org/) on the server:
 2. From the WordPress root, run:
    - `wp supervisor bootstrap-pages` — creates or updates pages by slug (Hebrew titles, slugs in [inc/supervisor-pages.php](../inc/supervisor-pages.php)).
    - Optional: `wp supervisor bootstrap-pages --dry-run` to preview.
+   - To **paste real IDs into [`config.php`](../config.php)** after pages exist:  
+     `wp supervisor bootstrap-pages --print-config-defines`  
+     (or anytime: `wp supervisor print-config-defines`). Copy the `define(...)` lines into `config.php` — the CLI does not rewrite the file automatically.
 3. After pages exist, either keep **slug-only** mode (commented defines in [`config.php`](../config.php), slugs must match the manifest) **or** uncomment the `SUPERVISOR_*` block and set IDs from the admin (recommended if you will change slugs or already have legacy pages).
 4. **ACF field definitions:** ensure [`acf-export/field-groups.php`](../acf-export/field-groups.php) contains your latest **Custom Fields → Tools → Export (PHP)** from staging (see [`acf-export/README.md`](../acf-export/README.md)). Commit before deploy so production does not rely on manual field-group rebuild or third-party migration plugins.
 5. Optional meta cleanup: `wp supervisor automap-km-tags` (see [inc/knowledge-map-automap.php](../inc/knowledge-map-automap.php)).

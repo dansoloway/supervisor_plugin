@@ -9,8 +9,9 @@
  * probably do not match that file — either fix slugs or uncomment the defines
  * below with real IDs from Pages → Edit (URL ...post=####...).
  *
- * New environments: run `wp supervisor bootstrap-pages` then rely on slugs;
- * you usually do not need any lines below.
+ * New environments: run `wp supervisor bootstrap-pages` then rely on slugs, or run
+ * `wp supervisor print-config-defines` (or bootstrap with `--print-config-defines`)
+ * and paste the output below.
  */
 
 /*

@@ -17,6 +17,14 @@ The main plugin loads [`field-groups.php`](field-groups.php) automatically when 
 
 Repeat the export from staging (or edit `field-groups.php` by hand if you dare), commit, deploy.
 
+## Related: `config.php` page IDs
+
+If you use numeric `SUPERVISOR_*` defines, you can regenerate them from the database after bootstrap:
+
+`wp supervisor print-config-defines`
+
+Paste the output into `config.php` (see [GOING_LIVE.md](../doc/GOING_LIVE.md)).
+
 ## Content (values), not definitions
 
 This only moves **field group definitions**. Post meta / content still needs your normal content migration or manual entry.

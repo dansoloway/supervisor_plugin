@@ -9,14 +9,35 @@ if (! defined('WP_CLI') || ! WP_CLI) {
     return;
 }
 
+/**
+ * Print define( 'SUPERVISOR_*', ID ); lines for config.php from current pages by registry slug.
+ *
+ * @return bool False if any slug was missing.
+ */
+function supervisor_wp_cli_print_config_defines() {
+    $ok = true;
+    foreach (supervisor_supervisor_pages_registry() as $constant => $row) {
+        $page = get_page_by_path($row['slug']);
+        if (! $page instanceof WP_Post || $page->post_type !== 'page' || $page->post_status === 'trash') {
+            WP_CLI::warning(sprintf('%s: no published page for slug "%s"', $constant, $row['slug']));
+            $ok = false;
+            continue;
+        }
+        WP_CLI::log(sprintf("define('%s', %d);", $constant, (int) $page->ID));
+    }
+
+    return $ok;
+}
+
 WP_CLI::add_command(
     'supervisor bootstrap-pages',
     function ($__, $assoc_args) {
         require_once ABSPATH . 'wp-admin/includes/post.php';
 
-        $dry_run       = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
-        $activate      = WP_CLI\Utils\get_flag_value($assoc_args, 'activate-plugin', false);
-        $flush_rewrite = ! WP_CLI\Utils\get_flag_value($assoc_args, 'no-flush-rewrites', false);
+        $dry_run              = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
+        $activate             = WP_CLI\Utils\get_flag_value($assoc_args, 'activate-plugin', false);
+        $flush_rewrite        = ! WP_CLI\Utils\get_flag_value($assoc_args, 'no-flush-rewrites', false);
+        $print_config_defines = WP_CLI\Utils\get_flag_value($assoc_args, 'print-config-defines', false);
 
         if ($activate) {
             if (! defined('SUPERVISOR_PLUGIN_BASENAME')) {
@@ -25,7 +46,7 @@ WP_CLI::add_command(
             if ($dry_run) {
                 WP_CLI::log(sprintf('(dry-run) would run: wp plugin activate %s', SUPERVISOR_PLUGIN_BASENAME));
             } else {
-                \WP_CLI::run_command( array( 'plugin', 'activate', SUPERVISOR_PLUGIN_BASENAME ) );
+                \WP_CLI::run_command([ 'plugin', 'activate', SUPERVISOR_PLUGIN_BASENAME ]);
             }
         }
 
@@ -96,6 +117,15 @@ WP_CLI::add_command(
             [ 'slug', 'id', 'action' ]
         );
 
+        if ($print_config_defines && ! $dry_run) {
+            WP_CLI::log('');
+            WP_CLI::log('// Paste into plugin config.php (uncomment or replace the template block):');
+            supervisor_wp_cli_print_config_defines();
+        } elseif ($print_config_defines && $dry_run) {
+            WP_CLI::log('');
+            WP_CLI::log('(dry-run) re-run without --dry-run to print define(...) lines after pages exist.');
+        }
+
         WP_CLI::success($dry_run ? 'Dry run complete' : 'Bootstrap complete');
     },
     [
@@ -116,6 +146,25 @@ WP_CLI::add_command(
                 'name'        => 'no-flush-rewrites',
                 'description' => 'Skip flush_rewrite_rules after changes.',
             ],
+            [
+                'type'        => 'flag',
+                'name'        => 'print-config-defines',
+                'description' => 'After bootstrap, print define(...) lines for config.php to STDOUT.',
+            ],
         ],
+    ]
+);
+
+WP_CLI::add_command(
+    'supervisor print-config-defines',
+    function () {
+        WP_CLI::log('// Paste into config.php:');
+        if (! supervisor_wp_cli_print_config_defines()) {
+            WP_CLI::error('One or more slugs missing; create pages or run wp supervisor bootstrap-pages first.');
+        }
+        WP_CLI::success('Done');
+    },
+    [
+        'shortdesc' => 'Print define( \'SUPERVISOR_*\', … ) lines from current pages (by registry slug).',
     ]
 );

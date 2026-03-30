@@ -51,6 +51,7 @@ Optional flags:
 - `--dry-run` — list actions without writing.
 - `--activate-plugin` — runs `wp plugin activate` for this plugin (uses folder + `supervisor-plugin.php` basename).
 - `--no-flush-rewrites` — skip `flush_rewrite_rules` after changes.
+- `--print-config-defines` — after a real run (not with `--dry-run`), print `define('SUPERVISOR_*', …);` lines for [`config.php`](../config.php). Same output anytime: `wp supervisor print-config-defines` (pages must exist for each registry slug). The commands **print only**; paste into `config.php` yourself.
 
 Titles and slugs match the manifest in [`inc/supervisor-pages.php`](../inc/supervisor-pages.php). If those slugs match your database **exactly**, the plugin can resolve `SUPERVISOR_*` from slugs on each request and you can leave the numeric block in [`config.php`](../config.php) commented out.
 

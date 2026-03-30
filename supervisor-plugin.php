@@ -19,6 +19,9 @@ require_once plugin_dir_path(__FILE__) . 'inc/acf-org-country-select.php';
 // Knowledge-map category automap (qa_tags meta) + optional WP-CLI command
 require_once plugin_dir_path(__FILE__) . 'inc/knowledge-map-automap.php';
 
+// AJAX: bibliography categories (נושאי מפתח) sidebar filter
+require_once plugin_dir_path(__FILE__) . 'inc/ajax-bib-cats-terms.php';
+
 // Include bibliography admin functionality
 require_once plugin_dir_path(__FILE__) . 'inc/bib_admin_page.php';
 
@@ -140,6 +143,38 @@ function enqueue_alternate_header_assets() {
             ['jquery'], // Dependencies
             time(), // Force cache refresh
             true // Load in the footer
+        );
+    }
+
+    if (is_page(SUPERVISOR_BIB_CATS)) {
+        $bib_base_km_slugs = [];
+        $km_cat_raw          = isset($_GET['km_cat']) ? sanitize_key(wp_unslash($_GET['km_cat'])) : '';
+        if ($km_cat_raw !== '' && function_exists('supervisor_knowledge_map_resolve_to_leaf_slugs')) {
+            $bib_base_km_slugs = supervisor_knowledge_map_resolve_to_leaf_slugs($km_cat_raw);
+            if (! is_array($bib_base_km_slugs)) {
+                $bib_base_km_slugs = [];
+            }
+        }
+
+        wp_enqueue_script(
+            'bib-cats-filter',
+            plugins_url('/assets/js/bib-cats-filter.js', __FILE__),
+            ['jquery'],
+            '1.0.0',
+            true
+        );
+        wp_localize_script(
+            'bib-cats-filter',
+            'bibCatsFilter',
+            [
+                'ajaxUrl'     => admin_url('admin-ajax.php'),
+                'nonce'       => wp_create_nonce('supervisor_bib_cats_filter'),
+                'action'      => 'supervisor_bib_cats_terms',
+                'baseKmSlugs' => array_values($bib_base_km_slugs),
+                'strings'     => [
+                    'error' => __('שגיאה בטעינת הנתונים. נסו שוב.', 'text-domain'),
+                ],
+            ]
         );
     }
 

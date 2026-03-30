@@ -4824,10 +4824,59 @@ img[src*=".svg"] {
 .supervisor-bib-cats .bib-cats-sidebar {
     position: sticky;
     top: 1rem;
+    background: #e8e8e8;
+    border-radius: 12px;
+    padding: 1rem 1rem 1.25rem;
+    box-sizing: border-box;
+    align-self: start;
 }
 
-.supervisor-bib-cats .bib-cats-filter-placeholder {
-    min-height: 12rem;
+/* Grid items are cards inside inner wrapper — use subgrid substitute */
+.supervisor-bib-cats #bib-cats-grid-inner {
+    display: contents;
+}
+
+/* Sidebar filter panel (חיפוש בנושאי המפתח + 4 checkboxes + סנן) */
+.supervisor-bib-cats .bib-cats-filter-panel.ajax-search-component {
+    width: 100%;
+    margin: 0;
+}
+
+.supervisor-bib-cats .bib-cats-filter-panel .bib-cats-filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.supervisor-bib-cats .bib-cats-filter-panel .search-section {
+    margin-bottom: 0.25rem;
+}
+
+.supervisor-bib-cats .bib-cats-filter-panel .search-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 0.65rem;
+    color: var(--sv-text, #1a1a1a);
+}
+
+.supervisor-bib-cats .bib-cats-filter-panel .filter-section {
+    background: transparent;
+}
+
+.supervisor-bib-cats .bib-cats-filter-panel .filter-listbox.bib-cats-km-area-list {
+    background: #fff;
+    border: 1px solid #c5c5c5;
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.supervisor-bib-cats .bib-cats-filter-panel .filter-button,
+.supervisor-bib-cats .bib-cats-filter-panel #bib-cats-filter-submit {
+    width: 100%;
+    margin-top: 0.5rem;
+    box-sizing: border-box;
 }
 
 .supervisor-bib-cats .bib-cats-content {

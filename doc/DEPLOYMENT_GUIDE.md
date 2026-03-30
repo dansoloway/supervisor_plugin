@@ -131,12 +131,27 @@ If anything looks wrong (theme layout instead of supervisor templates, empty nav
 
 ## 🎨 Step 3: ACF (Advanced Custom Fields) Setup
 
+### 3.0 Ship field groups with the plugin (recommended one-time flow)
+
+If field groups already exist on **staging** and you want production to match **without** migration plugins or manual re-creation:
+
+1. Staging: **Custom Fields → Tools → Export** — select the groups to ship (see note below about duplicates).
+2. Output format: **PHP** (built into ACF Pro).
+3. Replace [`acf-export/field-groups.php`](../acf-export/field-groups.php) in this repository with the exported file (full contents; one `<?php` at the top).
+4. Commit and deploy. The supervisor plugin `require`s that file on load; definitions apply automatically when ACF Pro is active.
+
+Full checklist: [`acf-export/README.md`](../acf-export/README.md).
+
+**Do not** export the org-country field group if it duplicates [`inc/acf-org-country-select.php`](../inc/acf-org-country-select.php). Either exclude that group from the export or remove the PHP registration—never both.
+
+This exports **definitions** only. **Values** (what editors entered) are still a separate content migration.
+
 ### 3.1 Install ACF Pro
 1. Upload ACF Pro plugin files to `/wp-content/plugins/advanced-custom-fields-pro/`
 2. Activate the plugin
 3. Enter your ACF Pro license key in **Custom Fields → Updates**
 
-### 3.2 Create ACF Field Groups
+### 3.2 Create ACF Field Groups (manual alternative / reference)
 
 #### Field Group 1: Activities Page Fields
 1. Go to **Custom Fields → Field Groups → Add New**

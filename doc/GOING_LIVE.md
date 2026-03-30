@@ -57,11 +57,10 @@ Set **Settings → Reading** if this supervisor home should be the site front pa
 ## 4. ACF (Advanced Custom Fields)
 
 - **ACF Pro** is expected for `acf_add_local_field_group` and common field setups.
-- **Field groups** in the deployment guide must match what templates actually call (`get_field`, `get_fields`). Verify against:
-  - org listing: `templates/supervisor-qa_orgs.php` (e.g. `qa_subtitle`, `qa_country`, `qa_org_acronym`; plugin may register **`qa_country_code`** automatically).
-  - updates, bibliography items, stories, etc.
+- **Porting field groups (one-time, no extra WordPress plugins):** on staging, **Custom Fields → Tools → Export** → choose groups → **Export to PHP** → paste the full file into [`acf-export/field-groups.php`](../acf-export/field-groups.php), commit, deploy. The main plugin loads it automatically. See [`acf-export/README.md`](../acf-export/README.md). Skip duplicating the org country group already defined in [`inc/acf-org-country-select.php`](../inc/acf-org-country-select.php).
+- **Field groups** must match what templates call (`get_field`, `get_fields`). The deployment guide lists labels; verify against org listing, updates, etc.
 - **Term meta** for `qa_tags`: plugin registers **קטגוריית מפת הידע** (`qa_knowledge_map_category`) in code — ensure editors fill this for map/sidebar filtering.
-- Export/import ACF JSON between staging and prod if you use it.
+- **Field values** (post content, meta) do not move with the PHP export; migrate content separately if needed.
 
 ## 5. Content and taxonomies
 

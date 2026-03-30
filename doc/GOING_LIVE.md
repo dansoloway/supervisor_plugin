@@ -2,6 +2,20 @@
 
 Short path from "plugin in repo" to "site works in production." Details live in [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md).
 
+## `config.php`: page IDs (important)
+
+[`config.php`](../config.php) ships with a **commented block** of `define('SUPERVISOR_*', …)` lines.
+
+- **Uncomment and set real post IDs** (from **Pages → Edit**: URL contains `post=####`) when:
+  - supervisor pages use **different slugs** than [inc/supervisor-pages.php](../inc/supervisor-pages.php), or
+  - the site looks broken after deploy (wrong layout, missing nav, scripts not loading on the right pages).
+
+- **Leave those lines commented** only when every supervisor page slug **exactly matches** the manifest (typical fresh install after `wp supervisor bootstrap-pages`).
+
+The plugin can still pick the **correct PHP template** for some setups when IDs are unset (slug fallback), but **menus, permalinks, and conditional assets** depend on the numeric page IDs. **Pinning IDs in `config.php` is the dependable fix** for staging/production that did not start from the default slugs.
+
+`PLUGIN_ROOT` is **not** set in `config.php`; it comes from the main plugin file.
+
 ## Automated path (WP-CLI)
 
 If you have [WP-CLI](https://wp-cli.org/) on the server:
@@ -10,14 +24,16 @@ If you have [WP-CLI](https://wp-cli.org/) on the server:
 2. From the WordPress root, run:
    - `wp supervisor bootstrap-pages` — creates or updates pages by slug (Hebrew titles, slugs in [inc/supervisor-pages.php](../inc/supervisor-pages.php)).
    - Optional: `wp supervisor bootstrap-pages --dry-run` to preview.
-3. Page IDs need no manual copy: `SUPERVISOR_*` constants are set on `plugins_loaded` from those slugs (unless you override in [`config.php`](../config.php)).
-4. `PLUGIN_ROOT` is set automatically from the main plugin file — do not edit paths per environment.
-5. Optional meta cleanup: `wp supervisor automap-km-tags` (see [inc/knowledge-map-automap.php](../inc/knowledge-map-automap.php)).
-6. Smoke-test URLs, supervisor nav, bib cats filter, orgs, updates.
+3. After pages exist, either keep **slug-only** mode (commented defines in [`config.php`](../config.php), slugs must match the manifest) **or** uncomment the `SUPERVISOR_*` block and set IDs from the admin (recommended if you will change slugs or already have legacy pages).
+4. Optional meta cleanup: `wp supervisor automap-km-tags` (see [inc/knowledge-map-automap.php](../inc/knowledge-map-automap.php)).
+5. Smoke-test URLs, supervisor nav, bib cats filter, orgs, updates.
 
 ## Manual path (no CLI)
 
-Same as before: create pages with the slugs in the deployment guide, then either rely on slug resolution (leave [`config.php`](../config.php) empty of `SUPERVISOR_*` defines) or add numeric overrides there if your slugs differ.
+Create pages with the slugs in the deployment guide. Then:
+
+- If slugs match [inc/supervisor-pages.php](../inc/supervisor-pages.php), you can leave [`config.php`](../config.php) without active `SUPERVISOR_*` defines.
+- Otherwise, **uncomment the ID block** in [`config.php`](../config.php) and fill in the correct numbers.
 
 ## 1. Server and WordPress
 
@@ -25,18 +41,14 @@ Same as before: create pages with the slugs in the deployment guide, then either
 - Deploy plugin to `wp-content/plugins/` (folder name must match activation; **`supervisor-plugin.php`** is the main file).
 - **Activate** the plugin (registers CPTs, taxonomies, rewrites).
 
-## 2. `config.php`
+## 2. `config.php` (summary)
 
-[`config.php`](../config.php) is **optional** for most installs:
-
-- **No `PLUGIN_ROOT`** — defined in `supervisor-plugin.php`.
-- **`SUPERVISOR_*`** — only if you must override slug-based resolution (non-standard slugs, duplicates, etc.).
-
-Wrong overrides = wrong templates or broken menus.
+- **No `PLUGIN_ROOT`** in [`config.php`](../config.php) — it is set in `supervisor-plugin.php`.
+- **`SUPERVISOR_*`**: optional only in the strict sense — **use explicit defines** whenever slugs do not match the repo manifest or behavior is flaky after deploy.
 
 ## 3. Pages and templates
 
-Prefer `wp supervisor bootstrap-pages`, or create pages manually per [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) §2.1 (slugs must match [inc/supervisor-pages.php](../inc/supervisor-pages.php) unless you use `config.php` overrides).
+Prefer `wp supervisor bootstrap-pages`, or create pages manually per [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) §2.1. Slugs should match [inc/supervisor-pages.php](../inc/supervisor-pages.php) unless you rely on numeric overrides in [`config.php`](../config.php).
 
 Minimum set usually includes: home, נושאי מפתח / bib categories, updates, orgs, knowledge map, contact, about, intro, activities (if used).
 
@@ -72,8 +84,8 @@ Set **Settings → Reading** if this supervisor home should be the site front pa
 ## 8. Go-live order (summary)
 
 1. Deploy code + activate plugin (`wp plugin activate ...` or Admin).
-2. **`wp supervisor bootstrap-pages`** (or manual pages + matching slugs).
-3. **`config.php`** overrides only if needed.
+2. **`wp supervisor bootstrap-pages`** (or manual pages).
+3. Set **[`config.php`](../config.php)** — uncomment `SUPERVISOR_*` and paste real IDs unless you are sure slugs match the manifest everywhere.
 4. Install/configure **ACF** + import or recreate field groups.
 5. **Migrate or enter content** (terms + posts).
 6. Smoke-test; optional `wp supervisor automap-km-tags`.

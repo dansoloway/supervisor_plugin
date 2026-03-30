@@ -51,7 +51,9 @@ Optional flags:
 - `--activate-plugin` — runs `wp plugin activate` for this plugin (uses folder + `supervisor-plugin.php` basename).
 - `--no-flush-rewrites` — skip `flush_rewrite_rules` after changes.
 
-Titles and slugs match the manifest in [`inc/supervisor-pages.php`](../inc/supervisor-pages.php). The plugin sets `SUPERVISOR_*` constants from those slugs on each request; you normally **do not** edit numeric IDs in [`config.php`](../config.php). Override there only if your site uses different slugs.
+Titles and slugs match the manifest in [`inc/supervisor-pages.php`](../inc/supervisor-pages.php). If those slugs match your database **exactly**, the plugin can resolve `SUPERVISOR_*` from slugs on each request and you can leave the numeric block in [`config.php`](../config.php) commented out.
+
+**In practice** (staging, renamed slugs, imports): uncomment the `define('SUPERVISOR_*', …)` lines in [`config.php`](../config.php) and set each ID from **Pages → Edit** (`post=####` in the URL). That is the reliable setting for menus, permalinks, and conditional scripts—not only an “edge case.” Slug-based resolution and template fallback help when IDs are missing, but **pinned IDs avoid subtle breakage**.
 
 `PLUGIN_ROOT` is derived automatically in `supervisor-plugin.php` — no per-environment path in `config.php`.
 
@@ -113,11 +115,17 @@ Create these pages in WordPress Admin → Pages → Add New:
 - **Template**: "Supervisor Content" (from dropdown)
 - **Status**: Published
 
-### 2.2 Configuration overrides (optional)
+### 2.2 `config.php` — page IDs (`SUPERVISOR_*`)
 
-If pages use the slugs in §2.1 / [`inc/supervisor-pages.php`](../inc/supervisor-pages.php), **no** `config.php` entries are required: `SUPERVISOR_*` is resolved at runtime.
+[`config.php`](../config.php) contains a **commented template** of all `SUPERVISOR_*` defines.
 
-Add defines to [`config.php`](../config.php) only when you cannot match those slugs or need to pin a specific post ID.
+**Recommended workflow**
+
+1. After pages exist, open each in the admin and note the numeric ID in the edit URL (`post=####`).
+2. Uncomment the block in [`config.php`](../config.php) and set those integers (staging and production may differ — **do not assume** the sample numbers in comments match your site).
+3. Leave the block commented **only** if you are certain every supervisor page slug matches [`inc/supervisor-pages.php`](../inc/supervisor-pages.php) (e.g. right after `wp supervisor bootstrap-pages` on a clean site).
+
+If anything looks wrong (theme layout instead of supervisor templates, empty nav targets, assets missing on key pages), **enable the defines first**; then align slugs or the manifest if you want slug-only mode later.
 
 ---
 

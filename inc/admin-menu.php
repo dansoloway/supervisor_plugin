@@ -93,6 +93,15 @@ function supervisor_admin_menu() {
         'supervisor-settings', // Menu slug
         'supervisor_settings_page' // Callback function
     );
+
+    add_submenu_page(
+        'supervisor-admin',
+        __('מפת הידע: כותרות (קנוני)', 'text-domain'),
+        __('מפת הידע: כותרות', 'text-domain'),
+        'manage_options',
+        'supervisor-km-label-compare',
+        'supervisor_admin_knowledge_map_label_compare_page'
+    );
 }
 add_action('admin_menu', 'supervisor_admin_menu', 20); // Higher priority to ensure capabilities are set
 

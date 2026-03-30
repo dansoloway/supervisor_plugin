@@ -2,12 +2,13 @@
 /**
  * Compare knowledge-map canonical labels (screenshot) vs hierarchy + qa_tags term names; optionally rename terms.
  *
- * Usage (browser): Administrator, open:
+ * Prefer WP Admin → המפקחת → מפת הידע: כותרות (avoids 404 when hosts block direct plugin PHP).
+ *
+ * Legacy direct URL (may 404 on Kinsta etc.):
  *   /wp-content/plugins/supervisor_plugin/development/compare-knowledge-map-labels.php
  *
  * Query:
- *   ?dry_run=1   — default: only report
- *   ?apply=1     — wp_update_term names to match canonical (requires dry_run off or use apply=1 alone)
+ *   ?apply=1 — wp_update_term names to match canonical
  */
 
 $wp_load_paths = [

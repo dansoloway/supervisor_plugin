@@ -39,6 +39,7 @@ require_once plugin_dir_path(__FILE__) . 'inc/ajax-bib-cats-terms.php';
 require_once plugin_dir_path(__FILE__) . 'inc/bib_admin_page.php';
 
 // Include consolidated admin menu
+require_once plugin_dir_path(__FILE__) . 'inc/admin-knowledge-map-label-compare.php';
 require_once plugin_dir_path(__FILE__) . 'inc/admin-menu.php';
 
 // Include ACF custom location rules

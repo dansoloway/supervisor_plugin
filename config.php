@@ -1,17 +1,14 @@
 <?php
+/**
+ * Optional overrides for supervisor page IDs (integers).
+ *
+ * If a SUPERVISOR_* constant is not defined here, it is set on plugins_loaded
+ * from the published page matching the slug in inc/supervisor-pages.php.
+ *
+ * New environments: run `wp supervisor bootstrap-pages` then rely on slugs;
+ * you usually do not need any lines below.
+ *
+ * Example for a non-standard install:
+ * define('SUPERVISOR_HOME', 27886);
+ */
 
-define("PLUGIN_ROOT", "/www/brookdalejdcorg_480/public/wp-content/plugins/supervisor-plugin/");
-
-define("SUPERVISOR_HOME", '27886');
-define("SUPERVISOR_BIB_CATS", '27899');
-define("SUPERVISOR_UPDATES", '27906');
-define("SUPERVISOR_ORGS", '27928');
-
-// Single Content Pages - using content-supervisor.php template
-define("SUPERVISOR_ABOUT", '27908');
-define("SUPERVISOR_CONTACT", '27912');
-define("SUPERVISOR_INTRO_TEXT", '27901');
-define("SUPERVISOR_ACTIVITIES", '28029'); // Add your actual page ID here
-define("SUPERVISOR_KNOWLEDGE_MAP", '28040'); // Knowledge Map page ID
-
-?>

@@ -75,8 +75,8 @@ if ($existing_page) {
         update_post_meta($page_id, '_wp_page_template', 'supervisor-knowledge-map.php');
         echo '<p class="success">✓ תבנית הדף הוגדרה למפת הידע</p>';
         
-        // Note: After creating the page, update the page ID in config.php to match the actual ID
-        echo '<p class="warning">⚠️ חשוב: עדכן את ה-ID בקובץ config.php לשורה: define("SUPERVISOR_KNOWLEDGE_MAP", "' . $page_id . '");</p>';
+        // Page ID is picked up automatically when slug is supervisor-knowledge-map (see inc/supervisor-pages.php).
+        echo '<p class="success">✓ אם ה-slug של הדף הוא <code>supervisor-knowledge-map</code>, אין צורך לעדכן config.php — ה-constant נגזר מה-slug. אחרת: define בתוך config.php.</p>';
     }
 }
 

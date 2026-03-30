@@ -6,8 +6,18 @@ Version: 1.0
 Author: Daniel Soloway
 */
 
-// Include configuration file
+// Paths (config may override SUPERVISOR_* IDs only; not PLUGIN_ROOT)
+if (! defined('PLUGIN_ROOT')) {
+    define('PLUGIN_ROOT', plugin_dir_path(__FILE__));
+}
+if (! defined('SUPERVISOR_PLUGIN_BASENAME')) {
+    define('SUPERVISOR_PLUGIN_BASENAME', plugin_basename(__FILE__));
+}
+
+// Optional SUPERVISOR_* overrides; otherwise IDs resolve from page slugs (see inc/supervisor-pages.php)
 require_once plugin_dir_path(__FILE__) . 'config.php';
+require_once plugin_dir_path(__FILE__) . 'inc/supervisor-pages.php';
+require_once plugin_dir_path(__FILE__) . 'inc/supervisor-bootstrap-cli.php';
 
 // Include post type and taxonomy registration
 require_once plugin_dir_path(__FILE__) . 'inc/register_posts_and_tax.php';

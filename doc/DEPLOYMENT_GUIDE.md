@@ -37,7 +37,26 @@ git clone [your-repository-url] supervisor_plugin
 
 ## 📄 Step 2: Page Creation
 
-### 2.1 Create Required Pages
+### 2.0 Automated creation (recommended, WP-CLI)
+
+From the WordPress root (where `wp-config.php` lives):
+
+```bash
+wp supervisor bootstrap-pages
+```
+
+Optional flags:
+
+- `--dry-run` — list actions without writing.
+- `--activate-plugin` — runs `wp plugin activate` for this plugin (uses folder + `supervisor-plugin.php` basename).
+- `--no-flush-rewrites` — skip `flush_rewrite_rules` after changes.
+
+Titles and slugs match the manifest in [`inc/supervisor-pages.php`](../inc/supervisor-pages.php). The plugin sets `SUPERVISOR_*` constants from those slugs on each request; you normally **do not** edit numeric IDs in [`config.php`](../config.php). Override there only if your site uses different slugs.
+
+`PLUGIN_ROOT` is derived automatically in `supervisor-plugin.php` — no per-environment path in `config.php`.
+
+### 2.1 Create Required Pages (manual alternative)
+
 Create these pages in WordPress Admin → Pages → Add New:
 
 #### Home Page
@@ -94,24 +113,11 @@ Create these pages in WordPress Admin → Pages → Add New:
 - **Template**: "Supervisor Content" (from dropdown)
 - **Status**: Published
 
-### 2.2 Update Page IDs in Configuration
-After creating pages, update the page IDs in `config.php`:
+### 2.2 Configuration overrides (optional)
 
-```php
-// Get page IDs from WordPress Admin → Pages
-// Edit each page and check the URL: /wp-admin/post.php?post=XXXXX&action=edit
-// The number in the URL is the page ID
+If pages use the slugs in §2.1 / [`inc/supervisor-pages.php`](../inc/supervisor-pages.php), **no** `config.php` entries are required: `SUPERVISOR_*` is resolved at runtime.
 
-define('SUPERVISOR_HOME', 12345);           // Replace with actual ID
-define('SUPERVISOR_ACTIVITIES', 12346);     // Replace with actual ID
-define('SUPERVISOR_KNOWLEDGE_MAP', 12347);  // Replace with actual ID
-define('SUPERVISOR_UPDATES', 12348);        // Replace with actual ID
-define('SUPERVISOR_ORGS', 12349);           // Replace with actual ID
-define('SUPERVISOR_BIB_CATS', 12350);       // Replace with actual ID
-define('SUPERVISOR_CONTACT', 12351);        // Replace with actual ID
-define('SUPERVISOR_ABOUT', 12352);          // Replace with actual ID
-define('SUPERVISOR_INTRO_TEXT', 12353);     // Replace with actual ID
-```
+Add defines to [`config.php`](../config.php) only when you cannot match those slugs or need to pin a specific post ID.
 
 ---
 

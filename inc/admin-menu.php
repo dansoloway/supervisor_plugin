@@ -42,8 +42,8 @@ function supervisor_admin_menu() {
 
     add_submenu_page(
         'supervisor-admin', // Parent slug
-        __('ניהול ביבליוגרפיה', 'text-domain'), // Page title
-        __('ניהול ביבליוגרפיה', 'text-domain'), // Menu title
+        __('נושאי מפתח — תוכן ופריטים', 'text-domain'), // Page title
+        __('נושאי מפתח — תוכן', 'text-domain'), // Menu title
         $capability, // Capability - visible to all, but editing restricted
         'supervisor-bibliography', // Menu slug
         'supervisor_bibliography_page' // Callback function
@@ -78,8 +78,8 @@ function supervisor_admin_menu() {
 
     add_submenu_page(
         'supervisor-admin', // Parent slug
-        __('ניהול נושאי מפתח', 'text-domain'), // Page title
-        __('ניהול נושאי מפתח', 'text-domain'), // Menu title
+        __('נושאי מפתח — רשימה', 'text-domain'), // Page title
+        __('נושאי מפתח — רשימה', 'text-domain'), // Menu title
         $capability, // Capability - visible to all, but editing restricted
         'supervisor-categories', // Menu slug
         'supervisor_categories_page' // Callback function
@@ -263,7 +263,7 @@ function supervisor_admin_dashboard() {
             <div class="stat-box">
                 <h3><?php echo esc_html__('סטטיסטיקות כלליות', 'text-domain'); ?></h3>
                 <ul>
-                    <li><strong><?php echo esc_html__('פריטי ביבליוגרפיה:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_bib_items')->publish; ?></li>
+                    <li><strong><?php echo esc_html__('פריטי מקור (בנושאי מפתח):', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_bib_items')->publish; ?></li>
                     <li><strong><?php echo esc_html__('עדכונים:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_updates')->publish; ?></li>
                     <li><strong><?php echo esc_html__('ארגונים:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_orgs')->publish; ?></li>
                     <li><strong><?php echo esc_html__('סיפורים מהשטח:', 'text-domain'); ?></strong> <?php echo wp_count_posts('qa_stories')->publish; ?></li>
@@ -275,7 +275,7 @@ function supervisor_admin_dashboard() {
                 <h3><?php echo esc_html__('פעולות מהירות', 'text-domain'); ?></h3>
                 <p>
                     <a href="<?php echo admin_url('admin.php?page=supervisor-bibliography'); ?>" class="button button-primary">
-                        <?php echo esc_html__('ניהול ביבליוגרפיה', 'text-domain'); ?>
+                        <?php echo esc_html__('נושאי מפתח — תוכן', 'text-domain'); ?>
                     </a>
                     <a href="<?php echo admin_url('post-new.php?post_type=qa_updates'); ?>" class="button button-secondary">
                         <?php echo esc_html__('הוסף עדכון חדש', 'text-domain'); ?>
@@ -532,8 +532,8 @@ function supervisor_categories_page() {
     }
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html__('ניהול נושאי מפתח', 'text-domain'); ?></h1>
-        <p><?php echo esc_html__('ניהול נושאי מפתח במערכת המפקחת.', 'text-domain'); ?></p>
+        <h1><?php echo esc_html__('נושאי מפתח — רשימה', 'text-domain'); ?></h1>
+        <p><?php echo esc_html__('רשימת נושאי המפתח, שם, שיוך למפת הידע ועריכה.', 'text-domain'); ?></p>
         
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
             <div class="notice notice-success is-dismissible">

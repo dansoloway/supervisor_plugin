@@ -71,11 +71,11 @@ add_action('edited_qa_tags', 'save_qa_tags_custom_fields', 10, 2);
 function qa_bib_render_admin_page() {
     ?>
     <div class="wrap" style="direction:rtl; text-align:right">
-        <h1><?php esc_html_e('מנהל ביבליוגרפיה', 'text-domain'); ?></h1>
+        <h1><?php esc_html_e('נושאי מפתח — תוכן ופריטים', 'text-domain'); ?></h1>
         
         <p>
             <a href="<?php echo admin_url('post-new.php?post_type=qa_bib_items'); ?>" class="button button-primary">
-                <?php esc_html_e('הוסף פריט ביבליוגרפי חדש', 'text-domain'); ?>
+                <?php esc_html_e('הוסף פריט מקור חדש', 'text-domain'); ?>
             </a>
             <a href="<?php echo admin_url('edit.php?post_type=qa_bib_items'); ?>" class="button button-secondary">
                 <?php esc_html_e('צפה בכל הפריטים', 'text-domain'); ?>
@@ -85,7 +85,7 @@ function qa_bib_render_admin_page() {
         <form method="post" action="">
             <?php wp_nonce_field('qa_bib_admin_save', 'qa_bib_nonce'); ?>
 
-            <h2><?php esc_html_e('קטגוריות', 'text-domain'); ?></h2>
+            <h2><?php esc_html_e('נושאי מפתח', 'text-domain'); ?></h2>
             <?php
             // Fetch categories (qa_tags)
             $categories = get_terms([
@@ -175,7 +175,7 @@ function qa_bib_render_admin_page() {
                     echo '</div>';
                 }
             } else {
-                echo '<p>' . esc_html__('לא נמצאו קטגוריות.', 'text-domain') . '</p>';
+                echo '<p>' . esc_html__('לא נמצאו נושאי מפתח.', 'text-domain') . '</p>';
             }
             ?>
 

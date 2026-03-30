@@ -2,7 +2,7 @@
 
 This file lives in the repo under **`doc/`**. For a shorter go-live checklist see **[GOING_LIVE.md](GOING_LIVE.md)**.
 
-This guide covers the complete process of deploying the Supervisor Plugin from staging to production, including all manual setup steps, ACF configuration, and dependencies.
+This guide covers deployment from staging to production: pages, **`config.php`**, **ACF field definitions via [`acf-export/field-groups.php`](../acf-export/field-groups.php)** (see §3.0), theme integration, and checks.
 
 ## 📋 Pre-Deployment Checklist
 
@@ -10,6 +10,7 @@ This guide covers the complete process of deploying the Supervisor Plugin from s
 - [ ] All code committed to git repository
 - [ ] Repository is accessible from production server
 - [ ] No sensitive data (passwords, API keys) in repository
+- [ ] **[`acf-export/field-groups.php`](../acf-export/field-groups.php)** updated from staging (**Custom Fields → Tools → Export → PHP**) whenever field groups changed — see [`acf-export/README.md`](../acf-export/README.md)
 
 ### ✅ Dependencies
 - [ ] WordPress 5.0+ installed on production
@@ -501,8 +502,10 @@ Visit each page and verify:
 
 #### ACF Fields Not Showing
 - Ensure ACF Pro is activated and licensed
-- Check field group location rules match page templates
-- Verify field names match template code
+- Confirm **[`acf-export/field-groups.php`](../acf-export/field-groups.php)** is deployed and parses (PHP error log if the export was truncated). Re-export from staging if production lags behind.
+- Avoid **duplicate** registration: org country fields come from [`inc/acf-org-country-select.php`](../inc/acf-org-country-select.php) — do not also export that same field group from ACF.
+- Check field group location rules match page templates / supervisor pages (`config.php` IDs, slugs)
+- Verify field names match template code (§3.2 below vs `get_field` in templates)
 
 #### Contact Form Not Working
 - Check email recipients in `contact-form.php`

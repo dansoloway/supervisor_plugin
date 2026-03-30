@@ -14,6 +14,90 @@ function supervisor_bib_cats_sidebar_area_slugs() {
     return ['policy', 'control', 'enforcement', 'knowledge_development'];
 }
 
+/**
+ * Sidebar parent checkboxes to pre-check for the current ?km_cat= deep link (leaf slugs must map onto allowed parents).
+ *
+ * @param string        $km_cat_raw   Raw query value (parent or leaf).
+ * @param list<string>  $filter_slugs Resolved leaf slugs from $km_cat_raw.
+ *
+ * @return list<string> Parent slugs from supervisor_bib_cats_sidebar_area_slugs() only.
+ */
+function supervisor_bib_cats_sidebar_checked_areas_from_km($km_cat_raw, $filter_slugs) {
+    $km_cat_raw = sanitize_key((string) $km_cat_raw);
+    $allowed    = supervisor_bib_cats_sidebar_area_slugs();
+    $allowed_f  = array_flip($allowed);
+
+    if ($km_cat_raw !== '' && supervisor_knowledge_map_is_parent_slug($km_cat_raw) && isset($allowed_f[ $km_cat_raw ])) {
+        return [$km_cat_raw];
+    }
+
+    if ($filter_slugs === []) {
+        return [];
+    }
+
+    $leaf_flip = array_flip($filter_slugs);
+    $found     = [];
+    foreach (supervisor_knowledge_map_hierarchy() as $group) {
+        $parent = $group['slug'];
+        if (! isset($allowed_f[ $parent ])) {
+            continue;
+        }
+        foreach ($group['items'] as $item) {
+            if (isset($leaf_flip[ $item['slug'] ])) {
+                $found[ $parent ] = true;
+                break;
+            }
+        }
+    }
+
+    return array_keys($found);
+}
+
+/**
+ * Term query args for נושאי מפתח — keep in sync with supervisor_ajax_bib_cats_terms() (same meta_query shape as map filtering).
+ *
+ * @param string       $search
+ * @param list<string> $meta_slugs Leaf slugs for qa_knowledge_map_category; empty means no meta filter.
+ *
+ * @return array<string, mixed>
+ */
+function supervisor_bib_cats_term_query_args($search, $meta_slugs) {
+    $term_args = [
+        'taxonomy'   => 'qa_tags',
+        'hide_empty' => false,
+    ];
+    if ($search !== '') {
+        $term_args['search'] = $search;
+    }
+    $meta_slugs = array_values(array_filter(array_map('sanitize_key', (array) $meta_slugs)));
+    if ($meta_slugs !== []) {
+        $term_args['meta_query'] = [
+            [
+                'key'     => 'qa_knowledge_map_category',
+                'value'   => $meta_slugs,
+                'compare' => 'IN',
+            ],
+        ];
+    }
+
+    return $term_args;
+}
+
+/**
+ * @param string       $search
+ * @param list<string> $meta_slugs
+ *
+ * @return array<int, WP_Term>
+ */
+function supervisor_bib_cats_get_qa_tags_terms($search, $meta_slugs) {
+    $categories = get_terms(supervisor_bib_cats_term_query_args($search, $meta_slugs));
+    if (is_wp_error($categories)) {
+        return [];
+    }
+
+    return $categories;
+}
+
 add_action('wp_ajax_supervisor_bib_cats_terms', 'supervisor_ajax_bib_cats_terms');
 add_action('wp_ajax_nopriv_supervisor_bib_cats_terms', 'supervisor_ajax_bib_cats_terms');
 
@@ -78,27 +162,7 @@ function supervisor_ajax_bib_cats_terms() {
 
     $categories = [];
     if (! $impossible) {
-        $term_args = [
-            'taxonomy'   => 'qa_tags',
-            'hide_empty' => false,
-        ];
-        if ($search !== '') {
-            $term_args['search'] = $search;
-        }
-        if ($meta_slugs !== []) {
-            $term_args['meta_query'] = [
-                [
-                    'key'     => 'qa_knowledge_map_category',
-                    'value'   => $meta_slugs,
-                    'compare' => 'IN',
-                ],
-            ];
-        }
-
-        $categories = get_terms($term_args);
-        if (is_wp_error($categories)) {
-            $categories = [];
-        }
+        $categories = supervisor_bib_cats_get_qa_tags_terms($search, $meta_slugs);
     }
 
     $filter_narrow = $impossible || $meta_slugs !== [] || $search !== '';

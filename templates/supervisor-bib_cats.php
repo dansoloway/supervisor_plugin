@@ -75,32 +75,7 @@ $bib_cats_area_labels = [
                 <div class="categories-grid" id="bib-cats-grid">
                     <div id="bib-cats-grid-inner">
                     <?php
-                    $term_args = [
-                        'taxonomy'   => 'qa_tags',
-                        'hide_empty' => false,
-                    ];
-                    if ($filter_active) {
-                        if (count($filter_slugs) === 1) {
-                            $term_args['meta_query'] = [
-                                [
-                                    'key'   => 'qa_knowledge_map_category',
-                                    'value' => $filter_slugs[0],
-                                ],
-                            ];
-                        } else {
-                            $term_args['meta_query'] = [
-                                [
-                                    'key'     => 'qa_knowledge_map_category',
-                                    'value'   => $filter_slugs,
-                                    'compare' => 'IN',
-                                ],
-                            ];
-                        }
-                    }
-                    $categories = get_terms($term_args);
-                    if (is_wp_error($categories)) {
-                        $categories = [];
-                    }
+                    $categories = supervisor_bib_cats_get_qa_tags_terms('', $filter_active ? $filter_slugs : []);
 
                     $bib_cats_categories = $categories;
                     $bib_cats_empty_message = $filter_active
@@ -139,7 +114,8 @@ $bib_cats_area_labels = [
                                     <div class="filter-listbox bib-cats-km-area-list">
                                         <?php
                                         $allowed = supervisor_bib_cats_sidebar_area_slugs();
-                                        $checked_flip = array_flip(array_intersect($filter_slugs, $allowed));
+                                        $sidebar_checked = supervisor_bib_cats_sidebar_checked_areas_from_km($km_cat_raw, $filter_slugs);
+                                        $checked_flip    = array_flip($sidebar_checked);
                                         foreach ($bib_cats_area_labels as $slug => $label) :
                                             if (! in_array($slug, $allowed, true)) {
                                                 continue;

@@ -355,61 +355,64 @@ function save_taxonomy_icon_field($term_id) {
  * @return list<array{slug: string, label: string, items: list<array{slug: string, label: string}>}>
  */
 function supervisor_knowledge_map_hierarchy() {
+    $leaf  = 'supervisor_knowledge_map_hierarchy_leaf_item';
+    $canon = supervisor_knowledge_map_canonical_leaf_labels();
+
     return [
         [
             'slug'  => 'policy',
             'label' => __('מדיניות', 'text-domain'),
             'items' => [
-                ['slug' => 'policy_supervision', 'label' => __('מדיניות פיקוח', 'text-domain')],
-                ['slug' => 'policy_service_quality_standards', 'label' => __('סטנדרטים לאיכות השירותים', 'text-domain')],
+                $leaf('policy_supervision'),
+                $leaf('policy_service_quality_standards'),
             ],
         ],
         [
             'slug'  => 'control',
             'label' => __('בקרה', 'text-domain'),
             'items' => [
-                ['slug' => 'control_external', 'label' => __('בקרה חיצונית', 'text-domain')],
-                ['slug' => 'control_self', 'label' => __('בקרה עצמית', 'text-domain')],
+                $leaf('control_external'),
+                $leaf('control_self'),
             ],
         ],
         [
             'slug'  => 'enforcement',
             'label' => __('אכיפה', 'text-domain'),
             'items' => [
-                ['slug' => 'enforcement_corrective_punitive', 'label' => __('אכיפה מתקנת ואכיפה עונשית', 'text-domain')],
+                $leaf('enforcement_corrective_punitive'),
             ],
         ],
         [
             'slug'  => 'knowledge_development',
             'label' => __('פיתוח ידע והדרכה', 'text-domain'),
             'items' => [
-                ['slug' => 'knowledge_training_materials', 'label' => __('חומרי הדרכה', 'text-domain')],
-                ['slug' => 'knowledge_research', 'label' => __('מחקרים', 'text-domain')],
+                $leaf('knowledge_training_materials'),
+                $leaf('knowledge_research'),
             ],
         ],
         [
             'slug'  => 'working_methods',
             'label' => __('שיטות עבודה', 'text-domain'),
             'items' => [
-                ['slug' => 'wm_risk_management', 'label' => __('ניהול סיכונים', 'text-domain')],
-                ['slug' => 'wm_service_user_participation', 'label' => __('שיתוף מקבלי השירות בפיקוח', 'text-domain')],
-                ['slug' => 'wm_transparency_access', 'label' => __('שקיפות והנגשת מידע', 'text-domain')],
-                ['slug' => 'wm_integrated_supervision', 'label' => __('פיקוח משולב', 'text-domain')],
-                ['slug' => 'wm_supervisor_supervisee_relations', 'label' => __('יחסי מפקחים מפוקחים', 'text-domain')],
+                $leaf('wm_risk_management'),
+                $leaf('wm_service_user_participation'),
+                $leaf('wm_transparency_access'),
+                $leaf('wm_integrated_supervision'),
+                $leaf('wm_supervisor_supervisee_relations'),
             ],
         ],
         [
             'slug'  => 'social_procurement',
             'label' => __('רכש חברתי', 'text-domain'),
             'items' => [
-                ['slug' => 'sp_service_delivery_outsourcing', 'label' => __('אספקת שירותים חברתיים ומיקור חוץ', 'text-domain')],
+                $leaf('sp_service_delivery_outsourcing'),
             ],
         ],
         [
             'slug'  => 'regulatory_welfare_state',
-            'label' => __('מדינת הרווחה הרגולטורית', 'text-domain'),
+            'label' => $canon['regulatory_welfare_state'],
             'items' => [
-                ['slug' => 'regulatory_welfare_state', 'label' => __('מדינת הרווחה הרגולטורית', 'text-domain')],
+                $leaf('regulatory_welfare_state'),
             ],
         ],
     ];

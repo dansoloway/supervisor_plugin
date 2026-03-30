@@ -19,6 +19,9 @@ require_once plugin_dir_path(__FILE__) . 'config.php';
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-pages.php';
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-bootstrap-cli.php';
 
+// Knowledge-map card titles (canonical Hebrew)
+require_once plugin_dir_path(__FILE__) . 'inc/knowledge-map-canonical-labels.php';
+
 // Include post type and taxonomy registration
 require_once plugin_dir_path(__FILE__) . 'inc/register_posts_and_tax.php';
 
@@ -40,6 +43,13 @@ require_once plugin_dir_path(__FILE__) . 'inc/admin-menu.php';
 
 // Include ACF custom location rules
 require_once plugin_dir_path(__FILE__) . 'acf-location-rules.php';
+
+// One-time / versioned ACF field groups: drop ACF → Tools → Export (PHP) into acf-export/field-groups.php
+$supervisor_acf_export = plugin_dir_path(__FILE__) . 'acf-export/field-groups.php';
+if (is_readable($supervisor_acf_export)) {
+    require_once $supervisor_acf_export;
+}
+
 
 // Include custom user role for supervisor editor
 require_once plugin_dir_path(__FILE__) . 'create-plugin-user-role.php';

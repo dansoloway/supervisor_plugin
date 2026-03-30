@@ -36,6 +36,17 @@ function supervisor_ajax_bib_cats_terms() {
     }
     $km_areas = array_values(array_unique($km_areas));
 
+    /*
+     * Sidebar values are parent slugs (policy, control, …). qa_knowledge_map_category on terms
+     * stores *leaf* slugs only (e.g. control_external). ?km_cat=control expands via
+     * supervisor_knowledge_map_resolve_to_leaf_slugs(); do the same here so checkbox matches map links.
+     */
+    $km_leaf_slugs = [];
+    foreach ($km_areas as $area_slug) {
+        $km_leaf_slugs = array_merge($km_leaf_slugs, supervisor_knowledge_map_resolve_to_leaf_slugs($area_slug));
+    }
+    $km_leaf_slugs = array_values(array_unique($km_leaf_slugs));
+
     $valid_choices   = supervisor_knowledge_map_category_choices();
     $valid_slug_flip = array_flip(array_keys($valid_choices));
 
@@ -54,13 +65,13 @@ function supervisor_ajax_bib_cats_terms() {
 
     $meta_slugs = [];
     $impossible = false;
-    if ($km_areas !== [] && $base_slugs !== []) {
-        $meta_slugs = array_values(array_intersect($base_slugs, $km_areas));
+    if ($km_leaf_slugs !== [] && $base_slugs !== []) {
+        $meta_slugs = array_values(array_intersect($base_slugs, $km_leaf_slugs));
         if ($meta_slugs === []) {
             $impossible = true;
         }
-    } elseif ($km_areas !== []) {
-        $meta_slugs = $km_areas;
+    } elseif ($km_leaf_slugs !== []) {
+        $meta_slugs = $km_leaf_slugs;
     } elseif ($base_slugs !== []) {
         $meta_slugs = $base_slugs;
     }

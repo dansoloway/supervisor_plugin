@@ -205,22 +205,17 @@ add_action('wp_enqueue_scripts', 'enqueue_alternate_header_assets', 999); // Hig
 
 // Load custom templates
 function supervisor_load_template($template) {
+    if (! is_page()) {
+        return $template;
+    }
+
     $page_id = get_queried_object_id();
+    $base    = function_exists('supervisor_resolve_page_template_basename')
+        ? supervisor_resolve_page_template_basename($page_id)
+        : null;
 
-    $custom_templates_by_id = [
-        SUPERVISOR_BIB_CATS => 'supervisor-bib_cats.php',
-        SUPERVISOR_ORGS => 'supervisor-qa_orgs.php',
-        SUPERVISOR_HOME => 'supervisor-home.php',
-        SUPERVISOR_UPDATES => 'supervisor-updates.php',
-        SUPERVISOR_INTRO_TEXT => 'supervisor-content.php',
-        SUPERVISOR_ABOUT => 'supervisor-about.php',
-        SUPERVISOR_CONTACT => 'supervisor-contact.php',
-        SUPERVISOR_ACTIVITIES => 'supervisor-activities.php',
-        SUPERVISOR_KNOWLEDGE_MAP => 'supervisor-knowledge-map.php',
-    ];
-
-    if (isset($custom_templates_by_id[$page_id]) && file_exists(plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$page_id])) {
-        return plugin_dir_path(__FILE__) . 'templates/' . $custom_templates_by_id[$page_id];
+    if ($base && file_exists(plugin_dir_path(__FILE__) . 'templates/' . $base)) {
+        return plugin_dir_path(__FILE__) . 'templates/' . $base;
     }
 
     return $template;

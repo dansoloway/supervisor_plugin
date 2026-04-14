@@ -52,25 +52,7 @@ $bib_cats_area_labels = [
                 $filter_slugs  = $km_cat_raw ? supervisor_knowledge_map_resolve_to_leaf_slugs($km_cat_raw) : [];
                 $filter_active = ! empty($filter_slugs);
                 $filter_label  = $filter_active ? supervisor_knowledge_map_filter_banner_label($km_cat_raw) : '';
-                $bib_page_url  = get_permalink();
                 ?>
-
-                <?php if ($filter_active) : ?>
-                    <div class="bib-cats-map-filter-active" role="status">
-                        <span class="bib-cats-map-filter-label">
-                            <?php
-                            echo esc_html(
-                                sprintf(
-                                    /* translators: %s: knowledge-map region name */
-                                    __('מסנן לפי: %s', 'text-domain'),
-                                    $filter_label
-                                )
-                            );
-                            ?>
-                        </span>
-                        <a class="bib-cats-map-filter-clear" href="<?php echo esc_url($bib_page_url); ?>"><?php echo esc_html__('הצג את כל נושאי המפתח', 'text-domain'); ?></a>
-                    </div>
-                <?php endif; ?>
 
                 <div class="categories-grid" id="bib-cats-grid">
                     <div id="bib-cats-grid-inner">
@@ -93,7 +75,15 @@ $bib_cats_area_labels = [
                         <div class="search-section">
                             <h2 class="search-title"><?php echo esc_html__('חיפוש בנושאי המפתח', 'text-domain'); ?></h2>
                             <div class="search-input-container">
-                                <input type="search" id="bib-cats-search-text" name="bib-cats-search" autocomplete="off" placeholder="<?php echo esc_attr__('חיפוש', 'text-domain'); ?>" class="search-input-field">
+                                <input
+                                    type="search"
+                                    id="bib-cats-search-text"
+                                    name="bib-cats-search"
+                                    autocomplete="off"
+                                    placeholder="<?php echo esc_attr__('חיפוש', 'text-domain'); ?>"
+                                    value="<?php echo esc_attr($filter_active ? $filter_label : ''); ?>"
+                                    class="search-input-field"
+                                >
                                 <button type="button" class="search-button" id="bib-cats-search-button" aria-label="<?php echo esc_attr__('חיפוש', 'text-domain'); ?>">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

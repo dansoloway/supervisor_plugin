@@ -582,6 +582,73 @@ function supervisor_knowledge_map_topics_url($slug) {
     return add_query_arg('km_cat', $slug, get_permalink(SUPERVISOR_BIB_CATS));
 }
 
+/**
+ * Resolve a Knowledge Map tile click target.
+ *
+ * - The 4 main areas link to the Key-Terms page filtered by `?km_cat=<area>`.
+ * - "רכש חברתי" and "מדינת הרווחה הרגולטורית" link to their single Key-Term (qa_tags term) pages.
+ * - "שיטות עבודה" is intentionally disabled (empty URL) for now.
+ *
+ * @param string $tile_slug Tile slug from templates (e.g. policy, social_procurement).
+ * @return string URL or empty string when disabled.
+ */
+function supervisor_knowledge_map_tile_url($tile_slug) {
+    $tile_slug = sanitize_key((string) $tile_slug);
+    if ($tile_slug === '') {
+        return '';
+    }
+
+    // Disabled for now (product decision: easy to enable later).
+    if ($tile_slug === 'working_methods') {
+        return '';
+    }
+
+    // Special-case tiles route to a single Key-Term (qa_tags term) page.
+    if ($tile_slug === 'social_procurement') {
+        return supervisor_knowledge_map_find_qa_tag_term_link_by_name_candidates([
+            'רכש חברתי',
+        ]) ?: supervisor_knowledge_map_topics_url($tile_slug);
+    }
+    if ($tile_slug === 'regulatory_welfare_state') {
+        return supervisor_knowledge_map_find_qa_tag_term_link_by_name_candidates([
+            'מדינת הרווחה הרגולטורית',
+            'מדינת רווחה רגולטורית',
+        ]) ?: supervisor_knowledge_map_topics_url($tile_slug);
+    }
+
+    // Default: filter the Key-Terms page (same behavior as before).
+    return supervisor_knowledge_map_topics_url($tile_slug);
+}
+
+/**
+ * Find a qa_tags term link by trying a list of exact Hebrew names.
+ *
+ * @param list<string> $names
+ * @return string Empty when no term is found or link cannot be built.
+ */
+function supervisor_knowledge_map_find_qa_tag_term_link_by_name_candidates($names) {
+    if (! taxonomy_exists('qa_tags')) {
+        return '';
+    }
+    foreach ((array) $names as $name) {
+        $name = wp_strip_all_tags((string) $name);
+        $name = trim($name);
+        if ($name === '') {
+            continue;
+        }
+        $term = get_term_by('name', $name, 'qa_tags');
+        if (! $term || is_wp_error($term)) {
+            continue;
+        }
+        $link = get_term_link($term);
+        if (! is_wp_error($link) && is_string($link) && $link !== '') {
+            return $link;
+        }
+    }
+
+    return '';
+}
+
 function add_qa_tags_knowledge_map_category_field($term) {
     $raw       = get_term_meta($term->term_id, 'qa_knowledge_map_category', true);
     $current   = $raw !== '' && $raw !== null ? sanitize_key($raw) : '';

@@ -102,13 +102,24 @@ get_header('supervisor');
                 <section class="knowledge-map-section" aria-labelledby="knowledge-map-heading">
                     <div class="home-knowledge-map">
                         <div class="knowledge-map-grid">
-                            <a class="km-tile km-top-left" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('regulatory_welfare_state')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>
-                            <a class="km-tile km-top-right" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('social_procurement')); ?>"><span>רכש חברתי</span></a>
-                            <a class="km-tile km-mid-left" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('policy')); ?>"><span>מדיניות</span></a>
-                            <a class="km-tile km-mid-right" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('knowledge_development')); ?>"><span>פיתוח ידע והדרכה</span></a>
-                            <a class="km-tile km-bottom-left" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('control')); ?>"><span>בקרה</span></a>
-                            <a class="km-tile km-bottom-right" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('enforcement')); ?>"><span>אכיפה</span></a>
-                            <a class="km-wide" href="<?php echo esc_url(supervisor_knowledge_map_topics_url('working_methods')); ?>"><span>שיטות עבודה</span></a>
+                            <a class="km-tile km-top-left" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('regulatory_welfare_state')); ?>"><span>מדינת הרווחה הרגולטורית</span></a>
+                            <a class="km-tile km-top-right" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('social_procurement')); ?>"><span>רכש חברתי</span></a>
+                            <a class="km-tile km-mid-left" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('policy')); ?>"><span>מדיניות</span></a>
+                            <a class="km-tile km-mid-right" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('knowledge_development')); ?>"><span>פיתוח ידע והדרכה</span></a>
+                            <a class="km-tile km-bottom-left" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('control')); ?>"><span>בקרה</span></a>
+                            <a class="km-tile km-bottom-right" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('enforcement')); ?>"><span>אכיפה</span></a>
+                            <?php
+                            $wm_url = supervisor_knowledge_map_tile_url('working_methods');
+                            if ($wm_url) :
+                                ?>
+                                <a class="km-wide" href="<?php echo esc_url($wm_url); ?>"><span>שיטות עבודה</span></a>
+                                <?php
+                            else :
+                                ?>
+                                <div class="km-wide" aria-disabled="true"><span>שיטות עבודה</span></div>
+                                <?php
+                            endif;
+                            ?>
                             <div class="km-center" aria-hidden="true"><span>גוף<br>פיקוח</span></div>
                         </div>
                     </div>
@@ -128,35 +139,43 @@ get_header('supervisor');
                     <span class="title-line"></span>
                 </h2>
             </div>
-            <div class="stories-grid" role="region" aria-label="<?php esc_attr_e('סיפורים מהשטח', 'text-domain'); ?>">
-                <?php
-                $stories_query = new WP_Query([
-                    'post_type' => 'qa_stories',
-                    'posts_per_page' => 3,
-                    'orderby' => 'date',
-                    'order' => 'DESC',
-                    'post_status' => 'publish',
-                ]);
-                if ($stories_query->have_posts()) :
-                    while ($stories_query->have_posts()) : $stories_query->the_post();
-                        $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 25);
-                ?>
-                        <a href="<?php the_permalink(); ?>" class="story-card">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="story-card-image"><?php the_post_thumbnail('medium'); ?></div>
-                            <?php else : ?>
-                                <div class="story-card-image story-card-placeholder"></div>
-                            <?php endif; ?>
-                            <h3 class="story-card-title"><?php the_title(); ?></h3>
-                            <?php if ($excerpt) : ?>
-                                <p class="story-card-excerpt"><?php echo esc_html($excerpt); ?></p>
-                            <?php endif; ?>
-                        </a>
-                <?php
-                    endwhile;
-                    wp_reset_postdata();
-                endif;
-                ?>
+            <div class="stories-carousel-wrapper" role="region" aria-label="<?php esc_attr_e('סיפורים מהשטח', 'text-domain'); ?>">
+                <button type="button" class="stories-carousel-prev" aria-label="<?php esc_attr_e('הקודם', 'text-domain'); ?>">
+                    <span aria-hidden="true">‹</span>
+                </button>
+                <div class="stories-carousel" aria-live="polite">
+                    <?php
+                    $stories_query = new WP_Query([
+                        'post_type' => 'qa_stories',
+                        'posts_per_page' => 12,
+                        'orderby' => 'date',
+                        'order' => 'DESC',
+                        'post_status' => 'publish',
+                    ]);
+                    if ($stories_query->have_posts()) :
+                        while ($stories_query->have_posts()) : $stories_query->the_post();
+                            $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 25);
+                    ?>
+                            <a href="<?php the_permalink(); ?>" class="story-card">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <div class="story-card-image"><?php the_post_thumbnail('medium'); ?></div>
+                                <?php else : ?>
+                                    <div class="story-card-image story-card-placeholder"></div>
+                                <?php endif; ?>
+                                <h3 class="story-card-title"><?php the_title(); ?></h3>
+                                <?php if ($excerpt) : ?>
+                                    <p class="story-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                                <?php endif; ?>
+                            </a>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+                <button type="button" class="stories-carousel-next" aria-label="<?php esc_attr_e('הבא', 'text-domain'); ?>">
+                    <span aria-hidden="true">›</span>
+                </button>
             </div>
         </section>
 

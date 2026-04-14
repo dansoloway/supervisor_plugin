@@ -297,7 +297,7 @@
 .supervisor-home .supervisor-content-wrapper.supervisor-two-column {
     display: grid !important;
     grid-template-columns: 3fr 7fr !important; /* Search/filters 30% (right), Updates list 70% (left) */
-    gap: 160px !important;
+    gap: 40px !important;
     align-items: start !important;
 }
 
@@ -2898,7 +2898,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         display: grid !important;
         grid-template-columns: 3fr 7fr !important;
         flex-direction: initial !important; /* Reset flex direction */
-        gap: 160px !important;
+        gap: 40px !important;
         align-items: start !important;
     }
 

@@ -10,11 +10,22 @@ jQuery(document).ready(function ($) {
 
     const UPDATES_PER_PAGE = 5;
 
+    function getSourceLinkText(url) {
+        if (!url || typeof url !== 'string') return '';
+        try {
+            const parsed = new URL(url, window.location.origin);
+            return parsed.host || url;
+        } catch (e) {
+            return url;
+        }
+    }
+
     function buildUpdateItemHtml(item, globalIndex) {
         const accordionId = 'search-result-' + globalIndex;
+        const sourceLinkText = item.source_link ? getSourceLinkText(item.source_link) : '';
         return `
-                                        <div class="qa-update-item content-card">
-                                            <div class="light-green-bkg accordion-header" data-accordion="${accordionId}">
+                                        <div class="qa-update-item">
+                                            <div class="accordion-header" data-accordion="${accordionId}">
                                                 <div class="qa-update-title">
                                                     <div class="title-date-container">
                                                         <h3>${item.title}</h3>
@@ -24,11 +35,11 @@ jQuery(document).ready(function ($) {
                                                 </div>
                                             </div>
                                             <div class="accordion-content" id="accordion-${accordionId}">
-                                                <div class="update-content-text"><p>${item.content || ''}</p></div>
+                                                <div class="update-content-text">${item.content || ''}</div>
                                                 <div class="taxonomy-boxes">
                                                     ${item.tags && item.tags.length > 0 ? `<p><strong>נושאי מפתח:</strong> ${item.tags.join(', ')}</p>` : ''}
                                                     ${item.themes && item.themes.length > 0 ? `<p><strong>תחומים:</strong> ${item.themes.join(', ')}</p>` : ''}
-                                                    ${item.source_link ? `<p><strong>לקישור:</strong> <a href="${item.source_link}" target="_blank" class="source-link">${item.source_link}</a></p>` : ''}
+                                                    ${item.source_link ? `<p><strong>למקור:</strong> <a href="${item.source_link}" target="_blank" class="source-link">${sourceLinkText}</a></p>` : ''}
                                                 </div>
                                             </div>
                                         </div>

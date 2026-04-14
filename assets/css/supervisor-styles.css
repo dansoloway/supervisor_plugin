@@ -5228,10 +5228,58 @@ body .supervisor-bib-cats .categories-grid {
     white-space: nowrap;
 }
 
-.stories-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.supervisor-home .stories-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+}
+
+.supervisor-home .stories-carousel-prev,
+.supervisor-home .stories-carousel-next {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--sv-border, #E5EAF0);
+    background: var(--sv-card, #fff);
+    color: var(--sv-text, #1f2937);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 28px;
+    line-height: 1;
+}
+
+.supervisor-home .stories-carousel-wrapper.no-scroll-needed .stories-carousel-prev,
+.supervisor-home .stories-carousel-wrapper.no-scroll-needed .stories-carousel-next {
+    display: none;
+}
+
+.supervisor-home .stories-carousel-prev:disabled,
+.supervisor-home .stories-carousel-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.supervisor-home .stories-carousel {
+    flex: 1;
+    min-width: 0;
+    display: flex;
     gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0; /* leave room for focus outline */
+}
+
+.supervisor-home .stories-carousel .story-card {
+    flex: 0 0 calc((100% - (24px * 2)) / 3);
+    scroll-snap-align: start;
 }
 
 .story-card {
@@ -5359,9 +5407,23 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 @media (max-width: 768px) {
-    .stories-grid {
-        grid-template-columns: 1fr;
+    .supervisor-home .stories-carousel-wrapper {
+        gap: 10px;
+    }
+
+    .supervisor-home .stories-carousel-prev,
+    .supervisor-home .stories-carousel-next {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    .supervisor-home .stories-carousel {
         gap: 16px;
+    }
+
+    .supervisor-home .stories-carousel .story-card {
+        flex-basis: 100%;
     }
 
     .supervisor-single-story .story-featured-image {

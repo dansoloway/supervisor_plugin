@@ -1,8 +1,9 @@
 <?php
 /**
  * Frozen snapshot of production page IDs (not loaded by WordPress).
- * The plugin reads config.php only — keep these defines in sync with config.php
- * when IDs change, or use this file to recover after a bad stash/deploy.
+ * The plugin reads `config.php` only (`config.php` is gitignored). To use these
+ * IDs on a server: `cp config-prod-backup.php config.php` (or merge into a
+ * local config.php). Keep in sync when IDs change.
  *
  * New environments: run `wp supervisor bootstrap-pages` then rely on slugs;
  * you usually do not need numeric defines.

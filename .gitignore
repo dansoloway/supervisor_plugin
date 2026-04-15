@@ -1,6 +1,9 @@
 config.log
 logs/
 
+# Environment-specific page IDs (copy from config.example.php or config-prod-backup.php)
+config.php
+
 # macOS
 .DS_Store
 

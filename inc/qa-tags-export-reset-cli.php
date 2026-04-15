@@ -110,20 +110,57 @@ function supervisor_qa_tags_export_state() {
 }
 
 /**
- * @param array<string, mixed> $export supervisor_qa_tags_export_state() shape
- * @return array<string, array<string, mixed>> name => first term export row
+ * Map an exported tag name (possibly legacy wording) to a term_id after CSV reset.
+ * Tries exact normalized name, then knowledge-map automap (name → leaf → canonical topic label).
+ *
+ * @param array<string, int> $term_ids_by_normalized_name normalized new topic title => term_id
  */
-function supervisor_qa_tags_export_terms_indexed_by_name($export) {
-    $by = [];
-    foreach ($export['terms'] ?? [] as $row) {
-        $n = isset($row['name']) ? supervisor_knowledge_map_automap_normalize_label($row['name']) : '';
-        if ($n === '' || isset($by[ $n ])) {
-            continue;
-        }
-        $by[ $n ] = $row;
+function supervisor_qa_tags_resolve_export_tag_name_to_term_id($export_name, $term_ids_by_normalized_name) {
+    $norm = supervisor_knowledge_map_automap_normalize_label((string) $export_name);
+    if ($norm !== '' && isset($term_ids_by_normalized_name[ $norm ])) {
+        return (int) $term_ids_by_normalized_name[ $norm ];
     }
 
-    return $by;
+    $leaf = supervisor_knowledge_map_automap_guess_leaf_from_name((string) $export_name);
+    if ($leaf === '') {
+        return 0;
+    }
+
+    $choices = supervisor_knowledge_map_category_choices();
+    if (! isset($choices[ $leaf ])) {
+        return 0;
+    }
+
+    $canon_norm = supervisor_knowledge_map_automap_normalize_label($choices[ $leaf ]);
+    if ($canon_norm === '' || ! isset($term_ids_by_normalized_name[ $canon_norm ])) {
+        return 0;
+    }
+
+    return (int) $term_ids_by_normalized_name[ $canon_norm ];
+}
+
+/**
+ * normalized term name => term_id for all current qa_tags (after CSV / manual setup).
+ *
+ * @return array<string, int>
+ */
+function supervisor_qa_tags_current_term_id_map_by_normalized_name() {
+    $map = [];
+    $terms = get_terms([
+        'taxonomy'   => 'qa_tags',
+        'hide_empty' => false,
+    ]);
+    if (is_wp_error($terms) || ! is_array($terms)) {
+        return $map;
+    }
+    foreach ($terms as $t) {
+        $n = supervisor_knowledge_map_automap_normalize_label($t->name);
+        if ($n !== '') {
+            $map[ $n ] = (int) $t->term_id;
+        }
+    }
+
+    return $map;
 }
 
 /**
@@ -255,24 +292,39 @@ function supervisor_qa_tags_insert_terms_from_csv($args = []) {
  * @param array<string, int>   $term_ids_by_normalized_name normalized topic => term_id
  */
 function supervisor_qa_tags_restore_term_meta_from_export($export, $term_ids_by_normalized_name, $dry_run = false) {
-    $by_name = supervisor_qa_tags_export_terms_indexed_by_name($export);
-    $applied  = 0;
+    $applied     = 0;
+    $seen_target = [];
 
-    foreach ($term_ids_by_normalized_name as $norm => $term_id) {
-        if ($term_id < 1 || ! isset($by_name[ $norm ])) {
+    foreach ($export['terms'] ?? [] as $row) {
+        $name = isset($row['name']) ? (string) $row['name'] : '';
+        if ($name === '') {
             continue;
         }
-        $meta = $by_name[ $norm ]['meta'] ?? [];
+
+        $term_id = supervisor_qa_tags_resolve_export_tag_name_to_term_id($name, $term_ids_by_normalized_name);
+        if ($term_id < 1) {
+            continue;
+        }
+
+        $meta = $row['meta'] ?? [];
         if (! is_array($meta) || $meta === []) {
             continue;
         }
+
         foreach ($meta as $key => $value) {
             if ($key === 'qa_knowledge_map_category') {
+                continue;
+            }
+            if (isset($seen_target[ $term_id ][ $key ])) {
                 continue;
             }
             if (! $dry_run) {
                 update_term_meta($term_id, $key, $value);
             }
+            if (! isset($seen_target[ $term_id ])) {
+                $seen_target[ $term_id ] = [];
+            }
+            $seen_target[ $term_id ][ $key ] = true;
             $applied++;
         }
     }
@@ -303,18 +355,15 @@ function supervisor_qa_tags_restore_post_assignments_from_export($export, $term_
 
         $term_ids = [];
         foreach ($names as $name) {
-            $norm = supervisor_knowledge_map_automap_normalize_label((string) $name);
-            if ($norm === '') {
+            if (supervisor_knowledge_map_automap_normalize_label((string) $name) === '') {
                 continue;
             }
-            if (! isset($term_ids_by_normalized_name[ $norm ])) {
+            $tid = supervisor_qa_tags_resolve_export_tag_name_to_term_id($name, $term_ids_by_normalized_name);
+            if ($tid < 1) {
                 $missing[] = (string) $name;
                 continue;
             }
-            $tid = $term_ids_by_normalized_name[ $norm ];
-            if ($tid > 0) {
-                $term_ids[] = $tid;
-            }
+            $term_ids[] = $tid;
         }
 
         $term_ids = array_values(array_unique(array_filter($term_ids)));
@@ -394,7 +443,7 @@ if (defined('WP_CLI') && WP_CLI) {
      * : CSV path (default: plugin נושאי מפתח - correct.csv).
      *
      * [--assignments=<path>]
-     * : JSON from export (default if omitted and readable: qa-tags-export.json in the plugin root). Restores term meta (except km category) and post qa_tags by **exact term name** match.
+     * : JSON from export (default if omitted and readable: qa-tags-export.json in the plugin root). Restores term meta and post qa_tags; legacy tag names are mapped via knowledge-map automap to current CSV titles.
      */
     WP_CLI::add_command('supervisor reset-qa-tags-from-csv', function ($__, $assoc_args) {
         $dry     = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
@@ -474,7 +523,7 @@ if (defined('WP_CLI') && WP_CLI) {
             $re = supervisor_qa_tags_restore_post_assignments_from_export($export, $map, false);
             WP_CLI::log(sprintf('Posts reassigned: %d', $re['posts']));
             if ($re['missing_names'] !== []) {
-                WP_CLI::warning('Tag names in export with no matching CSV term (posts skipped those tags): ' . implode(', ', array_slice($re['missing_names'], 0, 30))
+                WP_CLI::warning('Tag names in export still unmatched after legacy map: ' . implode(', ', array_slice($re['missing_names'], 0, 30))
                     . (count($re['missing_names']) > 30 ? ' …' : ''));
             }
         } elseif (is_array($export) && $dry) {
@@ -491,5 +540,64 @@ if (defined('WP_CLI') && WP_CLI) {
             $ins['created'],
             $dry ? 'yes' : 'no'
         ));
+    });
+
+    /**
+     * Re-apply export JSON to existing qa_tags (no term delete). Fixes posts after a reset when legacy tag names differ from CSV titles.
+     *
+     * ## OPTIONS
+     *
+     * [--dry-run]
+     * : Report only; no database writes.
+     *
+     * [--assignments=<path>]
+     * : Export JSON (default: qa-tags-export.json in the plugin root).
+     */
+    WP_CLI::add_command('supervisor reapply-qa-tags-from-export', function ($__, $assoc_args) {
+        $dry = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
+
+        $assignments_flag_set = array_key_exists('assignments', $assoc_args);
+        $assign_path           = $assignments_flag_set
+            ? (string) WP_CLI\Utils\get_flag_value($assoc_args, 'assignments', '')
+            : supervisor_qa_tags_export_default_file_path();
+
+        if ($assign_path !== '' && ! preg_match('#^/#', $assign_path) && ! preg_match('#^[A-Za-z]:[/\\\\]#', $assign_path)) {
+            $assign_path = PLUGIN_ROOT . ltrim($assign_path, '/');
+        }
+
+        if ($assign_path === '' || ! is_readable($assign_path)) {
+            WP_CLI::error(sprintf('Export JSON not readable: %s', $assign_path !== '' ? $assign_path : '(empty path)'));
+        }
+
+        $raw = file_get_contents($assign_path);
+        if ($raw === false) {
+            WP_CLI::error('Could not read export file.');
+        }
+
+        $export = json_decode($raw, true);
+        if (! is_array($export) || ! isset($export['posts'], $export['terms'])) {
+            WP_CLI::error('Invalid export JSON (expected posts + terms arrays).');
+        }
+
+        $map = supervisor_qa_tags_current_term_id_map_by_normalized_name();
+        if ($map === []) {
+            WP_CLI::error('No qa_tags terms found. Run reset from CSV or create terms first.');
+        }
+
+        if ($dry) {
+            WP_CLI::log('(dry run) Would reapply term meta and post assignments from export.');
+        }
+
+        $meta_writes = supervisor_qa_tags_restore_term_meta_from_export($export, $map, $dry);
+        WP_CLI::log(sprintf('Term meta keys %s: %d', $dry ? 'that would be written' : 'written', $meta_writes));
+
+        $re = supervisor_qa_tags_restore_post_assignments_from_export($export, $map, $dry);
+        WP_CLI::log(sprintf('Posts %s: %d', $dry ? 'that would get assignments' : 'updated', $re['posts']));
+        if ($re['missing_names'] !== []) {
+            WP_CLI::warning('Unmatched export tag names: ' . implode(', ', array_slice($re['missing_names'], 0, 30))
+                . (count($re['missing_names']) > 30 ? ' …' : ''));
+        }
+
+        WP_CLI::success($dry ? 'Dry run complete.' : 'Reapply complete.');
     });
 }

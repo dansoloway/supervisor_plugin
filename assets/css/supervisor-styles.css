@@ -5194,34 +5194,49 @@ body .supervisor-bib-cats .categories-grid {
     min-height: 200px;
 }
 
-/* ===== STORIES FROM THE FIELD - HOMEPAGE CAROUSEL ===== */
+/* ===== STORIES FROM THE FIELD - HOMEPAGE CAROUSEL (visual only; markup/JS unchanged) ===== */
 .supervisor-home .stories-from-field-section {
     margin-top: var(--sv-section-gap, 40px);
     padding-top: var(--sv-section-gap, 40px);
     width: 100%;
+    background: #fff;
 }
 
-/* Styled section title with horizontal lines */
+/* Section title: lines + optional accent (mockup: small square above title, slightly toward end) */
 .supervisor-home .stories-section-header {
     text-align: center;
-    margin-bottom: var(--sv-spacing-lg, 24px);
+    margin-bottom: var(--sv-spacing-lg, 28px);
 }
 
 .supervisor-home .stories-section-title-with-lines {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 100%;
+    position: relative;
+    padding-top: 18px;
     font-size: var(--sv-fs-h2, 24px);
-    font-weight: var(--sv-fw-bold, 700);
-    color: var(--sv-text, #1f2937);
+    font-weight: 700;
+    color: #111;
+}
+
+.supervisor-home .stories-section-title-with-lines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% + 2.25rem);
+    transform: translateX(-50%);
+    width: 11px;
+    height: 11px;
+    background: #e8d9b0;
 }
 
 .supervisor-home .stories-section-title-with-lines .title-line {
     flex: 1;
     height: 1px;
     min-width: 20px;
-    background: #9ca3af;
+    background: #d1d5db;
 }
 
 .supervisor-home .stories-section-title-with-lines .title-text {
@@ -5230,30 +5245,41 @@ body .supervisor-bib-cats .categories-grid {
 
 .supervisor-home .stories-carousel-wrapper {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    align-items: stretch;
+    gap: 12px;
     position: relative;
 }
 
+/* Thin chevrons, no pill — same buttons, same behavior */
 .supervisor-home .stories-carousel-prev,
 .supervisor-home .stories-carousel-next {
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 2px solid var(--sv-border, #E5EAF0);
-    background: var(--sv-card, #fff);
-    color: var(--sv-text, #1f2937);
+    width: 2rem;
+    min-width: 2rem;
+    align-self: center;
+    min-height: 7rem;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #111;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    font-size: 28px;
+    font-size: 1.75rem;
+    font-weight: 300;
     line-height: 1;
     position: relative;
     z-index: 2;
     pointer-events: auto;
+    box-shadow: none;
+}
+
+.supervisor-home .stories-carousel-prev:hover,
+.supervisor-home .stories-carousel-next:hover {
+    color: #000;
+    background: transparent;
 }
 
 .supervisor-home .stories-carousel-wrapper.no-scroll-needed .stories-carousel-prev,
@@ -5263,7 +5289,7 @@ body .supervisor-bib-cats .categories-grid {
 
 .supervisor-home .stories-carousel-prev:disabled,
 .supervisor-home .stories-carousel-next:disabled {
-    opacity: 0.4;
+    opacity: 0.35;
     cursor: not-allowed;
 }
 
@@ -5271,77 +5297,77 @@ body .supervisor-bib-cats .categories-grid {
     flex: 1;
     min-width: 0;
     display: flex;
-    gap: 24px;
+    gap: 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: thin;
     -webkit-overflow-scrolling: touch;
-    padding: 4px 0; /* leave room for focus outline */
+    padding: 4px 0;
 }
 
 .supervisor-home .stories-carousel .story-card {
-    flex: 0 0 calc((100% - (24px * 2)) / 3);
+    flex: 0 0 calc((100% - (20px * 2)) / 3);
     scroll-snap-align: start;
-}
-
-.story-card {
     display: flex;
     flex-direction: column;
-    background: #f3f4f6;
-    border: 1px solid var(--sv-border, #E5EAF0);
-    border-radius: 16px;
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    transition: box-shadow 0.2s, border-color 0.2s;
+    text-align: start;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.story-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-color: var(--sv-blue, #2563eb);
+.supervisor-home .stories-carousel .story-card:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-color: #ddd;
 }
 
-.story-card:focus {
+.supervisor-home .stories-carousel .story-card:focus {
     outline: 2px solid var(--sv-blue, #2563eb);
     outline-offset: 2px;
 }
 
-.story-card-image {
+.supervisor-home .stories-carousel .story-card-image {
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: #e5e7eb;
-    border-radius: 16px 16px 0 0;
+    background: #e8e8e8;
+    border-radius: 14px 14px 0 0;
     flex-shrink: 0;
 }
 
-.story-card-image img {
+.supervisor-home .stories-carousel .story-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
 
-.story-card-placeholder {
-    background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+.supervisor-home .stories-carousel .story-card-placeholder {
+    background: linear-gradient(145deg, #e5e5e5 0%, #f0f0f0 100%);
 }
 
-.story-card-title {
-    font-size: var(--sv-fs-lg, 18px);
-    font-weight: 600;
+.supervisor-home .stories-carousel .story-card-title {
+    font-size: 1.0625rem;
+    font-weight: 700;
     margin: 0;
-    padding: var(--sv-spacing-lg, 20px) var(--sv-spacing-md, 16px) var(--sv-spacing-sm, 8px);
-    line-height: 1.3;
-    color: var(--sv-text, #1f2937);
+    padding: 1rem 1rem 0.35rem;
+    line-height: 1.35;
+    color: #111;
 }
 
-.story-card-excerpt {
-    font-size: var(--sv-fs-sm, 14px);
-    line-height: 1.5;
-    color: #6b7280;
+.supervisor-home .stories-carousel .story-card-excerpt {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: #222;
     margin: 0;
-    padding: 0 var(--sv-spacing-md, 16px) var(--sv-spacing-lg, 20px);
+    padding: 0 1rem 1.1rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -5411,14 +5437,15 @@ body .supervisor-bib-cats .categories-grid {
 
 @media (max-width: 768px) {
     .supervisor-home .stories-carousel-wrapper {
-        gap: 10px;
+        gap: 8px;
     }
 
     .supervisor-home .stories-carousel-prev,
     .supervisor-home .stories-carousel-next {
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
+        width: 1.5rem;
+        min-width: 1.5rem;
+        min-height: 4rem;
+        font-size: 1.5rem;
     }
 
     .supervisor-home .stories-carousel {
@@ -5427,6 +5454,10 @@ body .supervisor-bib-cats .categories-grid {
 
     .supervisor-home .stories-carousel .story-card {
         flex-basis: 100%;
+    }
+
+    .supervisor-home .stories-section-title-with-lines::before {
+        left: calc(50% + 1.5rem);
     }
 
     .supervisor-single-story .story-featured-image {

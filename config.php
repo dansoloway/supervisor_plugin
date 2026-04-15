@@ -14,7 +14,6 @@
  * and paste the output below.
  */
 
-/*
 define('SUPERVISOR_HOME', 27886);
 define('SUPERVISOR_BIB_CATS', 27899);
 define('SUPERVISOR_UPDATES', 27906);
@@ -24,5 +23,4 @@ define('SUPERVISOR_CONTACT', 27912);
 define('SUPERVISOR_INTRO_TEXT', 27901);
 define('SUPERVISOR_ACTIVITIES', 28029);
 define('SUPERVISOR_KNOWLEDGE_MAP', 28040);
-*/
 

@@ -5314,8 +5314,8 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-home .stories-carousel .story-card {
-    /* ~14px narrower per card than full third; row still scrolls the same */
-    flex: 0 0 calc((100% - (20px * 2) - 42px) / 3);
+    /* Exactly one third of row (minus gaps) so a fourth card cannot peek beside three */
+    flex: 0 0 calc((100% - (20px * 2)) / 3);
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
@@ -5364,7 +5364,7 @@ body .supervisor-bib-cats .categories-grid {
     font-size: 1.0625rem;
     font-weight: 700;
     margin: 0;
-    padding: 1rem 1rem 0.35rem;
+    padding: 1.15rem 1.35rem 0.45rem;
     line-height: 1.35;
     color: #111;
 }
@@ -5375,7 +5375,7 @@ body .supervisor-bib-cats .categories-grid {
     line-height: 1.55;
     color: #222;
     margin: 0;
-    padding: 0 1rem 1.1rem;
+    padding: 0 1.35rem 1.35rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;

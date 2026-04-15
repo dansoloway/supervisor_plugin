@@ -14,8 +14,12 @@ if (! defined('SUPERVISOR_PLUGIN_BASENAME')) {
     define('SUPERVISOR_PLUGIN_BASENAME', plugin_basename(__FILE__));
 }
 
-// Optional SUPERVISOR_* overrides; otherwise IDs resolve from page slugs (see inc/supervisor-pages.php)
-require_once plugin_dir_path(__FILE__) . 'config.php';
+// Optional SUPERVISOR_* overrides; otherwise IDs resolve from page slugs (see inc/supervisor-pages.php).
+// Load only if present so a missing config.php (e.g. stashed locally, or not deployed) does not fatal the site.
+$supervisor_config_path = plugin_dir_path(__FILE__) . 'config.php';
+if (is_readable($supervisor_config_path)) {
+    require_once $supervisor_config_path;
+}
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-pages.php';
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-bootstrap-cli.php';
 

@@ -5301,13 +5301,21 @@ body .supervisor-bib-cats .categories-grid {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
     padding: 4px 0;
 }
 
+.supervisor-home .stories-carousel::-webkit-scrollbar {
+    display: none;
+    height: 0;
+    width: 0;
+}
+
 .supervisor-home .stories-carousel .story-card {
-    flex: 0 0 calc((100% - (20px * 2)) / 3);
+    /* ~14px narrower per card than full third; row still scrolls the same */
+    flex: 0 0 calc((100% - (20px * 2) - 42px) / 3);
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;

@@ -129,7 +129,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.4', // Version bump to force cache refresh (Phase 1)
+        '1.0.5', // Version bump (stories carousel controls)
         'all' // Media type
     );
 
@@ -160,14 +160,28 @@ function enqueue_alternate_header_assets() {
         true // Load in the footer
     );
 
-    // Enqueue Home Search JavaScript (only on home page)
-    if (is_page(SUPERVISOR_HOME)) {
+    // Enqueue Home Search + Stories carousel (supervisor home only).
+    // Use page template fallback when SUPERVISOR_HOME is unset or wrong so scripts still load.
+    $supervisor_home_id = defined('SUPERVISOR_HOME') ? (int) SUPERVISOR_HOME : 0;
+    $is_supervisor_home = ($supervisor_home_id > 0 && is_page($supervisor_home_id))
+        || (function_exists('is_page_template') && is_page_template('supervisor-home.php'));
+
+    if ($is_supervisor_home) {
         wp_enqueue_script(
             'home-search',
             plugins_url('/assets/js/home-search.js', __FILE__),
             ['jquery'], // Dependencies
             time(), // Force cache refresh
             true // Load in the footer
+        );
+
+        $stories_carousel_path = plugin_dir_path(__FILE__) . 'assets/js/stories-carousel.js';
+        wp_enqueue_script(
+            'stories-carousel',
+            plugins_url('/assets/js/stories-carousel.js', __FILE__),
+            [],
+            file_exists($stories_carousel_path) ? (string) filemtime($stories_carousel_path) : '1.0.0',
+            true
         );
     }
 

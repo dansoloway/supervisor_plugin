@@ -1,24 +1,45 @@
 /**
- * Stories from the Field - RTL-safe carousel
- * Uses visible-card detection and scrollIntoView. No scrollLeft math.
+ * Stories from the Field — horizontal carousel
+ * Uses scrollBy on the overflow container. scrollIntoView is unreliable inside
+ * overflow-x: auto, especially with RTL + flex.
  */
 (function() {
     'use strict';
 
     function initStoriesCarousel() {
         var wrapper = document.querySelector('.stories-carousel-wrapper');
-        if (!wrapper) return;
+        if (!wrapper) {
+            return;
+        }
 
         var carousel = wrapper.querySelector('.stories-carousel');
         var prevBtn = wrapper.querySelector('.stories-carousel-prev');
         var nextBtn = wrapper.querySelector('.stories-carousel-next');
 
-        if (!carousel || !prevBtn || !nextBtn) return;
+        if (!carousel || !prevBtn || !nextBtn) {
+            return;
+        }
 
         var cards = Array.prototype.slice.call(carousel.querySelectorAll('.story-card'));
+        if (cards.length === 0) {
+            return;
+        }
 
         function hasOverflow() {
-            return carousel.scrollWidth > carousel.clientWidth;
+            return carousel.scrollWidth > carousel.clientWidth + 1;
+        }
+
+        function isRtl() {
+            return getComputedStyle(carousel).direction === 'rtl';
+        }
+
+        /** ~one viewport (three cards); fallback if layout not ready */
+        function scrollStep() {
+            var w = carousel.clientWidth;
+            if (w < 80) {
+                w = 320;
+            }
+            return Math.max(120, Math.floor(w * 0.92));
         }
 
         function isCardVisible(card) {
@@ -26,13 +47,15 @@
             var cardRect = card.getBoundingClientRect();
             var overlapStart = Math.max(cRect.left, cardRect.left);
             var overlapEnd = Math.min(cRect.right, cardRect.right);
-            return overlapEnd > overlapStart;
+            return overlapEnd > overlapStart + 2;
         }
 
         function getVisibleIndices() {
             var indices = [];
             for (var i = 0; i < cards.length; i++) {
-                if (isCardVisible(cards[i])) indices.push(i);
+                if (isCardVisible(cards[i])) {
+                    indices.push(i);
+                }
             }
             return indices;
         }
@@ -57,45 +80,38 @@
         }
 
         function updateButtonStates() {
-            if (!shouldShowArrows()) return;
-
+            if (!shouldShowArrows()) {
+                prevBtn.disabled = false;
+                nextBtn.disabled = false;
+                return;
+            }
             prevBtn.disabled = atStart();
             nextBtn.disabled = atEnd();
         }
 
-        function scrollToCard(index, alignStart) {
-            if (index < 0 || index >= cards.length) return;
-
-            var el = cards[index];
-            el.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: alignStart ? 'start' : 'end'
-            });
-        }
-
-        prevBtn.addEventListener('click', function() {
-            if (prevBtn.disabled) return;
-
-            var indices = getVisibleIndices();
-            var targetIdx = indices.length > 0 ? indices[0] - 1 : 0;
-            if (targetIdx < 0) targetIdx = 0;
-
-            scrollToCard(targetIdx, true);
+        prevBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (prevBtn.disabled) {
+                return;
+            }
+            var step = scrollStep();
+            var rtl = isRtl();
+            carousel.scrollBy({ left: rtl ? step : -step, behavior: 'smooth' });
         });
 
-        nextBtn.addEventListener('click', function() {
-            if (nextBtn.disabled) return;
-
-            var indices = getVisibleIndices();
-            var lastIdx = cards.length - 1;
-            var targetIdx = indices.length > 0 ? indices[indices.length - 1] + 1 : 0;
-            if (targetIdx > lastIdx) targetIdx = lastIdx;
-
-            scrollToCard(targetIdx, false);
+        nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (nextBtn.disabled) {
+                return;
+            }
+            var step = scrollStep();
+            var rtl = isRtl();
+            carousel.scrollBy({ left: rtl ? -step : step, behavior: 'smooth' });
         });
 
-        carousel.addEventListener('scroll', updateButtonStates);
+        carousel.addEventListener('scroll', function() {
+            window.requestAnimationFrame(updateButtonStates);
+        });
         window.addEventListener('resize', function() {
             updateArrowVisibility();
             updateButtonStates();

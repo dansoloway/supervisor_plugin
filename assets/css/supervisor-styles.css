@@ -5251,6 +5251,9 @@ body .supervisor-bib-cats .categories-grid {
     padding: 0;
     font-size: 28px;
     line-height: 1;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
 }
 
 .supervisor-home .stories-carousel-wrapper.no-scroll-needed .stories-carousel-prev,

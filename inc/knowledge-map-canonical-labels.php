@@ -30,7 +30,7 @@ function supervisor_knowledge_map_canonical_leaf_labels() {
         'wm_integrated_supervision'      => 'פיקוח משולב',
         'wm_supervisor_supervisee_relations' => 'יחסי מפקחים מפוקחים',
         'sp_service_delivery_outsourcing' => 'רכש חברתי',
-        'regulatory_welfare_state'       => 'מדינת רווחה רגולטורית',
+        'regulatory_welfare_state'       => 'מדינת הרווחה הרגולטורית',
     ];
 
     return $map;

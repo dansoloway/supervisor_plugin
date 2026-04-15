@@ -36,6 +36,12 @@ require_once plugin_dir_path(__FILE__) . 'inc/acf-org-country-select.php';
 // Knowledge-map category automap (qa_tags meta) + optional WP-CLI command
 require_once plugin_dir_path(__FILE__) . 'inc/knowledge-map-automap.php';
 
+// CSV-driven sync for qa_knowledge_map_category + WP-CLI supervisor sync-km-csv
+require_once plugin_dir_path(__FILE__) . 'inc/knowledge-map-csv-sync.php';
+
+// Export / reset qa_tags (WP-CLI: export-qa-tags-state, reset-qa-tags-from-csv)
+require_once plugin_dir_path(__FILE__) . 'inc/qa-tags-export-reset-cli.php';
+
 // AJAX: bibliography categories (נושאי מפתח) sidebar filter
 require_once plugin_dir_path(__FILE__) . 'inc/ajax-bib-cats-terms.php';
 

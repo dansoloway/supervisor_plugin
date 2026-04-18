@@ -2,10 +2,11 @@
 /* Template Name: Supervisor Bibliography Categories */
 get_header('supervisor');
 $bib_cats_area_labels = [
-    'policy'               => __('מדיניות', 'text-domain'),
-    'control'              => __('בקרה', 'text-domain'),
-    'enforcement'          => __('אכיפה', 'text-domain'),
-    'knowledge_development'=> __('פיתוח ידע והדרכה', 'text-domain'),
+    'policy'                => __('מדיניות', 'text-domain'),
+    'control'               => __('בקרה', 'text-domain'),
+    'enforcement'           => __('אכיפה', 'text-domain'),
+    'knowledge_development' => __('פיתוח ידע והדרכה', 'text-domain'),
+    'working_methods'       => __('שיטות עבודה', 'text-domain'),
 ];
 ?>
 
@@ -51,7 +52,6 @@ $bib_cats_area_labels = [
                 $km_cat_raw    = isset($_GET['km_cat']) ? sanitize_key(wp_unslash($_GET['km_cat'])) : '';
                 $filter_slugs  = $km_cat_raw ? supervisor_knowledge_map_resolve_to_leaf_slugs($km_cat_raw) : [];
                 $filter_active = ! empty($filter_slugs);
-                $filter_label  = $filter_active ? supervisor_knowledge_map_filter_banner_label($km_cat_raw) : '';
                 ?>
 
                 <div class="categories-grid" id="bib-cats-grid">
@@ -81,7 +81,7 @@ $bib_cats_area_labels = [
                                     name="bib-cats-search"
                                     autocomplete="off"
                                     placeholder="<?php echo esc_attr__('חיפוש', 'text-domain'); ?>"
-                                    value="<?php echo esc_attr($filter_active ? $filter_label : ''); ?>"
+                                    value=""
                                     class="search-input-field"
                                 >
                                 <button type="button" class="search-button" id="bib-cats-search-button" aria-label="<?php echo esc_attr__('חיפוש', 'text-domain'); ?>">

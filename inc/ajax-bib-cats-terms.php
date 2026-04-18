@@ -11,7 +11,7 @@ if (! defined('ABSPATH')) {
  * @return list<string>
  */
 function supervisor_bib_cats_sidebar_area_slugs() {
-    return ['policy', 'control', 'enforcement', 'knowledge_development'];
+    return ['policy', 'control', 'enforcement', 'knowledge_development', 'working_methods'];
 }
 
 /**

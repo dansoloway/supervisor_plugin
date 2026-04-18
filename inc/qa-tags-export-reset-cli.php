@@ -111,14 +111,18 @@ function supervisor_qa_tags_export_state() {
 
 /**
  * Map an exported tag name (possibly legacy wording) to a term_id after CSV reset.
- * Tries exact normalized name, then knowledge-map automap (name → leaf → canonical topic label).
+ * Tries exact normalized name, then (unless $exact_match_only) knowledge-map automap (name → leaf → canonical topic label).
  *
  * @param array<string, int> $term_ids_by_normalized_name normalized new topic title => term_id
  */
-function supervisor_qa_tags_resolve_export_tag_name_to_term_id($export_name, $term_ids_by_normalized_name) {
+function supervisor_qa_tags_resolve_export_tag_name_to_term_id($export_name, $term_ids_by_normalized_name, $exact_match_only = false) {
     $norm = supervisor_knowledge_map_automap_normalize_label((string) $export_name);
     if ($norm !== '' && isset($term_ids_by_normalized_name[ $norm ])) {
         return (int) $term_ids_by_normalized_name[ $norm ];
+    }
+
+    if ($exact_match_only) {
+        return 0;
     }
 
     $leaf = supervisor_knowledge_map_automap_guess_leaf_from_name((string) $export_name);
@@ -238,6 +242,7 @@ function supervisor_qa_tags_insert_terms_from_csv($args = []) {
     foreach ($rows as $pair) {
         $topic      = $pair[0];
         $parent_csv = $pair[1];
+        $icon_cell  = isset($pair[2]) ? (string) $pair[2] : '';
         $leaf       = supervisor_knowledge_map_csv_leaf_slug_for_topic_title($topic);
         if ($leaf === '' || ! isset($choices[ $leaf ])) {
             $out['errors'][] = 'No leaf for topic: ' . $topic;
@@ -278,6 +283,10 @@ function supervisor_qa_tags_insert_terms_from_csv($args = []) {
 
         $term_id = (int) $ins['term_id'];
         update_term_meta($term_id, 'qa_knowledge_map_category', $leaf);
+        $fa_class = $icon_cell !== '' ? supervisor_knowledge_map_csv_icon_cell_to_fa_class($icon_cell) : '';
+        if ($fa_class !== '') {
+            update_term_meta($term_id, 'fa_icon', $fa_class);
+        }
         $out['created']++;
         $out['term_ids_by_normalized_name'][ $norm ] = $term_id;
     }
@@ -290,8 +299,9 @@ function supervisor_qa_tags_insert_terms_from_csv($args = []) {
  *
  * @param array<string, mixed> $export
  * @param array<string, int>   $term_ids_by_normalized_name normalized topic => term_id
+ * @param bool                 $exact_match_only If true, only exact Hebrew name matches (no automap to canonical leaf title).
  */
-function supervisor_qa_tags_restore_term_meta_from_export($export, $term_ids_by_normalized_name, $dry_run = false) {
+function supervisor_qa_tags_restore_term_meta_from_export($export, $term_ids_by_normalized_name, $dry_run = false, $exact_match_only = false) {
     $applied     = 0;
     $seen_target = [];
 
@@ -301,7 +311,7 @@ function supervisor_qa_tags_restore_term_meta_from_export($export, $term_ids_by_
             continue;
         }
 
-        $term_id = supervisor_qa_tags_resolve_export_tag_name_to_term_id($name, $term_ids_by_normalized_name);
+        $term_id = supervisor_qa_tags_resolve_export_tag_name_to_term_id($name, $term_ids_by_normalized_name, $exact_match_only);
         if ($term_id < 1) {
             continue;
         }
@@ -337,9 +347,10 @@ function supervisor_qa_tags_restore_term_meta_from_export($export, $term_ids_by_
  *
  * @param array<string, mixed> $export
  * @param array<string, int>   $term_ids_by_normalized_name
+ * @param bool                 $exact_match_only If true, only exact Hebrew name matches (no automap).
  * @return array{posts: int, missing_names: list<string>}
  */
-function supervisor_qa_tags_restore_post_assignments_from_export($export, $term_ids_by_normalized_name, $dry_run = false) {
+function supervisor_qa_tags_restore_post_assignments_from_export($export, $term_ids_by_normalized_name, $dry_run = false, $exact_match_only = false) {
     $missing = [];
     $posts   = 0;
 
@@ -358,7 +369,7 @@ function supervisor_qa_tags_restore_post_assignments_from_export($export, $term_
             if (supervisor_knowledge_map_automap_normalize_label((string) $name) === '') {
                 continue;
             }
-            $tid = supervisor_qa_tags_resolve_export_tag_name_to_term_id($name, $term_ids_by_normalized_name);
+            $tid = supervisor_qa_tags_resolve_export_tag_name_to_term_id($name, $term_ids_by_normalized_name, $exact_match_only);
             if ($tid < 1) {
                 $missing[] = (string) $name;
                 continue;
@@ -386,7 +397,9 @@ function supervisor_qa_tags_restore_post_assignments_from_export($export, $term_
 
 if (defined('WP_CLI') && WP_CLI) {
     /**
-     * Export qa_tags term list + post assignments (JSON). Run before reset.
+     * Export qa_tags term list + post assignments (JSON).
+     *
+     * Optional snapshot before `wp supervisor reset-qa-tags-from-csv`: preserves post↔tag links and term meta for reassignment (unless you use `--no-assignments` on reset).
      *
      * ## OPTIONS
      *
@@ -443,7 +456,13 @@ if (defined('WP_CLI') && WP_CLI) {
      * : CSV path (default: plugin נושאי מפתח - correct.csv).
      *
      * [--assignments=<path>]
-     * : JSON from export (default if omitted and readable: qa-tags-export.json in the plugin root). Restores term meta and post qa_tags; legacy tag names are mapped via knowledge-map automap to current CSV titles.
+     * : JSON from export (default if omitted and readable: qa-tags-export.json in the plugin root). Restores term meta and post qa_tags; legacy tag names are mapped via knowledge-map automap unless --exact-match-only.
+     *
+     * [--no-assignments]
+     * : Do not read any JSON; recreate terms from CSV only. Posts will have no qa_tags after term deletion until you assign in admin, run `reapply-qa-tags-from-export`, or import.
+     *
+     * [--exact-match-only]
+     * : When restoring from JSON, map export tag names to new terms by exact Hebrew title only (skip knowledge-map automap fallback).
      */
     WP_CLI::add_command('supervisor reset-qa-tags-from-csv', function ($__, $assoc_args) {
         $dry     = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
@@ -461,34 +480,41 @@ if (defined('WP_CLI') && WP_CLI) {
             WP_CLI::error(sprintf('CSV not readable: %s', $csv_path));
         }
 
-        $assignments_flag_set = array_key_exists('assignments', $assoc_args);
-        $assign_path          = $assignments_flag_set
-            ? (string) WP_CLI\Utils\get_flag_value($assoc_args, 'assignments', '')
-            : supervisor_qa_tags_export_default_file_path();
-
-        if ($assign_path !== '' && ! preg_match('#^/#', $assign_path) && ! preg_match('#^[A-Za-z]:[/\\\\]#', $assign_path)) {
-            $assign_path = PLUGIN_ROOT . ltrim($assign_path, '/');
-        }
+        $no_assignments = WP_CLI\Utils\get_flag_value($assoc_args, 'no-assignments', false);
+        $exact_only     = WP_CLI\Utils\get_flag_value($assoc_args, 'exact-match-only', false);
 
         $export = null;
-        if ($assign_path === '') {
-            WP_CLI::warning('No assignments file (--assignments was empty). Posts will keep no qa_tags until you assign manually.');
-        } elseif (! is_readable($assign_path)) {
-            if ($assignments_flag_set) {
-                WP_CLI::error(sprintf('Assignments JSON not readable: %s', $assign_path));
-            }
-            WP_CLI::warning(sprintf(
-                'Default export not found or not readable (%s). Run `wp supervisor export-qa-tags-state` first, or pass --assignments=.',
-                $assign_path
-            ));
+        if ($no_assignments) {
+            WP_CLI::log('Skipping assignments JSON (--no-assignments): terms recreated from CSV only; re-link later with `wp supervisor reapply-qa-tags-from-export` or in admin.');
         } else {
-            $raw = file_get_contents($assign_path);
-            if ($raw === false) {
-                WP_CLI::error('Could not read assignments file.');
+            $assignments_flag_set = array_key_exists('assignments', $assoc_args);
+            $assign_path           = $assignments_flag_set
+                ? (string) WP_CLI\Utils\get_flag_value($assoc_args, 'assignments', '')
+                : supervisor_qa_tags_export_default_file_path();
+
+            if ($assign_path !== '' && ! preg_match('#^/#', $assign_path) && ! preg_match('#^[A-Za-z]:[/\\\\]#', $assign_path)) {
+                $assign_path = PLUGIN_ROOT . ltrim($assign_path, '/');
             }
-            $export = json_decode($raw, true);
-            if (! is_array($export) || ! isset($export['posts'], $export['terms'])) {
-                WP_CLI::error('Invalid assignments JSON (expected posts + terms arrays).');
+
+            if ($assign_path === '') {
+                WP_CLI::warning('No assignments file (--assignments was empty). Posts will have no qa_tags until you assign manually.');
+            } elseif (! is_readable($assign_path)) {
+                if ($assignments_flag_set) {
+                    WP_CLI::error(sprintf('Assignments JSON not readable: %s', $assign_path));
+                }
+                WP_CLI::warning(sprintf(
+                    'Default export not found or not readable (%s). Run `wp supervisor export-qa-tags-state` first, or pass --assignments=.',
+                    $assign_path
+                ));
+            } else {
+                $raw = file_get_contents($assign_path);
+                if ($raw === false) {
+                    WP_CLI::error('Could not read assignments file.');
+                }
+                $export = json_decode($raw, true);
+                if (! is_array($export) || ! isset($export['posts'], $export['terms'])) {
+                    WP_CLI::error('Invalid assignments JSON (expected posts + terms arrays).');
+                }
             }
         }
 
@@ -517,13 +543,14 @@ if (defined('WP_CLI') && WP_CLI) {
         $map = $ins['term_ids_by_normalized_name'];
 
         if (is_array($export) && ! $dry) {
-            $meta_writes = supervisor_qa_tags_restore_term_meta_from_export($export, $map, false);
+            $meta_writes = supervisor_qa_tags_restore_term_meta_from_export($export, $map, false, $exact_only);
             WP_CLI::log(sprintf('Term meta keys restored (excluding km category): %d', $meta_writes));
 
-            $re = supervisor_qa_tags_restore_post_assignments_from_export($export, $map, false);
+            $re = supervisor_qa_tags_restore_post_assignments_from_export($export, $map, false, $exact_only);
             WP_CLI::log(sprintf('Posts reassigned: %d', $re['posts']));
             if ($re['missing_names'] !== []) {
-                WP_CLI::warning('Tag names in export still unmatched after legacy map: ' . implode(', ', array_slice($re['missing_names'], 0, 30))
+                $hint = $exact_only ? 'exact title match' : 'legacy automap';
+                WP_CLI::warning('Tag names in export still unmatched (' . $hint . '): ' . implode(', ', array_slice($re['missing_names'], 0, 30))
                     . (count($re['missing_names']) > 30 ? ' …' : ''));
             }
         } elseif (is_array($export) && $dry) {
@@ -534,11 +561,13 @@ if (defined('WP_CLI') && WP_CLI) {
             flush_rewrite_rules(false);
         }
 
+        $suffix = $no_assignments ? ' | assignments: skipped (no JSON)' : '';
         WP_CLI::success(sprintf(
-            'Terms deleted: %d | terms created: %d | dry-run: %s',
+            'Terms deleted: %d | terms created: %d | dry-run: %s%s',
             $del['deleted'],
             $ins['created'],
-            $dry ? 'yes' : 'no'
+            $dry ? 'yes' : 'no',
+            $suffix
         ));
     });
 
@@ -552,9 +581,13 @@ if (defined('WP_CLI') && WP_CLI) {
      *
      * [--assignments=<path>]
      * : Export JSON (default: qa-tags-export.json in the plugin root).
+     *
+     * [--exact-match-only]
+     * : Map export tag names to current terms by exact Hebrew title only (skip knowledge-map automap fallback).
      */
     WP_CLI::add_command('supervisor reapply-qa-tags-from-export', function ($__, $assoc_args) {
-        $dry = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
+        $dry        = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
+        $exact_only = WP_CLI\Utils\get_flag_value($assoc_args, 'exact-match-only', false);
 
         $assignments_flag_set = array_key_exists('assignments', $assoc_args);
         $assign_path           = $assignments_flag_set
@@ -588,13 +621,13 @@ if (defined('WP_CLI') && WP_CLI) {
             WP_CLI::log('(dry run) Would reapply term meta and post assignments from export.');
         }
 
-        $meta_writes = supervisor_qa_tags_restore_term_meta_from_export($export, $map, $dry);
+        $meta_writes = supervisor_qa_tags_restore_term_meta_from_export($export, $map, $dry, $exact_only);
         WP_CLI::log(sprintf('Term meta keys %s: %d', $dry ? 'that would be written' : 'written', $meta_writes));
 
-        $re = supervisor_qa_tags_restore_post_assignments_from_export($export, $map, $dry);
+        $re = supervisor_qa_tags_restore_post_assignments_from_export($export, $map, $dry, $exact_only);
         WP_CLI::log(sprintf('Posts %s: %d', $dry ? 'that would get assignments' : 'updated', $re['posts']));
         if ($re['missing_names'] !== []) {
-            WP_CLI::warning('Unmatched export tag names: ' . implode(', ', array_slice($re['missing_names'], 0, 30))
+            WP_CLI::warning('Unmatched export tag names' . ($exact_only ? ' (exact match only)' : '') . ': ' . implode(', ', array_slice($re['missing_names'], 0, 30))
                 . (count($re['missing_names']) > 30 ? ' …' : ''));
         }
 

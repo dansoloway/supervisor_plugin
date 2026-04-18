@@ -13,7 +13,33 @@ function supervisor_knowledge_map_csv_default_path() {
 }
 
 /**
- * @return list<array{0: string, 1: string}> [שם נושא המפתח, קטגוריית מפת הידע]
+ * Turn optional CSV icon cell (e.g. glasses, shield-alt) into a Font Awesome class string.
+ */
+function supervisor_knowledge_map_csv_icon_cell_to_fa_class($raw) {
+    $raw = trim((string) $raw);
+    if ($raw === '') {
+        return '';
+    }
+    if (preg_match('/\bfa-(solid|regular|brands)\s+fa-/i', $raw) || preg_match('/^fa[srb]?\s+fa-/i', $raw)) {
+        return sanitize_text_field($raw);
+    }
+    $suffix = strtolower(preg_replace('/\s+/u', '-', $raw));
+    $suffix = preg_replace('/[^a-z0-9-]/', '', $suffix);
+    if ($suffix === '') {
+        return '';
+    }
+    $aliases = [
+        'shield-alt' => 'shield-halved',
+    ];
+    if (isset($aliases[ $suffix ])) {
+        $suffix = $aliases[ $suffix ];
+    }
+
+    return 'fa-solid fa-' . $suffix;
+}
+
+/**
+ * @return list<array{0: string, 1: string, 2: string}> [שם נושא המפתח, קטגוריית מפת הידע, optional שם האייקון]
  */
 function supervisor_knowledge_map_csv_read_rows($path) {
     if (! is_readable($path)) {
@@ -31,22 +57,23 @@ function supervisor_knowledge_map_csv_read_rows($path) {
         }
         $a = supervisor_knowledge_map_automap_normalize_label($row[0]);
         $b = supervisor_knowledge_map_automap_normalize_label($row[1]);
+        $c = isset($row[2]) ? trim((string) $row[2]) : '';
         if ($a === '' || $b === '') {
             continue;
         }
-        $rows[] = [$a, $b];
+        $rows[] = [$a, $b, $c];
     }
     fclose($fh);
 
     $unique = [];
     $seen    = [];
-    foreach ($rows as $pair) {
-        $k = $pair[0] . "\t" . $pair[1];
+    foreach ($rows as $triple) {
+        $k = $triple[0] . "\t" . $triple[1];
         if (isset($seen[ $k ])) {
             continue;
         }
         $seen[ $k ]   = true;
-        $unique[]     = $pair;
+        $unique[]     = $triple;
     }
 
     return $unique;
@@ -113,7 +140,7 @@ function supervisor_knowledge_map_csv_term_ids_for_exact_name($name) {
  * Apply CSV rows to qa_tags: set qa_knowledge_map_category to the matching leaf slug.
  *
  * @param array{dry_run?: bool, path?: string} $args
- * @return array{updated: int, skipped_parent_mismatch: int, skipped_no_leaf: int, skipped_no_term: int, csv_pairs?: int, rows: list<array<string, mixed>>}
+ * @return array{updated: int, icons_written: int, skipped_parent_mismatch: int, skipped_no_leaf: int, skipped_no_term: int, csv_pairs?: int, rows: list<array<string, mixed>>}
  */
 function supervisor_knowledge_map_sync_csv_to_qa_tags($args = []) {
     $dry  = ! empty($args['dry_run']);
@@ -123,6 +150,7 @@ function supervisor_knowledge_map_sync_csv_to_qa_tags($args = []) {
 
     $stats = [
         'updated'                   => 0,
+        'icons_written'             => 0,
         'skipped_parent_mismatch'   => 0,
         'skipped_no_leaf'           => 0,
         'skipped_no_term'           => 0,
@@ -140,9 +168,10 @@ function supervisor_knowledge_map_sync_csv_to_qa_tags($args = []) {
 
     $parent_map = supervisor_knowledge_map_csv_parent_column_for_leaf();
 
-    foreach ($rows as $pair) {
-        $topic       = $pair[0];
-        $parent_csv  = $pair[1];
+    foreach ($rows as $triple) {
+        $topic       = $triple[0];
+        $parent_csv  = $triple[1];
+        $icon_cell   = isset($triple[2]) ? (string) $triple[2] : '';
         $leaf        = supervisor_knowledge_map_csv_leaf_slug_for_topic_title($topic);
         if ($leaf === '' || ! isset($choices[ $leaf ])) {
             $stats['skipped_no_leaf']++;
@@ -171,6 +200,8 @@ function supervisor_knowledge_map_sync_csv_to_qa_tags($args = []) {
             continue;
         }
 
+        $fa_class = $icon_cell !== '' ? supervisor_knowledge_map_csv_icon_cell_to_fa_class($icon_cell) : '';
+
         foreach ($term_ids as $term_id) {
             $current = get_term_meta($term_id, 'qa_knowledge_map_category', true);
             $current = $current !== '' && $current !== null ? sanitize_key((string) $current) : '';
@@ -179,6 +210,13 @@ function supervisor_knowledge_map_sync_csv_to_qa_tags($args = []) {
             }
             if ($current !== $leaf) {
                 $stats['updated']++;
+            }
+            if ($fa_class !== '' && ! $dry) {
+                $prev_icon = (string) get_term_meta($term_id, 'fa_icon', true);
+                update_term_meta($term_id, 'fa_icon', $fa_class);
+                if ($prev_icon !== $fa_class) {
+                    $stats['icons_written']++;
+                }
             }
         }
     }
@@ -196,7 +234,7 @@ if (defined('WP_CLI') && WP_CLI) {
      * : Report actions without writing term meta.
      *
      * [--csv=<path>]
-     * : Absolute or relative path to a UTF-8 CSV with header: שם נושא המפתח,קטגוריית מפת הידע
+     * : Absolute or relative path to a UTF-8 CSV with header: שם נושא המפתח,קטגוריית מפת הידע[,שם האייקון] (optional third column → fa_icon term meta).
      */
     WP_CLI::add_command('supervisor sync-km-csv', function ($__, $assoc_args) {
         $dry  = WP_CLI\Utils\get_flag_value($assoc_args, 'dry-run', false);
@@ -221,8 +259,9 @@ if (defined('WP_CLI') && WP_CLI) {
 
         WP_CLI::log($dry ? '(dry run) no database writes for meta changes' : 'Term meta updated where needed');
         WP_CLI::success(sprintf(
-            'meta writes counted: %d | no qa_tags term for name: %d | topic not a leaf title: %d | parent column mismatch: %d',
+            'km_category writes: %d | fa_icon writes: %d | no qa_tags term for name: %d | topic not a leaf title: %d | parent column mismatch: %d',
             $stats['updated'],
+            $stats['icons_written'],
             $stats['skipped_no_term'],
             $stats['skipped_no_leaf'],
             $stats['skipped_parent_mismatch']

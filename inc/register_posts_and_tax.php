@@ -585,9 +585,8 @@ function supervisor_knowledge_map_topics_url($slug) {
 /**
  * Resolve a Knowledge Map tile click target.
  *
- * - The 4 main areas link to the Key-Terms page filtered by `?km_cat=<area>`.
- * - "רכש חברתי" and "מדינת הרווחה הרגולטורית" link to their single Key-Term (qa_tags term) pages.
- * - "שיטות עבודה" is intentionally disabled (empty URL) for now.
+ * - Area tiles link to the Key-Terms page filtered by `?km_cat=<parent slug>` (all leaves in that group).
+ * - "רכש חברתי" and "מדינת הרווחה הרגולטורית" prefer a direct qa_tags term archive when the term name exists.
  *
  * @param string $tile_slug Tile slug from templates (e.g. policy, social_procurement).
  * @return string URL or empty string when disabled.
@@ -595,11 +594,6 @@ function supervisor_knowledge_map_topics_url($slug) {
 function supervisor_knowledge_map_tile_url($tile_slug) {
     $tile_slug = sanitize_key((string) $tile_slug);
     if ($tile_slug === '') {
-        return '';
-    }
-
-    // Disabled for now (product decision: easy to enable later).
-    if ($tile_slug === 'working_methods') {
         return '';
     }
 
@@ -730,7 +724,23 @@ add_action('created_qa_tags', 'save_qa_tags_knowledge_map_category', 15, 1);
 // Helper function to get icon for a term
 function get_term_fa_icon($term_id, $default_icon = 'fas fa-folder') {
     $icon = get_term_meta($term_id, 'fa_icon', true);
-    return !empty($icon) ? $icon : $default_icon;
+    if (! empty($icon)) {
+        return $icon;
+    }
+    $term = get_term($term_id);
+    if ($term && ! is_wp_error($term) && $term->taxonomy === 'qa_tags') {
+        $km_raw = get_term_meta($term_id, 'qa_knowledge_map_category', true);
+        $km_raw = $km_raw !== '' && $km_raw !== null ? sanitize_key((string) $km_raw) : '';
+        if ($km_raw !== '') {
+            $km_leaf = supervisor_knowledge_map_normalize_slug($km_raw);
+            $fa      = supervisor_knowledge_map_leaf_default_fa_icon($km_leaf);
+            if ($fa !== '') {
+                return $fa;
+            }
+        }
+    }
+
+    return $default_icon;
 }
 
 // Helper function to get icon for a term by term object

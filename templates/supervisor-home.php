@@ -108,18 +108,7 @@ get_header('supervisor');
                             <a class="km-tile km-mid-right" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('knowledge_development')); ?>"><span>פיתוח ידע והדרכה</span></a>
                             <a class="km-tile km-bottom-left" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('control')); ?>"><span>בקרה</span></a>
                             <a class="km-tile km-bottom-right" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('enforcement')); ?>"><span>אכיפה</span></a>
-                            <?php
-                            $wm_url = supervisor_knowledge_map_tile_url('working_methods');
-                            if ($wm_url) :
-                                ?>
-                                <a class="km-wide" href="<?php echo esc_url($wm_url); ?>"><span>שיטות עבודה</span></a>
-                                <?php
-                            else :
-                                ?>
-                                <div class="km-wide" aria-disabled="true"><span>שיטות עבודה</span></div>
-                                <?php
-                            endif;
-                            ?>
+                            <a class="km-wide" href="<?php echo esc_url(supervisor_knowledge_map_tile_url('working_methods')); ?>"><span>שיטות עבודה</span></a>
                             <div class="km-center" aria-hidden="true"><span>גוף<br>פיקוח</span></div>
                         </div>
                     </div>

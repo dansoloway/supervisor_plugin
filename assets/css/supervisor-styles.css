@@ -2936,6 +2936,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     position: relative;
 }
 
+/* Allow dropdown groups inside the desktop menu */
+.nav-wrapper .desktop-menu > .nav-item-group {
+    flex: 1 1 0;
+    display: inline-flex;
+    align-items: stretch;
+    justify-content: center;
+    position: relative; /* anchor for absolute submenu */
+    min-width: 0;
+    min-height: 56px;
+}
+
 /* Links - equal-width tabs, large bold Hebrew - DESKTOP ONLY */
 .nav-wrapper .desktop-menu a {
     flex: 1 1 0;
@@ -2956,6 +2967,42 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     min-width: 0;
     box-sizing: border-box;
     min-height: 56px;
+}
+
+/* Dropdown group: make link + arrow look like one tab */
+.nav-wrapper .desktop-menu .nav-item-group > a.nav-item {
+    flex: 1 1 auto;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group > .dropdown-toggle {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    min-height: 56px;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group:hover > .dropdown-toggle,
+.nav-wrapper .desktop-menu .nav-item-group:focus-within > .dropdown-toggle {
+    color: white !important;
+    background: #183d5c !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group:hover > a.nav-item,
+.nav-wrapper .desktop-menu .nav-item-group:focus-within > a.nav-item {
+    background: #183d5c !important;
+    color: white !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group.is-open > a.nav-item,
+.nav-wrapper .desktop-menu .nav-item-group.is-open > .dropdown-toggle {
+    background: var(--sv-nav-accent) !important;
+    color: white !important;
 }
 
 /* Inactive items - white background, blue text/icon */
@@ -3030,11 +3077,12 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transition: transform 0.2s ease;
 }
 
-.nav-wrapper .desktop-menu a.dropdown.active .dropdown-icon {
+.nav-wrapper .desktop-menu .nav-item-group.is-open .dropdown-icon {
     transform: rotate(180deg);
 }
 
-.nav-wrapper .desktop-menu a.active .dropdown-icon {
+.nav-wrapper .desktop-menu a.active .dropdown-icon,
+.nav-wrapper .desktop-menu .nav-item-group.is-open .dropdown-icon {
     color: white;
 }
 
@@ -3042,8 +3090,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 .nav-wrapper .desktop-menu .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    inset-inline-start: 0;
+    transform: none;
     margin-top: -2px; /* Overlap with parent to prevent hover gap */
     background: var(--sv-submenu-panel);
     border: 1px solid var(--sv-submenu-separator);

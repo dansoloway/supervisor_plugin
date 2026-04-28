@@ -99,113 +99,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Dropdown menu functionality - desktop menu
-    // Scope to the Supervisor nav component so behavior is consistent across pages,
-    // without relying on a page-level wrapper class.
-    const dropdownItems = document.querySelectorAll('.nav-wrapper .site-nav.supervisor_header_links.desktop-menu a.dropdown');
-    
-    dropdownItems.forEach(dropdown => {
-        // Find the dropdown menu that follows this dropdown item
-        const dropdownMenu = dropdown.nextElementSibling;
-        
-        if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
-            let isClickMode = false;
-            let hoverTimeout = null;
-            
-            // Toggle dropdown on click
-            dropdown.addEventListener('click', function(e) {
-                // On mobile, always use click mode for dropdowns
-                const isMobile = window.innerWidth <= 768;
-                
-                if (isMobile || !this.href || this.href === '#' || this.href.endsWith('#') || this.href.endsWith(window.location.pathname + '#')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                
-                isClickMode = true;
-                
-                // Close any other open dropdowns
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                    if (menu !== dropdownMenu) {
-                        menu.classList.remove('show');
-                        menu.previousElementSibling.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current dropdown
-                dropdownMenu.classList.toggle('show');
-                dropdown.classList.toggle('active');
-                
-                // Reset click mode after a delay
-                setTimeout(() => {
-                    isClickMode = false;
-                }, 100);
-            });
-            
-            // Show dropdown on hover (only if not in click mode)
-            dropdown.addEventListener('mouseenter', function() {
-                if (isClickMode) return;
-                
-                // Clear any pending hide timeout
-                if (hoverTimeout) {
-                    clearTimeout(hoverTimeout);
-                    hoverTimeout = null;
-                }
-                
-                // Close any other open dropdowns
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                    if (menu !== dropdownMenu) {
-                        menu.classList.remove('show');
-                        menu.previousElementSibling.classList.remove('active');
-                    }
-                });
-                
-                dropdownMenu.classList.add('show');
-                dropdown.classList.add('active');
-            });
-            
-            // Hide dropdown when mouse leaves (with delay to prevent flickering)
-            dropdown.addEventListener('mouseleave', function() {
-                if (isClickMode) return;
-                
-                hoverTimeout = setTimeout(() => {
-                    if (!dropdownMenu.matches(':hover') && !dropdown.matches(':hover')) {
-                        dropdownMenu.classList.remove('show');
-                        dropdown.classList.remove('active');
-                    }
-                }, 150);
-            });
-            
-            // Keep dropdown open when hovering over the menu
-            dropdownMenu.addEventListener('mouseenter', function() {
-                if (hoverTimeout) {
-                    clearTimeout(hoverTimeout);
-                    hoverTimeout = null;
-                }
-                dropdownMenu.classList.add('show');
-                dropdown.classList.add('active');
-            });
-            
-            dropdownMenu.addEventListener('mouseleave', function() {
-                if (isClickMode) return;
-                
-                hoverTimeout = setTimeout(() => {
-                    if (!dropdownMenu.matches(':hover') && !dropdown.matches(':hover')) {
-                        dropdownMenu.classList.remove('show');
-                        dropdown.classList.remove('active');
-                    }
-                }, 150);
-            });
-        }
+    // Dropdown menu functionality - desktop menu (arrow-only toggle)
+    const desktopDropdownGroups = document.querySelectorAll('.nav-wrapper .site-nav.supervisor_header_links.desktop-menu .nav-item-group');
+
+    function closeAllDesktopDropdowns(exceptGroup = null) {
+        desktopDropdownGroups.forEach(group => {
+            if (exceptGroup && group === exceptGroup) return;
+            const menu = group.querySelector('.dropdown-menu');
+            const toggle = group.querySelector('.dropdown-toggle');
+            if (menu) menu.classList.remove('show');
+            group.classList.remove('is-open');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    desktopDropdownGroups.forEach(group => {
+        const toggle = group.querySelector('.dropdown-toggle');
+        const menu = group.querySelector('.dropdown-menu');
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const willOpen = !menu.classList.contains('show');
+            closeAllDesktopDropdowns(group);
+
+            if (willOpen) {
+                menu.classList.add('show');
+                group.classList.add('is-open');
+                toggle.setAttribute('aria-expanded', 'true');
+            } else {
+                menu.classList.remove('show');
+                group.classList.remove('is-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
     });
     
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown') && !e.target.closest('.dropdown-menu')) {
-            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                menu.classList.remove('show');
-                menu.previousElementSibling.classList.remove('active');
-            });
+        if (!e.target.closest('.nav-wrapper .nav-item-group') && !e.target.closest('.nav-wrapper .dropdown-menu')) {
+            closeAllDesktopDropdowns();
         }
     });
 
@@ -219,11 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (clickedTopLevelLink.classList.contains('dropdown')) return;
         if (e.target.closest('.dropdown-menu')) return;
 
-        document.querySelectorAll('.nav-wrapper .dropdown-menu.show').forEach(menu => {
-            menu.classList.remove('show');
-            const toggle = menu.previousElementSibling;
-            if (toggle && toggle.classList) toggle.classList.remove('active');
-        });
+        closeAllDesktopDropdowns();
     });
     
     // Mobile menu dropdown functionality (separate from desktop)

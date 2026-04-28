@@ -23,7 +23,7 @@ $supervisor_menu = [
     ],
     [
         'title' => 'מפת הידע',
-        'url' => '#', // Will be handled by JavaScript
+        'url' => get_the_permalink(SUPERVISOR_KNOWLEDGE_MAP),
         'is_active' => is_page(SUPERVISOR_BIB_CATS) || is_page(SUPERVISOR_KNOWLEDGE_MAP) || is_tax('qa_tags'),
         'has_dropdown' => true,
         'submenu' => [
@@ -79,12 +79,50 @@ function render_nav_item($item) {
     }
     
     $class_string = implode(' ', $classes);
-    
-    // All items are now anchor tags for consistency
-    $style = $item['has_dropdown'] ? ' style="border-radius: 0 !important;"' : '';
+
+    // For dropdown items, render a group: text link navigates, arrow button toggles submenu.
+    if ($item['has_dropdown'] && !empty($item['submenu'])) {
+        echo '<div class="nav-item-group" data-dropdown-parent="' . esc_attr($item['title']) . '">';
+
+        $aria_label = !empty($item['is_home_icon']) ? ' aria-label="בית"' : '';
+        echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '"' . $aria_label . '>';
+        if (!empty($item['is_home_icon'])) {
+            $house_icon_url = plugin_dir_url(dirname(__FILE__)) . 'assets/img/home3vsg.svg';
+            echo '<span class="nav-icon nav-icon-home" aria-hidden="true">';
+            echo '<img src="' . esc_url($house_icon_url) . '" alt="" width="24" height="24" class="nav-icon-home-img">';
+            echo '</span>';
+        } else {
+            echo '<span class="nav-text">' . esc_html($item['title']) . '</span>';
+        }
+        echo '</a>';
+
+        echo '<button type="button" class="dropdown-toggle" aria-label="' . esc_attr__('פתח תפריט משנה', 'supervisor-plugin') . '" aria-expanded="false">';
+        echo '<svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+        echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+        echo '</svg>';
+        echo '</button>';
+
+        echo '<div class="dropdown-menu" data-parent="' . esc_attr($item['title']) . '">';
+        foreach ($item['submenu'] as $submenu_item) {
+            $submenu_classes = ['submenu-item'];
+            if ($submenu_item['is_active']) {
+                $submenu_classes[] = 'active';
+            }
+
+            echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
+            echo esc_html($submenu_item['title']);
+            echo '</a>';
+        }
+        echo '</div>';
+
+        echo '</div>';
+        return;
+    }
+
+    // Non-dropdown items: simple anchor.
     $aria_label = !empty($item['is_home_icon']) ? ' aria-label="בית"' : '';
-    echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '"' . $style . $aria_label . '>';
-    
+    echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '"' . $aria_label . '>';
+
     if (!empty($item['is_home_icon'])) {
         $house_icon_url = plugin_dir_url(dirname(__FILE__)) . 'assets/img/home3vsg.svg';
         echo '<span class="nav-icon nav-icon-home" aria-hidden="true">';
@@ -93,31 +131,8 @@ function render_nav_item($item) {
     } else {
         echo '<span class="nav-text">' . esc_html($item['title']) . '</span>';
     }
-    
-    // Add dropdown icon if needed
-    if ($item['has_dropdown']) {
-        echo '<svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
-        echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-        echo '</svg>';
-    }
-    
+
     echo '</a>';
-    
-    // Add dropdown menu as sibling element
-    if ($item['has_dropdown'] && !empty($item['submenu'])) {
-        echo '<div class="dropdown-menu" data-parent="' . esc_attr($item['title']) . '">';
-        foreach ($item['submenu'] as $submenu_item) {
-            $submenu_classes = ['submenu-item'];
-            if ($submenu_item['is_active']) {
-                $submenu_classes[] = 'active';
-            }
-            
-            echo '<a href="' . esc_url($submenu_item['url']) . '" class="' . implode(' ', $submenu_classes) . '">';
-            echo esc_html($submenu_item['title']);
-            echo '</a>';
-        }
-        echo '</div>';
-    }
 }
 ?>
 

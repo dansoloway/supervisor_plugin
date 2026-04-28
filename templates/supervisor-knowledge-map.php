@@ -20,25 +20,6 @@ get_header('supervisor');
 
         <div class="knowledge-map-page-stack">
             <div class="knowledge-map-main">
-                <?php
-                while (have_posts()) :
-                    the_post();
-                    $has_lead = trim((string) get_post_field('post_content', get_the_ID())) !== '';
-                    if ($has_lead) :
-                        ?>
-                        <div class="knowledge-map-lead entry-content">
-                            <?php the_content(); ?>
-                        </div>
-                        <?php
-                    else :
-                        ?>
-                        <div class="knowledge-map-lead knowledge-map-lead--empty" aria-hidden="true"></div>
-                        <?php
-                    endif;
-                endwhile;
-                rewind_posts();
-                ?>
-
                 <section class="knowledge-map-section knowledge-map-page-tiles" aria-label="<?php esc_attr_e('מפת הידע', 'text-domain'); ?>">
                     <div class="home-knowledge-map">
                         <div class="knowledge-map-grid">
@@ -53,6 +34,22 @@ get_header('supervisor');
                         </div>
                     </div>
                 </section>
+
+                <?php
+                // Render the page body content below the map (if any).
+                while (have_posts()) :
+                    the_post();
+                    $has_lead = trim((string) get_post_field('post_content', get_the_ID())) !== '';
+                    if ($has_lead) :
+                        ?>
+                        <div class="knowledge-map-lead entry-content">
+                            <?php the_content(); ?>
+                        </div>
+                        <?php
+                    endif;
+                endwhile;
+                rewind_posts();
+                ?>
 
                 <div class="knowledge-map-description">
                     <h2 class="knowledge-map-description-title">מפת הידע:</h2>

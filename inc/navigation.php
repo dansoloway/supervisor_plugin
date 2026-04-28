@@ -97,8 +97,8 @@ function render_nav_item($item) {
         echo '</a>';
 
         echo '<button type="button" class="dropdown-toggle" aria-label="' . esc_attr__('פתח תפריט משנה', 'supervisor-plugin') . '" aria-expanded="false">';
-        echo '<svg class="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
-        echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+        echo '<svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+        echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>';
         echo '</svg>';
         echo '</button>';
 

@@ -2976,6 +2976,12 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     min-height: 56px;
 }
 
+.nav-wrapper .desktop-menu > .nav-item-group.dropdown {
+    /* "מפת הידע" is longer — give it a slightly larger flex floor so it doesn't wrap into two lines */
+    flex: 1.15 1 0;
+    min-width: 170px;
+}
+
 /* Links - equal-width tabs, large bold Hebrew - DESKTOP ONLY */
 .nav-wrapper .desktop-menu a {
     flex: 1 1 0;
@@ -2991,7 +2997,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     text-decoration: none;
     border-radius: 0;
     position: relative;
-    transition: background .2s, color .2s;
+    transition: background .2s ease, color .2s ease;
     height: 100%;
     min-width: 0;
     box-sizing: border-box;
@@ -3001,6 +3007,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 /* Dropdown group: make link + arrow look like one tab */
 .nav-wrapper .desktop-menu .nav-item-group > a.nav-item {
     flex: 1 1 auto;
+    white-space: nowrap;
 }
 
 .nav-wrapper .desktop-menu .nav-item-group > .dropdown-toggle {
@@ -3014,6 +3021,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: inherit;
     cursor: pointer;
     min-height: 56px;
+    transition: background .2s ease, color .2s ease;
+    /* Remove the "dead zone" between label + caret so hover reads as one unit */
+    margin-inline-start: -10px;
 }
 
 .nav-wrapper .desktop-menu .nav-item-group:hover > .dropdown-toggle,
@@ -3102,8 +3112,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 /* Dropdown caret - DESKTOP ONLY */
 .nav-wrapper .desktop-menu .dropdown-icon {
-    margin-inline-start: 8px; /* RTL-friendly */
+    margin-inline-start: 6px; /* RTL-friendly */
     transition: transform 0.2s ease;
+    display: block;
 }
 
 .nav-wrapper .desktop-menu .nav-item-group.is-open .dropdown-icon {

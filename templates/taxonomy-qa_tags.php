@@ -28,7 +28,9 @@ error_log('Loading taxonomy-qa_tags.php template');
             // Get and display the icon for this term
             $icon = get_term_fa_icon($term->term_id, 'fas fa-folder');
             if ($icon) {
+                echo '<span class="taxonomy-term-icon" aria-hidden="true">';
                 echo '<i class="' . esc_attr($icon) . '"></i>';
+                echo '</span>';
             }
             echo '<span>' . esc_html($term->name) . '</span>';
             ?>

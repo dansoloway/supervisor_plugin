@@ -1699,15 +1699,27 @@
     margin-bottom: 30px !important;
 }
 
-.taxonomy-content .page-title i {
-    font-size: 48px;
-    color: var(--sv-blue);
+/* QA Tags taxonomy title icon: small teal glyph inside a white square (matches Bib Categories card icon treatment) */
+.taxonomy-content .taxonomy-page-title .taxonomy-term-icon {
     order: 1;
-    width: 48px;
-    height: 48px;
-    display: flex;
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+.taxonomy-content .taxonomy-page-title .taxonomy-term-icon i {
+    font-size: 1.05rem;
+    line-height: 1;
+    color: #319694;
+    width: auto;
+    height: auto;
+    display: block;
 }
 
 .taxonomy-content .page-title span {

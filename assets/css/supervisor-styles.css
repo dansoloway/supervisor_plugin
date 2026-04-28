@@ -4245,6 +4245,17 @@ img[src*=".svg"] {
     background: #1e4a6f !important;
 }
 
+/* Supervisor Updates (two-column layout): hide the explicit "סנן" CTA for now.
+   Search still runs via the magnifying-glass button + checkbox/text input handlers. */
+.supervisor-home .supervisor-content-wrapper.supervisor-two-column .ajax-search-component #search-submit {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    visibility: hidden !important;
+}
+
 /* Phase 2 overrides: tokens, content-card, spacing */
 /* Consolidated: .ajax-search-component uses canonical token block ~582 */
 

@@ -208,6 +208,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    // If a dropdown was opened/hover-activated, ensure it doesn't stay highlighted
+    // when the user clicks a different top-level nav item.
+    document.addEventListener('click', function(e) {
+        const clickedTopLevelLink = e.target.closest('.nav-wrapper .site-nav.supervisor_header_links a.nav-item');
+        if (!clickedTopLevelLink) return;
+
+        // Don't immediately clear when clicking the dropdown toggle itself or inside its menu.
+        if (clickedTopLevelLink.classList.contains('dropdown')) return;
+        if (e.target.closest('.dropdown-menu')) return;
+
+        document.querySelectorAll('.nav-wrapper .dropdown-menu.show').forEach(menu => {
+            menu.classList.remove('show');
+            const toggle = menu.previousElementSibling;
+            if (toggle && toggle.classList) toggle.classList.remove('active');
+        });
+    });
     
     // Mobile menu dropdown functionality (separate from desktop)
     if (mobileMenu) {

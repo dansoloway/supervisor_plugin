@@ -100,7 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Dropdown menu functionality - desktop menu
-    const dropdownItems = document.querySelectorAll('.supervisor-home .desktop-menu a.dropdown');
+    // Scope to the Supervisor nav component so behavior is consistent across pages,
+    // without relying on a page-level wrapper class.
+    const dropdownItems = document.querySelectorAll('.nav-wrapper .site-nav.supervisor_header_links.desktop-menu a.dropdown');
     
     dropdownItems.forEach(dropdown => {
         // Find the dropdown menu that follows this dropdown item

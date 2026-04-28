@@ -208,13 +208,6 @@
 /* ===== FOUNDATION CSS OVERRIDES ===== */
 /* Prevent Foundation from interfering with our custom design */
 
-/* Only override Foundation classes that might conflict, not our custom classes */
-.supervisor-home .foundation-button,
-.supervisor-home .foundation-input,
-.supervisor-home .foundation-nav {
-    /* Only target Foundation-specific classes, not generic elements */
-}
-
 /* Override Foundation grid classes that might interfere */
 .supervisor-home .row.foundation-row,
 .supervisor-home .column.foundation-column,
@@ -2916,13 +2909,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 /* ===== HORIZONTAL MENU BAR - DESKTOP ===== */
 /* Flat strip: top/bottom blue lines only, no pill, full-width, editorial look */
-.supervisor-home .nav-wrapper {
+.nav-wrapper {
     position: relative;
     width: 100%;
 }
 
 /* Desktop menu - flat strip, top/bottom borders only, no capsule */
-.supervisor-home nav.site-nav.supervisor_header_links.desktop-menu {
+.nav-wrapper nav.site-nav.supervisor_header_links.desktop-menu {
     display: flex;
     align-items: stretch;
     gap: 0;
@@ -2944,7 +2937,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Links - equal-width tabs, large bold Hebrew - DESKTOP ONLY */
-.supervisor-home .desktop-menu a {
+.nav-wrapper .desktop-menu a {
     flex: 1 1 0;
     display: inline-flex;
     align-items: center;
@@ -2966,45 +2959,45 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Inactive items - white background, blue text/icon */
-.supervisor-home .desktop-menu a:not(.active) {
+.nav-wrapper .desktop-menu a:not(.active) {
     background: white !important;
 }
 
 /* Active state - solid dark blue, white text - DESKTOP ONLY */
-.supervisor-home .desktop-menu a.active {
+.nav-wrapper .desktop-menu a.active {
     background: var(--sv-nav-accent) !important;
     color: white !important;
     outline: 0;
 }
 
-.supervisor-home .desktop-menu a.active .nav-text,
-.supervisor-home .desktop-menu a.active .nav-icon {
+.nav-wrapper .desktop-menu a.active .nav-text,
+.nav-wrapper .desktop-menu a.active .nav-icon {
     color: white !important;
 }
 
-.supervisor-home .desktop-menu a.active .nav-icon-home img {
+.nav-wrapper .desktop-menu a.active .nav-icon-home img {
     opacity: 1;
     filter: brightness(0) invert(1);
 }
 
 /* Inactive icon (home when not active) - uses built-in colors from house3.svg */
-.supervisor-home .desktop-menu a:not(.active) .nav-icon-home img {
+.nav-wrapper .desktop-menu a:not(.active) .nav-icon-home img {
     opacity: 0.9;
 }
 
 /* Home icon - same treatment as text items, icon-only width - DESKTOP ONLY */
-.supervisor-home .desktop-menu a.nav-item-home {
+.nav-wrapper .desktop-menu a.nav-item-home {
     flex: 0 1 auto;
     min-width: 52px;
 }
 
-.supervisor-home .desktop-menu a.nav-item-home .nav-icon-home {
+.nav-wrapper .desktop-menu a.nav-item-home .nav-icon-home {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-.supervisor-home .nav-icon-home img {
+.nav-wrapper .nav-icon-home img {
     width: 24px;
     height: 24px;
     display: block;
@@ -3012,41 +3005,41 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Hover/Focus - all main menu items - dark blue, white text - DESKTOP ONLY */
-.supervisor-home .desktop-menu a:hover,
-.supervisor-home .desktop-menu a:focus-visible {
+.nav-wrapper .desktop-menu a:hover,
+.nav-wrapper .desktop-menu a:focus-visible {
     background: #183d5c !important;
     color: white !important;
     outline: 0;
 }
 
-.supervisor-home .desktop-menu a:hover .nav-text,
-.supervisor-home .desktop-menu a:hover .nav-icon,
-.supervisor-home .desktop-menu a:focus-visible .nav-text,
-.supervisor-home .desktop-menu a:focus-visible .nav-icon {
+.nav-wrapper .desktop-menu a:hover .nav-text,
+.nav-wrapper .desktop-menu a:hover .nav-icon,
+.nav-wrapper .desktop-menu a:focus-visible .nav-text,
+.nav-wrapper .desktop-menu a:focus-visible .nav-icon {
     color: white !important;
 }
 
-.supervisor-home .desktop-menu a:hover .nav-icon-home img,
-.supervisor-home .desktop-menu a:focus-visible .nav-icon-home img {
+.nav-wrapper .desktop-menu a:hover .nav-icon-home img,
+.nav-wrapper .desktop-menu a:focus-visible .nav-icon-home img {
     opacity: 1;
 }
 
 /* Dropdown caret - DESKTOP ONLY */
-.supervisor-home .desktop-menu .dropdown-icon {
+.nav-wrapper .desktop-menu .dropdown-icon {
     margin-inline-start: 8px; /* RTL-friendly */
     transition: transform 0.2s ease;
 }
 
-.supervisor-home .desktop-menu a.dropdown.active .dropdown-icon {
+.nav-wrapper .desktop-menu a.dropdown.active .dropdown-icon {
     transform: rotate(180deg);
 }
 
-.supervisor-home .desktop-menu a.active .dropdown-icon {
+.nav-wrapper .desktop-menu a.active .dropdown-icon {
     color: white;
 }
 
 /* ===== DROPDOWN MENU - DESKTOP ONLY ===== */
-.supervisor-home .desktop-menu .dropdown-menu {
+.nav-wrapper .desktop-menu .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 50%;
@@ -3063,7 +3056,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Bridge between parent and submenu to prevent hover loss */
-.supervisor-home .desktop-menu .dropdown-menu::before {
+.nav-wrapper .desktop-menu .dropdown-menu::before {
     content: '';
     position: absolute;
     top: -8px;
@@ -3072,12 +3065,12 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     height: 10px;
 }
 
-.supervisor-home .desktop-menu .dropdown-menu.show {
+.nav-wrapper .desktop-menu .dropdown-menu.show {
     display: block;
 }
 
 /* Dropdown submenu rows — shared (desktop + mobile .site-nav) */
-.supervisor-home .site-nav .dropdown-menu .submenu-item {
+.nav-wrapper .site-nav .dropdown-menu .submenu-item {
     display: block;
     padding: 14px 20px;
     color: var(--sv-nav-accent) !important;
@@ -3097,29 +3090,29 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     outline: 0;
 }
 
-.supervisor-home .site-nav .dropdown-menu .submenu-item:last-child {
+.nav-wrapper .site-nav .dropdown-menu .submenu-item:last-child {
     border-bottom: none;
 }
 
-.supervisor-home .site-nav .dropdown-menu .submenu-item:hover,
-.supervisor-home .site-nav .dropdown-menu .submenu-item:focus-visible {
+.nav-wrapper .site-nav .dropdown-menu .submenu-item:hover,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item:focus-visible {
     background: var(--sv-submenu-hover-bg) !important;
     color: var(--sv-nav-accent) !important;
 }
 
-.supervisor-home .site-nav .dropdown-menu .submenu-item.active {
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active {
     background: var(--sv-nav-accent) !important;
     color: #fff !important;
 }
 
-.supervisor-home .site-nav .dropdown-menu .submenu-item.active:hover,
-.supervisor-home .site-nav .dropdown-menu .submenu-item.active:focus-visible {
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active:hover,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active:focus-visible {
     background: var(--sv-nav-accent) !important;
     color: #fff !important;
 }
 
 /* Prevent decorative ::before on dropdown rows */
-.supervisor-home .site-nav .dropdown-menu .submenu-item::before {
+.nav-wrapper .site-nav .dropdown-menu .submenu-item::before {
     display: none !important;
     content: none !important;
 }
@@ -3131,16 +3124,16 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Desktop menu - visible by default */
-.supervisor-home .desktop-menu {
+.nav-wrapper .desktop-menu {
     display: flex;
 }
 
 /* Mobile menu - hidden by default */
-.supervisor-home .mobile-menu {
+.nav-wrapper .mobile-menu {
     display: none;
 }
 
-.supervisor-home .mobile-menu-toggle {
+.nav-wrapper .mobile-menu-toggle {
     display: none; /* Hidden by default on desktop */
     background: var(--sv-bar);
     border: 2px solid var(--sv-bar-border);
@@ -3193,12 +3186,12 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 /* Mobile styles - hide desktop menu, show hamburger */
 @media (max-width: 768px) {
     /* Hide desktop menu on mobile */
-    .supervisor-home .desktop-menu {
+    .nav-wrapper .desktop-menu {
         display: none !important;
     }
     
     /* Show hamburger button on mobile */
-    .supervisor-home .mobile-menu-toggle {
+    .nav-wrapper .mobile-menu-toggle {
         display: flex;
         margin: 8px auto 14px;
         position: relative;
@@ -3206,7 +3199,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     }
     
     /* Mobile menu - full screen overlay */
-    .supervisor-home .mobile-menu {
+    .nav-wrapper .mobile-menu {
         display: none;
         position: fixed;
         top: 0;
@@ -3224,12 +3217,12 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         align-items: stretch;
     }
     
-    .supervisor-home .mobile-menu.mobile-active {
+    .nav-wrapper .mobile-menu.mobile-active {
         display: block;
     }
     
     /* Close button at top of mobile menu */
-    .supervisor-home .mobile-menu-close {
+    .nav-wrapper .mobile-menu-close {
         position: fixed;
         top: 8px;
         left: 8px; /* RTL - left side for Hebrew */
@@ -3247,28 +3240,28 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         margin: 0;
     }
     
-    .supervisor-home .mobile-menu-close svg {
+    .nav-wrapper .mobile-menu-close svg {
         width: 28px;
         height: 28px;
         color: var(--sv-text);
         stroke-width: 2.5;
     }
     
-    .supervisor-home .mobile-menu-close:hover,
-    .supervisor-home .mobile-menu-close:focus {
+    .nav-wrapper .mobile-menu-close:hover,
+    .nav-wrapper .mobile-menu-close:focus {
         background: transparent;
         outline: none;
         opacity: 0.7;
     }
     
     /* Mobile menu items - simple block list */
-    .supervisor-home .mobile-menu {
+    .nav-wrapper .mobile-menu {
         padding-top: 60px; /* Space for close button at top */
         padding-left: 0;
         padding-right: 0;
     }
     
-    .supervisor-home .mobile-menu a {
+    .nav-wrapper .mobile-menu a {
         display: block;
         width: 100%;
         padding: 20px 24px;
@@ -3283,17 +3276,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         line-height: 1.5;
     }
     
-    .supervisor-home .mobile-menu a:last-child {
+    .nav-wrapper .mobile-menu a:last-child {
         border-bottom: none;
     }
     
     /* Remove all separators and duplicate boxes on mobile */
-    .supervisor-home .mobile-menu a::before {
+    .nav-wrapper .mobile-menu a::before {
         display: none !important;
     }
     
     /* Remove any duplicate borders or boxes */
-    .supervisor-home .mobile-menu a.nav-item {
+    .nav-wrapper .mobile-menu a.nav-item {
         border-radius: 0 !important;
         border-left: none !important;
         border-right: none !important;
@@ -3301,7 +3294,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     }
     
     /* Mobile dropdown menus */
-    .supervisor-home .mobile-menu .dropdown-menu {
+    .nav-wrapper .mobile-menu .dropdown-menu {
         display: none;
         background: var(--sv-submenu-panel);
         padding: 0;
@@ -3313,17 +3306,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         box-shadow: none;
     }
     
-    .supervisor-home .mobile-menu .dropdown-menu.show {
+    .nav-wrapper .mobile-menu .dropdown-menu.show {
         display: block;
     }
     
-    .supervisor-home .mobile-menu .dropdown-menu .submenu-item {
+    .nav-wrapper .mobile-menu .dropdown-menu .submenu-item {
         padding: 16px 24px 16px 44px;
         font-size: 18px;
         line-height: 1.5;
     }
     
-    .supervisor-home .mobile-menu a.dropdown.active .dropdown-icon {
+    .nav-wrapper .mobile-menu a.dropdown.active .dropdown-icon {
         transform: rotate(180deg);
     }
 }
@@ -3735,11 +3728,6 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 .knowledge-map-card.card {
     padding: 20px;
     text-align: center;
-}
-
-.knowledge-map-diagram {
-    /* display: flex;
-    justify-content: center; */
 }
 
 .knowledge-map-image-link {
@@ -4636,14 +4624,6 @@ img[src*=".svg"] {
     position: relative;
 }
 
-.supervisor-single-org .info-box.left-box {
-    /* border-right: 1px solid #e0e0e0; */
-}
-
-.supervisor-single-org .info-box.right-box {
-    /* border-left: 1px solid #e0e0e0; */
-}
-
 .supervisor-single-org .info-item {
     display: flex;
     justify-content: space-between;
@@ -5019,7 +4999,6 @@ body .supervisor-bib-cats .categories-grid {
 
 .supervisor-bib-cats .category-arrow-svg {
     display: block;
-    vertical-align: middle;
 }
 
 .supervisor-bib-cats .category-card:hover .category-arrow,
@@ -5377,6 +5356,7 @@ body .supervisor-bib-cats .categories-grid {
     margin: 0;
     padding: 0 1.35rem 1.35rem;
     display: -webkit-box;
+    line-clamp: 3;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;

@@ -4976,8 +4976,8 @@ body .supervisor-bib-cats .categories-grid {
 .supervisor-bib-cats .category-icon {
     align-self: flex-start;
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     margin: 0 0 0 0;
     display: flex;
     align-items: center;
@@ -4988,7 +4988,7 @@ body .supervisor-bib-cats .categories-grid {
 }
 
 .supervisor-bib-cats .category-icon i {
-    font-size: 1.2rem;
+    font-size: 1.45rem;
     color: var(--bib-cat-icon-teal);
     width: auto;
     height: auto;
@@ -5005,7 +5005,7 @@ body .supervisor-bib-cats .categories-grid {
 /* Category Title — bold black, centered in card body */
 .supervisor-bib-cats .category-title {
     font-family: var(--sv-font-primary);
-    font-size: 1.6rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: #000000;
     margin: 0;
@@ -5103,6 +5103,10 @@ body .supervisor-bib-cats .categories-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 18px 20px !important;
     }
+
+    .supervisor-bib-cats .category-title {
+        font-size: 1.25rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -5145,7 +5149,17 @@ body .supervisor-bib-cats .categories-grid {
     }
     
     .supervisor-bib-cats .category-title {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
+    }
+
+    .supervisor-bib-cats .category-icon {
+        width: 52px;
+        height: 52px;
+    }
+
+    .supervisor-bib-cats .category-icon i,
+    .supervisor-bib-cats .category-icon .dashicons {
+        font-size: 1.35rem;
     }
     
 }
@@ -5160,13 +5174,13 @@ body .supervisor-bib-cats .categories-grid {
     }
     
     .supervisor-bib-cats .category-icon {
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
     }
     
     .supervisor-bib-cats .category-icon i,
     .supervisor-bib-cats .category-icon .dashicons {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
         width: auto;
         height: auto;
     }

@@ -749,10 +749,20 @@
     color: var(--sv-text);
 }
 
+/* About accordion uses an h2; normalize margins so the caret aligns to the top */
+.about-accordion-section .about-accordion-item .qa-update-title h2 {
+    margin: 0;
+    flex: 1;
+    display: block;
+    line-height: 1.2;
+}
+
 .about-accordion-section .about-accordion-item .accordion-icon {
     font-size: 32px;
     flex-shrink: 0;
     color: black;
+    line-height: 1;
+    margin-top: 2px;
 }
 
 .about-accordion-section .about-accordion-item > .accordion-content {

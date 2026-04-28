@@ -24,6 +24,16 @@ get_header('supervisor');
                 $has_about_accordion = false;
                 while (have_posts()) : the_post();
 
+                    // Render the page body text before the accordion (if any).
+                    $page_content = trim((string) get_the_content());
+                    if ($page_content !== '') :
+                        ?>
+                        <div class="about-page-content entry-content">
+                            <?php the_content(); ?>
+                        </div>
+                        <?php
+                    endif;
+
                     $about_context = get_queried_object_id();
                     $accordion_context = have_rows('qa_about_accordion', $about_context) ? $about_context : (have_rows('qa_about_accordion', 'option') ? 'option' : null);
                     if ($accordion_context !== null) :

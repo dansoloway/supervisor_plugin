@@ -35,39 +35,19 @@ get_header('supervisor');
                     </div>
                 </section>
 
-                <?php
-                // Render the page body content below the map (if any).
-                while (have_posts()) :
-                    the_post();
-                    $has_lead = trim((string) get_post_field('post_content', get_the_ID())) !== '';
-                    if ($has_lead) :
-                        ?>
-                        <div class="knowledge-map-lead entry-content">
-                            <?php the_content(); ?>
-                        </div>
-                        <?php
-                    endif;
-                endwhile;
-                rewind_posts();
-                ?>
-
+                <?php while (have_posts()) : the_post(); ?>
                 <div class="knowledge-map-description">
-                    <h2 class="knowledge-map-description-title">מפת הידע:</h2>
-                    <p>
-                        מפת הידע מתארת את המערכת המקיפה לפיקוח ובקרה על שירותים חברתיים.
-                        המעבר במדינות רבות מניהול ישיר של שירותים חברתיים על ידי המדינה לרכישה חברתית (social procurement)
-                        מאופרטורים חיצוניים - ארגונים פרטיים למטרות רווח ולא למטרות רווח - מציב בפני המדינה אחריות
-                        לגיבוש מדיניות ולפיקוח על שירותים אלה.
-                    </p>
-                    <p>
-                        המפה מקבצת את נושאי המפתח לפי שבע קטגוריות: מדיניות, בקרה, אכיפה, פיתוח ידע והדרכה, שיטות עבודה,
-                        רכש חברתי ומדינת הרווחה הרגולטורית. כל קטגוריה כוללת כלים ומנגנונים המבטיחים איכות, שקיפות ואחריותיות בשירותים החברתיים.
-                    </p>
-                    <p>
-                        פרויקט זה הוא שיתוף פעולה בין אגף הרכש החברתי במשרד ראש הממשלה, JDC-אלכא ומכון מאיירס-ג'וינט-ברוקדייל
-                        לביצוע סקירה השוואתית בינלאומית של שיטות אספקת שירותים חברתיים.
-                    </p>
+                    <h2 class="knowledge-map-title">מפת הידע:</h2>
+                    <?php
+                    $km_body = trim((string) get_post_field('post_content', get_the_ID()));
+                    if ($km_body !== '') :
+                        ?>
+                    <div class="knowledge-map-description__content">
+                        <?php the_content(); ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
+                <?php endwhile; ?>
             </div>
         </div>
 

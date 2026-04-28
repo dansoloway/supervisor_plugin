@@ -1914,17 +1914,6 @@
     box-sizing: border-box;
 }
 
-.supervisor-knowledge-map .knowledge-map-lead {
-    margin-bottom: 1.25rem;
-    width: 100%;
-    max-width: 65ch;
-    margin-inline: auto;
-}
-
-.supervisor-knowledge-map .knowledge-map-lead--empty {
-    min-height: 0.75rem;
-}
-
 .supervisor-knowledge-map .knowledge-map-main .knowledge-map-section.knowledge-map-page-tiles {
     display: flex;
     flex-direction: column;
@@ -1933,7 +1922,7 @@
 }
 
 .supervisor-knowledge-map .knowledge-map-main .knowledge-map-description,
-.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description-title {
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-title {
     text-align: center;
 }
 
@@ -2290,12 +2279,13 @@
         padding: 0 16px;
     }
     
-    .supervisor-knowledge-map .knowledge-map-description-title {
+    .supervisor-knowledge-map .knowledge-map-title {
         font-size: 22px !important;
         margin-bottom: 16px !important;
     }
     
-    .supervisor-knowledge-map .knowledge-map-description p {
+    .supervisor-knowledge-map .knowledge-map-description p,
+    .supervisor-knowledge-map .knowledge-map-description .knowledge-map-description__content {
         font-size: 18px !important;
         line-height: 1.7 !important;
         margin-bottom: 16px !important;
@@ -2325,13 +2315,26 @@
     direction: rtl;
 }
 
-.knowledge-map-description-title {
+.knowledge-map-title {
     font-family: var(--sv-font-secondary);
     font-size: 24px;
     font-weight: 700;
     color: var(--sv-text);
     margin-bottom: 20px;
     text-align: right;
+}
+
+.knowledge-map-description .knowledge-map-description__content {
+    font-family: var(--sv-font-primary);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--sv-text);
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.knowledge-map-description .knowledge-map-description__content > *:last-child {
+    margin-bottom: 0;
 }
 
 .knowledge-map-description p {
@@ -3026,22 +3029,22 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     margin-inline-start: -10px;
 }
 
-.nav-wrapper .desktop-menu .nav-item-group:hover > .dropdown-toggle,
-.nav-wrapper .desktop-menu .nav-item-group:focus-within > .dropdown-toggle {
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > .dropdown-toggle,
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> a.nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .dropdown-toggle {
     color: white !important;
     background: #183d5c !important;
 }
 
-.nav-wrapper .desktop-menu .nav-item-group:hover > a.nav-item,
-.nav-wrapper .desktop-menu .nav-item-group:focus-within > a.nav-item {
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > a.nav-item:not(.active),
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> a.nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > a.nav-item:not(.active) {
     background: #183d5c !important;
     color: white !important;
 }
 
 .nav-wrapper .desktop-menu .nav-item-group.is-open > a.nav-item,
 .nav-wrapper .desktop-menu .nav-item-group.is-open > .dropdown-toggle {
-    background: var(--sv-nav-accent) !important;
-    color: white !important;
+    background: transparent !important;
+    color: var(--sv-nav-accent) !important;
 }
 
 /* Inactive items - white background, blue text/icon */
@@ -3049,21 +3052,22 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: white !important;
 }
 
-/* Active state - solid dark blue, white text - DESKTOP ONLY */
+/* Active state - underline only (current page) - DESKTOP ONLY */
 .nav-wrapper .desktop-menu a.active {
-    background: var(--sv-nav-accent) !important;
-    color: white !important;
+    background: white !important;
+    color: var(--sv-nav-accent) !important;
+    box-shadow: inset 0 -3px 0 0 var(--sv-nav-accent);
     outline: 0;
 }
 
 .nav-wrapper .desktop-menu a.active .nav-text,
 .nav-wrapper .desktop-menu a.active .nav-icon {
-    color: white !important;
+    color: var(--sv-nav-accent) !important;
 }
 
 .nav-wrapper .desktop-menu a.active .nav-icon-home img {
     opacity: 1;
-    filter: brightness(0) invert(1);
+    filter: none;
 }
 
 /* Inactive icon (home when not active) - uses built-in colors from house3.svg */
@@ -3091,22 +3095,22 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Hover/Focus - all main menu items - dark blue, white text - DESKTOP ONLY */
-.nav-wrapper .desktop-menu a:hover,
-.nav-wrapper .desktop-menu a:focus-visible {
+.nav-wrapper .desktop-menu a:not(.active):hover,
+.nav-wrapper .desktop-menu a:not(.active):focus-visible {
     background: #183d5c !important;
     color: white !important;
     outline: 0;
 }
 
-.nav-wrapper .desktop-menu a:hover .nav-text,
-.nav-wrapper .desktop-menu a:hover .nav-icon,
-.nav-wrapper .desktop-menu a:focus-visible .nav-text,
-.nav-wrapper .desktop-menu a:focus-visible .nav-icon {
+.nav-wrapper .desktop-menu a:not(.active):hover .nav-text,
+.nav-wrapper .desktop-menu a:not(.active):hover .nav-icon,
+.nav-wrapper .desktop-menu a:not(.active):focus-visible .nav-text,
+.nav-wrapper .desktop-menu a:not(.active):focus-visible .nav-icon {
     color: white !important;
 }
 
-.nav-wrapper .desktop-menu a:hover .nav-icon-home img,
-.nav-wrapper .desktop-menu a:focus-visible .nav-icon-home img {
+.nav-wrapper .desktop-menu a:not(.active):hover .nav-icon-home img,
+.nav-wrapper .desktop-menu a:not(.active):focus-visible .nav-icon-home img {
     opacity: 1;
 }
 
@@ -3123,7 +3127,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 .nav-wrapper .desktop-menu a.active .dropdown-icon,
 .nav-wrapper .desktop-menu .nav-item-group.is-open .dropdown-icon {
-    color: white;
+    color: var(--sv-nav-accent);
 }
 
 /* ===== DROPDOWN MENU - DESKTOP ONLY ===== */
@@ -3189,14 +3193,16 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active {
-    background: var(--sv-nav-accent) !important;
-    color: #fff !important;
+    background: var(--sv-submenu-panel) !important;
+    color: var(--sv-nav-accent) !important;
+    font-weight: 700;
+    box-shadow: inset 0 -3px 0 0 var(--sv-nav-accent);
 }
 
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active:hover,
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active:focus-visible {
-    background: var(--sv-nav-accent) !important;
-    color: #fff !important;
+    background: var(--sv-submenu-hover-bg) !important;
+    color: var(--sv-nav-accent) !important;
 }
 
 /* Prevent decorative ::before on dropdown rows */

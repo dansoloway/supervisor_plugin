@@ -23,6 +23,15 @@ get_header('supervisor');
         <!-- Page Title -->
         <div class="page-header">
             <h1 class="page-title">יצירת קשר</h1>
+            <div class="contact-lead">
+                <p class="contact-name">Tal Lento</p>
+                <?php
+                $contact_email = get_option('supervisor_contact_email', 'TalLen@jdc.org');
+                ?>
+                <p class="contact-email">
+                    <a href="mailto:<?php echo esc_attr($contact_email); ?>"><?php echo esc_html($contact_email); ?></a>
+                </p>
+            </div>
         </div>
         
         <!-- Right Column: Contact Info -->

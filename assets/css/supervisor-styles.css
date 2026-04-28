@@ -3588,13 +3588,30 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 .supervisor-contact-page .page-header {
     text-align: right;
     margin-bottom: 40px;
+    grid-column: 1 / -1;
 }
 
 .supervisor-contact-page .page-title {
     font-family: var(--sv-font-primary);
-    font-size: 32px;
+    font-size: var(--sv-fs-h1);
     font-weight: 700;
-    color: var(--sv-blue);
+    color: var(--sv-text);
+    margin: 0;
+}
+
+.supervisor-contact-page .contact-lead {
+    margin-top: 12px;
+}
+
+.supervisor-contact-page .contact-lead .contact-name {
+    font-family: var(--sv-font-primary);
+    font-size: var(--sv-fs-body-lg);
+    font-weight: 700;
+    color: var(--sv-text);
+    margin: 0 0 6px 0;
+}
+
+.supervisor-contact-page .contact-lead .contact-email {
     margin: 0;
 }
 
@@ -3644,7 +3661,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 /* Contact Form Styles */
 .supervisor-contact-form {
-    margin: 20px auto;
+    margin: 0px auto;
     padding: 20px;
     background: #f9f9f9;
     border: 1px solid var(--sv-border);

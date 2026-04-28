@@ -68,11 +68,6 @@ get_header('supervisor');
                         לביצוע סקירה השוואתית בינלאומית של שיטות אספקת שירותים חברתיים.
                     </p>
                 </div>
-
-                <div class="knowledge-map-links">
-                    <a href="<?php echo get_permalink(SUPERVISOR_BIB_CATS); ?>">נושאי מפתח</a>
-                    <a href="<?php echo get_permalink(SUPERVISOR_ORGS); ?>">ארגוני פיקוח</a>
-                </div>
             </div>
         </div>
 

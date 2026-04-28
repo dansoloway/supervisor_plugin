@@ -145,24 +145,30 @@
     padding: 0 6px;
     box-sizing: border-box;
     border-radius: 50%;
-    background: #6b7280;
+    /* Force readable pagination even when theme/plugin link styles override anchors */
+    background: #6b7280 !important;
     color: #fff !important;
     text-decoration: none !important;
     font-family: var(--sv-font-primary);
     font-weight: 600;
     font-size: 15px;
-    border: none;
+    border: none !important;
     transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .qa-updates-list .updates-pagination a.page-numbers:hover,
 .qa-updates-list .updates-pagination a.page-numbers:focus-visible {
-    background: #4b5563;
+    background: #4b5563 !important;
+    color: #fff !important;
+}
+
+.qa-updates-list .updates-pagination a.page-numbers:visited,
+.qa-updates-list .updates-pagination a.page-numbers:link {
     color: #fff !important;
 }
 
 .qa-updates-list .updates-pagination span.page-numbers.current {
-    background: #4b5563;
+    background: #4b5563 !important;
     color: #fff !important;
     font-weight: 700;
 }

@@ -916,7 +916,7 @@
 .supervisor-home .more-updates-button {
     font-family: var(--sv-font-secondary);
     font-weight: var(--sv-fw-bold);
-    font-size: var(--sv-fs-body);
+    font-size: 18px;
     background: #1e4e79 !important;
     color: white !important;
     border: none;
@@ -5413,7 +5413,9 @@ body .supervisor-bib-cats .categories-grid {
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    padding: 4px 0;
+    /* Inset narrows cards vs full wrapper without changing flex math (still 3-up, no peek) */
+    padding: 4px 20px;
+    box-sizing: border-box;
 }
 
 .supervisor-home .stories-carousel::-webkit-scrollbar {
@@ -5450,7 +5452,7 @@ body .supervisor-bib-cats .categories-grid {
 
 .supervisor-home .stories-carousel .story-card-image {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
     background: #e8e8e8;
     border-radius: 14px 14px 0 0;
@@ -5567,6 +5569,7 @@ body .supervisor-bib-cats .categories-grid {
 
     .supervisor-home .stories-carousel {
         gap: 16px;
+        padding-inline: 14px;
     }
 
     .supervisor-home .stories-carousel .story-card {

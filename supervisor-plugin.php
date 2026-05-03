@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.10', // Nav: dropdown hover bridge; label opens only, caret toggles
+        '1.0.11', // Homepage stories cards: inset + taller image ratio
         'all' // Media type
     );
 

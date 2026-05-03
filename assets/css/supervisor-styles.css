@@ -1429,34 +1429,51 @@
     max-width: 100%;
 }
 
-/* Updates section - compact, crisp, box-like (redesign) */
+/* Updates section — layout shell (border set later so it wins over `.card`) */
 .supervisor-home .home-updates-card {
-    border-radius: var(--sv-radius-sm);
+    border-radius: 0;
     overflow: hidden;
     padding: 0;
+    box-shadow: none;
 }
 
-/* Updates header: light gray strip - flatter, crisper */
+/* Updates header: white strip + single divider under (not blue bar) */
 .supervisor-home .home-updates-card .updates-header {
-    background: white;
+    background: #fff;
     color: var(--sv-text);
     padding: 10px 16px;
     font-weight: 700;
     font-size: var(--sv-fs-body-lg);
+    border-bottom: 1px solid var(--sv-border);
+}
+
+.supervisor-home .home-updates-card .updates-header:hover {
+    background: #fff;
+    color: var(--sv-text);
 }
 
 .supervisor-home .home-updates-card .updates-list {
     padding: var(--sv-spacing-sm) var(--sv-spacing-md);
+    border: none;
+}
+
+/* No borders between list rows — spacing only */
+.supervisor-home .home-updates-card .update-item.home-update-card,
+.supervisor-home .home-updates-card .home-update-card {
+    border: none;
+    border-top: none;
 }
 
 .supervisor-home .home-update-card {
-    padding: 8px 0;
-    border-top: 1px solid var(--sv-divider);
+    padding: 12px 0;
 }
 
 .supervisor-home .home-update-card:first-child {
-    border-top: none;
     padding-top: 0;
+}
+
+.supervisor-home .home-update-card + .home-update-card {
+    padding-top: 4px;
 }
 
 .supervisor-home .home-update-card .update-content {
@@ -1487,11 +1504,13 @@
     margin: 0;
 }
 
-/* Full-width footer bar: strip-like, not chunky */
+/* Full-width footer bar — closes the box (no gray bottom border; blue meets side edges) */
 .supervisor-home .updates-footer-link {
     display: block;
     width: 100%;
     padding: 0;
+    margin: 0;
+    border: none;
     border-top: none;
     background: #1e4e79;
 }
@@ -3510,6 +3529,15 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: var(--sv-card);
     border: 1px solid var(--sv-border);
     padding: var(--sv-block-gap);
+}
+
+/* Homepage updates: `.card` adds a full border — mockup is top + sides only, square, no inner row lines */
+.supervisor-home .updates-box.card.home-updates-card {
+    padding: 0;
+    border-radius: 0;
+    border: 1px solid var(--sv-border);
+    border-bottom: none;
+    box-shadow: none;
 }
 
 /* Header strip full-bleed - NO border radius */

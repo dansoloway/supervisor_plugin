@@ -1192,7 +1192,7 @@
     border-radius: var(--sv-radius-lg);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
     font-weight: 700;
-    font-size: var(--sv-fs-h4);
+    font-size: 24px;
     color: #319694;
     line-height: 1.3;
     pointer-events: none;
@@ -1282,7 +1282,6 @@
 }
 
 .supervisor-contact-page .contact-info-column {
-    border-radius: var(--sv-radius-lg);
     padding: var(--sv-spacing-xl);
 }
 
@@ -1299,7 +1298,6 @@
     padding: var(--sv-spacing-xl);
     background: var(--sv-blue-050);
     border: 1px solid var(--sv-border);
-    border-radius: var(--sv-radius-lg);
 }
 
 .supervisor-contact-page .supervisor-contact-form .form-group {
@@ -1938,16 +1936,6 @@
     width: 100%;
 }
 
-.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description,
-.supervisor-knowledge-map .knowledge-map-main .knowledge-map-title {
-    text-align: center;
-}
-
-.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description {
-    max-width: 65ch;
-    margin-inline: auto;
-}
-
 .supervisor-knowledge-map .knowledge-map-main .knowledge-map-links {
     justify-content: center;
     flex-wrap: wrap;
@@ -1957,10 +1945,25 @@
     max-width: 100%;
 }
 
+/* Full width of the main column; RTL start = physical right */
 .supervisor-knowledge-map .knowledge-map-main .knowledge-map-description {
-    margin-left: 0;
-    margin-right: 0;
+    align-self: stretch;
+    width: 100%;
     max-width: none;
+    margin-inline: 0;
+    margin-block-start: 60px;
+    margin-block-end: 40px;
+    text-align: start;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-title,
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description .knowledge-map-description__content,
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-description p {
+    text-align: start;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-title {
+    color: var(--sv-nav-accent);
 }
 
 .knowledge-map-content {
@@ -2292,13 +2295,18 @@
     /* Knowledge map description - bigger fonts */
     .supervisor-knowledge-map .knowledge-map-description {
         display: block !important; /* Show on mobile with bigger fonts */
-        margin: 30px auto !important;
+        align-self: stretch !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 30px 0 !important;
         padding: 0 16px;
+        text-align: start !important;
     }
     
     .supervisor-knowledge-map .knowledge-map-title {
         font-size: 22px !important;
         margin-bottom: 16px !important;
+        text-align: start !important;
     }
     
     .supervisor-knowledge-map .knowledge-map-description p,
@@ -2306,6 +2314,7 @@
         font-size: 18px !important;
         line-height: 1.7 !important;
         margin-bottom: 16px !important;
+        text-align: start !important;
     }
     
     /* Knowledge map links - bigger fonts, stacked */
@@ -2328,7 +2337,7 @@
 
 .knowledge-map-description {
     margin: 60px auto 40px;
-    text-align: right;
+    text-align: start;
     direction: rtl;
 }
 
@@ -2338,7 +2347,7 @@
     font-weight: 700;
     color: var(--sv-text);
     margin-bottom: 20px;
-    text-align: right;
+    text-align: start;
 }
 
 .knowledge-map-description .knowledge-map-description__content {
@@ -2347,7 +2356,7 @@
     line-height: 1.6;
     color: var(--sv-text);
     margin-bottom: 20px;
-    text-align: right;
+    text-align: start;
 }
 
 .knowledge-map-description .knowledge-map-description__content > *:last-child {
@@ -2360,6 +2369,7 @@
     line-height: 1.6;
     color: var(--sv-text);
     margin-bottom: 20px;
+    text-align: start;
 }
 
 .knowledge-map-links {
@@ -3068,8 +3078,9 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: white !important;
 }
 
-.nav-wrapper .desktop-menu .nav-item-group.is-open > .nav-item,
-.nav-wrapper .desktop-menu .nav-item-group.is-open > .dropdown-toggle {
+/* Open menu: only reset strip when this branch is NOT the current page */
+.nav-wrapper .desktop-menu .nav-item-group.is-open:not(:has(> button.nav-item.active)) > button.nav-item,
+.nav-wrapper .desktop-menu .nav-item-group.is-open:not(:has(> button.nav-item.active)) > .dropdown-toggle {
     background: transparent !important;
     color: var(--sv-nav-accent) !important;
 }
@@ -3080,25 +3091,66 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: white !important;
 }
 
-/* Active state - underline only (current page) - DESKTOP ONLY */
+/* Active state — full-height blue bar, white label (matches design mockup) */
 .nav-wrapper .desktop-menu > a.active,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active {
-    background: white !important;
-    color: var(--sv-nav-accent) !important;
-    box-shadow: inset 0 -3px 0 0 var(--sv-nav-accent);
+    background: var(--sv-nav-accent) !important;
+    color: #fff !important;
+    box-shadow: none;
     outline: 0;
+}
+
+/* Flush with nav bottom border: overlap the bar’s 1px rule (removes white hairline) */
+.nav-wrapper .desktop-menu > a.active {
+    position: relative;
+    z-index: 1;
+    margin-bottom: -1px;
+    border-bottom: 1px solid var(--sv-nav-accent);
+}
+
+.nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active) {
+    position: relative;
+    z-index: 1;
+    margin-bottom: -1px;
+    border-bottom: 1px solid var(--sv-nav-accent);
+}
+
+/* Caret sits in its own control — paint it like the active tab */
+.nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active) > .dropdown-toggle {
+    background: var(--sv-nav-accent) !important;
+    color: #fff !important;
 }
 
 .nav-wrapper .desktop-menu > a.active .nav-text,
 .nav-wrapper .desktop-menu > a.active .nav-icon,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .nav-text,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .nav-icon {
-    color: var(--sv-nav-accent) !important;
+    color: #fff !important;
+}
+
+.nav-wrapper .desktop-menu > a.active:hover,
+.nav-wrapper .desktop-menu > a.active:focus-visible,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active:hover,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active:focus-visible,
+.nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active) > .dropdown-toggle:hover,
+.nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active) > .dropdown-toggle:focus-visible {
+    background: #142e45 !important;
+    color: #fff !important;
+}
+
+.nav-wrapper .desktop-menu > a.active:hover,
+.nav-wrapper .desktop-menu > a.active:focus-visible {
+    border-bottom-color: #142e45;
+}
+
+.nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active):hover,
+.nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active):focus-within {
+    border-bottom-color: #142e45;
 }
 
 .nav-wrapper .desktop-menu > a.active .nav-icon-home img {
     opacity: 1;
-    filter: none;
+    filter: brightness(0) invert(1);
 }
 
 /* Inactive icon (home when not active) - uses built-in colors from house3.svg */
@@ -3162,39 +3214,38 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transform: rotate(180deg);
 }
 
-.nav-wrapper .desktop-menu > a.active .dropdown-icon,
-.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .dropdown-icon,
 .nav-wrapper .desktop-menu .nav-item-group.is-open .dropdown-icon {
     color: var(--sv-nav-accent);
+}
+
+.nav-wrapper .desktop-menu > a.active .dropdown-icon,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .dropdown-icon,
+.nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active) > .dropdown-toggle .dropdown-icon {
+    color: #fff !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active) > .dropdown-toggle .dropdown-icon {
+    color: #fff !important;
 }
 
 /* ===== DROPDOWN MENU - DESKTOP ONLY ===== */
 .nav-wrapper .desktop-menu .dropdown-menu {
     position: absolute;
-    top: calc(100% - 16px);
+    top: 100%;
     inset-inline-start: 0;
     transform: none;
     margin-top: 0;
-    padding: 16px 0 0;
-    background-clip: padding-box;
-    background: var(--sv-submenu-panel);
-    border: 1px solid var(--sv-submenu-separator);
+    padding: 0;
+    background: var(--sv-submenu-hover-bg);
+    border: 1px solid var(--sv-nav-accent);
     border-radius: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     display: none;
-    width: 225px;
-}
-
-/* Hit target over the seam (same bg as panel — no visual gap) */
-.nav-wrapper .desktop-menu .dropdown-menu::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 18px;
-    pointer-events: auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .nav-wrapper .desktop-menu .dropdown-menu.show {
@@ -3203,15 +3254,19 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 /* Dropdown submenu rows — shared (desktop + mobile .site-nav) */
 .nav-wrapper .site-nav .dropdown-menu .submenu-item {
-    display: block;
-    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 56px;
+    padding: 16px;
     color: var(--sv-nav-accent) !important;
     text-decoration: none;
     font-family: var(--sv-font-secondary);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.4;
-    background: var(--sv-submenu-panel);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+    background: #fff;
     border: none;
     border-bottom: 1px solid var(--sv-submenu-separator);
     border-radius: 0;
@@ -3232,17 +3287,29 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: var(--sv-nav-accent) !important;
 }
 
-.nav-wrapper .site-nav .dropdown-menu .submenu-item.active {
-    background: var(--sv-submenu-panel) !important;
+/* Desktop submenu: inactive rows — light gray panel (mockup) */
+.nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active) {
+    background: var(--sv-submenu-hover-bg) !important;
+}
+
+.nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active):hover,
+.nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active):focus-visible {
+    background: #ccd1d5 !important;
     color: var(--sv-nav-accent) !important;
-    font-weight: 700;
-    box-shadow: inset 0 -3px 0 0 var(--sv-nav-accent);
+}
+
+/* Current submenu page: blue strip, white label */
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active {
+    background: var(--sv-nav-accent) !important;
+    color: #fff !important;
+    font-weight: 600;
+    box-shadow: none;
 }
 
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active:hover,
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active:focus-visible {
-    background: var(--sv-submenu-hover-bg) !important;
-    color: var(--sv-nav-accent) !important;
+    background: #142e45 !important;
+    color: #fff !important;
 }
 
 /* Prevent decorative ::before on dropdown rows */
@@ -3445,8 +3512,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     }
     
     .nav-wrapper .mobile-menu .dropdown-menu .submenu-item {
+        min-height: 0;
         padding: 16px 24px 16px 44px;
         font-size: 18px;
+        font-weight: 500;
         line-height: 1.5;
     }
     

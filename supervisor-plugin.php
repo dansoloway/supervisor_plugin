@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.13', // Stories carousel arrows more prominent
+        '1.0.17', // Active nav tab flush to bottom border (no hairline gap)
         'all' // Media type
     );
 

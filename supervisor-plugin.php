@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.17', // Active nav tab flush to bottom border (no hairline gap)
+        '1.0.21', // Nav: grey main hover; submenu white + blue, grey row hover
         'all' // Media type
     );
 

@@ -1304,6 +1304,10 @@
     margin-bottom: var(--sv-spacing-lg);
 }
 
+.supervisor-contact-page .supervisor-form label {
+    font-size: 1.25rem;
+}
+
 .supervisor-contact-page .supervisor-contact-form input {
     border-radius: var(--sv-radius-md);
     border: 1px solid var(--sv-border-input);
@@ -3068,14 +3072,14 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > .dropdown-toggle,
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> .nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .dropdown-toggle {
-    color: white !important;
-    background: #183d5c !important;
+    color: var(--sv-nav-accent) !important;
+    background: #dfe3e6 !important;
 }
 
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > .nav-item:not(.active),
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> .nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .nav-item:not(.active) {
-    background: #183d5c !important;
-    color: white !important;
+    background: #dfe3e6 !important;
+    color: var(--sv-nav-accent) !important;
 }
 
 /* Open menu: only reset strip when this branch is NOT the current page */
@@ -3128,6 +3132,27 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: #fff !important;
 }
 
+/* מפת הידע (dropdown parent): label text must track state — avoids white-on-white if theme targets span */
+.nav-wrapper .desktop-menu .nav-item-group.dropdown > button.nav-item:not(.active) .nav-text {
+    color: var(--sv-nav-accent) !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group.dropdown > button.nav-item:not(.active):hover .nav-text,
+.nav-wrapper .desktop-menu .nav-item-group.dropdown > button.nav-item:not(.active):focus-visible .nav-text {
+    color: var(--sv-nav-accent) !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group.dropdown > button.nav-item.active:hover .nav-text,
+.nav-wrapper .desktop-menu .nav-item-group.dropdown > button.nav-item.active:focus-visible .nav-text,
+.nav-wrapper .desktop-menu .nav-item-group.is-open > button.nav-item.active .nav-text {
+    color: #fff !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group.is-open > button.nav-item.active {
+    background: var(--sv-nav-accent) !important;
+    color: #fff !important;
+}
+
 .nav-wrapper .desktop-menu > a.active:hover,
 .nav-wrapper .desktop-menu > a.active:focus-visible,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active:hover,
@@ -3177,13 +3202,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     object-fit: contain;
 }
 
-/* Hover/Focus - all main menu items - dark blue, white text - DESKTOP ONLY */
+/* Hover/Focus — inactive top-level tabs: grey wash, classic blue text */
 .nav-wrapper .desktop-menu > a:not(.active):hover,
 .nav-wrapper .desktop-menu > a:not(.active):focus-visible,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible {
-    background: #183d5c !important;
-    color: white !important;
+    background: #dfe3e6 !important;
+    color: var(--sv-nav-accent) !important;
     outline: 0;
 }
 
@@ -3195,7 +3220,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover .nav-icon,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible .nav-text,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible .nav-icon {
-    color: white !important;
+    color: var(--sv-nav-accent) !important;
 }
 
 .nav-wrapper .desktop-menu > a:not(.active):hover .nav-icon-home img,
@@ -3236,7 +3261,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transform: none;
     margin-top: 0;
     padding: 0;
-    background: var(--sv-submenu-hover-bg);
+    background: #fff;
     border: 1px solid var(--sv-nav-accent);
     border-radius: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -3283,19 +3308,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 .nav-wrapper .site-nav .dropdown-menu .submenu-item:hover,
 .nav-wrapper .site-nav .dropdown-menu .submenu-item:focus-visible {
-    background: var(--sv-submenu-hover-bg) !important;
+    background: #dfe3e6 !important;
     color: var(--sv-nav-accent) !important;
 }
 
-/* Desktop submenu: inactive rows — light gray panel (mockup) */
+/* Desktop submenu: default white + accent; hover grey (shared rule above) */
 .nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active) {
-    background: var(--sv-submenu-hover-bg) !important;
-}
-
-.nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active):hover,
-.nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active):focus-visible {
-    background: #ccd1d5 !important;
-    color: var(--sv-nav-accent) !important;
+    background: #fff !important;
 }
 
 /* Current submenu page: blue strip, white label */
@@ -4685,12 +4704,21 @@ img[src*=".svg"] {
 
 .supervisor-qa_orgs .org-card__main {
     display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* Flag + EN title on one row (RTL: flag at reading start / right, text beside it — like bib category icon + title) */
+.supervisor-qa_orgs .org-card__headline {
+    display: flex;
     flex-direction: row;
-    direction: ltr;
-    justify-content: space-between;
+    direction: rtl;
     align-items: flex-start;
+    justify-content: flex-start;
     gap: 12px;
     flex: 1 1 auto;
+    min-width: 0;
 }
 
 .supervisor-qa_orgs .org-card__en {

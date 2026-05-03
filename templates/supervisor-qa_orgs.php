@@ -66,23 +66,25 @@ get_header('supervisor');
 
             <a href="<?php echo esc_url($organization_link); ?>" class="org-card">
                 <div class="org-card__main">
-                    <div class="org-card__en">
-                        <h2 class="org-card__acronym"><?php echo esc_html($acronym); ?></h2>
-                        <?php if ($tagline !== '') : ?>
-                            <p class="org-card__tagline"><?php echo esc_html($tagline); ?></p>
+                    <div class="org-card__headline">
+                        <?php if ($country_flag_url) : ?>
+                            <img
+                                src="<?php echo esc_url($country_flag_url); ?>"
+                                alt="<?php echo esc_attr($flag_alt); ?>"
+                                class="org-card__flag"
+                                width="40"
+                                height="28"
+                                loading="lazy"
+                                decoding="async"
+                            />
                         <?php endif; ?>
+                        <div class="org-card__en">
+                            <h2 class="org-card__acronym"><?php echo esc_html($acronym); ?></h2>
+                            <?php if ($tagline !== '') : ?>
+                                <p class="org-card__tagline"><?php echo esc_html($tagline); ?></p>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <?php if ($country_flag_url) : ?>
-                        <img
-                            src="<?php echo esc_url($country_flag_url); ?>"
-                            alt="<?php echo esc_attr($flag_alt); ?>"
-                            class="org-card__flag"
-                            width="40"
-                            height="28"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                    <?php endif; ?>
                 </div>
                 <div class="org-card__footer">
                     <span class="org-card__arrow" aria-hidden="true">

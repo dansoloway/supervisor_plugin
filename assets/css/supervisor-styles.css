@@ -922,7 +922,6 @@
     border: none;
     border-radius: var(--sv-radius-md);
     cursor: pointer;
-    transition: background 0.2s ease;
 }
 
 .supervisor-home .search-button:hover,

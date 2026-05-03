@@ -80,12 +80,14 @@ function render_nav_item($item) {
     
     $class_string = implode(' ', $classes);
 
-    // For dropdown items, render a group: text link navigates, arrow button toggles submenu.
+    // For dropdown items: parent is a button (opens submenu only; submenu links carry URLs).
     if ($item['has_dropdown'] && !empty($item['submenu'])) {
-        echo '<div class="nav-item-group" data-dropdown-parent="' . esc_attr($item['title']) . '">';
+        $submenu_panel_id = 'supervisor-nav-submenu-' . substr(md5($item['title']), 0, 12);
+
+        echo '<div class="nav-item-group dropdown" data-dropdown-parent="' . esc_attr($item['title']) . '">';
 
         $aria_label = !empty($item['is_home_icon']) ? ' aria-label="בית"' : '';
-        echo '<a href="' . esc_url($item['url']) . '" class="' . esc_attr($class_string) . '"' . $aria_label . '>';
+        echo '<button type="button" class="' . esc_attr($class_string) . '" aria-expanded="false" aria-haspopup="true" aria-controls="' . esc_attr($submenu_panel_id) . '"' . $aria_label . '>';
         if (!empty($item['is_home_icon'])) {
             $house_icon_url = plugin_dir_url(dirname(__FILE__)) . 'assets/img/home3vsg.svg';
             echo '<span class="nav-icon nav-icon-home" aria-hidden="true">';
@@ -94,15 +96,15 @@ function render_nav_item($item) {
         } else {
             echo '<span class="nav-text">' . esc_html($item['title']) . '</span>';
         }
-        echo '</a>';
+        echo '</button>';
 
-        echo '<button type="button" class="dropdown-toggle" aria-label="' . esc_attr__('פתח תפריט משנה', 'supervisor-plugin') . '" aria-expanded="false">';
+        echo '<button type="button" class="dropdown-toggle" aria-label="' . esc_attr__('פתח תפריט משנה', 'supervisor-plugin') . '" aria-expanded="false" aria-controls="' . esc_attr($submenu_panel_id) . '">';
         echo '<svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
         echo '<path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>';
         echo '</svg>';
         echo '</button>';
 
-        echo '<div class="dropdown-menu" data-parent="' . esc_attr($item['title']) . '">';
+        echo '<div id="' . esc_attr($submenu_panel_id) . '" class="dropdown-menu" data-parent="' . esc_attr($item['title']) . '">';
         foreach ($item['submenu'] as $submenu_item) {
             $submenu_classes = ['submenu-item'];
             if ($submenu_item['is_active']) {

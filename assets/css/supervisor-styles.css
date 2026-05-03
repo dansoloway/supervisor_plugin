@@ -1435,12 +1435,11 @@
     border-radius: var(--sv-radius-sm);
     overflow: hidden;
     padding: 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 /* Updates header: light gray strip - flatter, crisper */
 .supervisor-home .home-updates-card .updates-header {
-    background: #e5e7eb;
+    background: white;
     color: var(--sv-text);
     padding: 10px 16px;
     font-weight: 700;
@@ -2985,13 +2984,14 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     min-width: 170px;
 }
 
-/* Links - equal-width tabs, large bold Hebrew - DESKTOP ONLY */
-.nav-wrapper .desktop-menu a {
+/* Top-level tabs: anchors + dropdown parent button (not a link) - DESKTOP ONLY */
+.nav-wrapper .desktop-menu > a,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item {
     flex: 1 1 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 28px;
+    padding: 16px;
     color: var(--sv-nav-accent) !important;
     font-family: var(--sv-font-secondary);
     font-weight: 600 !important;
@@ -3007,8 +3007,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     min-height: 56px;
 }
 
-/* Dropdown group: make link + arrow look like one tab */
-.nav-wrapper .desktop-menu .nav-item-group > a.nav-item {
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    text-align: center;
+}
+
+/* Dropdown group: label + arrow look like one tab */
+.nav-wrapper .desktop-menu .nav-item-group > :is(a, button).nav-item {
     flex: 1 1 auto;
     white-space: nowrap;
 }
@@ -3030,58 +3039,62 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > .dropdown-toggle,
-.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> a.nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .dropdown-toggle {
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> .nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .dropdown-toggle {
     color: white !important;
     background: #183d5c !important;
 }
 
-.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > a.nav-item:not(.active),
-.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> a.nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > a.nav-item:not(.active) {
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > .nav-item:not(.active),
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> .nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .nav-item:not(.active) {
     background: #183d5c !important;
     color: white !important;
 }
 
-.nav-wrapper .desktop-menu .nav-item-group.is-open > a.nav-item,
+.nav-wrapper .desktop-menu .nav-item-group.is-open > .nav-item,
 .nav-wrapper .desktop-menu .nav-item-group.is-open > .dropdown-toggle {
     background: transparent !important;
     color: var(--sv-nav-accent) !important;
 }
 
 /* Inactive items - white background, blue text/icon */
-.nav-wrapper .desktop-menu a:not(.active) {
+.nav-wrapper .desktop-menu > a:not(.active),
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active) {
     background: white !important;
 }
 
 /* Active state - underline only (current page) - DESKTOP ONLY */
-.nav-wrapper .desktop-menu a.active {
+.nav-wrapper .desktop-menu > a.active,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active {
     background: white !important;
     color: var(--sv-nav-accent) !important;
     box-shadow: inset 0 -3px 0 0 var(--sv-nav-accent);
     outline: 0;
 }
 
-.nav-wrapper .desktop-menu a.active .nav-text,
-.nav-wrapper .desktop-menu a.active .nav-icon {
+.nav-wrapper .desktop-menu > a.active .nav-text,
+.nav-wrapper .desktop-menu > a.active .nav-icon,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .nav-text,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .nav-icon {
     color: var(--sv-nav-accent) !important;
 }
 
-.nav-wrapper .desktop-menu a.active .nav-icon-home img {
+.nav-wrapper .desktop-menu > a.active .nav-icon-home img {
     opacity: 1;
     filter: none;
 }
 
 /* Inactive icon (home when not active) - uses built-in colors from house3.svg */
-.nav-wrapper .desktop-menu a:not(.active) .nav-icon-home img {
+.nav-wrapper .desktop-menu > a:not(.active) .nav-icon-home img {
     opacity: 0.9;
 }
 
 /* Home icon - same treatment as text items, icon-only width - DESKTOP ONLY */
-.nav-wrapper .desktop-menu a.nav-item-home {
+.nav-wrapper .desktop-menu > a.nav-item-home {
     flex: 0 1 auto;
     min-width: 52px;
 }
 
-.nav-wrapper .desktop-menu a.nav-item-home .nav-icon-home {
+.nav-wrapper .desktop-menu > a.nav-item-home .nav-icon-home {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3095,22 +3108,28 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Hover/Focus - all main menu items - dark blue, white text - DESKTOP ONLY */
-.nav-wrapper .desktop-menu a:not(.active):hover,
-.nav-wrapper .desktop-menu a:not(.active):focus-visible {
+.nav-wrapper .desktop-menu > a:not(.active):hover,
+.nav-wrapper .desktop-menu > a:not(.active):focus-visible,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible {
     background: #183d5c !important;
     color: white !important;
     outline: 0;
 }
 
-.nav-wrapper .desktop-menu a:not(.active):hover .nav-text,
-.nav-wrapper .desktop-menu a:not(.active):hover .nav-icon,
-.nav-wrapper .desktop-menu a:not(.active):focus-visible .nav-text,
-.nav-wrapper .desktop-menu a:not(.active):focus-visible .nav-icon {
+.nav-wrapper .desktop-menu > a:not(.active):hover .nav-text,
+.nav-wrapper .desktop-menu > a:not(.active):hover .nav-icon,
+.nav-wrapper .desktop-menu > a:not(.active):focus-visible .nav-text,
+.nav-wrapper .desktop-menu > a:not(.active):focus-visible .nav-icon,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover .nav-text,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover .nav-icon,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible .nav-text,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible .nav-icon {
     color: white !important;
 }
 
-.nav-wrapper .desktop-menu a:not(.active):hover .nav-icon-home img,
-.nav-wrapper .desktop-menu a:not(.active):focus-visible .nav-icon-home img {
+.nav-wrapper .desktop-menu > a:not(.active):hover .nav-icon-home img,
+.nav-wrapper .desktop-menu > a:not(.active):focus-visible .nav-icon-home img {
     opacity: 1;
 }
 
@@ -3125,7 +3144,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transform: rotate(180deg);
 }
 
-.nav-wrapper .desktop-menu a.active .dropdown-icon,
+.nav-wrapper .desktop-menu > a.active .dropdown-icon,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .dropdown-icon,
 .nav-wrapper .desktop-menu .nav-item-group.is-open .dropdown-icon {
     color: var(--sv-nav-accent);
 }
@@ -3133,10 +3153,12 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 /* ===== DROPDOWN MENU - DESKTOP ONLY ===== */
 .nav-wrapper .desktop-menu .dropdown-menu {
     position: absolute;
-    top: 100%;
+    top: calc(100% - 16px);
     inset-inline-start: 0;
     transform: none;
-    margin-top: -2px; /* Overlap with parent to prevent hover gap */
+    margin-top: 0;
+    padding: 16px 0 0;
+    background-clip: padding-box;
     background: var(--sv-submenu-panel);
     border: 1px solid var(--sv-submenu-separator);
     border-radius: 0;
@@ -3144,17 +3166,17 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     z-index: 1000;
     display: none;
     width: 225px;
-    padding: 0;
 }
 
-/* Bridge between parent and submenu to prevent hover loss */
+/* Hit target over the seam (same bg as panel — no visual gap) */
 .nav-wrapper .desktop-menu .dropdown-menu::before {
     content: '';
     position: absolute;
-    top: -8px;
+    top: 0;
     left: 0;
     right: 0;
-    height: 10px;
+    height: 18px;
+    pointer-events: auto;
 }
 
 .nav-wrapper .desktop-menu .dropdown-menu.show {
@@ -3410,7 +3432,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
         line-height: 1.5;
     }
     
-    .nav-wrapper .mobile-menu a.dropdown.active .dropdown-icon {
+    .nav-wrapper .mobile-menu a.dropdown.active .dropdown-icon,
+    .nav-wrapper .mobile-menu button.nav-item.dropdown.active .dropdown-icon {
         transform: rotate(180deg);
     }
 }

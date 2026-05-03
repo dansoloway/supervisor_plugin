@@ -99,42 +99,65 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Dropdown menu functionality - desktop menu (arrow-only toggle)
+    // Dropdown menu — desktop: label opens only (never closes on label click); caret toggles open/close.
     const desktopDropdownGroups = document.querySelectorAll('.nav-wrapper .site-nav.supervisor_header_links.desktop-menu .nav-item-group');
+
+    function setDesktopDropdownAria(group, open) {
+        const toggles = group.querySelectorAll('.dropdown-toggle, button.nav-item.dropdown');
+        toggles.forEach(t => t.setAttribute('aria-expanded', open ? 'true' : 'false'));
+    }
 
     function closeAllDesktopDropdowns(exceptGroup = null) {
         desktopDropdownGroups.forEach(group => {
             if (exceptGroup && group === exceptGroup) return;
             const menu = group.querySelector('.dropdown-menu');
-            const toggle = group.querySelector('.dropdown-toggle');
             if (menu) menu.classList.remove('show');
             group.classList.remove('is-open');
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            setDesktopDropdownAria(group, false);
         });
     }
 
     desktopDropdownGroups.forEach(group => {
-        const toggle = group.querySelector('.dropdown-toggle');
         const menu = group.querySelector('.dropdown-menu');
-        if (!toggle || !menu) return;
+        const label = group.querySelector('button.nav-item.dropdown');
+        const caret = group.querySelector('.dropdown-toggle');
+        if (!menu || (!label && !caret)) return;
 
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        if (caret) {
+            caret.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            const willOpen = !menu.classList.contains('show');
-            closeAllDesktopDropdowns(group);
+                const willOpen = !menu.classList.contains('show');
+                closeAllDesktopDropdowns(group);
 
-            if (willOpen) {
+                if (willOpen) {
+                    menu.classList.add('show');
+                    group.classList.add('is-open');
+                    setDesktopDropdownAria(group, true);
+                } else {
+                    menu.classList.remove('show');
+                    group.classList.remove('is-open');
+                    setDesktopDropdownAria(group, false);
+                }
+            });
+        }
+
+        if (label) {
+            label.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (menu.classList.contains('show')) {
+                    return;
+                }
+
+                closeAllDesktopDropdowns(group);
                 menu.classList.add('show');
                 group.classList.add('is-open');
-                toggle.setAttribute('aria-expanded', 'true');
-            } else {
-                menu.classList.remove('show');
-                group.classList.remove('is-open');
-                toggle.setAttribute('aria-expanded', 'false');
-            }
-        });
+                setDesktopDropdownAria(group, true);
+            });
+        }
     });
     
     // Close dropdowns when clicking outside
@@ -147,41 +170,41 @@ document.addEventListener('DOMContentLoaded', function() {
     // If a dropdown was opened/hover-activated, ensure it doesn't stay highlighted
     // when the user clicks a different top-level nav item.
     document.addEventListener('click', function(e) {
-        const clickedTopLevelLink = e.target.closest('.nav-wrapper .site-nav.supervisor_header_links a.nav-item');
-        if (!clickedTopLevelLink) return;
+        const clickedTopLevel = e.target.closest('.nav-wrapper .site-nav.supervisor_header_links a.nav-item, .nav-wrapper .site-nav.supervisor_header_links button.nav-item');
+        if (!clickedTopLevel) return;
 
-        // Don't immediately clear when clicking the dropdown toggle itself or inside its menu.
-        if (clickedTopLevelLink.classList.contains('dropdown')) return;
+        if (clickedTopLevel.classList.contains('dropdown')) return;
         if (e.target.closest('.dropdown-menu')) return;
 
         closeAllDesktopDropdowns();
     });
     
-    // Mobile menu dropdown functionality (separate from desktop)
+    // Mobile menu dropdown: label button + caret both toggle (same DOM as desktop)
     if (mobileMenu) {
-        const mobileDropdownItems = mobileMenu.querySelectorAll('a.dropdown');
-        
-        mobileDropdownItems.forEach(dropdown => {
-            const dropdownMenu = dropdown.nextElementSibling;
-            
-            if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
-                dropdown.addEventListener('click', function(e) {
+        mobileMenu.querySelectorAll('.nav-item-group').forEach(group => {
+            const dropdownMenu = group.querySelector('.dropdown-menu');
+            const parentTab = group.querySelector('.nav-item.dropdown');
+            const triggers = group.querySelectorAll('.dropdown-toggle, button.nav-item.dropdown');
+            if (!dropdownMenu || triggers.length === 0) return;
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    // Close any other open dropdowns
+
                     mobileMenu.querySelectorAll('.dropdown-menu.show').forEach(menu => {
                         if (menu !== dropdownMenu) {
                             menu.classList.remove('show');
-                            menu.previousElementSibling.classList.remove('active');
+                            const g = menu.closest('.nav-item-group');
+                            const p = g && g.querySelector('.nav-item.dropdown');
+                            if (p) p.classList.remove('active');
                         }
                     });
-                    
-                    // Toggle current dropdown
+
                     dropdownMenu.classList.toggle('show');
-                    dropdown.classList.toggle('active');
+                    if (parentTab) parentTab.classList.toggle('active');
                 });
-            }
+            });
         });
     }
 });

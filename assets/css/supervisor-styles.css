@@ -3261,7 +3261,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transform: none;
     margin-top: 0;
     padding: 0;
-    background: #fff;
+    background: #f0f3f6;
     border: 1px solid var(--sv-nav-accent);
     border-radius: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -3286,6 +3286,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     min-height: 56px;
     padding: 16px;
     color: var(--sv-nav-accent) !important;
+    -webkit-text-fill-color: var(--sv-nav-accent);
     text-decoration: none;
     font-family: var(--sv-font-secondary);
     font-size: 20px;
@@ -3293,7 +3294,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     line-height: 1;
     background: #fff;
     border: none;
-    border-bottom: 1px solid var(--sv-submenu-separator);
+    border-bottom: 1px solid rgba(24, 61, 92, 0.12);
     border-radius: 0;
     transition: background-color 0.2s ease, color 0.2s ease;
     cursor: pointer;
@@ -3302,33 +3303,59 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     outline: 0;
 }
 
+.nav-wrapper .site-nav .dropdown-menu .submenu-item:link,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item:visited,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item:hover,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item:active {
+    color: var(--sv-nav-accent) !important;
+    -webkit-text-fill-color: var(--sv-nav-accent);
+}
+
 .nav-wrapper .site-nav .dropdown-menu .submenu-item:last-child {
     border-bottom: none;
 }
 
 .nav-wrapper .site-nav .dropdown-menu .submenu-item:hover,
 .nav-wrapper .site-nav .dropdown-menu .submenu-item:focus-visible {
-    background: #dfe3e6 !important;
+    background: var(--sv-submenu-hover-bg) !important;
     color: var(--sv-nav-accent) !important;
+    -webkit-text-fill-color: var(--sv-nav-accent);
 }
 
-/* Desktop submenu: default white + accent; hover grey (shared rule above) */
+/* Desktop: inactive rows — light grey tile, classic blue type; hover slightly darker grey */
 .nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active) {
-    background: #fff !important;
+    background: var(--sv-submenu-hover-bg) !important;
+}
+
+.nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active):hover,
+.nav-wrapper .desktop-menu .dropdown-menu .submenu-item:not(.active):focus-visible {
+    background: #c5ccd2 !important;
+    color: var(--sv-nav-accent) !important;
+    -webkit-text-fill-color: var(--sv-nav-accent);
 }
 
 /* Current submenu page: blue strip, white label */
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active {
     background: var(--sv-nav-accent) !important;
     color: #fff !important;
+    -webkit-text-fill-color: #fff;
     font-weight: 600;
     box-shadow: none;
+}
+
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active:link,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active:visited,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active:hover,
+.nav-wrapper .site-nav .dropdown-menu .submenu-item.active:active {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff;
 }
 
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active:hover,
 .nav-wrapper .site-nav .dropdown-menu .submenu-item.active:focus-visible {
     background: #142e45 !important;
     color: #fff !important;
+    -webkit-text-fill-color: #fff;
 }
 
 /* Prevent decorative ::before on dropdown rows */

@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.21', // Nav: grey main hover; submenu white + blue, grey row hover
+        '1.0.22', // Submenu: restore grey rows, dividers, forced accent/white link colors
         'all' // Media type
     );
 

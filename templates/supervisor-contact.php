@@ -19,7 +19,7 @@ get_header('supervisor');
         
         <!-- Main Content Area -->
         <div class="supervisor-content-wrapper supervisor-two-column">
-               
+        <h3 style="color:black;text-align:right;">צור קשר</h3>
         <!-- Right Column: Contact Info -->
         <div class="contact-info-column">
             <h2 class="contact-info-title">ליצירת קשר:</h2>

@@ -5387,36 +5387,40 @@ body .supervisor-bib-cats .categories-grid {
     position: relative;
 }
 
-/* Thin chevrons, no pill — same buttons, same behavior */
+/* Carousel arrows — larger, higher-contrast chevrons; subtle pill for prominence */
 .supervisor-home .stories-carousel-prev,
 .supervisor-home .stories-carousel-next {
     flex-shrink: 0;
-    width: 2rem;
-    min-width: 2rem;
+    width: 2.5rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    min-height: 2.5rem;
     align-self: center;
-    min-height: 7rem;
-    border: none;
-    border-radius: 0;
-    background: transparent;
-    color: #111;
+    border: 1px solid var(--sv-border, #e5eaf0);
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: var(--sv-nav-accent, #183d5c);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    font-size: 1.75rem;
-    font-weight: 300;
+    font-size: 1.375rem;
+    font-weight: 700;
     line-height: 1;
     position: relative;
     z-index: 2;
     pointer-events: auto;
-    box-shadow: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .supervisor-home .stories-carousel-prev:hover,
 .supervisor-home .stories-carousel-next:hover {
-    color: #000;
-    background: transparent;
+    color: #0f172a;
+    background: #e8ecf0;
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .supervisor-home .stories-carousel-wrapper.no-scroll-needed .stories-carousel-prev,
@@ -5426,8 +5430,9 @@ body .supervisor-bib-cats .categories-grid {
 
 .supervisor-home .stories-carousel-prev:disabled,
 .supervisor-home .stories-carousel-next:disabled {
-    opacity: 0.35;
+    opacity: 0.45;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 .supervisor-home .stories-carousel {
@@ -5589,10 +5594,11 @@ body .supervisor-bib-cats .categories-grid {
 
     .supervisor-home .stories-carousel-prev,
     .supervisor-home .stories-carousel-next {
-        width: 1.5rem;
-        min-width: 1.5rem;
-        min-height: 4rem;
-        font-size: 1.5rem;
+        width: 2.25rem;
+        min-width: 2.25rem;
+        height: 2.25rem;
+        min-height: 2.25rem;
+        font-size: 1.2rem;
     }
 
     .supervisor-home .stories-carousel {

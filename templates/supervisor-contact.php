@@ -19,10 +19,9 @@ get_header('supervisor');
         
         <!-- Main Content Area -->
         <div class="supervisor-content-wrapper supervisor-two-column">
-        <h3 style="color:black;text-align:right;">צור קשר</h3>
         <!-- Right Column: Contact Info -->
         <div class="contact-info-column">
-            <h2 class="contact-info-title">ליצירת קשר:</h2>
+            <!-- <h2 class="contact-info-title">ליצירת קשר:</h2> -->
             <?php 
             $contact_email = get_option('supervisor_contact_email', '');
             if ($contact_email) {
@@ -35,6 +34,8 @@ get_header('supervisor');
         
         <!-- Left Column: Contact Form -->
         <div class="contact-form-container">
+        <h3 style="color:black;text-align:center;">צור קשר</h3>
+
             <?php 
             if (function_exists('supervisor_display_contact_form')) {
                 supervisor_display_contact_form(); 

@@ -5704,17 +5704,13 @@ body .supervisor-bib-cats .categories-grid {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     transition:
         background 0.22s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease,
-        transform 0.22s ease;
+        border-color 0.22s ease;
 }
 
 .supervisor-home .stories-carousel .story-card:hover,
 .supervisor-home .stories-carousel .story-card:focus-visible {
     background: var(--sv-blue-050, #f3f7fc);
     border-color: rgba(89, 130, 194, 0.45);
-    box-shadow: 0 6px 18px rgba(89, 130, 194, 0.16);
-    transform: translateY(-2px);
 }
 
 .supervisor-home .stories-carousel .story-card:focus {
@@ -5740,12 +5736,6 @@ body .supervisor-bib-cats .categories-grid {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.35s ease;
-}
-
-.supervisor-home .stories-carousel .story-card:hover .story-card-image img,
-.supervisor-home .stories-carousel .story-card:focus-visible .story-card-image img {
-    transform: scale(1.05);
 }
 
 .supervisor-home .stories-carousel .story-card-placeholder {

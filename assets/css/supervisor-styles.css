@@ -2984,11 +2984,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     padding: 0;
     direction: rtl;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     margin: 0 0 var(--sv-spacing-lg) 0;
     width: 100%;
     max-width: none;
-    min-height: 56px;
+    box-sizing: border-box;
+    min-height: 58px;
+    height: 58px;
     font-family: var(--sv-font-primary);
     position: relative;
 }
@@ -3001,7 +3003,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     justify-content: center;
     position: relative; /* anchor for absolute submenu */
     min-width: 0;
-    min-height: 56px;
+    align-self: stretch;
 }
 
 .nav-wrapper .desktop-menu > .nav-item-group.dropdown {
@@ -3017,19 +3019,20 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
+    padding: 0 16px;
     color: var(--sv-nav-accent) !important;
     font-family: var(--sv-font-secondary);
     font-weight: 600 !important;
     font-size: 20px !important;
+    line-height: 1.2;
     text-decoration: none;
     border-radius: 0;
     position: relative;
     transition: background .2s ease, color .2s ease;
-    height: 100%;
+    align-self: stretch;
     min-width: 0;
     box-sizing: border-box;
-    min-height: 56px;
+    border: none;
 }
 
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item {
@@ -3057,7 +3060,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: transparent;
     color: inherit;
     cursor: pointer;
-    min-height: 56px;
+    align-self: stretch;
     transition: background .2s ease, color .2s ease;
     /* Remove the "dead zone" between label + caret so hover reads as one unit */
     margin-inline-start: -10px;
@@ -3066,17 +3069,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > .dropdown-toggle,
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> .nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .dropdown-toggle {
     color: var(--sv-nav-accent) !important;
-    background: #dfe3e6 !important;
-    border-top: 1px solid #dfe3e6;
-    border-bottom: 1px solid #dfe3e6;
+    background: transparent !important;
 }
 
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(.dropdown-menu:focus-within)):hover > .nav-item:not(.active),
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> .nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within > .nav-item:not(.active) {
-    background: #dfe3e6 !important;
+    background: transparent !important;
     color: var(--sv-nav-accent) !important;
-    border-top: 1px solid #dfe3e6;
-    border-bottom: 1px solid #dfe3e6;
 }
 
 /* Open menu: only reset strip when this branch is NOT the current page */
@@ -3101,18 +3100,22 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     outline: 0;
 }
 
-/* Flush with nav bottom border: overlap the bar’s 1px rule (removes white hairline) */
+/* Flush with nav top/bottom borders: overlap the bar’s 1px rules (removes white hairline) */
 .nav-wrapper .desktop-menu > a.active {
     position: relative;
     z-index: 1;
+    margin-top: -1px;
     margin-bottom: -1px;
+    border-top: 1px solid var(--sv-nav-accent);
     border-bottom: 1px solid var(--sv-nav-accent);
 }
 
 .nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active) {
     position: relative;
     z-index: 1;
+    margin-top: -1px;
     margin-bottom: -1px;
+    border-top: 1px solid var(--sv-nav-accent);
     border-bottom: 1px solid var(--sv-nav-accent);
 }
 
@@ -3162,11 +3165,13 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 
 .nav-wrapper .desktop-menu > a.active:hover,
 .nav-wrapper .desktop-menu > a.active:focus-visible {
+    border-top-color: #142e45;
     border-bottom-color: #142e45;
 }
 
 .nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active):hover,
 .nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active):focus-within {
+    border-top-color: #142e45;
     border-bottom-color: #142e45;
 }
 
@@ -3217,7 +3222,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     filter: brightness(0) saturate(100%) invert(19%) sepia(42%) saturate(1158%) hue-rotate(169deg) brightness(94%) contrast(94%);
 }
 
-/* Hover/Focus — inactive top-level tabs: grey wash, flush to bar borders (no white hairline) */
+/* Hover/Focus — inactive tabs: grey wash flush to bar edges (pseudo extends over 1px borders) */
 .nav-wrapper .desktop-menu > a:not(.active):hover,
 .nav-wrapper .desktop-menu > a:not(.active):focus-visible,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover,
@@ -3225,22 +3230,46 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     background: #dfe3e6 !important;
     color: var(--sv-nav-accent) !important;
     outline: 0;
-    position: relative;
     z-index: 1;
-    margin-top: -1px;
-    margin-bottom: -1px;
-    border-top: 1px solid #dfe3e6;
-    border-bottom: 1px solid #dfe3e6;
+}
+
+.nav-wrapper .desktop-menu > a:not(.active):hover::before,
+.nav-wrapper .desktop-menu > a:not(.active):focus-visible::before,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover::before,
+.nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    background: #dfe3e6;
+    z-index: -1;
 }
 
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):not(:has(.dropdown-menu:focus-within)):hover,
 .nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within {
+    z-index: 1;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):not(:has(.dropdown-menu:focus-within)):hover::before,
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):not(:has(.dropdown-menu:focus-within)):focus-within::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    background: #dfe3e6;
+    z-index: 0;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):hover > .nav-item,
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):hover > .dropdown-toggle,
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):focus-within > .nav-item,
+.nav-wrapper .desktop-menu .nav-item-group:not(.is-open):not(:has(> button.nav-item.active)):focus-within > .dropdown-toggle {
     position: relative;
     z-index: 1;
-    margin-top: -1px;
-    margin-bottom: -1px;
-    border-top: 1px solid #dfe3e6;
-    border-bottom: 1px solid #dfe3e6;
 }
 
 .nav-wrapper .desktop-menu > a:not(.active):hover .nav-text,

@@ -89,6 +89,10 @@
             nextBtn.disabled = atEnd();
         }
 
+        function resetScrollPosition() {
+            carousel.scrollLeft = 0;
+        }
+
         prevBtn.addEventListener('click', function(e) {
             e.preventDefault();
             if (prevBtn.disabled) {
@@ -117,8 +121,11 @@
             updateButtonStates();
         });
 
-        updateArrowVisibility();
-        updateButtonStates();
+        requestAnimationFrame(function() {
+            resetScrollPosition();
+            updateArrowVisibility();
+            updateButtonStates();
+        });
     }
 
     if (document.readyState === 'loading') {

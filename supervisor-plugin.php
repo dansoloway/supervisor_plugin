@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.27', // Story cards: seafoam hover aligned with org/bib category cards
+        '1.0.32', // Org cards + single org: flag in white well beside title (key-topics pattern)
         'all' // Media type
     );
 

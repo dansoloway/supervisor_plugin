@@ -45,8 +45,29 @@ get_header('supervisor');
         ?>
         
         <!-- Organization Title -->
+        <?php
+            $flag_meta = function_exists('supervisor_org_resolve_flag_meta')
+                ? supervisor_org_resolve_flag_meta($acf_fields ?: [])
+                : ['url' => '', 'name' => ''];
+            $country_flag_url = $flag_meta['url'];
+        ?>
         <div class="org-header">
-            <h1 class="org-main-title"><?php echo esc_html($org_title); ?></h1>
+            <div class="org-header__headline">
+                <?php if ($country_flag_url) : ?>
+                    <div class="org-header__flag-well" aria-hidden="true">
+                        <img
+                            src="<?php echo esc_url($country_flag_url); ?>"
+                            alt=""
+                            class="org-header__flag"
+                            width="40"
+                            height="28"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </div>
+                <?php endif; ?>
+                <h1 class="org-main-title"><?php echo esc_html($org_title); ?></h1>
+            </div>
         </div>
 
         <!-- Information Boxes -->

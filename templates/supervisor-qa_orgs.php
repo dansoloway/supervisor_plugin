@@ -58,25 +58,23 @@ get_header('supervisor');
             $terms = get_the_terms(get_the_ID(), 'qa_themes');
             $has_themes = $terms && ! is_wp_error($terms) && count($terms) > 0;
             $themes_text = $has_themes ? implode(', ', wp_list_pluck($terms, 'name')) : '';
-
-            $flag_alt = $country_display_for_alt !== ''
-                ? sprintf('%s — %s', $acronym, $country_display_for_alt)
-                : $acronym;
             ?>
 
             <a href="<?php echo esc_url($organization_link); ?>" class="org-card">
                 <div class="org-card__main">
                     <div class="org-card__headline">
                         <?php if ($country_flag_url) : ?>
-                            <img
-                                src="<?php echo esc_url($country_flag_url); ?>"
-                                alt="<?php echo esc_attr($flag_alt); ?>"
-                                class="org-card__flag"
-                                width="40"
-                                height="28"
-                                loading="lazy"
-                                decoding="async"
-                            />
+                            <div class="org-card__flag-well" aria-hidden="true">
+                                <img
+                                    src="<?php echo esc_url($country_flag_url); ?>"
+                                    alt=""
+                                    class="org-card__flag"
+                                    width="40"
+                                    height="28"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
                         <?php endif; ?>
                         <div class="org-card__en">
                             <h2 class="org-card__acronym"><?php echo esc_html($acronym); ?></h2>

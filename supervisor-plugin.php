@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.22', // Submenu: restore grey rows, dividers, forced accent/white link colors
+        '1.0.27', // Story cards: seafoam hover aligned with org/bib category cards
         'all' // Media type
     );
 

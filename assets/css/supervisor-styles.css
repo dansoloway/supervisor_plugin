@@ -4849,23 +4849,12 @@ img[src*=".svg"] {
     text-align: left;
 }
 
-.supervisor-qa_orgs .org-card__flag-well {
-    flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border-radius: 12px;
-    box-sizing: border-box;
-}
-
 .supervisor-qa_orgs .org-card__flag {
     width: 40px;
     height: 28px;
     object-fit: cover;
     border-radius: 4px;
+    flex-shrink: 0;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
@@ -5009,24 +4998,12 @@ img[src*=".svg"] {
     max-width: 100%;
 }
 
-.supervisor-single-org .org-header__flag-well {
-    flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border-radius: 12px;
-    box-sizing: border-box;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
-}
-
 .supervisor-single-org .org-header__flag {
     width: 40px;
     height: 28px;
     object-fit: cover;
     border-radius: 4px;
+    flex-shrink: 0;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 

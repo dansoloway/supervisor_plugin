@@ -70,17 +70,15 @@ get_header('supervisor');
                 <div class="org-card__main">
                     <div class="org-card__headline">
                         <?php if ($country_flag_url) : ?>
-                            <div class="org-card__flag-well" aria-hidden="true">
-                                <img
-                                    src="<?php echo esc_url($country_flag_url); ?>"
-                                    alt=""
-                                    class="org-card__flag"
-                                    width="40"
-                                    height="28"
-                                    loading="lazy"
-                                    decoding="async"
-                                />
-                            </div>
+                            <img
+                                src="<?php echo esc_url($country_flag_url); ?>"
+                                alt=""
+                                class="org-card__flag"
+                                width="40"
+                                height="28"
+                                loading="lazy"
+                                decoding="async"
+                            />
                         <?php endif; ?>
                         <div class="org-card__en">
                             <h2 class="org-card__acronym"><?php echo esc_html($acronym); ?></h2>

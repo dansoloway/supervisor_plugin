@@ -54,17 +54,15 @@ get_header('supervisor');
         <div class="org-header">
             <div class="org-header__headline">
                 <?php if ($country_flag_url) : ?>
-                    <div class="org-header__flag-well" aria-hidden="true">
-                        <img
-                            src="<?php echo esc_url($country_flag_url); ?>"
-                            alt=""
-                            class="org-header__flag"
-                            width="40"
-                            height="28"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                    </div>
+                    <img
+                        src="<?php echo esc_url($country_flag_url); ?>"
+                        alt=""
+                        class="org-header__flag"
+                        width="40"
+                        height="28"
+                        loading="lazy"
+                        decoding="async"
+                    />
                 <?php endif; ?>
                 <h1 class="org-main-title"><?php echo esc_html($org_title); ?></h1>
             </div>

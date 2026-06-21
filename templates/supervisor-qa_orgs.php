@@ -60,7 +60,13 @@ get_header('supervisor');
             $themes_text = $has_themes ? implode(', ', wp_list_pluck($terms, 'name')) : '';
             ?>
 
-            <a href="<?php echo esc_url($organization_link); ?>" class="org-card">
+            <?php
+            $tooltip_text = $tagline !== '' ? $tagline : get_the_title();
+            ?>
+            <a href="<?php echo esc_url($organization_link); ?>" class="org-card" target="_blank" rel="noopener noreferrer">
+                <?php if ($tooltip_text !== '') : ?>
+                    <span class="org-card__tooltip" role="tooltip" hidden><?php echo esc_html($tooltip_text); ?></span>
+                <?php endif; ?>
                 <div class="org-card__main">
                     <div class="org-card__headline">
                         <?php if ($country_flag_url) : ?>

@@ -3185,10 +3185,11 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     opacity: 0.9;
 }
 
-/* Home icon - same treatment as text items, icon-only width - DESKTOP ONLY */
+/* Home icon - icon-only tab, pointer cursor - DESKTOP ONLY */
 .nav-wrapper .desktop-menu > a.nav-item-home {
     flex: 0 1 auto;
     min-width: 52px;
+    cursor: pointer;
 }
 
 .nav-wrapper .desktop-menu > a.nav-item-home .nav-icon-home {
@@ -3199,7 +3200,6 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     border-radius: 8px;
     padding: 4px;
     box-sizing: border-box;
-    transition: background-color 0.2s ease;
 }
 
 .nav-wrapper .nav-icon-home img {
@@ -3210,10 +3210,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
-/* Home (inactive): standard grey tab + white icon well + accent-blue house */
+/* Home tab: icon-only hover — no tab wash, no white well */
 .nav-wrapper .desktop-menu > a.nav-item-home:not(.active):hover .nav-icon-home,
 .nav-wrapper .desktop-menu > a.nav-item-home:not(.active):focus-visible .nav-icon-home {
-    background: #fff;
+    background: transparent;
 }
 
 .nav-wrapper .desktop-menu > a.nav-item-home:not(.active):hover .nav-icon-home img,
@@ -3223,8 +3223,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Hover/Focus — inactive tabs: grey wash flush to bar edges (pseudo extends over 1px borders) */
-.nav-wrapper .desktop-menu > a:not(.active):hover,
-.nav-wrapper .desktop-menu > a:not(.active):focus-visible,
+.nav-wrapper .desktop-menu > a:not(.active):not(.nav-item-home):hover,
+.nav-wrapper .desktop-menu > a:not(.active):not(.nav-item-home):focus-visible,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible {
     background: #dfe3e6 !important;
@@ -3233,8 +3233,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     z-index: 1;
 }
 
-.nav-wrapper .desktop-menu > a:not(.active):hover::before,
-.nav-wrapper .desktop-menu > a:not(.active):focus-visible::before,
+.nav-wrapper .desktop-menu > a:not(.active):not(.nav-item-home):hover::before,
+.nav-wrapper .desktop-menu > a:not(.active):not(.nav-item-home):focus-visible::before,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):hover::before,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item:not(.active):focus-visible::before {
     content: '';
@@ -4759,6 +4759,7 @@ img[src*=".svg"] {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     margin-top: 30px;
+    overflow: visible;
 }
 
 .supervisor-qa_orgs .org-card {
@@ -4774,7 +4775,8 @@ img[src*=".svg"] {
     color: var(--sv-text);
     transition: background 0.25s ease, box-shadow 0.25s ease;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    cursor: pointer;
 }
 
 .supervisor-qa_orgs .org-card:hover,
@@ -4887,6 +4889,32 @@ img[src*=".svg"] {
 .supervisor-qa_orgs .org-card:hover .org-card__themes,
 .supervisor-qa_orgs .org-card:focus-visible .org-card__themes {
     color: #1a1a1a;
+}
+
+.supervisor-qa_orgs .org-card__tooltip {
+    position: fixed;
+    z-index: 100;
+    max-width: min(280px, 42vw);
+    padding: 0.65rem 0.85rem;
+    background: #fff;
+    color: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.14);
+    font-family: var(--sv-font-primary);
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.45;
+    text-align: right;
+    direction: rtl;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.supervisor-qa_orgs .org-card__tooltip.is-visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 @media (max-width: 1200px) {

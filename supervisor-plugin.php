@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.34', // Story cards: color-only hover, no lift or image zoom
+        '1.0.35', // Home icon hover, org card tooltips, org links open in new tab
         'all' // Media type
     );
 
@@ -171,6 +171,21 @@ function enqueue_alternate_header_assets() {
     $supervisor_home_id = defined('SUPERVISOR_HOME') ? (int) SUPERVISOR_HOME : 0;
     $is_supervisor_home = ($supervisor_home_id > 0 && is_page($supervisor_home_id))
         || (function_exists('is_page_template') && is_page_template('supervisor-home.php'));
+
+    $supervisor_orgs_id = defined('SUPERVISOR_ORGS') ? (int) SUPERVISOR_ORGS : 0;
+    $is_supervisor_orgs = ($supervisor_orgs_id > 0 && is_page($supervisor_orgs_id))
+        || (function_exists('is_page_template') && is_page_template('supervisor-qa_orgs.php'));
+
+    if ($is_supervisor_orgs) {
+        $org_tooltips_path = plugin_dir_path(__FILE__) . 'assets/js/org-card-tooltips.js';
+        wp_enqueue_script(
+            'org-card-tooltips',
+            plugins_url('/assets/js/org-card-tooltips.js', __FILE__),
+            [],
+            file_exists($org_tooltips_path) ? (string) filemtime($org_tooltips_path) : '1.0.0',
+            true
+        );
+    }
 
     if ($is_supervisor_home) {
         wp_enqueue_script(

@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.35', // Home icon hover, org card tooltips, org links open in new tab
+        '1.0.36', // Home icon: stable filter, opacity-only hover (fix red flash)
         'all' // Media type
     );
 

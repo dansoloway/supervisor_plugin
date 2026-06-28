@@ -52,7 +52,7 @@ get_header('supervisor');
                                     <div class="accordion-header" data-accordion="<?php echo esc_attr($accordion_id); ?>">
                                         <div class="qa-update-title">
                                             <h2><?php echo esc_html($subtitle); ?></h2>
-                                            <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>
+                                            <?php echo supervisor_accordion_icon_markup($accordion_id, false); ?>
                                         </div>
                                     </div>
                                     <div class="accordion-content" id="accordion-<?php echo esc_attr($accordion_id); ?>">
@@ -73,50 +73,4 @@ get_header('supervisor');
 
 </div>
 
-<?php
-if ($has_about_accordion) :
-?>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        function initializeAccordions() {
-            const accordions = document.querySelectorAll('.about-content .accordion-header');
-            accordions.forEach(function (header) {
-                header.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const accordionId = this.getAttribute('data-accordion');
-                    if (!accordionId) return;
-                    const content = document.getElementById('accordion-' + accordionId);
-                    const icon = document.getElementById('icon-' + accordionId);
-                    if (!content || !icon) return;
-                    const allHeaders = document.querySelectorAll('.about-content .accordion-header');
-                    allHeaders.forEach(function (other) {
-                        if (other !== header) {
-                            const otherId = other.getAttribute('data-accordion');
-                            if (otherId) {
-                                const otherContent = document.getElementById('accordion-' + otherId);
-                                const otherIcon = document.getElementById('icon-' + otherId);
-                                if (otherContent && otherIcon) {
-                                    otherContent.classList.remove('is-open');
-                                    otherIcon.textContent = '⌄';
-                                }
-                            }
-                        }
-                    });
-                    if (content.classList.contains('is-open')) {
-                        content.classList.remove('is-open');
-                        icon.textContent = '⌄';
-                    } else {
-                        content.classList.add('is-open');
-                        icon.textContent = '⌃';
-                    }
-                });
-            });
-        }
-        initializeAccordions();
-    });
-</script>
-<?php
-endif;
-get_footer();
-?>
+<?php get_footer(); ?>

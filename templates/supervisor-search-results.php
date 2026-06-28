@@ -262,7 +262,7 @@ $total_results = $search_query->found_posts;
                                         <h3><?php echo get_the_title(); ?></h3>
                                         <span class="update-date"><?php echo esc_html($formatted_date); ?></span>
                                     </div>
-                                    <span class="accordion-icon" id="icon-<?php echo esc_attr($accordion_id); ?>">⌄</span>
+                                    <?php echo supervisor_accordion_icon_markup($accordion_id, false); ?>
                                 </div>
                             </div>
 
@@ -359,58 +359,6 @@ $total_results = $search_query->found_posts;
 
     </div> <!-- End supervisor-page-container -->
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        function initializeAccordions() {
-            const accordions = document.querySelectorAll('.accordion-header');
-
-            accordions.forEach(header => {
-                header.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const accordionId = this.getAttribute('data-accordion');
-                    if (!accordionId) return;
-                    
-                    const content = document.getElementById('accordion-' + accordionId);
-                    const icon = document.getElementById('icon-' + accordionId);
-                    
-                    if (!content || !icon) return;
-
-                    // Close all other accordions first
-                    const allAccordions = document.querySelectorAll('.accordion-header');
-                    allAccordions.forEach(otherHeader => {
-                        if (otherHeader !== this) {
-                            const otherAccordionId = otherHeader.getAttribute('data-accordion');
-                            if (otherAccordionId) {
-                                const otherContent = document.getElementById('accordion-' + otherAccordionId);
-                                const otherIcon = document.getElementById('icon-' + otherAccordionId);
-                                
-                                if (otherContent && otherIcon) {
-                                    otherContent.classList.remove('is-open');
-                                    otherIcon.textContent = '⌄';
-                                }
-                            }
-                        }
-                    });
-
-                    // Toggle the clicked accordion
-                    if (content.classList.contains('is-open')) {
-                        content.classList.remove('is-open');
-                        icon.textContent = '⌄';
-                    } else {
-                        content.classList.add('is-open');
-                        icon.textContent = '⌃';
-                    }
-                });
-            });
-        }
-
-        // Initialize accordions on page load
-        initializeAccordions();
-    });
-</script>
 
 <?php
 wp_reset_postdata();

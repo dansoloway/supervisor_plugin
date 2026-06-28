@@ -21,6 +21,7 @@ if (is_readable($supervisor_config_path)) {
     require_once $supervisor_config_path;
 }
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-pages.php';
+require_once plugin_dir_path(__FILE__) . 'inc/ui-markup.php';
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-bootstrap-cli.php';
 
 // Knowledge-map card titles (canonical Hebrew)
@@ -135,7 +136,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.42', // Home icon: exclude from generic active-tab nav rules
+        '1.0.44', // Accordion nav chevrons; bib-cats arrow bottom-left
         'all' // Media type
     );
 
@@ -148,11 +149,20 @@ function enqueue_alternate_header_assets() {
         true // Load in the footer
     );
 
+    $accordion_js_path = plugin_dir_path(__FILE__) . 'assets/js/accordion.js';
+    wp_enqueue_script(
+        'supervisor-accordion',
+        plugins_url('/assets/js/accordion.js', __FILE__),
+        [],
+        file_exists($accordion_js_path) ? (string) filemtime($accordion_js_path) : '1.0.0',
+        true
+    );
+
     // Enqueue AJAX Search JavaScript
     wp_enqueue_script(
         'ajax-search',
         plugins_url('/assets/js/ajax-search.js', __FILE__),
-        ['jquery'], // Dependencies
+        ['jquery', 'supervisor-accordion'],
         time(), // Force cache refresh
         true // Load in the footer
     );

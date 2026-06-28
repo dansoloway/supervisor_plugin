@@ -98,8 +98,7 @@ $updates_query = new WP_Query($args);
                                     echo '<h3>' . get_the_title() . '</h3>';
                                     echo '<span class="update-date">' . esc_html($formatted_date) . '</span>';
                                 echo '</div>'; // title-date-container
-                                $icon_text = $is_highlighted ? '⌃' : '⌄';
-                                echo '<span class="accordion-icon" id="icon-' . esc_attr($post_id) . '">' . $icon_text . '</span>';
+                                echo supervisor_accordion_icon_markup($post_id, (bool) $is_highlighted);
                             echo '</div>'; // qa-update-title
                         echo '</div>'; // accordion-header
 
@@ -193,76 +192,14 @@ $updates_query = new WP_Query($args);
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        function initializeAccordions() {
-            const accordions = document.querySelectorAll('.accordion-header');
-
-            accordions.forEach(header => {
-                header.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const postId = this.getAttribute('data-accordion');
-                    if (!postId) return;
-                    
-                    const content = document.getElementById('accordion-' + postId);
-                    const icon = document.getElementById('icon-' + postId);
-                    
-                    if (!content || !icon) return;
-
-                    // Close all other accordions first
-                    const allAccordions = document.querySelectorAll('.accordion-header');
-                    allAccordions.forEach(otherHeader => {
-                        if (otherHeader !== this) {
-                            const otherPostId = otherHeader.getAttribute('data-accordion');
-                            if (otherPostId) {
-                                const otherContent = document.getElementById('accordion-' + otherPostId);
-                                const otherIcon = document.getElementById('icon-' + otherPostId);
-                                
-                                if (otherContent && otherIcon) {
-                                    otherContent.classList.remove('is-open');
-                                    otherIcon.textContent = '⌄';
-                                }
-                            }
-                        }
-                    });
-
-                    // Toggle the clicked accordion
-                    if (content.classList.contains('is-open')) {
-                        content.classList.remove('is-open');
-                        icon.textContent = '⌄';
-                    } else {
-                        content.classList.add('is-open');
-                        icon.textContent = '⌃';
-                    }
-                });
-            });
-        }
-
-        // Initialize accordions on page load
-        initializeAccordions();
-        
         <?php if ($highlight_id): ?>
-        // Ensure initial content is visible when coming from home page
         const initialContent = document.querySelector('.initial-content');
         const searchResults = document.querySelector('.search-results-container');
         if (initialContent && searchResults) {
             initialContent.classList.add('initial-content--visible');
             searchResults.style.display = 'none';
         }
-        
-        // Open the highlighted accordion (already has is-open from PHP)
-        const highlightedContent = document.getElementById('accordion-<?php echo esc_js($highlight_id); ?>');
-        const highlightedIcon = document.getElementById('icon-<?php echo esc_js($highlight_id); ?>');
-        if (highlightedContent && highlightedIcon) {
-            highlightedContent.classList.add('is-open');
-            highlightedIcon.textContent = '⌃';
-        }
         <?php endif; ?>
-        
-        // Re-initialize when search results are loaded
-        if (typeof window !== 'undefined') {
-            window.initializeAccordions = initializeAccordions;
-        }
     });
 </script>
 

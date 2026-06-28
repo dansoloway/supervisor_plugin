@@ -663,7 +663,9 @@
 
 .qa-update-item.content-card .accordion-icon {
     flex-shrink: 0;
-    transition: transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .qa-update-item.content-card > .accordion-content .update-content-text {
@@ -738,10 +740,11 @@
 }
 
 .about-accordion-section .about-accordion-item .accordion-icon {
-    font-size: 32px;
     flex-shrink: 0;
-    color: black;
-    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sv-text);
     margin-top: 2px;
 }
 
@@ -2784,23 +2787,31 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 .accordion-icon {
-    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: var(--sv-text);
     cursor: pointer;
-    margin-right: auto;
     flex-shrink: 0;
+    margin-inline-start: auto;
 }
 
-/* QA updates accordions — caret matches About page (⌄ / ⌃) */
+.accordion-chevron {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.accordion-icon.is-open .accordion-chevron {
+    transform: rotate(180deg);
+}
+
+/* QA updates / search accordions — chevron matches nav dropdown */
 .qa-updates-list .qa-update-item .accordion-icon,
 .search-results-container .qa-update-item .accordion-icon,
 .search-results-list .qa-update-item .accordion-icon {
-    font-size: 32px;
     flex-shrink: 0;
-    color: #000;
-    line-height: 1;
+    color: var(--sv-text);
     margin-top: 2px;
-    margin-right: 0;
     margin-inline-start: auto;
     cursor: pointer;
 }
@@ -5445,11 +5456,11 @@ body .supervisor-bib-cats .categories-grid {
     display: none !important;
 }
 
-/* Arrow — bottom-left in RTL (align flex-end); thin stroke; white on hover */
+/* Arrow — physical bottom-left of card */
 .supervisor-bib-cats .category-arrow {
-    margin-top: auto;
-    align-self: flex-end;
-    padding-top: 10px;
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
     line-height: 0;
     color: #000000;
     transition: color 0.22s ease;

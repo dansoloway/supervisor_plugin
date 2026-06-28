@@ -31,7 +31,7 @@ jQuery(document).ready(function ($) {
                                                         <h3>${item.title}</h3>
                                                         <span class="update-date">${item.date || ''}</span>
                                                     </div>
-                                                    <span class="accordion-icon" id="icon-${accordionId}">⌄</span>
+                                                    <span class="accordion-icon" id="icon-${accordionId}" aria-hidden="true">${typeof window.supervisorAccordionChevronSvg === 'string' ? window.supervisorAccordionChevronSvg : ''}</span>
                                                 </div>
                                             </div>
                                             <div class="accordion-content" id="accordion-${accordionId}">
@@ -285,51 +285,12 @@ jQuery(document).ready(function ($) {
 
     function initializeSearchAccordions() {
         const searchResultsContainer = document.querySelector('.search-results-container');
-        if (!searchResultsContainer) return;
-
-        const searchAccordions = searchResultsContainer.querySelectorAll('.accordion-header');
-
-        searchAccordions.forEach((header) => {
-            const newHeader = header.cloneNode(true);
-            header.parentNode.replaceChild(newHeader, header);
-
-            newHeader.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const accordionId = this.getAttribute('data-accordion');
-                if (!accordionId) return;
-
-                const content = document.getElementById('accordion-' + accordionId);
-                const icon = document.getElementById('icon-' + accordionId);
-
-                if (!content || !icon) return;
-
-                const allAccordions = document.querySelectorAll('.accordion-header');
-                allAccordions.forEach((otherHeader) => {
-                    if (otherHeader !== this) {
-                        const otherAccordionId = otherHeader.getAttribute('data-accordion');
-                        if (otherAccordionId) {
-                            const otherContent = document.getElementById('accordion-' + otherAccordionId);
-                            const otherIcon = document.getElementById('icon-' + otherAccordionId);
-
-                            if (otherContent && otherIcon) {
-                                otherContent.classList.remove('is-open');
-                                otherIcon.textContent = '⌄';
-                            }
-                        }
-                    }
-                });
-
-                if (content.classList.contains('is-open')) {
-                    content.classList.remove('is-open');
-                    icon.textContent = '⌄';
-                } else {
-                    content.classList.add('is-open');
-                    icon.textContent = '⌃';
-                }
-            });
-        });
+        if (!searchResultsContainer) {
+            return;
+        }
+        if (typeof window.supervisorInitAccordions === 'function') {
+            window.supervisorInitAccordions(searchResultsContainer);
+        }
     }
 
     $('.filter-toggle').on('click', function () {

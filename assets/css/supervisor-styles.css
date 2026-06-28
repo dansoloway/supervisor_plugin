@@ -1087,7 +1087,6 @@
     grid-template-columns: repeat(2, minmax(90px, 1fr));
     grid-template-rows: minmax(148px, 1fr) minmax(148px, 1fr) minmax(148px, 1fr) auto;
     gap: 6px;
-    position: relative;
     max-width: 360px;
     margin: 0;
     margin-inline-start: auto;
@@ -1152,11 +1151,11 @@
     padding: var(--sv-spacing-md) var(--sv-spacing-lg);
 }
 
+/* Span the four middle tiles (rows 2–3); place-self centers at their intersection */
 .supervisor-home .km-center {
-    position: absolute;
-    top: 63%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    grid-row: 2 / 4;
+    grid-column: 1 / -1;
+    place-self: center;
     display: flex;
     align-items: center;
     justify-content: center;

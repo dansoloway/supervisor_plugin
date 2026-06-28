@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.37', // Org flags: remove white flag-well background
+        '1.0.38', // Knowledge map: grid-place km-center on middle four tiles
         'all' // Media type
     );
 

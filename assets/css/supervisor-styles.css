@@ -3238,9 +3238,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     align-items: center;
     justify-content: center;
     background: transparent;
-    border-radius: 8px;
-    padding: 4px;
+    border-radius: 10px;
+    padding: 6px;
     box-sizing: border-box;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .nav-wrapper .nav-icon-home img {
@@ -3251,17 +3252,29 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transition: opacity 0.15s ease;
 }
 
-/* Home tab: icon-only hover — no tab wash, no white well; opacity only */
+/* Home tab hover: accent pill + white icon (matches active tab colors, no filter animation) */
 .nav-wrapper .desktop-menu > a.nav-item-home:not(.active):hover .nav-icon-home,
 .nav-wrapper .desktop-menu > a.nav-item-home:not(.active):focus-visible .nav-icon-home {
-    background: transparent;
+    background: var(--sv-nav-accent);
+    box-shadow: 0 3px 10px rgba(24, 61, 92, 0.38);
+    transform: scale(1.12);
 }
 
 .nav-wrapper .desktop-menu > a.nav-item-home:not(.active):hover .nav-icon-home img,
-.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):focus-visible .nav-icon-home img,
+.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):focus-visible .nav-icon-home img {
+    opacity: 1;
+    filter: brightness(0) invert(1);
+}
+
+.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):active .nav-icon-home {
+    background: #142e45;
+    box-shadow: 0 1px 5px rgba(24, 61, 92, 0.32);
+    transform: scale(1.06);
+}
+
 .nav-wrapper .desktop-menu > a.nav-item-home:not(.active):active .nav-icon-home img {
     opacity: 1;
-    filter: var(--sv-nav-home-icon-filter);
+    filter: brightness(0) invert(1);
 }
 
 /* Hover/Focus — inactive tabs: grey wash flush to bar edges (pseudo extends over 1px borders) */

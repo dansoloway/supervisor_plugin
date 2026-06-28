@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.39', // Knowledge map: km-middle wrapper for robust center label placement
+        '1.0.40', // Home icon: stronger hover with accent pill and white icon
         'all' // Media type
     );
 

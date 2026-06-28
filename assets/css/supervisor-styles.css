@@ -3121,7 +3121,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Active state — full-height blue bar, white label (matches design mockup) */
-.nav-wrapper .desktop-menu > a.active,
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home),
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active {
     background: var(--sv-nav-accent) !important;
     color: #fff !important;
@@ -3130,7 +3130,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 }
 
 /* Flush with nav top/bottom borders: overlap the bar’s 1px rules (removes white hairline) */
-.nav-wrapper .desktop-menu > a.active {
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home) {
     position: relative;
     z-index: 1;
     margin-top: -1px;
@@ -3154,8 +3154,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: #fff !important;
 }
 
-.nav-wrapper .desktop-menu > a.active .nav-text,
-.nav-wrapper .desktop-menu > a.active .nav-icon,
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home) .nav-text,
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home) .nav-icon,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .nav-text,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active .nav-icon {
     color: #fff !important;
@@ -3182,8 +3182,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: #fff !important;
 }
 
-.nav-wrapper .desktop-menu > a.active:hover,
-.nav-wrapper .desktop-menu > a.active:focus-visible,
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home):hover,
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home):focus-visible,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active:hover,
 .nav-wrapper .desktop-menu > .nav-item-group > button.nav-item.active:focus-visible,
 .nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active) > .dropdown-toggle:hover,
@@ -3192,8 +3192,8 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: #fff !important;
 }
 
-.nav-wrapper .desktop-menu > a.active:hover,
-.nav-wrapper .desktop-menu > a.active:focus-visible {
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home):hover,
+.nav-wrapper .desktop-menu > a.active:not(.nav-item-home):focus-visible {
     border-top-color: #142e45;
     border-bottom-color: #142e45;
 }

@@ -34,7 +34,7 @@ get_header('supervisor');
         
         <!-- Left Column: Contact Form -->
         <div class="contact-form-container">
-        <h3 style="color:black;text-align:right;">צור קשר</h3>
+        <!-- <h3 style="color:black;text-align:right;">צור קשר</h3> -->
 
             <?php 
             if (function_exists('supervisor_display_contact_form')) {

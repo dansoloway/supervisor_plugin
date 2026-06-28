@@ -38,17 +38,22 @@ get_header('supervisor');
                 </section>
 
                 <?php while (have_posts()) : the_post(); ?>
-                <div class="knowledge-map-description">
-                    <h2 class="knowledge-map-title">מפת הידע:</h2>
-                    <?php
+                <?php
+                $show_knowledge_map_description = false;
+                if ($show_knowledge_map_description) :
                     $km_body = trim((string) get_post_field('post_content', get_the_ID()));
                     if ($km_body !== '') :
-                        ?>
+                ?>
+                <div class="knowledge-map-description">
+                    <h2 class="knowledge-map-title">מפת הידע:</h2>
                     <div class="knowledge-map-description__content">
                         <?php the_content(); ?>
                     </div>
-                    <?php endif; ?>
                 </div>
+                <?php
+                    endif;
+                endif;
+                ?>
                 <?php endwhile; ?>
             </div>
         </div>

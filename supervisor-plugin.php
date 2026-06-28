@@ -135,7 +135,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.41', // Home icon: consistent appearance on all pages (no active strip)
+        '1.0.42', // Home icon: exclude from generic active-tab nav rules
         'all' // Media type
     );
 

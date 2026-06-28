@@ -3204,14 +3204,33 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     border-bottom-color: #142e45;
 }
 
-.nav-wrapper .desktop-menu > a.active .nav-icon-home img {
-    opacity: 1;
-    filter: brightness(0) invert(1);
+/* Home icon at rest: same on every page (ignore .active tab styling) */
+.nav-wrapper .desktop-menu > a.nav-item-home .nav-icon-home img {
+    opacity: 0.88;
+    filter: var(--sv-nav-home-icon-filter);
     transition: opacity 0.15s ease;
 }
 
-/* Inactive home icon: stable accent filter at rest (never animate filter — causes red flash) */
-.nav-wrapper .desktop-menu > a:not(.active) .nav-icon-home img {
+/* Home tab: no full-width active strip — icon-only on all pages */
+.nav-wrapper .desktop-menu > a.nav-item-home.active {
+    background: white !important;
+    color: var(--sv-nav-accent) !important;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top: none;
+    border-bottom: none;
+    box-shadow: none;
+}
+
+.nav-wrapper .desktop-menu > a.nav-item-home.active:hover,
+.nav-wrapper .desktop-menu > a.nav-item-home.active:focus-visible {
+    background: white !important;
+    color: var(--sv-nav-accent) !important;
+    border-top: none;
+    border-bottom: none;
+}
+
+.nav-wrapper .desktop-menu > a.nav-item-home.active .nav-icon-home img {
     opacity: 0.88;
     filter: var(--sv-nav-home-icon-filter);
 }
@@ -3252,27 +3271,27 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transition: opacity 0.15s ease;
 }
 
-/* Home tab hover: accent pill + white icon (matches active tab colors, no filter animation) */
-.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):hover .nav-icon-home,
-.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):focus-visible .nav-icon-home {
+/* Home tab hover: accent pill + white icon (same whether or not current page) */
+.nav-wrapper .desktop-menu > a.nav-item-home:hover .nav-icon-home,
+.nav-wrapper .desktop-menu > a.nav-item-home:focus-visible .nav-icon-home {
     background: var(--sv-nav-accent);
     box-shadow: 0 3px 10px rgba(24, 61, 92, 0.38);
     transform: scale(1.12);
 }
 
-.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):hover .nav-icon-home img,
-.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):focus-visible .nav-icon-home img {
+.nav-wrapper .desktop-menu > a.nav-item-home:hover .nav-icon-home img,
+.nav-wrapper .desktop-menu > a.nav-item-home:focus-visible .nav-icon-home img {
     opacity: 1;
     filter: brightness(0) invert(1);
 }
 
-.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):active .nav-icon-home {
+.nav-wrapper .desktop-menu > a.nav-item-home:active .nav-icon-home {
     background: #142e45;
     box-shadow: 0 1px 5px rgba(24, 61, 92, 0.32);
     transform: scale(1.06);
 }
 
-.nav-wrapper .desktop-menu > a.nav-item-home:not(.active):active .nav-icon-home img {
+.nav-wrapper .desktop-menu > a.nav-item-home:active .nav-icon-home img {
     opacity: 1;
     filter: brightness(0) invert(1);
 }

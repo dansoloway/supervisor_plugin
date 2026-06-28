@@ -136,7 +136,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.44', // Accordion nav chevrons; bib-cats arrow bottom-left
+        '1.0.45', // Home icon: tab grey hover like other nav items
         'all' // Media type
     );
 

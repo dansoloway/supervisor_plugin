@@ -32,3 +32,15 @@ function supervisor_accordion_icon_markup($id, $is_open = false) {
         supervisor_accordion_chevron_svg()
     );
 }
+
+/**
+ * Filter panel collapse icon (סינון לפי) — same SVG chevron as nav/accordions.
+ *
+ * @param bool $expanded Whether the filter panel starts expanded.
+ */
+function supervisor_filter_toggle_icon_markup($expanded = true) {
+    return sprintf(
+        '<span class="filter-toggle-icon" aria-hidden="true">%s</span>',
+        supervisor_accordion_chevron_svg()
+    );
+}

@@ -145,7 +145,7 @@ get_header('supervisor');
                     ]);
                     if ($stories_query->have_posts()) :
                         while ($stories_query->have_posts()) : $stories_query->the_post();
-                            $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 25);
+                            $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 15);
                     ?>
                             <a href="<?php the_permalink(); ?>" class="story-card">
                                 <?php if (has_post_thumbnail()) : ?>

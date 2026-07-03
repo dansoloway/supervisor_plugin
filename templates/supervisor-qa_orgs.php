@@ -63,7 +63,7 @@ get_header('supervisor');
             <?php
             $tooltip_text = $tagline !== '' ? $tagline : get_the_title();
             ?>
-            <a href="<?php echo esc_url($organization_link); ?>" class="org-card" target="_blank" rel="noopener noreferrer">
+            <a href="<?php echo esc_url($organization_link); ?>" class="org-card">
                 <?php if ($tooltip_text !== '') : ?>
                     <span class="org-card__tooltip" role="tooltip" hidden><?php echo esc_html($tooltip_text); ?></span>
                 <?php endif; ?>

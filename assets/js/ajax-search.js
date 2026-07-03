@@ -295,7 +295,7 @@ jQuery(document).ready(function ($) {
 
     $('.filter-toggle').on('click', function () {
         const $toggle = $(this);
-        const $content = $('.filter-content');
+        const $content = $toggle.closest('.filter-section').find('.filter-content').first();
         const isExpanded = $toggle.attr('aria-expanded') === 'true';
 
         if (isExpanded) {

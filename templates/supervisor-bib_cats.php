@@ -96,7 +96,7 @@ $bib_cats_area_labels = [
                             <div class="filter-header">
                                 <h3 class="filter-title"><?php echo esc_html__('סינון לפי:', 'text-domain'); ?></h3>
                                 <button type="button" class="filter-toggle" aria-label="<?php echo esc_attr__('הצג/הסתר סינון', 'text-domain'); ?>" aria-expanded="true">
-                                    <span class="filter-toggle-icon">⌃</span>
+                                    <?php echo supervisor_filter_toggle_icon_markup(true); ?>
                                 </button>
                             </div>
                             <div class="filter-content">

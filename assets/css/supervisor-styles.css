@@ -1874,18 +1874,25 @@
 }
 
 .bib-toggle {
-    color: #000000 !important;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
     cursor: pointer;
-    font-size: 16px;
-    transition: transform 0.2s ease;
+    color: var(--sv-text);
+    line-height: 0;
+}
+
+.bib-toggle .accordion-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .bib-toggle:hover {
     opacity: 0.7;
-}
-
-.bib-toggle.fa-chevron-up {
-    transform: rotate(180deg);
 }
 
 
@@ -3118,10 +3125,10 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     color: var(--sv-nav-accent) !important;
 }
 
-/* Open menu: only reset strip when this branch is NOT the current page */
+/* Open menu (not current section): grey tab wash on label + caret together */
 .nav-wrapper .desktop-menu .nav-item-group.is-open:not(:has(> button.nav-item.active)) > button.nav-item,
 .nav-wrapper .desktop-menu .nav-item-group.is-open:not(:has(> button.nav-item.active)) > .dropdown-toggle {
-    background: transparent !important;
+    background: #dfe3e6 !important;
     color: var(--sv-nav-accent) !important;
 }
 
@@ -3213,6 +3220,26 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
 .nav-wrapper .desktop-menu > .nav-item-group:has(> button.nav-item.active):focus-within {
     border-top-color: #142e45;
     border-bottom-color: #142e45;
+}
+
+/* Open dropdown: label + caret always match — no split from focus on one control */
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active) > button.nav-item,
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active) > .dropdown-toggle,
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active) > button.nav-item:focus-visible,
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active) > .dropdown-toggle:focus-visible {
+    background: var(--sv-nav-accent) !important;
+    color: #fff !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active):hover > button.nav-item,
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active):hover > .dropdown-toggle {
+    background: #142e45 !important;
+    color: #fff !important;
+}
+
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active) > button.nav-item .nav-text,
+.nav-wrapper .desktop-menu .nav-item-group.is-open:has(> button.nav-item.active) > .dropdown-toggle .dropdown-icon {
+    color: #fff !important;
 }
 
 /* Home icon at rest: same on every page (ignore .active tab styling) */
@@ -3369,7 +3396,7 @@ body .supervisor-home.supervisor-single-org .supervisor-page-container .org-cont
     transform: rotate(180deg);
 }
 
-.nav-wrapper .desktop-menu .nav-item-group.is-open .dropdown-icon {
+.nav-wrapper .desktop-menu .nav-item-group.is-open:not(:has(> button.nav-item.active)) .dropdown-icon {
     color: var(--sv-nav-accent);
 }
 
@@ -4411,24 +4438,28 @@ img[src*=".svg"] {
     border: none;
     padding: 4px 8px;
     cursor: pointer;
-    font-size: 20px;
     color: #1F2937;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
 }
 
 .supervisor-home .filter-toggle:hover {
     opacity: 0.7;
 }
 
-.supervisor-home .filter-toggle[aria-expanded="false"] .filter-toggle-icon {
+.supervisor-home .filter-toggle[aria-expanded="false"] .filter-toggle-icon .accordion-chevron {
     transform: rotate(180deg);
 }
 
 .supervisor-home .filter-toggle-icon {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.supervisor-home .filter-toggle-icon .accordion-chevron {
+    display: block;
     transition: transform 0.3s ease;
 }
 
@@ -4469,13 +4500,6 @@ img[src*=".svg"] {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.supervisor-home .filter-group-title::after {
-    content: '⌄';
-    font-size: 14px;
-    flex-shrink: 0;
-    margin-inline-start: auto;
 }
 
 .supervisor-home .filter-listbox {

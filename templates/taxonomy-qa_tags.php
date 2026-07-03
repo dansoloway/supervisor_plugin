@@ -70,9 +70,6 @@ error_log('Loading taxonomy-qa_tags.php template');
                     ?>
                     <div class="bib-item" data-post-id="<?php echo get_the_ID(); ?>">
                         <div class="bib-item-header">
-                            <div class="bib-toggle-container">
-                                <i class="fas fa-chevron-down bib-toggle"></i>
-                            </div>
                             <div class="bib-item-content">
                                 <div class="bib-reference"><?php the_title(); ?></div>
                                 <?php
@@ -86,6 +83,11 @@ error_log('Loading taxonomy-qa_tags.php template');
                                         </a>
                                     </div>
                                 <?php endif; ?>
+                            </div>
+                            <div class="bib-toggle-container">
+                                <button type="button" class="bib-toggle" aria-expanded="false" aria-label="<?php echo esc_attr__('הצג/הסתר תוכן', 'text-domain'); ?>">
+                                    <?php echo supervisor_accordion_icon_markup('bib-' . get_the_ID(), false); ?>
+                                </button>
                             </div>
                         </div>
                         <div class="bib-content">
@@ -109,22 +111,18 @@ error_log('Loading taxonomy-qa_tags.php template');
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle bibliography items
     document.querySelectorAll('.bib-toggle').forEach(function(toggle) {
         toggle.addEventListener('click', function() {
             const item = this.closest('.bib-item');
             const content = item.querySelector('.bib-content');
-            const isExpanded = content.classList.contains('is-open');
-            
-            if (isExpanded) {
-                content.classList.remove('is-open');
-                this.classList.remove('fa-chevron-up');
-                this.classList.add('fa-chevron-down');
-            } else {
-                content.classList.add('is-open');
-                this.classList.remove('fa-chevron-down');
-                this.classList.add('fa-chevron-up');
+            const icon = this.querySelector('.accordion-icon');
+            const willOpen = !content.classList.contains('is-open');
+
+            content.classList.toggle('is-open', willOpen);
+            if (icon) {
+                icon.classList.toggle('is-open', willOpen);
             }
+            this.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
         });
     });
 });

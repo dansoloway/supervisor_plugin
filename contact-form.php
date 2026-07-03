@@ -105,7 +105,7 @@ function supervisor_display_contact_form() {
     
     ?>
     <div class="supervisor-contact-form">
-        <p>נשמח לשמוע ממכם</p>
+        <p>נשמח לשמוע מכם</p>
         
         <form method="post" action="" class="supervisor-form" dir="rtl">
             <?php wp_nonce_field('supervisor_contact_form', 'supervisor_contact_nonce'); ?>

@@ -21,3 +21,7 @@ define('SUPERVISOR_INTRO_TEXT', 0);
 define('SUPERVISOR_ACTIVITIES', 0);
 define('SUPERVISOR_KNOWLEDGE_MAP', 0);
 */
+
+// Pre-launch: restrict all supervisor pages, CPTs, and taxonomies to logged-in users.
+// Remove (or set to false) on launch day. See inc/preview-mode.php.
+// define('SUPERVISOR_PREVIEW_MODE', true);

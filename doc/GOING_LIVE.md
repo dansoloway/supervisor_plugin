@@ -89,6 +89,18 @@ Set **Settings → Reading** if this supervisor home should be the site front pa
 - **Search**: supervisor search URL / rewrite must work on prod (see plugin rewrite rules).
 - **Flag icons** (orgs): `assets/flag-icons-main/` bundled; `qa_country_code` select is registered by the plugin when ACF runs.
 
+## 7a. Preview mode (logged-in users only)
+
+To deploy before public launch, add this to `config.php` on the server:
+
+```php
+define('SUPERVISOR_PREVIEW_MODE', true);
+```
+
+While it is on, logged-out visitors are sent to the WordPress login screen for every supervisor URL: the supervisor pages, `qa_orgs` / `qa_updates` / `qa_bib_items` / `qa_stories` singles and archives, `qa_tags` / `qa_themes` archives, and `/supervisor-search/`. Those URLs also get `noindex`, the bib-cats AJAX endpoint returns 403, and supervisor pages and terms are hidden from the REST API. Admins see a warning notice in wp-admin.
+
+**On launch:** delete the line (or set it to `false`). Implementation: [`inc/preview-mode.php`](../inc/preview-mode.php).
+
 ## 8. Go-live order (summary)
 
 1. Deploy code + activate supervisor plugin (`wp plugin activate …` or Admin).

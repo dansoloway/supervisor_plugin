@@ -22,39 +22,25 @@ function add_supervisor_template_location_rule_values($choices) {
 }
 
 /**
- * Page ID => template slug for plugin-forced templates.
- * Must match supervisor_load_template() in supervisor-plugin.php.
+ * Resolves the plugin template the same way supervisor_load_template() does
+ * (SUPERVISOR_* page ID, then registry slug), so field groups follow the page
+ * across environments where IDs differ.
  */
-function supervisor_acf_template_page_ids() {
-    return [
-        'supervisor-home' => defined('SUPERVISOR_HOME') ? SUPERVISOR_HOME : null,
-        'supervisor-about' => defined('SUPERVISOR_ABOUT') ? SUPERVISOR_ABOUT : null,
-        'supervisor-activities' => defined('SUPERVISOR_ACTIVITIES') ? SUPERVISOR_ACTIVITIES : null,
-        'supervisor-knowledge-map' => defined('SUPERVISOR_KNOWLEDGE_MAP') ? SUPERVISOR_KNOWLEDGE_MAP : null,
-    ];
-}
-
 function add_supervisor_template_location_rule_match($match, $rule, $options) {
-    global $post;
-
-    if (!$post) {
+    $post_id = isset($options['post_id']) ? (int) $options['post_id'] : 0;
+    if ($post_id <= 0) {
+        global $post;
+        $post_id = $post ? (int) $post->ID : 0;
+    }
+    if ($post_id <= 0 || get_post_type($post_id) !== 'page') {
         return false;
     }
 
-    $template = get_page_template_slug($post->ID);
-    $page_ids = supervisor_acf_template_page_ids();
-    $page_id_str = (string) $post->ID;
-
-    // Plugin-forced templates: match by page ID when slug is in our mapping
-    $template_from_page_id = null;
-    foreach ($page_ids as $slug => $id) {
-        if ($id && (string) $id === $page_id_str) {
-            $template_from_page_id = $slug;
-            break;
-        }
+    $effective_template = get_page_template_slug($post_id);
+    if (! $effective_template) {
+        $basename = supervisor_resolve_page_template_basename($post_id);
+        $effective_template = $basename ? basename($basename, '.php') : '';
     }
-
-    $effective_template = $template ?: $template_from_page_id;
 
     if ($rule['operator'] == '==') {
         $match = ($effective_template === $rule['value']);

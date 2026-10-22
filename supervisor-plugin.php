@@ -24,6 +24,7 @@ require_once plugin_dir_path(__FILE__) . 'inc/supervisor-pages.php';
 require_once plugin_dir_path(__FILE__) . 'inc/preview-mode.php';
 require_once plugin_dir_path(__FILE__) . 'inc/ui-markup.php';
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-bootstrap-cli.php';
+require_once plugin_dir_path(__FILE__) . 'inc/acf-content-cli.php';
 
 // Knowledge-map card titles (canonical Hebrew)
 require_once plugin_dir_path(__FILE__) . 'inc/knowledge-map-canonical-labels.php';

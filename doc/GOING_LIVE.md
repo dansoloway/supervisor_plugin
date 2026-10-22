@@ -108,6 +108,8 @@ While it is on, logged-out visitors are sent to the WordPress login screen for e
 3. Set **[`config.php`](../config.php)** — uncomment `SUPERVISOR_*` and real IDs when slugs don’t match the manifest or the site misbehaves.
 4. **ACF Pro:** activate and license. Ensure **[`acf-export/field-groups.php`](../acf-export/field-groups.php)** reflects your latest staging export (see §4 and [`acf-export/README.md`](../acf-export/README.md)) — no separate “import field groups” step on production if that file is current.
 5. **Migrate or enter content** (terms + posts + ACF **values** if needed).
+   - Page ACF values (About accordion, Activities, etc.): on the source site `wp supervisor export-page-fields --file=pages.json`, then on the target `wp supervisor import-page-fields pages.json --dry-run` and again without `--dry-run`. Pages are matched by `SUPERVISOR_*` constant, not by ID.
+   - If posts were copied without their `_<field>` reference meta: `wp supervisor repair-acf-references --dry-run`, then without `--dry-run`.
 6. Smoke-test; optional `wp supervisor automap-km-tags`.
 7. Turn off staging-only plugins/logging; set `WP_DEBUG` appropriately.
 

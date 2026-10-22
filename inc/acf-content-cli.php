@@ -130,11 +130,13 @@ WP_CLI::add_command(
             ],
             [
                 'type'        => 'flag',
+                'optional'    => true,
                 'name'        => 'dry-run',
                 'description' => 'Only print what would change.',
             ],
             [
                 'type'        => 'flag',
+                'optional'    => true,
                 'name'        => 'overwrite',
                 'description' => 'Replace fields that already have a value.',
             ],
@@ -195,6 +197,7 @@ WP_CLI::add_command(
         'synopsis'  => [
             [
                 'type'        => 'flag',
+                'optional'    => true,
                 'name'        => 'dry-run',
                 'description' => 'Only count references that would change.',
             ],

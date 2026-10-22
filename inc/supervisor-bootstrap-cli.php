@@ -133,21 +133,25 @@ WP_CLI::add_command(
         'synopsis'  => [
             [
                 'type'        => 'flag',
+                'optional'    => true,
                 'name'        => 'dry-run',
                 'description' => 'Only print what would run.',
             ],
             [
                 'type'        => 'flag',
+                'optional'    => true,
                 'name'        => 'activate-plugin',
                 'description' => 'Run wp plugin activate for this plugin (requires SUPERVISOR_PLUGIN_BASENAME).',
             ],
             [
                 'type'        => 'flag',
+                'optional'    => true,
                 'name'        => 'no-flush-rewrites',
                 'description' => 'Skip flush_rewrite_rules after changes.',
             ],
             [
                 'type'        => 'flag',
+                'optional'    => true,
                 'name'        => 'print-config-defines',
                 'description' => 'After bootstrap, print define(...) lines for config.php to STDOUT.',
             ],

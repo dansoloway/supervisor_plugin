@@ -19,9 +19,8 @@ get_header('supervisor');
         <h1 class="page-title"><?php the_title(); ?></h1>
 
         <?php
-        $km_page_id     = get_queried_object_id();
-        $km_text_before = function_exists('get_field') ? (string) get_field('qa_km_text_before', $km_page_id) : '';
-        $km_text_after  = function_exists('get_field') ? (string) get_field('qa_km_text_after', $km_page_id) : '';
+        $km_text_before = wpautop((string) get_option('supervisor_km_text_before', ''));
+        $km_text_after  = wpautop((string) get_option('supervisor_km_text_after', ''));
         ?>
         <div class="knowledge-map-page-stack">
             <div class="knowledge-map-main">

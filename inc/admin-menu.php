@@ -622,6 +622,12 @@ function supervisor_save_settings() {
             update_option('supervisor_contact_email', $email);
         }
     }
+
+    foreach (['supervisor_km_text_before', 'supervisor_km_text_after'] as $km_option) {
+        if (isset($_POST[ $km_option ])) {
+            update_option($km_option, wp_kses_post(wp_unslash($_POST[ $km_option ])));
+        }
+    }
     
     wp_redirect(add_query_arg('settings-updated', 'true', admin_url('admin.php?page=supervisor-settings')));
     exit;
@@ -786,6 +792,22 @@ function supervisor_settings_page() {
                                    class="regular-text"
                                    placeholder="example@jdc.org">
                             <p class="description"><?php echo esc_html__('כתובת האימייל שתוצג בעמוד יצירת הקשר. הודעות מטופס יצירת הקשר נשלחות לכתובת זו.', 'text-domain'); ?></p>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2><?php echo esc_html__('מפת הידע', 'text-domain'); ?></h2>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php echo esc_html__('טקסט לפני מפת הידע', 'text-domain'); ?></th>
+                        <td>
+                            <?php wp_editor(get_option('supervisor_km_text_before', ''), 'supervisor_km_text_before', ['textarea_rows' => 8]); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php echo esc_html__('טקסט אחרי מפת הידע', 'text-domain'); ?></th>
+                        <td>
+                            <?php wp_editor(get_option('supervisor_km_text_after', ''), 'supervisor_km_text_after', ['textarea_rows' => 8]); ?>
                         </td>
                     </tr>
                 </table>

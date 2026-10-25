@@ -535,46 +535,4 @@ add_action('acf/include_fields', function () {
 	  'ai_description' => '',
 	  'local_file' => '/www/brookdalejdcorg_480/public/wp-content/themes/brookdale-theme/admin/fields/group_69bb3958ecf3d.json',
 	));
-
-	acf_add_local_field_group(array(
-	  'key' => 'group_supervisor_km_text',
-	  'title' => 'QA_Knowledge_Map_Text',
-	  'fields' => array(
-	    0 => array(
-	      'key' => 'field_supervisor_km_text_before',
-	      'label' => 'טקסט לפני מפת הידע',
-	      'name' => 'qa_km_text_before',
-	      'type' => 'wysiwyg',
-	      'tabs' => 'all',
-	      'toolbar' => 'full',
-	      'media_upload' => 1,
-	      'delay' => 0,
-	    ),
-	    1 => array(
-	      'key' => 'field_supervisor_km_text_after',
-	      'label' => 'טקסט אחרי מפת הידע',
-	      'name' => 'qa_km_text_after',
-	      'type' => 'wysiwyg',
-	      'tabs' => 'all',
-	      'toolbar' => 'full',
-	      'media_upload' => 1,
-	      'delay' => 0,
-	    ),
-	  ),
-	  'location' => array(
-	    0 => array(
-	      0 => array(
-	        'param' => 'supervisor_template',
-	        'operator' => '==',
-	        'value' => 'supervisor-knowledge-map',
-	      ),
-	    ),
-	  ),
-	  'menu_order' => 0,
-	  'position' => 'normal',
-	  'style' => 'default',
-	  'label_placement' => 'top',
-	  'instruction_placement' => 'label',
-	  'active' => true,
-	));
 });

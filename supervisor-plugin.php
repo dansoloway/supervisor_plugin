@@ -122,17 +122,7 @@ function enqueue_alternate_header_assets() {
     $is_archive = is_post_type_archive($post_type_archives);
     $is_single = is_singular($singles);
 
-    // Debug logging
-    error_log('=== SUPERVISOR CSS DEBUG ===');
-    error_log('Template: ' . $template);
-    error_log('Is plugin template? ' . ($is_plugin_template ? 'Yes' : 'No'));
-    error_log('Is taxonomy archive? ' . ($is_taxonomy ? 'Yes' : 'No'));
-    error_log('Is archive? ' . ($is_archive ? 'Yes' : 'No'));
-    error_log('Is single? ' . ($is_single ? 'Yes' : 'No'));
-
     // Load CSS on ALL pages for now to ensure it works
-    error_log('Enqueueing CSS & JS for ALL pages');
-    
     // Enqueue CSS with cache busting and high priority
     wp_enqueue_style(
         'supervisor-styles',

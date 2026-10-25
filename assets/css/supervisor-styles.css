@@ -6015,7 +6015,7 @@ body .supervisor-bib-cats .categories-grid {
     box-sizing: border-box;
 }
 
-.supervisor-partner-logos__scroll {
+.supervisor-partner-logos__inner {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6025,7 +6025,7 @@ body .supervisor-bib-cats .categories-grid {
 .supervisor-partner-logos img {
     display: block;
     width: 100%;
-    max-width: 752px;
+    max-width: 580px;
     height: auto;
     margin: 0 auto;
 }
@@ -6033,36 +6033,13 @@ body .supervisor-bib-cats .categories-grid {
 @media (max-width: 768px) {
     .supervisor-partner-logos {
         margin-top: var(--sv-spacing-lg, 24px);
-        padding: var(--sv-spacing-md, 16px) 0 var(--sv-spacing-lg, 24px);
+        padding: var(--sv-spacing-md, 16px) 16px var(--sv-spacing-lg, 24px);
     }
 
-    /* Keep logos legible: native-ish size + horizontal scroll instead of shrinking text */
-    .supervisor-partner-logos__scroll {
-        justify-content: flex-start;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        padding-inline: 16px;
-        mask-image: linear-gradient(
-            to right,
-            transparent 0,
-            #000 16px,
-            #000 calc(100% - 16px),
-            transparent 100%
-        );
-    }
-
+    /* Fit full strip in viewport — no horizontal scroll */
     .supervisor-partner-logos img {
-        width: auto;
-        max-width: none;
-        height: 48px;
-        flex-shrink: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .supervisor-partner-logos img {
-        height: 44px;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
     }
 }

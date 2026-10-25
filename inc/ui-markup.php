@@ -58,8 +58,8 @@ function supervisor_partner_logos_markup() {
 
     return sprintf(
         '<div class="supervisor-partner-logos" role="region" aria-label="%1$s">'
-        . '<div class="supervisor-partner-logos__scroll">'
-        . '<img src="%2$s" alt="%1$s" width="752" height="55" loading="lazy" decoding="async" />'
+        . '<div class="supervisor-partner-logos__inner">'
+        . '<img src="%2$s" alt="%1$s" width="580" height="55" loading="lazy" decoding="async" />'
         . '</div>'
         . '</div>',
         esc_attr($alt),

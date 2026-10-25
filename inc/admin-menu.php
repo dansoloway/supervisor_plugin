@@ -611,6 +611,10 @@ function supervisor_save_settings() {
     
     check_admin_referer('supervisor_settings');
     
+    if (isset($_POST['supervisor_contact_name'])) {
+        update_option('supervisor_contact_name', sanitize_text_field(wp_unslash($_POST['supervisor_contact_name'])));
+    }
+
     // Save contact email
     if (isset($_POST['supervisor_contact_email'])) {
         $email = sanitize_email($_POST['supervisor_contact_email']);
@@ -743,6 +747,7 @@ function supervisor_settings_page() {
         echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('ההגדרות נשמרו בהצלחה.', 'text-domain') . '</p></div>';
     }
     
+    $contact_name  = get_option('supervisor_contact_name', '');
     $contact_email = get_option('supervisor_contact_email', '');
     ?>
     <div class="wrap supervisor-settings-page">
@@ -758,6 +763,19 @@ function supervisor_settings_page() {
                 <table class="form-table">
                     <tr>
                         <th scope="row">
+                            <label for="supervisor_contact_name"><?php echo esc_html__('שם איש הקשר', 'text-domain'); ?></label>
+                        </th>
+                        <td>
+                            <input type="text"
+                                   id="supervisor_contact_name"
+                                   name="supervisor_contact_name"
+                                   value="<?php echo esc_attr($contact_name); ?>"
+                                   class="regular-text">
+                            <p class="description"><?php echo esc_html__('השם שיוצג בעמוד יצירת הקשר לצד האימייל.', 'text-domain'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
                             <label for="supervisor_contact_email"><?php echo esc_html__('כתובת אימייל ליצירת קשר', 'text-domain'); ?></label>
                         </th>
                         <td>
@@ -767,7 +785,7 @@ function supervisor_settings_page() {
                                    value="<?php echo esc_attr($contact_email); ?>" 
                                    class="regular-text"
                                    placeholder="example@jdc.org">
-                            <p class="description"><?php echo esc_html__('כתובת האימייל שתוצג בעמוד יצירת הקשר.', 'text-domain'); ?></p>
+                            <p class="description"><?php echo esc_html__('כתובת האימייל שתוצג בעמוד יצירת הקשר. הודעות מטופס יצירת הקשר נשלחות לכתובת זו.', 'text-domain'); ?></p>
                         </td>
                     </tr>
                 </table>

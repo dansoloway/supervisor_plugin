@@ -5,13 +5,10 @@
 
 // Contact form configuration
 function supervisor_contact_form_config() {
+    $recipient = get_option('supervisor_contact_email', '') ?: get_option('admin_email');
+
     return [
-        'recipients' => [
-            'TalLen@jdc.org',
-            // Add more email addresses here as needed
-            // 'another@example.com',
-            // 'third@example.com',
-        ],
+        'recipients' => [$recipient],
         'subject_prefix' => '[המפקחת - טופס יצירת קשר]',
         'from_email' => get_option('admin_email'),
         'from_name' => 'מערכת המפקחת',
@@ -186,14 +183,7 @@ function supervisor_contact_admin_page() {
             <p><strong>כפונקציה PHP:</strong> <code>&lt;?php supervisor_display_contact_form(); ?&gt;</code></p>
             
             <h3>עריכת הגדרות:</h3>
-            <p>כדי לשנות את כתובות האימייל, ערכו את הקובץ <code>contact-form.php</code> ושינוי את המערך <code>recipients</code> בפונקציה <code>supervisor_contact_form_config()</code>.</p>
-            
-            <h3>דוגמה להוספת כתובת אימייל:</h3>
-            <pre><code>'recipients' => [
-    'TalLen@jdc.org',
-    'newperson@jdc.org',
-    'another@example.com',
-],</code></pre>
+            <p>את השם והאימייל ליצירת קשר משנים בעמוד <a href="<?php echo esc_url(admin_url('admin.php?page=supervisor-settings')); ?>">הגדרות</a>. ההודעות מהטופס נשלחות לאימייל שמוגדר שם.</p>
         </div>
     </div>
     <?php

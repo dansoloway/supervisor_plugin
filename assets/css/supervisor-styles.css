@@ -1954,6 +1954,27 @@
     width: 100%;
 }
 
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-text {
+    width: 100%;
+    font-family: var(--sv-font-primary);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--sv-text);
+    text-align: right;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-text--before {
+    margin-bottom: 1.5rem;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-text--after {
+    margin-top: 1.5rem;
+}
+
+.supervisor-knowledge-map .knowledge-map-main .knowledge-map-text > :last-child {
+    margin-bottom: 0;
+}
+
 .supervisor-knowledge-map .knowledge-map-main .knowledge-map-links {
     justify-content: center;
     flex-wrap: wrap;

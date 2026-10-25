@@ -18,8 +18,19 @@ get_header('supervisor');
         <div class="supervisor-content-wrapper supervisor-single-column knowledge-map-page-inner">
         <h1 class="page-title"><?php the_title(); ?></h1>
 
+        <?php
+        $km_page_id     = get_queried_object_id();
+        $km_text_before = function_exists('get_field') ? (string) get_field('qa_km_text_before', $km_page_id) : '';
+        $km_text_after  = function_exists('get_field') ? (string) get_field('qa_km_text_after', $km_page_id) : '';
+        ?>
         <div class="knowledge-map-page-stack">
             <div class="knowledge-map-main">
+                <?php if (trim($km_text_before) !== '') : ?>
+                <div class="knowledge-map-text knowledge-map-text--before entry-content">
+                    <?php echo wp_kses_post($km_text_before); ?>
+                </div>
+                <?php endif; ?>
+
                 <section class="knowledge-map-section knowledge-map-page-tiles" aria-label="<?php esc_attr_e('מפת הידע', 'text-domain'); ?>">
                     <div class="home-knowledge-map">
                         <div class="knowledge-map-grid">
@@ -36,6 +47,12 @@ get_header('supervisor');
                         </div>
                     </div>
                 </section>
+
+                <?php if (trim($km_text_after) !== '') : ?>
+                <div class="knowledge-map-text knowledge-map-text--after entry-content">
+                    <?php echo wp_kses_post($km_text_after); ?>
+                </div>
+                <?php endif; ?>
 
                 <?php while (have_posts()) : the_post(); ?>
                 <?php

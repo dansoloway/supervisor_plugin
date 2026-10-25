@@ -128,7 +128,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.50', // Trimmed partner logos; no mobile scroll
+        '1.0.51', // Larger partner logos on desktop
         'all' // Media type
     );
 

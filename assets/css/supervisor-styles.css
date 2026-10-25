@@ -6005,3 +6005,64 @@ body .supervisor-bib-cats .categories-grid {
         margin-right: 0;
     }
 }
+
+/* ===== Partner logos (above site footer) ===== */
+.supervisor-partner-logos {
+    width: 100%;
+    max-width: var(--sv-page-max-width);
+    margin: var(--sv-spacing-xl, 32px) auto 0;
+    padding: var(--sv-spacing-lg, 24px) 20px var(--sv-spacing-xl, 32px);
+    box-sizing: border-box;
+}
+
+.supervisor-partner-logos__scroll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.supervisor-partner-logos img {
+    display: block;
+    width: 100%;
+    max-width: 752px;
+    height: auto;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .supervisor-partner-logos {
+        margin-top: var(--sv-spacing-lg, 24px);
+        padding: var(--sv-spacing-md, 16px) 0 var(--sv-spacing-lg, 24px);
+    }
+
+    /* Keep logos legible: native-ish size + horizontal scroll instead of shrinking text */
+    .supervisor-partner-logos__scroll {
+        justify-content: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding-inline: 16px;
+        mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 16px,
+            #000 calc(100% - 16px),
+            transparent 100%
+        );
+    }
+
+    .supervisor-partner-logos img {
+        width: auto;
+        max-width: none;
+        height: 48px;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .supervisor-partner-logos img {
+        height: 44px;
+    }
+}

@@ -128,7 +128,7 @@ function enqueue_alternate_header_assets() {
         'supervisor-styles',
         plugins_url('/assets/css/supervisor-styles.css', __FILE__),
         ['supervisor-google-fonts'], // Make sure CSS loads after fonts
-        '1.0.48', // Knowledge map before/after text
+        '1.0.49', // Partner logos before footer
         'all' // Media type
     );
 
@@ -412,4 +412,23 @@ function get_supervisor_search_url($search_term = '') {
     }
     return home_url('/supervisor-search/');
 }
+
+/**
+ * Partner logos strip immediately before the theme footer on supervisor pages.
+ */
+function supervisor_render_partner_logos_before_footer($name = null) {
+    if (is_admin()) {
+        return;
+    }
+    if (! function_exists('supervisor_preview_mode_is_supervisor_request')
+        || ! supervisor_preview_mode_is_supervisor_request()) {
+        return;
+    }
+    if (! function_exists('supervisor_partner_logos_markup')) {
+        return;
+    }
+
+    echo supervisor_partner_logos_markup();
+}
+add_action('get_footer', 'supervisor_render_partner_logos_before_footer', 5);
 

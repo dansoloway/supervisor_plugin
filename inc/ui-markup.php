@@ -44,3 +44,25 @@ function supervisor_filter_toggle_icon_markup($expanded = true) {
         supervisor_accordion_chevron_svg()
     );
 }
+
+/**
+ * Partner / ministry logos strip shown above the site footer.
+ */
+function supervisor_partner_logos_markup() {
+    $src = plugins_url(
+        'assets/img/logos.png',
+        dirname(__DIR__) . '/supervisor-plugin.php'
+    );
+
+    $alt = 'לוגוס שותפים: המוסד לביטוח לאומי, משרד האוצר, משרד הבריאות, משרד החינוך, משרד העבודה הרווחה והשירותים החברתיים';
+
+    return sprintf(
+        '<div class="supervisor-partner-logos" role="region" aria-label="%1$s">'
+        . '<div class="supervisor-partner-logos__scroll">'
+        . '<img src="%2$s" alt="%1$s" width="752" height="55" loading="lazy" decoding="async" />'
+        . '</div>'
+        . '</div>',
+        esc_attr($alt),
+        esc_url($src)
+    );
+}

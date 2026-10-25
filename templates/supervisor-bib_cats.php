@@ -27,7 +27,18 @@ $bib_cats_area_labels = [
 
         <div class="bib-cats-layout">
             <div class="bib-cats-main">
-                <h1 class="page-title"><?php echo esc_html(get_the_title()); ?></h1>
+                <?php
+                $km_cat_raw    = isset($_GET['km_cat']) ? sanitize_key(wp_unslash($_GET['km_cat'])) : '';
+                $filter_slugs  = $km_cat_raw ? supervisor_knowledge_map_resolve_to_leaf_slugs($km_cat_raw) : [];
+                $filter_active = ! empty($filter_slugs);
+
+                // Knowledge-map deep links: omit the generic page title ("קטגוריות ביבליוגרפיה").
+                if ($km_cat_raw === '') :
+                    ?>
+                    <h1 class="page-title"><?php echo esc_html(get_the_title()); ?></h1>
+                    <?php
+                endif;
+                ?>
 
                 <?php
                 while (have_posts()) :
@@ -46,12 +57,6 @@ $bib_cats_area_labels = [
                     endif;
                 endwhile;
                 rewind_posts();
-                ?>
-
-                <?php
-                $km_cat_raw    = isset($_GET['km_cat']) ? sanitize_key(wp_unslash($_GET['km_cat'])) : '';
-                $filter_slugs  = $km_cat_raw ? supervisor_knowledge_map_resolve_to_leaf_slugs($km_cat_raw) : [];
-                $filter_active = ! empty($filter_slugs);
                 ?>
 
                 <div class="categories-grid" id="bib-cats-grid">

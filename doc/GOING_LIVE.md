@@ -101,6 +101,16 @@ While it is on, logged-out visitors are sent to the WordPress login screen for e
 
 **On launch:** delete the line (or set it to `false`). Implementation: [`inc/preview-mode.php`](../inc/preview-mode.php).
 
+## 7b. Staging content read-only
+
+After production is live and editors should stop changing staging, add this to **staging** `config.php` only:
+
+```php
+define('SUPERVISOR_CONTENT_READONLY', true);
+```
+
+While it is on, wp-admin cannot save supervisor pages, `qa_*` posts, `qa_tags` / `qa_themes`, or the המפקחת settings (contact / knowledge-map text). A warning notice appears in admin. **WP-CLI is not blocked**, so content ports still work. Do **not** enable this on production. Implementation: [`inc/content-readonly.php`](../inc/content-readonly.php).
+
 ## 8. Go-live order (summary)
 
 1. Deploy code + activate supervisor plugin (`wp plugin activate …` or Admin).

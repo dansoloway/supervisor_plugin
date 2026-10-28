@@ -179,6 +179,10 @@ add_action('admin_menu', 'supervisor_remove_duplicate_menu_item', 25); // Run af
 
 // Helper function to check if user can edit supervisor content
 function supervisor_can_edit() {
+    if (function_exists('supervisor_content_readonly_blocks_writes') && supervisor_content_readonly_blocks_writes()) {
+        return false;
+    }
+
     return current_user_can('manage_options') || current_user_can('edit_qa_updates') || current_user_can('edit_qa_stories') || current_user_can('supervisor_editor');
 }
 

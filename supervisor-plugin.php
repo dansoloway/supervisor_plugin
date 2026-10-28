@@ -22,6 +22,7 @@ if (is_readable($supervisor_config_path)) {
 }
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-pages.php';
 require_once plugin_dir_path(__FILE__) . 'inc/preview-mode.php';
+require_once plugin_dir_path(__FILE__) . 'inc/content-readonly.php';
 require_once plugin_dir_path(__FILE__) . 'inc/ui-markup.php';
 require_once plugin_dir_path(__FILE__) . 'inc/supervisor-bootstrap-cli.php';
 require_once plugin_dir_path(__FILE__) . 'inc/acf-content-cli.php';

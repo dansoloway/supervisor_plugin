@@ -338,30 +338,42 @@ function supervisor_map_page_capabilities($caps, $cap, $user_id, $args) {
         return $caps;
     }
     
-    // Check if this is a page-related capability
-    $page_caps = ['edit_page', 'delete_page', 'publish_page'];
-    if (!in_array($cap, $page_caps) && !in_array($cap, ['edit_pages', 'edit_others_pages', 'edit_published_pages', 'publish_pages', 'delete_pages', 'delete_others_pages', 'delete_published_pages'])) {
-        return $caps;
-    }
-    
-    // Get the page ID from args
+    // Get the object ID from args (post/page id for meta caps)
     $page_id = isset($args[0]) ? intval($args[0]) : 0;
+
+    // current_user_can('edit_post', $id) uses cap "edit_post" even for pages —
+    // only apply the allowlist when the target is actually a page.
+    if (in_array($cap, ['edit_post', 'delete_post', 'publish_post'], true)) {
+        if ($page_id <= 0) {
+            return $caps;
+        }
+        $post = get_post($page_id);
+        if (! $post || $post->post_type !== 'page') {
+            return $caps;
+        }
+    } else {
+        $page_caps = ['edit_page', 'delete_page', 'publish_page'];
+        $primitive = ['edit_pages', 'edit_others_pages', 'edit_published_pages', 'publish_pages', 'delete_pages', 'delete_others_pages', 'delete_published_pages'];
+        if (! in_array($cap, $page_caps, true) && ! in_array($cap, $primitive, true)) {
+            return $caps;
+        }
+    }
     
     if ($page_id > 0) {
         $allowed_pages = supervisor_get_allowed_page_ids();
         
         // If this is one of the allowed supervisor pages, grant the capability
-        if (in_array($page_id, $allowed_pages)) {
+        if (in_array($page_id, $allowed_pages, true)) {
             // Remove 'do_not_allow' and allow the action
             $caps = array_diff($caps, ['do_not_allow']);
-            // For edit_page, we need edit_posts capability
-            if ($cap === 'edit_page') {
+            // For edit_page / edit_post on an allowed page, require edit_posts
+            if (in_array($cap, ['edit_page', 'edit_post'], true)) {
                 $caps[] = 'edit_posts';
             }
         } else {
             // Not an allowed page - deny access
             $caps = ['do_not_allow'];
-    }
+        }
     }
     
     return $caps;

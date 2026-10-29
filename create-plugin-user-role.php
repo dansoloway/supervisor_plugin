@@ -129,6 +129,26 @@ function update_supervisor_editor_capabilities() {
 }
 add_action('init', 'update_supervisor_editor_capabilities');
 
+/**
+ * Caps for each qa_* CPT (must match supervisor_qa_cpt_capabilities() plural bases).
+ *
+ * @return list<string>
+ */
+function supervisor_qa_cpt_role_caps() {
+    $caps = [];
+    foreach (['qa_updates', 'qa_orgs', 'qa_bib_items', 'qa_stories'] as $plural) {
+        foreach ([
+            'edit_', 'edit_others_', 'edit_published_', 'publish_',
+            'delete_', 'delete_others_', 'delete_published_',
+            'read_private_', 'edit_private_', 'delete_private_', 'read_',
+        ] as $prefix) {
+            $caps[] = $prefix . $plural;
+        }
+    }
+
+    return $caps;
+}
+
 // Grant qa_tags taxonomy capabilities to Administrator and Editor roles
 // (Custom taxonomy caps are not granted automatically; only supervisor_editor had them)
 function supervisor_grant_qa_tags_capabilities() {
@@ -143,6 +163,22 @@ function supervisor_grant_qa_tags_capabilities() {
     }
 }
 add_action('init', 'supervisor_grant_qa_tags_capabilities', 20);
+
+// After CPTs use custom caps, administrators (and editors) need those caps too —
+// they previously edited qa_* via default edit_posts / edit_others_posts.
+function supervisor_grant_qa_cpt_capabilities_to_wp_roles() {
+    $caps = supervisor_qa_cpt_role_caps();
+    foreach (['administrator', 'editor'] as $role_name) {
+        $role = get_role($role_name);
+        if (! $role) {
+            continue;
+        }
+        foreach ($caps as $cap) {
+            $role->add_cap($cap);
+        }
+    }
+}
+add_action('init', 'supervisor_grant_qa_cpt_capabilities_to_wp_roles', 20);
 
 // Force update existing supervisor_editor users with ALL capabilities
 function fix_supervisor_editor_permissions() {

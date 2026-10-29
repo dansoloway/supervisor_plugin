@@ -1,5 +1,31 @@
 <?php
 
+/**
+ * Map WP primitive caps onto the plural qa_* caps already granted to supervisor_editor.
+ * Without this, CPTs use edit_others_posts and editors cannot edit others' content.
+ *
+ * @param string $plural e.g. qa_updates, qa_orgs, qa_bib_items, qa_stories
+ * @return array<string, string>
+ */
+function supervisor_qa_cpt_capabilities($plural) {
+    return [
+        'edit_post'              => 'edit_' . $plural,
+        'read_post'              => 'read_' . $plural,
+        'delete_post'            => 'delete_' . $plural,
+        'edit_posts'             => 'edit_' . $plural,
+        'edit_others_posts'      => 'edit_others_' . $plural,
+        'edit_published_posts'   => 'edit_published_' . $plural,
+        'publish_posts'          => 'publish_' . $plural,
+        'read_private_posts'     => 'read_private_' . $plural,
+        'delete_posts'           => 'delete_' . $plural,
+        'delete_others_posts'    => 'delete_others_' . $plural,
+        'delete_published_posts' => 'delete_published_' . $plural,
+        'delete_private_posts'   => 'delete_private_' . $plural,
+        'edit_private_posts'     => 'edit_private_' . $plural,
+        'create_posts'           => 'edit_' . $plural,
+    ];
+}
+
 // 1. Register Custom Post Types
 function register_qa_cpts() {
     // CPT: ארגונים
@@ -20,6 +46,8 @@ function register_qa_cpts() {
         'has_archive' => false,
         'rewrite' => ['slug' => 'qa-orgs'],
         'supports' => ['title', 'editor', 'thumbnail'],
+        'map_meta_cap' => true,
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_orgs'),
     ]);
 
     // CPT: עדכונים
@@ -40,6 +68,8 @@ function register_qa_cpts() {
         'has_archive' => true,
         'rewrite' => ['slug' => 'qa-updates'],
         'supports' => ['title', 'editor', 'thumbnail'],
+        'map_meta_cap' => true,
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_updates'),
     ]);
 
     // CPT: ביבליוגרפיה
@@ -60,6 +90,8 @@ function register_qa_cpts() {
         'has_archive' => false,
         'rewrite' => ['slug' => 'qa-bib-items'],
         'supports' => ['title', 'editor', 'thumbnail'],
+        'map_meta_cap' => true,
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_bib_items'),
     ]);
 
     // CPT: סיפורים מהשטח
@@ -80,6 +112,8 @@ function register_qa_cpts() {
         'has_archive' => false,
         'rewrite' => ['slug' => 'qa-stories'],
         'supports' => ['title', 'editor', 'thumbnail'],
+        'map_meta_cap' => true,
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_stories'),
     ]);
 
 }

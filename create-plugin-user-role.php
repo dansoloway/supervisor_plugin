@@ -30,6 +30,10 @@ function add_supervisor_editor_role() {
             'delete_published_pages' => false,
             
             // Plugin custom post types - ALLOW
+            // Singular = meta caps (per-post); plural = primitives (list/create)
+            'edit_qa_update' => true,
+            'read_qa_update' => true,
+            'delete_qa_update' => true,
             'edit_qa_updates' => true,
             'edit_others_qa_updates' => true,
             'edit_published_qa_updates' => true,
@@ -42,6 +46,9 @@ function add_supervisor_editor_role() {
             'delete_private_qa_updates' => true,
             'read_qa_updates' => true,
             
+            'edit_qa_org' => true,
+            'read_qa_org' => true,
+            'delete_qa_org' => true,
             'edit_qa_orgs' => true,
             'edit_others_qa_orgs' => true,
             'edit_published_qa_orgs' => true,
@@ -54,6 +61,9 @@ function add_supervisor_editor_role() {
             'delete_private_qa_orgs' => true,
             'read_qa_orgs' => true,
             
+            'edit_qa_bib_item' => true,
+            'read_qa_bib_item' => true,
+            'delete_qa_bib_item' => true,
             'edit_qa_bib_items' => true,
             'edit_others_qa_bib_items' => true,
             'edit_published_qa_bib_items' => true,
@@ -66,6 +76,9 @@ function add_supervisor_editor_role() {
             'delete_private_qa_bib_items' => true,
             'read_qa_bib_items' => true,
             
+            'edit_qa_story' => true,
+            'read_qa_story' => true,
+            'delete_qa_story' => true,
             'edit_qa_stories' => true,
             'edit_others_qa_stories' => true,
             'edit_published_qa_stories' => true,
@@ -116,15 +129,14 @@ function add_supervisor_editor_role() {
 }
 add_action('init', 'add_supervisor_editor_role');
 
-// Update existing supervisor_editor users with new capabilities
+// Keep supervisor_editor role in sync with current CPT caps (incl. singular meta caps).
 function update_supervisor_editor_capabilities() {
     $role = get_role('supervisor_editor');
-    if ($role) {
-        // Add the missing capabilities
-        $role->add_cap('read_qa_updates');
-        $role->add_cap('read_qa_orgs');
-        $role->add_cap('read_qa_bib_items');
-        $role->add_cap('read_qa_stories');
+    if (! $role) {
+        return;
+    }
+    foreach (supervisor_qa_cpt_role_caps() as $cap) {
+        $role->add_cap($cap);
     }
 }
 add_action('init', 'update_supervisor_editor_capabilities');
@@ -136,7 +148,16 @@ add_action('init', 'update_supervisor_editor_capabilities');
  */
 function supervisor_qa_cpt_role_caps() {
     $caps = [];
-    foreach (['qa_updates', 'qa_orgs', 'qa_bib_items', 'qa_stories'] as $plural) {
+    $types = [
+        'qa_update'    => 'qa_updates',
+        'qa_org'       => 'qa_orgs',
+        'qa_bib_item'  => 'qa_bib_items',
+        'qa_story'     => 'qa_stories',
+    ];
+    foreach ($types as $singular => $plural) {
+        foreach (['edit_', 'read_', 'delete_'] as $prefix) {
+            $caps[] = $prefix . $singular;
+        }
         foreach ([
             'edit_', 'edit_others_', 'edit_published_', 'publish_',
             'delete_', 'delete_others_', 'delete_published_',
@@ -195,54 +216,10 @@ function fix_supervisor_editor_permissions() {
         $user->add_cap('upload_files');
         $user->add_cap('unfiltered_html');
         
-        // Plugin custom post types
-        $user->add_cap('edit_qa_updates');
-        $user->add_cap('edit_others_qa_updates');
-        $user->add_cap('edit_published_qa_updates');
-        $user->add_cap('publish_qa_updates');
-        $user->add_cap('delete_qa_updates');
-        $user->add_cap('delete_others_qa_updates');
-        $user->add_cap('delete_published_qa_updates');
-        $user->add_cap('read_private_qa_updates');
-        $user->add_cap('edit_private_qa_updates');
-        $user->add_cap('delete_private_qa_updates');
-        $user->add_cap('read_qa_updates');
-        
-        $user->add_cap('edit_qa_orgs');
-        $user->add_cap('edit_others_qa_orgs');
-        $user->add_cap('edit_published_qa_orgs');
-        $user->add_cap('publish_qa_orgs');
-        $user->add_cap('delete_qa_orgs');
-        $user->add_cap('delete_others_qa_orgs');
-        $user->add_cap('delete_published_qa_orgs');
-        $user->add_cap('read_private_qa_orgs');
-        $user->add_cap('edit_private_qa_orgs');
-        $user->add_cap('delete_private_qa_orgs');
-        $user->add_cap('read_qa_orgs');
-        
-        $user->add_cap('edit_qa_bib_items');
-        $user->add_cap('edit_others_qa_bib_items');
-        $user->add_cap('edit_published_qa_bib_items');
-        $user->add_cap('publish_qa_bib_items');
-        $user->add_cap('delete_qa_bib_items');
-        $user->add_cap('delete_others_qa_bib_items');
-        $user->add_cap('delete_published_qa_bib_items');
-        $user->add_cap('read_private_qa_bib_items');
-        $user->add_cap('edit_private_qa_bib_items');
-        $user->add_cap('delete_private_qa_bib_items');
-        $user->add_cap('read_qa_bib_items');
-        
-        $user->add_cap('edit_qa_stories');
-        $user->add_cap('edit_others_qa_stories');
-        $user->add_cap('edit_published_qa_stories');
-        $user->add_cap('publish_qa_stories');
-        $user->add_cap('delete_qa_stories');
-        $user->add_cap('delete_others_qa_stories');
-        $user->add_cap('delete_published_qa_stories');
-        $user->add_cap('read_private_qa_stories');
-        $user->add_cap('edit_private_qa_stories');
-        $user->add_cap('delete_private_qa_stories');
-        $user->add_cap('read_qa_stories');
+        // Plugin custom post types (singular meta + plural primitives)
+        foreach (supervisor_qa_cpt_role_caps() as $cap) {
+            $user->add_cap($cap);
+        }
         
         // Taxonomy capabilities
         $user->add_cap('manage_qa_tags');

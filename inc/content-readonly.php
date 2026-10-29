@@ -110,12 +110,16 @@ function supervisor_content_readonly_user_has_cap($allcaps, $caps, $args, $user)
     }
 
     $blocked_exact = [
+        'edit_qa_update', 'read_qa_update', 'delete_qa_update',
         'edit_qa_updates', 'edit_others_qa_updates', 'edit_published_qa_updates', 'publish_qa_updates',
         'delete_qa_updates', 'delete_others_qa_updates', 'delete_published_qa_updates',
+        'edit_qa_org', 'read_qa_org', 'delete_qa_org',
         'edit_qa_orgs', 'edit_others_qa_orgs', 'edit_published_qa_orgs', 'publish_qa_orgs',
         'delete_qa_orgs', 'delete_others_qa_orgs', 'delete_published_qa_orgs',
+        'edit_qa_bib_item', 'read_qa_bib_item', 'delete_qa_bib_item',
         'edit_qa_bib_items', 'edit_others_qa_bib_items', 'edit_published_qa_bib_items', 'publish_qa_bib_items',
         'delete_qa_bib_items', 'delete_others_qa_bib_items', 'delete_published_qa_bib_items',
+        'edit_qa_story', 'read_qa_story', 'delete_qa_story',
         'edit_qa_stories', 'edit_others_qa_stories', 'edit_published_qa_stories', 'publish_qa_stories',
         'delete_qa_stories', 'delete_others_qa_stories', 'delete_published_qa_stories',
         'manage_qa_tags', 'edit_qa_tags', 'delete_qa_tags', 'assign_qa_tags',

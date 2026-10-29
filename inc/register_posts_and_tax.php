@@ -1,17 +1,22 @@
 <?php
 
 /**
- * Map WP primitive caps onto the plural qa_* caps already granted to supervisor_editor.
- * Without this, CPTs use edit_others_posts and editors cannot edit others' content.
+ * CPT capability map for supervisor_editor.
  *
- * @param string $plural e.g. qa_updates, qa_orgs, qa_bib_items, qa_stories
+ * Singular names (edit_qa_update) are meta caps used with a post ID.
+ * Plural names (edit_qa_updates) are primitives for listing/creating.
+ * They must differ — if both map to the same string, WP treats the
+ * primitive as a meta cap and denies create_posts with do_not_allow.
+ *
+ * @param string $singular e.g. qa_update, qa_org, qa_bib_item, qa_story
+ * @param string $plural   e.g. qa_updates, qa_orgs, qa_bib_items, qa_stories
  * @return array<string, string>
  */
-function supervisor_qa_cpt_capabilities($plural) {
+function supervisor_qa_cpt_capabilities($singular, $plural) {
     return [
-        'edit_post'              => 'edit_' . $plural,
-        'read_post'              => 'read_' . $plural,
-        'delete_post'            => 'delete_' . $plural,
+        'edit_post'              => 'edit_' . $singular,
+        'read_post'              => 'read_' . $singular,
+        'delete_post'            => 'delete_' . $singular,
         'edit_posts'             => 'edit_' . $plural,
         'edit_others_posts'      => 'edit_others_' . $plural,
         'edit_published_posts'   => 'edit_published_' . $plural,
@@ -47,7 +52,7 @@ function register_qa_cpts() {
         'rewrite' => ['slug' => 'qa-orgs'],
         'supports' => ['title', 'editor', 'thumbnail'],
         'map_meta_cap' => true,
-        'capabilities' => supervisor_qa_cpt_capabilities('qa_orgs'),
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_org', 'qa_orgs'),
     ]);
 
     // CPT: עדכונים
@@ -69,7 +74,7 @@ function register_qa_cpts() {
         'rewrite' => ['slug' => 'qa-updates'],
         'supports' => ['title', 'editor', 'thumbnail'],
         'map_meta_cap' => true,
-        'capabilities' => supervisor_qa_cpt_capabilities('qa_updates'),
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_update', 'qa_updates'),
     ]);
 
     // CPT: ביבליוגרפיה
@@ -91,7 +96,7 @@ function register_qa_cpts() {
         'rewrite' => ['slug' => 'qa-bib-items'],
         'supports' => ['title', 'editor', 'thumbnail'],
         'map_meta_cap' => true,
-        'capabilities' => supervisor_qa_cpt_capabilities('qa_bib_items'),
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_bib_item', 'qa_bib_items'),
     ]);
 
     // CPT: סיפורים מהשטח
@@ -113,7 +118,7 @@ function register_qa_cpts() {
         'rewrite' => ['slug' => 'qa-stories'],
         'supports' => ['title', 'editor', 'thumbnail'],
         'map_meta_cap' => true,
-        'capabilities' => supervisor_qa_cpt_capabilities('qa_stories'),
+        'capabilities' => supervisor_qa_cpt_capabilities('qa_story', 'qa_stories'),
     ]);
 
 }

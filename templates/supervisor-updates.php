@@ -23,8 +23,9 @@ if ($highlight_id) {
         'post_type'      => 'qa_updates',
         'posts_per_page' => -1,  // Show all updates
         'paged'          => 1,  // Always show first page
-        'orderby'        => 'date',  // Use same sorting as home page
-        'order'          => 'DESC',  // Latest dates first
+        'meta_key'       => 'qa_updates_date',
+        'orderby'        => 'meta_value',  // ACF date (Ymd) — same as home page
+        'order'          => 'DESC',  // Latest ACF dates first
         'post_status'    => 'publish',
     ];
 } else {
@@ -33,8 +34,9 @@ if ($highlight_id) {
         'post_type'      => 'qa_updates',
         'posts_per_page' => $posts_per_page,
         'paged'          => $paged,
-        'orderby'        => 'date',  // Sort by post date
-        'order'          => 'DESC',  // Latest dates first
+        'meta_key'       => 'qa_updates_date',
+        'orderby'        => 'meta_value',  // ACF date (Ymd)
+        'order'          => 'DESC',  // Latest ACF dates first
         'post_status'    => 'publish',
     ];
 }
